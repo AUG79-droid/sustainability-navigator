@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Buscador bilingüe de conceptos y preguntas frecuentes sobre sostenibilidad aeronáutica.">
+  <meta name="theme-color" content="#071b33">
+  <title>Sustainability Navigator · Sustainable Aviation Learning Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#results">Saltar a resultados</a>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Sustainable Aviation Learning Lab">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span><strong>Sustainable Aviation</strong><small>Learning Lab</small></span>
+    </a>
+    <div class="top-actions">
+      <span class="prototype-badge" data-i18n="prototype">Prototipo MVP</span>
+      <div class="language-switch" role="group" aria-label="Idioma">
+        <button class="lang-button is-active" type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button class="lang-button" type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="eyebrow">Descubrir · Comprender · Decidir</p>
+        <h1 id="hero-title">Sustainability <span>Navigator</span></h1>
+        <p class="hero-lead" data-i18n="heroLead">Encuentra conceptos, preguntas frecuentes y referencias para conectar sostenibilidad con decisiones aeronáuticas.</p>
+
+        <form id="search-form" class="search-box" role="search">
+          <label class="sr-only" for="search-input" data-i18n="searchLabel">Buscar en el Navigator</label>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+          <input id="search-input" type="search" autocomplete="off" data-placeholder-es="Busca energía, circularidad, IA, proveedores, biodiversidad…" data-placeholder-en="Search energy, circularity, AI, suppliers, biodiversity…" placeholder="Busca energía, circularidad, IA, proveedores, biodiversidad…">
+          <button type="submit" data-i18n="searchButton">Buscar</button>
+        </form>
+
+        <div class="quick-searches" aria-label="Búsquedas sugeridas">
+          <span data-i18n="tryLabel">Prueba:</span>
+          <button type="button" data-query-es="¿Qué es la economía circular?" data-query-en="What is the circular economy?">Circularity</button>
+          <button type="button" data-query-es="¿Cómo evaluar una afirmación ambiental?" data-query-en="How should an environmental claim be assessed?">Evidence</button>
+          <button type="button" data-query-es="¿Por qué la biodiversidad forma parte de la sostenibilidad?" data-query-en="Why is biodiversity part of sustainability?">Nature</button>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Resumen del catálogo">
+        <div class="radar" aria-hidden="true">
+          <span class="radar-ring ring-1"></span><span class="radar-ring ring-2"></span><span class="radar-ring ring-3"></span>
+          <span class="radar-line line-1"></span><span class="radar-line line-2"></span><span class="radar-line line-3"></span>
+          <span class="radar-core">6</span>
+        </div>
+        <p data-i18n="sixPillars">Seis perspectivas, una visión de sistema</p>
+        <div class="hero-metrics">
+          <div><strong id="metric-items">90</strong><span data-i18n="entries">fichas</span></div>
+          <div><strong id="metric-sources">12</strong><span data-i18n="sources">fuentes</span></div>
+          <div><strong>ES/EN</strong><span data-i18n="bilingual">bilingüe</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="pillar-section" aria-labelledby="pillar-title">
+      <div class="section-heading">
+        <div><p class="eyebrow" data-i18n="architecture">Arquitectura</p><h2 id="pillar-title" data-i18n="explorePillars">Explora los seis pilares</h2></div>
+        <button id="show-all-pillars" class="text-button" type="button" data-i18n="showAll">Ver todo</button>
+      </div>
+      <div id="pillar-grid" class="pillar-grid"></div>
+    </section>
+
+    <section class="navigator-layout" aria-labelledby="catalog-title">
+      <aside class="filters" aria-label="Filtros del catálogo">
+        <div class="filter-heading"><p class="eyebrow" data-i18n="filters">Filtros</p><button id="clear-filters" type="button" data-i18n="clear">Limpiar</button></div>
+        <fieldset>
+          <legend data-i18n="contentType">Tipo de contenido</legend>
+          <label><input type="radio" name="type" value="all" checked><span data-i18n="all">Todo</span><b id="count-all">90</b></label>
+          <label><input type="radio" name="type" value="faq"><span>FAQ</span><b id="count-faq">30</b></label>
+          <label><input type="radio" name="type" value="glossary"><span data-i18n="glossary">Glosario</span><b id="count-glossary">60</b></label>
+        </fieldset>
+        <label class="select-label" for="audience-filter" data-i18n="audience">Audiencia</label>
+        <select id="audience-filter"></select>
+        <div class="governance-note">
+          <strong data-i18n="governanceTitle">Gobernanza del contenido</strong>
+          <p data-i18n="governanceBody">Cada ficha muestra fuente, fecha y responsable propuesto. El contenido sigue en validación funcional.</p>
+        </div>
+      </aside>
+
+      <div class="catalog">
+        <div class="catalog-head">
+          <div><p class="eyebrow" data-i18n="knowledgeBase">Base de conocimiento</p><h2 id="catalog-title"><span id="result-count">90</span> <span data-i18n="results">resultados</span></h2></div>
+          <label class="sort-label"><span data-i18n="sort">Ordenar</span><select id="sort-select"><option value="relevance" data-i18n="relevance">Relevancia</option><option value="pillar" data-i18n="byPillar">Por pilar</option><option value="az">A–Z</option></select></label>
+        </div>
+        <div id="active-filters" class="active-filters" aria-live="polite"></div>
+        <div id="results" class="results" aria-live="polite"></div>
+        <div id="empty-state" class="empty-state" hidden>
+          <span aria-hidden="true">⌁</span><h3 data-i18n="noResults">No hay coincidencias</h3><p data-i18n="noResultsBody">Prueba una palabra más amplia o elimina algún filtro.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="decision-banner">
+      <div><p class="eyebrow" data-i18n="internalContext">Contexto interno</p><h2 data-i18n="internalTitle">¿La pregunta afecta a un centro, producto, proceso o política interna?</h2><p data-i18n="internalBody">Usa la ficha como orientación inicial y confirma la respuesta con la referencia corporativa aprobada y el responsable funcional correspondiente.</p></div>
+      <div class="decision-rule"><span>01</span><p data-i18n="ruleOne">Define el alcance</p><span>02</span><p data-i18n="ruleTwo">Comprueba la evidencia</p><span>03</span><p data-i18n="ruleThree">Documenta límites y decisión</p></div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Sustainability Navigator</strong> · <span data-i18n="signature">From knowledge to better decisions</span></p>
+    <p data-i18n="disclaimer">Prototipo educativo. No constituye una publicación corporativa oficial ni sustituye procedimientos, normas o validaciones internas.</p>
+  </footer>
+
+  <template id="result-template">
+    <article class="result-card">
+      <div class="result-accent"></div>
+      <div class="result-main">
+        <div class="result-meta"><span class="type-badge"></span><span class="pillar-badge"></span><span class="status-badge"></span></div>
+        <h3></h3><p class="result-summary"></p>
+        <div class="audience-tags"></div>
+      </div>
+      <details>
+        <summary><span data-i18n="traceability">Trazabilidad</span><svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5 7 5 5 5-5"></path></svg></summary>
+        <div class="traceability-content"><dl><div><dt data-i18n="owner">Responsable propuesto</dt><dd class="owner"></dd></div><div><dt data-i18n="lastReview">Última revisión</dt><dd class="review-date"></dd></div></dl><div class="source-list"></div></div>
+      </details>
+    </article>
+  </template>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
