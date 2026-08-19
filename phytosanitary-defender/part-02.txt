@@ -1,0 +1,74 @@
+ce-items:center;font-weight:900;color:#604a20;cursor:pointer;z-index:3}
+.p1-hotspot:hover{transform:scale(1.05)}
+.p1-hotspot.done{border-color:#91ddb0;background:rgba(145,221,176,.22);box-shadow:0 0 0 9px rgba(145,221,176,.14)}
+#spotA{left:31%;top:52%}
+#spotB{left:67%;top:63%}
+.p1-mark-card{background:#f6ead2;color:#1e2930;border:4px solid #252729;border-radius:12px;padding:18px;box-shadow:0 12px 26px rgba(0,0,0,.18)}
+.p1-mark-card h4{margin:0 0 8px;font-size:20px;line-height:1.15}
+.p1-mark-card .stamp-line{height:3px;background:#202325;margin:9px 0 12px}
+.p1-mark-card .stamp-code{font-size:18px;font-weight:900}
+.p1-mark-card .stamp-ht{font-size:52px;font-weight:950;line-height:1;margin:8px 0}
+.p1-mark-card .stamp-foot{font-size:13px;line-height:1.45;color:#475158}
+.p1-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.p1-tools .tool-chip{background:#35595d;color:#fff;border:1px solid rgba(255,255,255,.28);box-shadow:none;padding:12px 10px;min-height:46px;white-space:normal}
+.p1-tools .tool-chip:hover,.p1-tools .tool-chip.active{background:#173b3f;border-color:#f0d77e}
+.p1-helper{display:none;margin-top:10px;padding:12px 14px;border-radius:14px;background:#fffefa;border:1px solid #dfcfbd;color:#564422;font-size:14px;line-height:1.5}
+.p1-helper.show{display:block}
+.p1-evidence-hint{margin-top:10px;color:#d9ece8;font-size:13px;line-height:1.45}
+.p1-modal{position:fixed;inset:0;background:rgba(10,22,24,.82);display:none;z-index:9999;padding:30px;align-items:center;justify-content:center}
+.p1-modal.show{display:flex}
+.p1-modal-inner{position:relative;max-width:900px;width:min(92vw,900px);background:#fff;border-radius:22px;padding:16px;box-shadow:0 24px 70px rgba(0,0,0,.35)}
+.p1-modal-inner img{width:100%;height:auto;max-height:78vh;object-fit:contain}
+.p1-close{position:absolute;right:18px;top:18px;border:0;border-radius:999px;width:42px;height:42px;background:#173b3f;color:#fff;font-size:22px;font-weight:900;cursor:pointer}
+@media (max-width:1120px){.practice-grid{grid-template-columns:1fr}.p1-workbench{grid-template-columns:1fr}.p1-mark-card{max-width:none}.p1-tools{grid-template-columns:1fr}.scene-hud{grid-template-columns:repeat(2,1fr)}}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="brand">
+      <div class="eyebrow">In-Service Logistics · Audit Simulator</div>
+      <h1>Phytosanitary Defender: The ISPM-15 Challenge</h1>
+      <p>Manage a critical military shipment from Getafe while preventing untreated or suspicious wooden packaging from carrying biological risk across borders. Learn the rule first, inspect the evidence second, and only then decide.</p>
+    </div>
+    <div class="hud">
+      <div class="stat"><strong id="score">0</strong><span>Score</span></div>
+      <div class="stat"><strong id="progress">0 / 2</strong><span>Checks completed</span></div>
+    </div>
+  </div>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="avatar-panel">
+        <div id="sidebarAvatar" class="avatar-wrap">
+          <img src="data:image/jpeg;base64,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" alt="ARIA digital guide" />
+        </div>
+        <div>
+          <h3>ARIA</h3>
+          <p id="sidebarGuide">I am your digital logistics guide. I explain what the player must inspect, why the control matters and how to complete each step without guessing.</p>
+          <button class="voice-btn" id="speakCurrent">▶ Hear current guidance</button>
+        </div>
+      </div>
+      <div class="side-note"><strong>Review goal:</strong> keep the game clear for non-specialists. Every practical screen now has a visible guide, explicit actions and corrective feedback when the learner answers incorrectly.</div>
+      <div class="nav">
+        <button class="active" data-screen="home">Overview</button>
+        <button data-screen="theory1">Theory 01 · ISPM-15 basics</button>
+        <button data-screen="practice1">Practical 01 · Mark + wood inspection</button>
+        <button data-screen="theory2">Theory 02 · Residual bark rule</button>
+        <button data-screen="practice2">Practical 02 · Bark tolerance decision</button>
+        <button data-screen="wrap">Wrap-up</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="screen active" id="home" data-guide="Welcome. In this game, you protect both logistics and the environment. First read the concept, mechanics and learning objective. Then move through one theory page before each practical challenge. You do not need prior knowledge of ISPM-15.">
+        <div class="screen-head">
+          <div>
+            <span class="tag">Synopsis</span>
+            <h2>Audit the packaging before it becomes a biological incident.</h2>
+            <p>A critical spare-part shipment must leave Getafe for an international operational base. The parts are urgent, but the wooden pallet and crate cannot move unless the phytosanitary controls are credible. If the packaging is treated incorrectly or inspected badly, the shipment can trigger customs blockage, invasive-species transfer and an ISO 14001 nonconformity.</p>
+          </div>
+        </div>
+        <div class="aria-brief">
+          <div class="mini-avatar"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFBAcGBgYIBwcICxILCwoKCxYPEA0SGhYbGhkWGRgcICgiHB4mHhgZIzAkJiorLS4tGyIyNTEsNSgsLSz/2wBDAQcICAsJCxULCxUsHRkdLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCz/wgARCAB4ALQDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAABAUAAwYCAQf/xAAaAQADAQEBAQAAAAAAAAAAAAACAwQBAAUG/9oADAMBAAIQAxAAAAGiaOrCV93cS3e9xnopqtMFRHigDlHFxZR53GGIjRM0lf4trYqrrcPnd1cAoTIAk1QqNncW13eV9DzYevDr/Y0zF612poRh1jZM0LSAyVt1DvJadFLdXRYG4e69e5OmOEoojKOBbYfc9lMwVWnMgtzOhIghV1Z4PVLWoZF8mHdraV0denreCyIuBgo74lZ5pYzSGvbOxSzmATaXGsGmFRk30AxaZ5vqme09bPZOPC7rirsiyGa+h4xwoDWC0XEmLTV0veukSTzrFUTVF9C84NKZCl2mRYvi
