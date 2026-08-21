@@ -17,13 +17,19 @@
 
 ## P1 · Experiencia
 
-- [ ] Probar búsquedas en español e inglés, con y sin tildes.
+- [x] Probar búsquedas en español e inglés, con y sin tildes, plurales y sinónimos.
 - [ ] Comprobar filtros combinados de pilar, tipo y audiencia.
 - [ ] Revisar navegación por teclado, foco visible, zoom al 200 % y lector de pantalla.
 - [ ] Verificar la experiencia en móvil, tableta y escritorio.
 - [ ] Realizar revisión lingüística ES/EN.
 
+### Pruebas técnicas automatizadas · 2026-08-21
+
+- [x] Las tres búsquedas sugeridas ya no devuelven el catálogo completo y ordenan primero la respuesta esperada.
+- [x] `proveedor/proveedores/supplier/suppliers` recuperan resultados equivalentes.
+- [x] REACH, humedal/wetland y murciélago/bat se resuelven mediante vocabulario relacionado sin falsos positivos difusos.
+- [x] Las 90 fichas contienen teoría, aplicación, método, ejemplo, tres comprobaciones y límites en español e inglés.
+
 ## Criterio de salida del piloto
 
 El piloto está listo cuando el propietario confirma por escrito el alcance, las 90 fichas están validadas o retiradas, los controles técnicos aplicables han pasado y la página identifica con claridad qué contenido es orientación general y qué contenido es referencia interna aprobada.
-

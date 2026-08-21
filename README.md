@@ -1,6 +1,6 @@
-# Sustainability Navigator · MVP v1
+# Sustainability Navigator · Knowledge Search v2
 
-Buscador bilingüe y estático de conceptos y preguntas frecuentes sobre sostenibilidad aeronáutica. Es la primera implementación del producto `A09 · Sustainability Navigator` definido en el catálogo de transformación.
+Buscador bilingüe y estático de conceptos y preguntas frecuentes sobre sostenibilidad aeronáutica. La segunda versión combina recuperación de información, fichas formativas ampliadas y trazabilidad editorial.
 
 ## Qué resuelve
 
@@ -8,7 +8,11 @@ Buscador bilingüe y estático de conceptos y preguntas frecuentes sobre sosteni
 - Sustituye la identidad `Biodiverso Search Tool` por una identidad transversal de sostenibilidad.
 - Organiza el conocimiento en los seis pilares acordados.
 - Incluye 60 términos de glosario y 30 preguntas frecuentes, con paridad ES/EN.
+- Reconoce palabras vacías, tildes, plurales, sinónimos, términos bilingües y conceptos especializados como REACH o ISPM-15.
+- Ordena por cobertura y relevancia, resalta coincidencias y propone alternativas cuando no encuentra resultados.
 - Filtra por pilar, tipo de contenido y audiencia.
+- Pagina los resultados y permite compartir una búsqueda mediante su URL.
+- Amplía cada resultado con teoría, aplicación aeronáutica, método, ejemplo, preguntas de decisión y límites.
 - Muestra fuente institucional, fecha de revisión y responsable funcional propuesto en cada ficha.
 - Mantiene biodiversidad de forma explícita dentro de `P6 · Climate, Nature & Biodiversity`.
 
@@ -20,8 +24,10 @@ No requiere instalación ni servidor. Abre `index.html` en un navegador moderno.
 
 - `index.html`: estructura accesible y metadatos.
 - `styles.css`: sistema visual responsive sin dependencias externas.
-- `data.js`: pilares, fuentes y 90 fichas bilingües.
-- `app.js`: búsqueda, filtros, ordenación, cambio de idioma y renderizado.
+- `data.js`: pilares, fuentes y 90 fichas bilingües ampliadas.
+- `search-engine.js`: normalización, sinónimos, puntuación, coincidencias aproximadas y sugerencias.
+- `app.js`: filtros, paginación, URL compartible, cambio de idioma y renderizado accesible.
+- `tests/search-engine.test.cjs`: pruebas del motor y de la estructura bilingüe de aprendizaje.
 - `VALIDATION_CHECKLIST.md`: controles necesarios antes de una publicación corporativa.
 
 ## Gobernanza y límites
@@ -30,3 +36,11 @@ Todo el contenido está marcado como `Borrador · validar`. Las fuentes externas
 
 Este MVP es deliberadamente independiente: no sobrescribe ni elimina los repositorios históricos de biodiversidad.
 
+## Validación técnica
+
+```sh
+node --check search-engine.js
+node --check data.js
+node --check app.js
+node --test tests/search-engine.test.cjs
+```

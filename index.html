@@ -16,7 +16,7 @@
       <span><strong>Sustainable Aviation</strong><small>Learning Lab</small></span>
     </a>
     <div class="top-actions">
-      <span class="prototype-badge" data-i18n="prototype">Prototipo MVP</span>
+      <span class="prototype-badge" data-i18n="prototype">Base de conocimiento</span>
       <div class="language-switch" role="group" aria-label="Idioma">
         <button class="lang-button is-active" type="button" data-lang="es" aria-pressed="true">ES</button>
         <button class="lang-button" type="button" data-lang="en" aria-pressed="false">EN</button>
@@ -34,15 +34,17 @@
         <form id="search-form" class="search-box" role="search">
           <label class="sr-only" for="search-input" data-i18n="searchLabel">Buscar en el Navigator</label>
           <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
-          <input id="search-input" type="search" autocomplete="off" data-placeholder-es="Busca energía, circularidad, IA, proveedores, biodiversidad…" data-placeholder-en="Search energy, circularity, AI, suppliers, biodiversity…" placeholder="Busca energía, circularidad, IA, proveedores, biodiversidad…">
+          <input id="search-input" type="search" autocomplete="off" list="search-suggestions-list" aria-describedby="search-assist" data-placeholder-es="Busca REACH, circularidad, IA, proveedores, humedales…" data-placeholder-en="Search REACH, circularity, AI, suppliers, wetlands…" placeholder="Busca REACH, circularidad, IA, proveedores, humedales…">
+          <datalist id="search-suggestions-list"></datalist>
           <button type="submit" data-i18n="searchButton">Buscar</button>
         </form>
+        <div id="search-assist" class="search-assist" aria-live="polite" hidden></div>
 
         <div class="quick-searches" aria-label="Búsquedas sugeridas">
           <span data-i18n="tryLabel">Prueba:</span>
-          <button type="button" data-query-es="¿Qué es la economía circular?" data-query-en="What is the circular economy?">Circularity</button>
-          <button type="button" data-query-es="¿Cómo evaluar una afirmación ambiental?" data-query-en="How should an environmental claim be assessed?">Evidence</button>
-          <button type="button" data-query-es="¿Por qué la biodiversidad forma parte de la sostenibilidad?" data-query-en="Why is biodiversity part of sustainability?">Nature</button>
+          <button type="button" data-query-es="¿Qué es la economía circular?" data-query-en="What is the circular economy?" data-label-es="Circularidad" data-label-en="Circularity">Circularidad</button>
+          <button type="button" data-query-es="¿Cómo evaluar una afirmación ambiental?" data-query-en="How should an environmental claim be assessed?" data-label-es="Evidencia" data-label-en="Evidence">Evidencia</button>
+          <button type="button" data-query-es="¿Por qué la biodiversidad forma parte de la sostenibilidad?" data-query-en="Why is biodiversity part of sustainability?" data-label-es="Naturaleza" data-label-en="Nature">Naturaleza</button>
         </div>
       </div>
 
@@ -55,7 +57,7 @@
         <p data-i18n="sixPillars">Seis perspectivas, una visión de sistema</p>
         <div class="hero-metrics">
           <div><strong id="metric-items">90</strong><span data-i18n="entries">fichas</span></div>
-          <div><strong id="metric-sources">12</strong><span data-i18n="sources">fuentes</span></div>
+          <div><strong id="metric-sources">15</strong><span data-i18n="sources">fuentes</span></div>
           <div><strong>ES/EN</strong><span data-i18n="bilingual">bilingüe</span></div>
         </div>
       </aside>
@@ -89,12 +91,19 @@
       <div class="catalog">
         <div class="catalog-head">
           <div><p class="eyebrow" data-i18n="knowledgeBase">Base de conocimiento</p><h2 id="catalog-title"><span id="result-count">90</span> <span data-i18n="results">resultados</span></h2></div>
-          <label class="sort-label"><span data-i18n="sort">Ordenar</span><select id="sort-select"><option value="relevance" data-i18n="relevance">Relevancia</option><option value="pillar" data-i18n="byPillar">Por pilar</option><option value="az">A–Z</option></select></label>
+          <div class="catalog-tools">
+            <label class="sort-label"><span data-i18n="sort">Ordenar</span><select id="sort-select"><option value="relevance" data-i18n="relevance">Relevancia</option><option value="pillar" data-i18n="byPillar">Por pilar</option><option value="az">A–Z</option></select></label>
+            <button id="copy-search" class="copy-search" type="button" data-i18n="copySearch">Copiar búsqueda</button>
+          </div>
         </div>
+        <p id="result-status" class="result-status" aria-live="polite"></p>
         <div id="active-filters" class="active-filters" aria-live="polite"></div>
         <div id="results" class="results" aria-live="polite"></div>
+        <div id="pagination" class="pagination" hidden>
+          <button id="load-more" type="button"><span data-i18n="loadMore">Mostrar más</span><small id="load-more-status"></small></button>
+        </div>
         <div id="empty-state" class="empty-state" hidden>
-          <span aria-hidden="true">⌁</span><h3 data-i18n="noResults">No hay coincidencias</h3><p data-i18n="noResultsBody">Prueba una palabra más amplia o elimina algún filtro.</p>
+          <span aria-hidden="true">⌁</span><h3 data-i18n="noResults">No hay coincidencias</h3><p data-i18n="noResultsBody">Prueba una palabra más amplia o elimina algún filtro.</p><div id="empty-suggestions" class="empty-suggestions"></div>
         </div>
       </div>
     </section>
@@ -106,7 +115,7 @@
   </main>
 
   <footer>
-    <p><strong>Sustainability Navigator</strong> · <span data-i18n="signature">From knowledge to better decisions</span></p>
+    <p><strong>Sustainability Navigator</strong> · <span data-i18n="signature">Del conocimiento a mejores decisiones</span></p>
     <p data-i18n="disclaimer">Prototipo educativo. No constituye una publicación corporativa oficial ni sustituye procedimientos, normas o validaciones internas.</p>
   </footer>
 
@@ -115,16 +124,30 @@
       <div class="result-accent"></div>
       <div class="result-main">
         <div class="result-meta"><span class="type-badge"></span><span class="pillar-badge"></span><span class="status-badge"></span></div>
-        <h3></h3><p class="result-summary"></p>
+        <h3></h3><p class="result-summary"></p><p class="match-reason"></p>
         <div class="audience-tags"></div>
       </div>
-      <details>
+      <details class="learning-details">
+        <summary><span data-i18n="openLearning">Abrir ficha completa</span><svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5 7 5 5 5-5"></path></svg></summary>
+        <div class="learning-content">
+          <section class="learning-intro"><p class="learning-kicker" data-i18n="whyItMatters">Por qué importa</p><p class="learning-why"></p></section>
+          <div class="learning-grid">
+            <section><h4 data-i18n="aviationApplication">Aplicación aeronáutica</h4><p class="learning-application"></p></section>
+            <section><h4 data-i18n="howToUse">Cómo utilizar esta ficha</h4><p class="learning-method"></p></section>
+            <section><h4 data-i18n="appliedExample">Ejemplo aplicado</h4><p class="learning-example"></p></section>
+            <section class="learning-checks"><h4 data-i18n="decisionChecks">Preguntas para decidir</h4><ul></ul></section>
+          </div>
+          <aside class="learning-limits"><strong data-i18n="limits">Límites y precauciones</strong><p></p></aside>
+        </div>
+      </details>
+      <details class="traceability-details">
         <summary><span data-i18n="traceability">Trazabilidad</span><svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5 7 5 5 5-5"></path></svg></summary>
         <div class="traceability-content"><dl><div><dt data-i18n="owner">Responsable propuesto</dt><dd class="owner"></dd></div><div><dt data-i18n="lastReview">Última revisión</dt><dd class="review-date"></dd></div></dl><div class="source-list"></div></div>
       </details>
     </article>
   </template>
 
+  <script src="search-engine.js"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
