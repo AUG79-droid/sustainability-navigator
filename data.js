@@ -1,5 +1,5 @@
 window.SN_DATA = (() => {
-  const reviewDate = "2026-07-18";
+  const reviewDate = "2026-08-21";
 
   const sources = {
     "icao-env": { name: "ICAO · Environmental Protection", url: "https://www.icao.int/environmental-protection" },
@@ -157,6 +157,174 @@ window.SN_DATA = (() => {
     ]
   };
 
+  const learningProfiles = {
+    P1: {
+      why: {
+        es: "El rendimiento sostenible exige observar conjuntamente función, seguridad, calidad, recursos e impactos. Una mejora relativa puede ocultar un aumento del impacto total, por lo que conviene leer tendencias, valores absolutos e intensidad dentro del mismo límite operacional.",
+        en: "Sustainable performance requires function, safety, quality, resources and impacts to be considered together. A relative improvement can hide an increase in total impact, so trends, absolute values and intensity should be read within the same operational boundary."
+      },
+      application: {
+        es: "Define la operación —mantenimiento, ensayo, actividad de hangar, logística o uso de instalaciones—, fija una línea base y vincula cada indicador ambiental con una unidad de actividad y un resultado operacional. Revisa después si el cambio desplaza el impacto a otro turno, centro, proveedor o fase del ciclo de vida.",
+        en: "Define the operation—maintenance, testing, hangar activity, logistics or facility use—set a baseline, and link each environmental indicator to an activity unit and an operational outcome. Then check whether the change shifts impact to another shift, site, supplier or life-cycle stage."
+      },
+      example: {
+        es: "Un equipo compara dos formas de planificar una actividad de mantenimiento. Además del tiempo de ejecución, registra consumo absoluto, intensidad por orden de trabajo, calidad, incidencias y posibles efectos locales antes de recomendar una opción.",
+        en: "A team compares two ways of scheduling a maintenance activity. Alongside completion time, it records absolute consumption, intensity per work order, quality, incidents and potential local effects before recommending an option."
+      },
+      checks: {
+        es: ["¿El límite y la unidad de actividad están definidos?", "¿Se comparan valores absolutos e intensidad?", "¿La opción mantiene seguridad, calidad y cumplimiento?"],
+        en: ["Are the boundary and activity unit defined?", "Are absolute values and intensity compared?", "Does the option maintain safety, quality and compliance?"]
+      },
+      limits: {
+        es: "No extrapoles un resultado puntual a toda la organización. Separa medición de estimación, documenta cambios de actividad y confirma los requisitos locales aplicables.",
+        en: "Do not extrapolate a one-off result to the whole organisation. Separate measurement from estimation, document activity changes and confirm applicable local requirements."
+      }
+    },
+    P2: {
+      why: {
+        es: "La circularidad conserva función y valor durante más tiempo, pero en aeronáutica solo es defendible cuando incorpora aeronavegabilidad, configuración, calidad, trazabilidad y fin de vida. Reciclar es una opción; prevenir, reparar, reutilizar o remanufacturar pueden retener más valor.",
+        en: "Circularity retains function and value for longer, but in aviation it is defensible only when airworthiness, configuration, quality, traceability and end of life are integrated. Recycling is one option; prevention, repair, reuse or remanufacturing may retain more value."
+      },
+      application: {
+        es: "Delimita componente, material y función; identifica requisitos no negociables; compara alternativas a lo largo del ciclo de vida; y conserva evidencia sobre composición, procedencia, ensayos, aprobaciones, reparabilidad y destino final real.",
+        en: "Define the component, material and function; identify non-negotiable requirements; compare alternatives across the life cycle; and retain evidence on composition, origin, tests, approvals, repairability and actual end destination."
+      },
+      example: {
+        es: "Ante un retrofit, el equipo compara sustituir un conjunto completo, reparar módulos o recuperar componentes. La decisión considera vida útil, función conservada, masa, sustancias, disponibilidad, certificación, coste y trazabilidad, no solo residuo evitado.",
+        en: "For a retrofit, the team compares replacing a complete assembly, repairing modules or recovering components. The decision considers service life, retained function, mass, substances, availability, certification, cost and traceability—not only avoided waste."
+      },
+      checks: {
+        es: ["¿Qué función y valor se conservan?", "¿Qué evidencia demuestra composición y trazabilidad?", "¿Se han revisado certificación, seguridad y fin de vida?"],
+        en: ["What function and value are retained?", "What evidence demonstrates composition and traceability?", "Have certification, safety and end of life been reviewed?"]
+      },
+      limits: {
+        es: "No presentes una opción como circular basándote únicamente en porcentaje reciclado o masa desviada. Declara compromisos, pérdidas de calidad, transportes, tratamientos y límites de reutilización.",
+        en: "Do not present an option as circular based only on recycled content or diverted mass. State trade-offs, quality losses, transport, treatments and reuse limits."
+      }
+    },
+    P3: {
+      why: {
+        es: "Una solución digital no es sostenible ni responsable por defecto. Su valor depende del propósito, la calidad de los datos, la proporcionalidad del sistema, la supervisión humana y la capacidad de explicar incertidumbre, límites y consecuencias.",
+        en: "A digital solution is not sustainable or responsible by default. Its value depends on purpose, data quality, system proportionality, human oversight and the ability to explain uncertainty, limitations and consequences."
+      },
+      application: {
+        es: "Formula la decisión que la herramienta debe apoyar, identifica usuarios y personas afectadas, define datos y métricas, prueba con un caso limitado y establece controles humanos, criterios de parada, trazabilidad y seguimiento posterior al despliegue.",
+        en: "State the decision the tool should support, identify users and affected people, define data and metrics, test a bounded use case, and establish human controls, stop criteria, traceability and post-deployment monitoring."
+      },
+      example: {
+        es: "Un prototipo prioriza inspecciones mediante datos históricos. Antes de usarlo, el equipo comprueba representatividad, falsos positivos y negativos, explicabilidad, seguridad de la información, consumo de recursos y quién puede anular la recomendación.",
+        en: "A prototype prioritises inspections using historical data. Before use, the team checks representativeness, false positives and negatives, explainability, information security, resource use and who can override the recommendation."
+      },
+      checks: {
+        es: ["¿Qué decisión concreta mejora la herramienta?", "¿Los datos son adecuados, actuales y trazables?", "¿Existe supervisión humana y un criterio de parada?"],
+        en: ["What specific decision does the tool improve?", "Are the data suitable, current and traceable?", "Is there human oversight and a stop criterion?"]
+      },
+      limits: {
+        es: "No confundas correlación con causalidad ni una predicción con un hecho. Separa resultados observados, estimaciones y objetivos; evita automatizar una decisión de alto impacto sin control proporcional.",
+        en: "Do not confuse correlation with causation or a prediction with a fact. Separate observed results, estimates and targets; avoid automating a high-impact decision without proportionate control."
+      }
+    },
+    P4: {
+      why: {
+        es: "El conocimiento solo genera valor cuando cambia la calidad de una decisión o una práctica. La cultura de sostenibilidad necesita lenguaje común, seguridad para plantear riesgos, colaboración entre funciones y mecanismos que conviertan aprendizaje en comportamiento verificable.",
+        en: "Knowledge creates value only when it changes the quality of a decision or practice. A sustainability culture needs shared language, safety to raise risks, cross-functional collaboration and mechanisms that turn learning into verifiable behaviour."
+      },
+      application: {
+        es: "Define la conducta o decisión que debe mejorar, identifica el público y sus barreras, combina teoría con una práctica cercana al trabajo y verifica transferencia mediante observación, calidad del entregable o cambio en un indicador del proceso.",
+        en: "Define the behaviour or decision to improve, identify the audience and its barriers, combine theory with work-relevant practice, and verify transfer through observation, deliverable quality or a change in a process indicator."
+      },
+      example: {
+        es: "Tras una sesión sobre sostenibilidad, un equipo aplica una lista de comprobación a una decisión real y documenta supuestos, impactos y responsables. La evaluación distingue asistencia, comprensión, aplicación y resultado.",
+        en: "After a sustainability session, a team applies a checklist to a real decision and documents assumptions, impacts and owners. Evaluation distinguishes attendance, understanding, application and outcome."
+      },
+      checks: {
+        es: ["¿Qué comportamiento debe cambiar?", "¿La práctica reproduce una decisión laboral real?", "¿Cómo se comprobará la transferencia al puesto?"],
+        en: ["What behaviour should change?", "Does the practice reproduce a real work decision?", "How will transfer to the job be verified?"]
+      },
+      limits: {
+        es: "Participación y satisfacción no demuestran impacto por sí solas. Evita atribuir cambios organizativos a una única acción formativa y protege inclusión, voluntariedad y confidencialidad cuando corresponda.",
+        en: "Participation and satisfaction do not demonstrate impact on their own. Avoid attributing organisational change to a single learning action, and protect inclusion, voluntariness and confidentiality where relevant."
+      }
+    },
+    P5: {
+      why: {
+        es: "Los impactos, dependencias y riesgos pueden aparecer lejos del comprador directo. Una cadena resiliente requiere visibilidad proporcional al riesgo, requisitos verificables, capacidad de corrección y decisiones documentadas, no una declaración genérica del proveedor.",
+        en: "Impacts, dependencies and risks may occur far beyond the direct supplier. A resilient chain requires risk-proportionate visibility, verifiable requirements, corrective capacity and documented decisions—not a generic supplier declaration."
+      },
+      application: {
+        es: "Mapea materiales, procesos, actores y ubicaciones; identifica vacíos de información; prioriza por gravedad y posibilidad de reparación; solicita evidencia proporcionada; y define seguimiento, escalado, corrección y tratamiento de excepciones.",
+        en: "Map materials, processes, actors and locations; identify information gaps; prioritise by severity and remediability; request proportionate evidence; and define monitoring, escalation, correction and exception handling."
+      },
+      example: {
+        es: "Para un material crítico, Compras e Ingeniería revisan origen, cadena de custodia, sustancias, concentración de suministro, controles y alternativas. Si faltan datos, registran el vacío, el riesgo y la acción antes de aprobar una excepción.",
+        en: "For a critical material, Procurement and Engineering review origin, chain of custody, substances, supply concentration, controls and alternatives. If data are missing, they record the gap, risk and action before approving an exception."
+      },
+      checks: {
+        es: ["¿Hasta qué nivel de la cadena llega la evidencia?", "¿La exigencia es proporcional a gravedad y riesgo?", "¿Existen corrección, escalado y decisión documentada?"],
+        en: ["How far down the chain does the evidence reach?", "Is the requirement proportionate to severity and risk?", "Are correction, escalation and the decision documented?"]
+      },
+      limits: {
+        es: "Una certificación puede apoyar la diligencia debida, pero no sustituye el análisis del riesgo ni la responsabilidad de actuar. Declara alcance, fecha, organismo, exclusiones y límites de la evidencia.",
+        en: "Certification can support due diligence, but it does not replace risk analysis or the responsibility to act. State its scope, date, body, exclusions and evidence limitations."
+      }
+    },
+    P6: {
+      why: {
+        es: "Clima y naturaleza están conectados, pero no son intercambiables. Las decisiones deben considerar ubicación, estado ecológico, dependencias, impactos directos e indirectos y posibles desplazamientos entre carbono, agua, suelo, especies y personas.",
+        en: "Climate and nature are connected, but they are not interchangeable. Decisions should consider location, ecological condition, dependencies, direct and indirect impacts, and potential shifts across carbon, water, soil, species and people."
+      },
+      application: {
+        es: "Define la actividad y su área de influencia, consulta datos del lugar, identifica hábitats, especies, servicios ecosistémicos y personas afectadas, aplica la jerarquía evitar–minimizar–restaurar–compensar y establece línea base, indicador, seguimiento y responsabilidad.",
+        en: "Define the activity and its area of influence, review location data, identify habitats, species, ecosystem services and affected people, apply the avoid–minimise–restore–offset hierarchy, and establish a baseline, indicator, monitoring and accountability."
+      },
+      example: {
+        es: "Al evaluar una ampliación o cambio operativo, el equipo compara alternativas de ubicación y calendario antes de diseñar mitigaciones. Registra sensibilidad del hábitat, conectividad, iluminación, ruido, suelo, agua, incertidumbre y seguimiento.",
+        en: "When assessing an expansion or operational change, the team compares location and timing alternatives before designing mitigation. It records habitat sensitivity, connectivity, lighting, noise, soil, water, uncertainty and monitoring."
+      },
+      checks: {
+        es: ["¿La línea base es específica del lugar y la temporada?", "¿Se ha priorizado evitar antes que compensar?", "¿El resultado tiene indicador, seguimiento y límites declarados?"],
+        en: ["Is the baseline specific to the place and season?", "Has avoidance been prioritised before offsetting?", "Does the outcome have an indicator, monitoring and stated limitations?"]
+      },
+      limits: {
+        es: "No uses una acción local para afirmar un resultado neto o global sin método y evidencia suficientes. Evita extrapolar entre lugares, especies o periodos y confirma permisos y competencia técnica.",
+        en: "Do not use a local action to claim a net or global outcome without sufficient method and evidence. Avoid extrapolating across places, species or periods, and confirm permits and technical competence."
+      }
+    }
+  };
+
+  const useGuide = {
+    glossary: {
+      es: "Utiliza el concepto para alinear el lenguaje del equipo y conviértelo después en un criterio observable: alcance, dato, requisito, responsable o evidencia. Una definición compartida es el punto de partida, no la decisión final.",
+      en: "Use the concept to align team language, then translate it into an observable criterion: scope, data, requirement, owner or evidence. A shared definition is the starting point, not the final decision."
+    },
+    faq: {
+      es: "Trata la respuesta como una hipótesis de trabajo. Contrástala con el contexto, los requisitos aplicables y la evidencia disponible; documenta qué cambia, qué permanece incierto y quién valida la decisión.",
+      en: "Treat the answer as a working hypothesis. Test it against context, applicable requirements and available evidence; document what changes, what remains uncertain and who validates the decision."
+    }
+  };
+
+  const pillarKeywords = {
+    P1: ["operaciones", "operations", "mantenimiento", "maintenance", "hangar", "base", "ensayo", "testing", "rendimiento", "performance"],
+    P2: ["ecodiseño", "ecodesign", "diseño", "design", "retrofit", "ciclo de vida", "life cycle", "componentes", "components"],
+    P3: ["digital", "innovación", "innovation", "algoritmo", "algorithm", "modelo", "model", "decisiones", "decisions"],
+    P4: ["personas", "people", "cultura", "culture", "formación", "training", "comunidad", "community"],
+    P5: ["cadena de suministro", "supply chain", "logística", "logistics", "compras", "procurement", "proveedores", "suppliers"],
+    P6: ["hábitat", "habitat", "fauna", "wildlife", "especies", "species", "territorio", "land", "naturaleza", "nature"]
+  };
+
+  const entryKeywords = {
+    G018: ["REACH", "sustancias", "chemicals", "hazardous substances", "SCIP", "declaración de materiales"],
+    F068: ["REACH", "sustancias peligrosas", "hazardous substances", "cumplimiento químico", "chemical compliance"],
+    G021: ["biomímesis", "biomimicry", "bioinspiración", "bioinspiration"],
+    G047: ["REACH", "ISPM-15", "NIMF-15", "embalajes", "packaging", "cadena de custodia", "chain of custody"],
+    F083: ["REACH", "ISPM-15", "NIMF-15", "certificado fitosanitario", "phytosanitary certificate", "sustancias", "substances"],
+    G053: ["especie clave", "keystone species", "murciélago", "bat", "polinizadores", "pollinators"],
+    G054: ["humedal", "wetland", "especie clave", "keystone species", "murciélago", "bat"],
+    G055: ["humedal", "wetland", "regulación hídrica", "water regulation", "polinización", "pollination"],
+    G058: ["corredor ecológico", "ecological corridor", "rutas migratorias", "migration routes"],
+    F088: ["bird strike", "riesgo de fauna", "wildlife hazard", "iluminación", "lighting", "invasoras", "invasive species"]
+  };
+
   const entries = [];
   let sequence = 1;
   const addRows = (type, collection) => {
@@ -179,6 +347,22 @@ window.SN_DATA = (() => {
   };
   addRows("glossary", glossary);
   addRows("faq", faqs);
+
+  entries.forEach(entry => {
+    const profile = learningProfiles[entry.pillar];
+    entry.keywords = [...pillarKeywords[entry.pillar], ...(entryKeywords[entry.id] || [])];
+    entry.learning = {
+      why: profile.why,
+      application: profile.application,
+      method: useGuide[entry.type],
+      example: {
+        es: `Ejemplo para «${entry.title.es}»: ${profile.example.es}`,
+        en: `Example for “${entry.title.en}”: ${profile.example.en}`
+      },
+      checks: profile.checks,
+      limits: profile.limits
+    };
+  });
 
   return { pillars, sources, entries, reviewDate };
 })();
