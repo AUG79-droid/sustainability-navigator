@@ -31,7 +31,12 @@
       decisionChecks: "Preguntas para decidir", limits: "Límites y precauciones", loadMore: "Mostrar más",
       showing: "Mostrando", of: "de", copySearch: "Copiar búsqueda", copied: "Enlace copiado",
       relatedMatch: "Coincidencia por contenido y términos relacionados", meaningfulTerms: "términos relevantes", suggestions: "Quizá buscabas",
-      searchReady: "La búsqueda reconoce sinónimos, plurales, tildes y términos en español o inglés."
+      searchReady: "La búsqueda reconoce sinónimos, plurales, tildes y términos en español o inglés.",
+      skipToKnowledge: "Saltar al conocimiento", primaryNavigation: "Navegación principal", languageLabel: "Idioma",
+      navHome: "Inicio", navKnowledge: "Conocimiento", navApplications: "Aplicaciones", navCourses: "Cursos",
+      navPaths: "Rutas de aprendizaje", navAbout: "Acerca de", interactiveLearning: "Aprendizaje interactivo",
+      applicationsTitle: "Aplicaciones para aprender haciendo",
+      applicationsIntro: "Explora retos y juegos educativos conectados con los pilares de sostenibilidad."
     },
     en: {
       prototype: "Knowledge base", eyebrow: "Discover · Understand · Decide",
@@ -57,7 +62,12 @@
       decisionChecks: "Decision checks", limits: "Limitations and precautions", loadMore: "Show more",
       showing: "Showing", of: "of", copySearch: "Copy search", copied: "Link copied",
       relatedMatch: "Matched through content and related terms", meaningfulTerms: "meaningful terms", suggestions: "You may be looking for",
-      searchReady: "Search recognises synonyms, plurals, accents and terms in English or Spanish."
+      searchReady: "Search recognises synonyms, plurals, accents and terms in English or Spanish.",
+      skipToKnowledge: "Skip to knowledge", primaryNavigation: "Primary navigation", languageLabel: "Language",
+      navHome: "Home", navKnowledge: "Knowledge", navApplications: "Applications", navCourses: "Courses",
+      navPaths: "Learning Paths", navAbout: "About", interactiveLearning: "Interactive Learning",
+      applicationsTitle: "Applications for learning by doing",
+      applicationsIntro: "Explore educational challenges and games connected to the sustainability pillars."
     }
   };
 
@@ -69,7 +79,7 @@
     audience: document.querySelector("#audience-filter"), sort: document.querySelector("#sort-select"), clear: document.querySelector("#clear-filters"),
     showAll: document.querySelector("#show-all-pillars"), activeFilters: document.querySelector("#active-filters"), template: document.querySelector("#result-template"),
     pagination: document.querySelector("#pagination"), loadMore: document.querySelector("#load-more"), loadMoreStatus: document.querySelector("#load-more-status"),
-    copySearch: document.querySelector("#copy-search")
+    copySearch: document.querySelector("#copy-search"), applications: document.querySelector("#applications-grid")
   };
 
   const t = key => ui[state.lang][key] || key;
@@ -117,6 +127,10 @@
     document.querySelectorAll("[data-i18n]").forEach(node => {
       const value = ui[state.lang][node.dataset.i18n];
       if (value) node.textContent = value;
+    });
+    document.querySelectorAll("[data-i18n-aria-label]").forEach(node => {
+      const value = ui[state.lang][node.dataset.i18nAriaLabel];
+      if (value) node.setAttribute("aria-label", value);
     });
     el.input.placeholder = el.input.dataset[`placeholder${state.lang === "es" ? "Es" : "En"}`];
     document.querySelectorAll(".lang-button").forEach(button => {
@@ -374,11 +388,24 @@
     document.querySelector("#count-glossary").textContent = withoutType.filter(result => result.entry.type === "glossary").length;
   }
 
+  function buildApplications() {
+    window.SNCatalogue.render(window.SN_CATALOGUE, {
+      container: el.applications,
+      lang: state.lang,
+      kind: "application",
+      pillarLabel: (id, lang) => {
+        const pillar = pillarById(id);
+        return pillar ? `${id} · ${pillar.short[lang]}` : id;
+      }
+    });
+  }
+
   function render(options = {}) {
     translateStaticUi();
     syncInputs();
     updateMetrics();
     buildPillars();
+    buildApplications();
     buildResults();
     buildActiveFilters();
     if (options.syncUrl !== false) syncUrl();
