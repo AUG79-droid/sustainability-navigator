@@ -33,10 +33,10 @@
       relatedMatch: "Coincidencia por contenido y términos relacionados", meaningfulTerms: "términos relevantes", suggestions: "Quizá buscabas",
       searchReady: "La búsqueda reconoce sinónimos, plurales, tildes y términos en español o inglés.",
       skipToKnowledge: "Saltar al conocimiento", primaryNavigation: "Navegación principal", languageLabel: "Idioma",
-      navHome: "Inicio", navKnowledge: "Conocimiento", navApplications: "Aplicaciones", navCourses: "Cursos",
-      navPaths: "Rutas de aprendizaje", navAbout: "Acerca de", interactiveLearning: "Aprendizaje interactivo",
-      applicationsTitle: "Aplicaciones para aprender haciendo",
-      applicationsIntro: "Explora retos y juegos educativos conectados con los pilares de sostenibilidad."
+      navHome: "Inicio", navKnowledge: "Conocimiento", navApplications: "Catálogo", navCourses: "Cursos",
+      navPaths: "Rutas de aprendizaje", navAbout: "Acerca de", interactiveLearning: "Catálogo de aprendizaje",
+      applicationsTitle: "Aprende con cursos y experiencias interactivas",
+      applicationsIntro: "Descubre recursos verificados y filtra por tipo, tema, audiencia, idioma, dificultad o duración."
     },
     en: {
       prototype: "Knowledge base", eyebrow: "Discover · Understand · Decide",
@@ -64,10 +64,10 @@
       relatedMatch: "Matched through content and related terms", meaningfulTerms: "meaningful terms", suggestions: "You may be looking for",
       searchReady: "Search recognises synonyms, plurals, accents and terms in English or Spanish.",
       skipToKnowledge: "Skip to knowledge", primaryNavigation: "Primary navigation", languageLabel: "Language",
-      navHome: "Home", navKnowledge: "Knowledge", navApplications: "Applications", navCourses: "Courses",
-      navPaths: "Learning Paths", navAbout: "About", interactiveLearning: "Interactive Learning",
-      applicationsTitle: "Applications for learning by doing",
-      applicationsIntro: "Explore educational challenges and games connected to the sustainability pillars."
+      navHome: "Home", navKnowledge: "Knowledge", navApplications: "Catalogue", navCourses: "Courses",
+      navPaths: "Learning Paths", navAbout: "About", interactiveLearning: "Learning catalogue",
+      applicationsTitle: "Learn through courses and interactive experiences",
+      applicationsIntro: "Discover verified resources and filter by type, topic, audience, language, difficulty or duration."
     }
   };
 
@@ -392,7 +392,6 @@
     window.SNCatalogue.render(window.SN_CATALOGUE, {
       container: el.applications,
       lang: state.lang,
-      kind: "application",
       pillarLabel: (id, lang) => {
         const pillar = pillarById(id);
         return pillar ? `${id} · ${pillar.short[lang]}` : id;
