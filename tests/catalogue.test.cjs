@@ -72,6 +72,36 @@ test("catalogue filters compose without inventing unknown values", () => {
   assert.equal(api.durationBucket(null), "unknown");
 });
 
+test("derives the four learner intentions from the single catalogue", () => {
+  assert.deepEqual(api.intentionCounts(catalogue.resources), {
+    learn: 5,
+    practice: 14,
+    assess: 2,
+    explore: 1
+  });
+  const groupedIds = api.LEARNING_INTENTIONS.flatMap(intention =>
+    api.resourcesForIntention(catalogue.resources, intention.id).map(resource => resource.id)
+  );
+  assert.equal(groupedIds.length, catalogue.resources.length);
+  assert.equal(new Set(groupedIds).size, catalogue.resources.length, "a resource must belong to exactly one intention");
+  assert.deepEqual(
+    api.filterResources(catalogue.resources, { intention: "practice", kind: "simulator" }).map(resource => resource.kind),
+    Array(5).fill("simulator")
+  );
+});
+
+test("homepage provides data-driven learner navigation without duplicate cards", () => {
+  const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
+  const app = fs.readFileSync(path.join(root, "app.js"), "utf8");
+  assert.match(html, /id="learning-intentions"/);
+  assert.match(html, /data-catalogue-intention="learn"/);
+  assert.match(html, /id="knowledge-section-title"/);
+  assert.doesNotMatch(html, /class="learning-intention-card/);
+  assert.match(app, /SNCatalogue\.renderIntentions/);
+  assert.match(app, /initialIntention: state\.catalogueIntent/);
+  assert.match(html, /<span class="future-nav" aria-disabled="true" data-i18n="navPaths">/);
+});
+
 test("external launches stay external and internal launches preserve Hub language", () => {
   catalogue.resources.forEach(resource => {
     Object.values(resource.launches).forEach(url => {
