@@ -99,7 +99,7 @@ test("homepage provides data-driven learner navigation without duplicate cards",
   assert.doesNotMatch(html, /class="learning-intention-card/);
   assert.match(app, /SNCatalogue\.renderIntentions/);
   assert.match(app, /initialIntention: state\.catalogueIntent/);
-  assert.match(html, /<span class="future-nav" aria-disabled="true" data-i18n="navPaths">/);
+  assert.match(html, /<a href="#learning-paths" data-i18n="navPaths">/);
 });
 
 test("external launches stay external and internal launches preserve Hub language", () => {
