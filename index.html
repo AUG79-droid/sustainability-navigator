@@ -9,15 +9,23 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#results">Saltar a resultados</a>
+  <a class="skip-link" href="#knowledge" data-i18n="skipToKnowledge">Saltar al conocimiento</a>
   <header class="topbar">
     <a class="brand" href="#top" aria-label="Sustainable Aviation Learning Lab">
       <span class="brand-mark" aria-hidden="true">SA</span>
       <span><strong>Sustainable Aviation</strong><small>Learning Lab</small></span>
     </a>
+    <nav class="global-nav" data-i18n-aria-label="primaryNavigation" aria-label="Navegación principal">
+      <a href="#top" data-i18n="navHome">Inicio</a>
+      <a href="#knowledge" data-i18n="navKnowledge">Conocimiento</a>
+      <a href="#applications" data-i18n="navApplications">Aplicaciones</a>
+      <span class="future-nav" aria-disabled="true" data-i18n="navCourses">Cursos</span>
+      <span class="future-nav" aria-disabled="true" data-i18n="navPaths">Rutas de aprendizaje</span>
+      <a href="#about" data-i18n="navAbout">Acerca de</a>
+    </nav>
     <div class="top-actions">
       <span class="prototype-badge" data-i18n="prototype">Base de conocimiento</span>
-      <div class="language-switch" role="group" aria-label="Idioma">
+      <div class="language-switch" role="group" data-i18n-aria-label="languageLabel" aria-label="Idioma">
         <button class="lang-button is-active" type="button" data-lang="es" aria-pressed="true">ES</button>
         <button class="lang-button" type="button" data-lang="en" aria-pressed="false">EN</button>
       </div>
@@ -71,7 +79,18 @@
       <div id="pillar-grid" class="pillar-grid"></div>
     </section>
 
-    <section class="navigator-layout" aria-labelledby="catalog-title">
+    <section id="applications" class="applications-section" aria-labelledby="applications-title">
+      <div class="applications-heading">
+        <div>
+          <p class="eyebrow" data-i18n="interactiveLearning">Aprendizaje interactivo</p>
+          <h2 id="applications-title" data-i18n="applicationsTitle">Aplicaciones para aprender haciendo</h2>
+        </div>
+        <p data-i18n="applicationsIntro">Explora retos y juegos educativos conectados con los pilares de sostenibilidad.</p>
+      </div>
+      <div id="applications-grid" class="applications-grid"></div>
+    </section>
+
+    <section id="knowledge" class="navigator-layout" aria-labelledby="catalog-title" tabindex="-1">
       <aside class="filters" aria-label="Filtros del catálogo">
         <div class="filter-heading"><p class="eyebrow" data-i18n="filters">Filtros</p><button id="clear-filters" type="button" data-i18n="clear">Limpiar</button></div>
         <fieldset>
@@ -114,7 +133,7 @@
     </section>
   </main>
 
-  <footer>
+  <footer id="about">
     <p><strong>Sustainability Navigator</strong> · <span data-i18n="signature">Del conocimiento a mejores decisiones</span></p>
     <p data-i18n="disclaimer">Prototipo educativo. No constituye una publicación corporativa oficial ni sustituye procedimientos, normas o validaciones internas.</p>
   </footer>
@@ -149,6 +168,8 @@
 
   <script src="search-engine.js"></script>
   <script src="data.js"></script>
+  <script src="catalogue-data.js"></script>
+  <script src="catalogue.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
