@@ -12,6 +12,12 @@
   const KINDS = ["application", "course", "quiz", "simulator", "game", "knowledge-resource"];
   const DIFFICULTIES = ["foundation", "intermediate", "advanced", "progressive"];
   const FILTER_KEYS = ["query", "kind", "pillar", "audience", "language", "difficulty", "duration"];
+  const LEARNING_INTENTIONS = [
+    { id: "learn", kinds: ["course"], number: "01" },
+    { id: "practice", kinds: ["game", "simulator", "application"], number: "02" },
+    { id: "assess", kinds: ["quiz"], number: "03" },
+    { id: "explore", kinds: ["knowledge-resource"], number: "04", knowledgeTarget: "#knowledge" }
+  ];
 
   const labels = {
     es: {
@@ -27,7 +33,13 @@
       launch_es: "Abrir en español", launch_en: "Abrir en inglés",
       general: "Público general", operations: "Operaciones", engineering: "Ingeniería", procurement: "Compras y supply chain",
       sustainability: "Sostenibilidad", managers: "Managers", innovation: "Innovación", quality: "Calidad", learning: "Learning y personas",
-      "in-service": "In-Service", environment: "Medio ambiente", "flight-safety": "Seguridad de vuelo", teams: "Equipos", maintenance: "Mantenimiento"
+      "in-service": "In-Service", environment: "Medio ambiente", "flight-safety": "Seguridad de vuelo", teams: "Equipos", maintenance: "Mantenimiento",
+      intentionActive: "Modo de aprendizaje", showAllResources: "Mostrar todos los recursos",
+      learnEyebrow: "Aprender", learnTitle: "Cursos", learnDescription: "Construye una base sólida o profundiza con experiencias formativas estructuradas.", learnAction: "Ver cursos",
+      practiceEyebrow: "Practicar", practiceTitle: "Juegos y simuladores", practiceDescription: "Aplica lo aprendido mediante decisiones, misiones y retos interactivos.", practiceAction: "Ver recursos prácticos",
+      assessEyebrow: "Evaluarme", assessTitle: "Quizzes y evaluaciones", assessDescription: "Comprueba tu comprensión e identifica temas que necesitas reforzar.", assessAction: "Ver evaluaciones",
+      exploreEyebrow: "Explorar conocimiento", exploreTitle: "Recursos de conocimiento", exploreDescription: "Consulta recursos de referencia o busca conceptos y evidencias en el Navigator.", exploreAction: "Ver recursos de conocimiento",
+      openKnowledgeNavigator: "Abrir Knowledge Navigator"
     },
     en: {
       search: "Search the catalogue", searchPlaceholder: "Search by title, topic or description…",
@@ -42,12 +54,28 @@
       launch_es: "Open in Spanish", launch_en: "Open in English",
       general: "General audience", operations: "Operations", engineering: "Engineering", procurement: "Procurement & supply chain",
       sustainability: "Sustainability", managers: "Managers", innovation: "Innovation", quality: "Quality", learning: "Learning & people",
-      "in-service": "In-Service", environment: "Environment", "flight-safety": "Flight safety", teams: "Teams", maintenance: "Maintenance"
+      "in-service": "In-Service", environment: "Environment", "flight-safety": "Flight safety", teams: "Teams", maintenance: "Maintenance",
+      intentionActive: "Learning mode", showAllResources: "Show all resources",
+      learnEyebrow: "Learn", learnTitle: "Courses", learnDescription: "Build a strong foundation or go deeper through structured learning experiences.", learnAction: "View courses",
+      practiceEyebrow: "Practice", practiceTitle: "Games & simulators", practiceDescription: "Apply learning through decisions, missions and interactive challenges.", practiceAction: "View practice resources",
+      assessEyebrow: "Assess myself", assessTitle: "Quizzes & assessments", assessDescription: "Check your understanding and identify topics that need reinforcement.", assessAction: "View assessments",
+      exploreEyebrow: "Explore knowledge", exploreTitle: "Knowledge resources", exploreDescription: "Consult reference resources or search concepts and evidence in the Navigator.", exploreAction: "View knowledge resources",
+      openKnowledgeNavigator: "Open Knowledge Navigator"
     }
   };
 
   const normalise = value => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   const languagesOf = resource => Object.keys(resource.launches || {}).filter(language => ["es", "en"].includes(language));
+  const intentionById = id => LEARNING_INTENTIONS.find(intention => intention.id === id);
+
+  function resourcesForIntention(resources, intentionId) {
+    const intention = intentionById(intentionId);
+    return intention ? resources.filter(resource => intention.kinds.includes(resource.kind)) : [...resources];
+  }
+
+  function intentionCounts(resources) {
+    return Object.fromEntries(LEARNING_INTENTIONS.map(intention => [intention.id, resourcesForIntention(resources, intention.id).length]));
+  }
 
   function validateResource(resource) {
     const errors = [];
@@ -103,7 +131,8 @@
         resource.title.es, resource.title.en, resource.description.es, resource.description.en,
         resource.learningTopic.es, resource.learningTopic.en
       ].join(" "));
-      return (!query || searchable.includes(query))
+      return (!filters.intention || filters.intention === "all" || resourcesForIntention([resource], filters.intention).length === 1)
+        && (!query || searchable.includes(query))
         && (selected.kind === "all" || resource.kind === selected.kind)
         && (selected.pillar === "all" || resource.pillarIds.includes(selected.pillar))
         && (selected.audience === "all" || resource.audienceIds.includes(selected.audience))
@@ -203,6 +232,76 @@
     return label;
   }
 
+  function syncIntentionButtons(container, activeIntention) {
+    if (!container) return;
+    container.querySelectorAll("[data-learning-intention]").forEach(button => {
+      const active = button.dataset.learningIntention === activeIntention;
+      button.setAttribute("aria-pressed", String(active));
+      button.closest(".learning-intention-card")?.classList.toggle("is-active", active);
+    });
+  }
+
+  function renderIntentions(catalogue, options) {
+    const container = options?.container;
+    const lang = options?.lang === "en" ? "en" : "es";
+    if (!container) return;
+    const errors = validateCatalogue(catalogue);
+    if (errors.length) throw new Error(`Invalid catalogue: ${errors.join("; ")}`);
+    const l = labels[lang];
+    const counts = intentionCounts(catalogue.resources);
+    const cards = LEARNING_INTENTIONS.map(intention => {
+      const card = document.createElement("article");
+      card.className = `learning-intention-card intention-${intention.id}`;
+      card.dataset.intentionId = intention.id;
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "learning-intention-primary";
+      button.dataset.learningIntention = intention.id;
+      button.setAttribute("aria-pressed", String(options.activeIntention === intention.id));
+
+      const header = document.createElement("span");
+      header.className = "learning-intention-header";
+      const number = document.createElement("span");
+      number.className = "learning-intention-number";
+      number.textContent = intention.number;
+      const eyebrow = document.createElement("span");
+      eyebrow.className = "learning-intention-eyebrow";
+      eyebrow.textContent = l[`${intention.id}Eyebrow`];
+      header.append(number, eyebrow);
+
+      const title = document.createElement("strong");
+      title.className = "learning-intention-title";
+      title.textContent = l[`${intention.id}Title`];
+      const description = document.createElement("span");
+      description.className = "learning-intention-description";
+      description.textContent = l[`${intention.id}Description`];
+
+      const footer = document.createElement("span");
+      footer.className = "learning-intention-footer";
+      const count = document.createElement("strong");
+      count.textContent = `${counts[intention.id]} ${counts[intention.id] === 1 ? l.result : l.results}`;
+      const action = document.createElement("span");
+      action.textContent = `${l[`${intention.id}Action`]} →`;
+      footer.append(count, action);
+      button.setAttribute("aria-label", `${l[`${intention.id}Action`]} · ${count.textContent}`);
+      button.append(header, title, description, footer);
+      button.addEventListener("click", () => options.onSelect?.(intention.id));
+      card.append(button);
+
+      if (intention.knowledgeTarget) {
+        const knowledgeLink = document.createElement("a");
+        knowledgeLink.className = "learning-intention-knowledge-link";
+        knowledgeLink.href = intention.knowledgeTarget;
+        knowledgeLink.textContent = l.openKnowledgeNavigator;
+        card.append(knowledgeLink);
+      }
+      return card;
+    });
+    container.replaceChildren(...cards);
+    syncIntentionButtons(container, options.activeIntention || "all");
+  }
+
   function render(catalogue, options) {
     const container = options?.container;
     const lang = options?.lang === "en" ? "en" : "es";
@@ -210,7 +309,10 @@
     const errors = validateCatalogue(catalogue);
     if (errors.length) throw new Error(`Invalid catalogue: ${errors.join("; ")}`);
     const l = labels[lang];
-    const state = { query: "", kind: "all", pillar: "all", audience: "all", language: "all", difficulty: "all", duration: "all" };
+    const state = {
+      query: "", kind: "all", pillar: "all", audience: "all", language: "all", difficulty: "all", duration: "all",
+      intention: intentionById(options?.initialIntention) ? options.initialIntention : "all"
+    };
     const resources = catalogue.resources;
 
     const discovery = document.createElement("div");
@@ -225,6 +327,16 @@
     searchInput.name = "query";
     searchInput.placeholder = l.searchPlaceholder;
     searchLabel.append(searchCaption, searchInput);
+
+    const intentionContext = document.createElement("div");
+    intentionContext.className = "catalogue-intention-context";
+    const intentionContextLabel = document.createElement("span");
+    intentionContextLabel.textContent = l.intentionActive;
+    const intentionContextValue = document.createElement("strong");
+    const showAll = document.createElement("button");
+    showAll.type = "button";
+    showAll.textContent = l.showAllResources;
+    intentionContext.append(intentionContextLabel, intentionContextValue, showAll);
 
     const unique = key => [...new Set(resources.flatMap(resource => resource[key]))].sort();
     const filters = document.createElement("div");
@@ -245,7 +357,7 @@
     clear.type = "button";
     clear.textContent = l.clear;
     summary.append(count, clear);
-    discovery.append(searchLabel, filters, summary);
+    discovery.append(intentionContext, searchLabel, filters, summary);
 
     const grid = document.createElement("div");
     grid.className = "applications-grid";
@@ -258,6 +370,23 @@
       count.textContent = `${matches.length} ${matches.length === 1 ? l.result : l.results}`;
       grid.replaceChildren(...matches.map(resource => renderCard(resource, lang, options.pillarLabel)));
       empty.hidden = matches.length > 0;
+      const activeIntention = intentionById(state.intention);
+      intentionContext.hidden = !activeIntention;
+      intentionContextValue.textContent = activeIntention ? l[`${activeIntention.id}Title`] : "";
+      syncIntentionButtons(options?.intentionsContainer, state.intention);
+    }
+
+    function resetFilterControls() {
+      Object.assign(state, { query: "", kind: "all", pillar: "all", audience: "all", language: "all", difficulty: "all", duration: "all" });
+      searchInput.value = "";
+      filters.querySelectorAll("select").forEach(select => { select.value = "all"; });
+    }
+
+    function applyIntention(intentionId, applyOptions = {}) {
+      state.intention = intentionById(intentionId) ? intentionId : "all";
+      if (applyOptions.resetFilters !== false) resetFilterControls();
+      update();
+      options?.onIntentionChange?.(state.intention);
     }
     discovery.addEventListener("input", event => {
       if (!FILTER_KEYS.includes(event.target.name)) return;
@@ -270,16 +399,22 @@
       update();
     });
     clear.addEventListener("click", () => {
-      Object.assign(state, { query: "", kind: "all", pillar: "all", audience: "all", language: "all", difficulty: "all", duration: "all" });
-      searchInput.value = "";
-      filters.querySelectorAll("select").forEach(select => { select.value = "all"; });
+      resetFilterControls();
+      state.intention = "all";
       update();
+      options?.onIntentionChange?.("all");
       searchInput.focus();
     });
+    showAll.addEventListener("click", () => applyIntention("all", { resetFilters: false }));
 
     container.replaceChildren(discovery, grid, empty);
     update();
+    return { applyIntention, getState: () => ({ ...state }) };
   }
 
-  return { REQUIRED_FIELDS, KINDS, DIFFICULTIES, validateResource, validateCatalogue, durationBucket, filterResources, launchHref, render };
+  return {
+    REQUIRED_FIELDS, KINDS, DIFFICULTIES, LEARNING_INTENTIONS,
+    validateResource, validateCatalogue, durationBucket, filterResources, resourcesForIntention, intentionCounts,
+    launchHref, syncIntentionButtons, renderIntentions, render
+  };
 });
