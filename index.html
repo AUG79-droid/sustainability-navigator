@@ -20,7 +20,7 @@
       <a href="#knowledge" data-i18n="navKnowledge">Conocimiento</a>
       <a href="#applications" data-i18n="navApplications">Catálogo</a>
       <a href="#applications" data-catalogue-intention="learn" data-i18n="navCourses">Cursos</a>
-      <span class="future-nav" aria-disabled="true" data-i18n="navPaths">Rutas de aprendizaje</span>
+      <a href="#learning-paths" data-i18n="navPaths">Rutas de aprendizaje</a>
       <a href="#about" data-i18n="navAbout">Acerca de</a>
     </nav>
     <div class="top-actions">
@@ -81,6 +81,18 @@
         <p data-i18n="learningIntentionsIntro">Elige una intención para ver una selección del catálogo o utiliza los filtros avanzados para explorar los 22 recursos.</p>
       </div>
       <div id="learning-intentions" class="learning-intentions-grid"></div>
+    </section>
+
+    <section id="learning-paths" class="learning-paths-section" aria-labelledby="learning-paths-title">
+      <div class="learning-paths-heading">
+        <div>
+          <p class="eyebrow" data-i18n="learningPathsEyebrow">Progresiones guiadas</p>
+          <h2 id="learning-paths-title" data-i18n="learningPathsTitle">Rutas de aprendizaje</h2>
+        </div>
+        <p data-i18n="learningPathsIntro">Compara seis progresiones construidas exclusivamente con los recursos existentes y abre la secuencia que mejor encaje con tu objetivo.</p>
+      </div>
+      <div id="learning-paths-grid" class="learning-paths-grid"></div>
+      <article id="learning-path-detail" class="learning-path-detail" aria-labelledby="active-learning-path-title" tabindex="-1" hidden></article>
     </section>
 
     <section class="pillar-section" aria-labelledby="pillar-title">
@@ -189,6 +201,8 @@
   <script src="data.js"></script>
   <script src="catalogue-data.js"></script>
   <script src="catalogue.js"></script>
+  <script src="learning-paths-data.js"></script>
+  <script src="learning-paths.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

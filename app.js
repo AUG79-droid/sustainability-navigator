@@ -6,7 +6,7 @@
   const PAGE_SIZE = 12;
   const state = {
     lang: "es", query: "", pillar: "all", type: "all", audience: "all", sort: "relevance", visible: PAGE_SIZE,
-    catalogueIntent: "all"
+    catalogueIntent: "all", learningPathId: null
   };
 
   const ui = {
@@ -40,6 +40,8 @@
       navPaths: "Rutas de aprendizaje", navAbout: "Acerca de", learningStart: "Empieza aquí",
       learningIntentionsTitle: "¿Cómo quieres aprender hoy?",
       learningIntentionsIntro: "Elige una intención para ver una selección del catálogo o utiliza los filtros avanzados para explorar los 22 recursos.",
+      learningPathsEyebrow: "Progresiones guiadas", learningPathsTitle: "Rutas de aprendizaje",
+      learningPathsIntro: "Compara seis progresiones construidas exclusivamente con los recursos existentes y abre la secuencia que mejor encaje con tu objetivo.",
       interactiveLearning: "Catálogo completo", applicationsTitle: "Todos los recursos de aprendizaje",
       applicationsIntro: "Combina la vista por intención con filtros de tipo, pilar, audiencia, idioma, dificultad y duración.",
       knowledgeExplorer: "Explorar conocimiento", knowledgeTitle: "Knowledge Navigator",
@@ -75,6 +77,8 @@
       navPaths: "Learning Paths", navAbout: "About", learningStart: "Start here",
       learningIntentionsTitle: "How do you want to learn today?",
       learningIntentionsIntro: "Choose an intention to see a catalogue selection, or use advanced filters to explore all 22 resources.",
+      learningPathsEyebrow: "Guided progressions", learningPathsTitle: "Learning Paths",
+      learningPathsIntro: "Compare six progressions built exclusively from existing resources and open the sequence that best fits your goal.",
       interactiveLearning: "Complete catalogue", applicationsTitle: "All learning resources",
       applicationsIntro: "Combine the intention view with filters for type, pillar, audience, language, difficulty and duration.",
       knowledgeExplorer: "Explore knowledge", knowledgeTitle: "Knowledge Navigator",
@@ -91,7 +95,8 @@
     showAll: document.querySelector("#show-all-pillars"), activeFilters: document.querySelector("#active-filters"), template: document.querySelector("#result-template"),
     pagination: document.querySelector("#pagination"), loadMore: document.querySelector("#load-more"), loadMoreStatus: document.querySelector("#load-more-status"),
     copySearch: document.querySelector("#copy-search"), applications: document.querySelector("#applications-grid"),
-    learningIntentions: document.querySelector("#learning-intentions")
+    learningIntentions: document.querySelector("#learning-intentions"), learningPaths: document.querySelector("#learning-paths-grid"),
+    learningPathDetail: document.querySelector("#learning-path-detail")
   };
 
   const t = key => ui[state.lang][key] || key;
@@ -422,6 +427,18 @@
       initialIntention: state.catalogueIntent,
       intentionsContainer: el.learningIntentions,
       onIntentionChange: intentionId => { state.catalogueIntent = intentionId; },
+      pillarLabel: (id, lang) => {
+        const pillar = pillarById(id);
+        return pillar ? `${id} · ${pillar.short[lang]}` : id;
+      }
+    });
+    window.SNLearningPaths.render(window.SN_LEARNING_PATHS, window.SN_CATALOGUE, {
+      container: el.learningPaths,
+      detailContainer: el.learningPathDetail,
+      lang: state.lang,
+      selectedPathId: state.learningPathId,
+      catalogueApi: window.SNCatalogue,
+      onSelect: pathId => { state.learningPathId = pathId; },
       pillarLabel: (id, lang) => {
         const pillar = pillarById(id);
         return pillar ? `${id} · ${pillar.short[lang]}` : id;
