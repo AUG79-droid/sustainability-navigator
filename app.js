@@ -4,14 +4,17 @@
   const data = window.SN_DATA;
   const search = window.SNSearch;
   const PAGE_SIZE = 12;
-  const state = { lang: "es", query: "", pillar: "all", type: "all", audience: "all", sort: "relevance", visible: PAGE_SIZE };
+  const state = {
+    lang: "es", query: "", pillar: "all", type: "all", audience: "all", sort: "relevance", visible: PAGE_SIZE,
+    catalogueIntent: "all"
+  };
 
   const ui = {
     es: {
-      prototype: "Base de conocimiento", eyebrow: "Descubrir · Comprender · Decidir",
-      heroLead: "Encuentra conceptos, preguntas frecuentes y referencias para conectar sostenibilidad con decisiones aeronáuticas.",
+      prototype: "Hub de aprendizaje", eyebrow: "Explorar · Aprender · Practicar · Evaluar",
+      heroLead: "Busca conocimiento o elige una experiencia de aprendizaje para avanzar en sostenibilidad aeronáutica.",
       searchLabel: "Buscar en el Navigator", searchButton: "Buscar", tryLabel: "Prueba:",
-      sixPillars: "Seis perspectivas, una visión de sistema", entries: "fichas", sources: "fuentes", bilingual: "bilingüe",
+      sixPillars: "Seis perspectivas, una visión de sistema", entries: "fichas", sources: "fuentes", learningResources: "recursos", bilingual: "bilingüe",
       architecture: "Arquitectura", explorePillars: "Explora los seis pilares", showAll: "Ver todo", filters: "Filtros", clear: "Limpiar",
       contentType: "Tipo de contenido", all: "Todo", glossary: "Glosario", audience: "Audiencia",
       governanceTitle: "Gobernanza del contenido", governanceBody: "Cada ficha muestra fuente, fecha y responsable propuesto. El contenido sigue en validación funcional.",
@@ -34,15 +37,19 @@
       searchReady: "La búsqueda reconoce sinónimos, plurales, tildes y términos en español o inglés.",
       skipToKnowledge: "Saltar al conocimiento", primaryNavigation: "Navegación principal", languageLabel: "Idioma",
       navHome: "Inicio", navKnowledge: "Conocimiento", navApplications: "Catálogo", navCourses: "Cursos",
-      navPaths: "Rutas de aprendizaje", navAbout: "Acerca de", interactiveLearning: "Catálogo de aprendizaje",
-      applicationsTitle: "Aprende con cursos y experiencias interactivas",
-      applicationsIntro: "Descubre recursos verificados y filtra por tipo, tema, audiencia, idioma, dificultad o duración."
+      navPaths: "Rutas de aprendizaje", navAbout: "Acerca de", learningStart: "Empieza aquí",
+      learningIntentionsTitle: "¿Cómo quieres aprender hoy?",
+      learningIntentionsIntro: "Elige una intención para ver una selección del catálogo o utiliza los filtros avanzados para explorar los 22 recursos.",
+      interactiveLearning: "Catálogo completo", applicationsTitle: "Todos los recursos de aprendizaje",
+      applicationsIntro: "Combina la vista por intención con filtros de tipo, pilar, audiencia, idioma, dificultad y duración.",
+      knowledgeExplorer: "Explorar conocimiento", knowledgeTitle: "Knowledge Navigator",
+      knowledgeIntro: "Busca conceptos, preguntas frecuentes y referencias conectadas con los mismos seis pilares del catálogo de aprendizaje."
     },
     en: {
-      prototype: "Knowledge base", eyebrow: "Discover · Understand · Decide",
-      heroLead: "Find concepts, frequently asked questions and references that connect sustainability with aviation decisions.",
+      prototype: "Learning Hub", eyebrow: "Explore · Learn · Practice · Assess",
+      heroLead: "Search knowledge or choose a learning experience to advance your understanding of sustainability in aviation.",
       searchLabel: "Search the Navigator", searchButton: "Search", tryLabel: "Try:",
-      sixPillars: "Six perspectives, one systems view", entries: "entries", sources: "sources", bilingual: "bilingual",
+      sixPillars: "Six perspectives, one systems view", entries: "entries", sources: "sources", learningResources: "resources", bilingual: "bilingual",
       architecture: "Architecture", explorePillars: "Explore the six pillars", showAll: "Show all", filters: "Filters", clear: "Clear",
       contentType: "Content type", all: "All", glossary: "Glossary", audience: "Audience",
       governanceTitle: "Content governance", governanceBody: "Every entry shows a source, date and proposed owner. Content is pending functional validation.",
@@ -65,9 +72,13 @@
       searchReady: "Search recognises synonyms, plurals, accents and terms in English or Spanish.",
       skipToKnowledge: "Skip to knowledge", primaryNavigation: "Primary navigation", languageLabel: "Language",
       navHome: "Home", navKnowledge: "Knowledge", navApplications: "Catalogue", navCourses: "Courses",
-      navPaths: "Learning Paths", navAbout: "About", interactiveLearning: "Learning catalogue",
-      applicationsTitle: "Learn through courses and interactive experiences",
-      applicationsIntro: "Discover verified resources and filter by type, topic, audience, language, difficulty or duration."
+      navPaths: "Learning Paths", navAbout: "About", learningStart: "Start here",
+      learningIntentionsTitle: "How do you want to learn today?",
+      learningIntentionsIntro: "Choose an intention to see a catalogue selection, or use advanced filters to explore all 22 resources.",
+      interactiveLearning: "Complete catalogue", applicationsTitle: "All learning resources",
+      applicationsIntro: "Combine the intention view with filters for type, pillar, audience, language, difficulty and duration.",
+      knowledgeExplorer: "Explore knowledge", knowledgeTitle: "Knowledge Navigator",
+      knowledgeIntro: "Search concepts, frequently asked questions and references connected to the same six pillars as the learning catalogue."
     }
   };
 
@@ -79,7 +90,8 @@
     audience: document.querySelector("#audience-filter"), sort: document.querySelector("#sort-select"), clear: document.querySelector("#clear-filters"),
     showAll: document.querySelector("#show-all-pillars"), activeFilters: document.querySelector("#active-filters"), template: document.querySelector("#result-template"),
     pagination: document.querySelector("#pagination"), loadMore: document.querySelector("#load-more"), loadMoreStatus: document.querySelector("#load-more-status"),
-    copySearch: document.querySelector("#copy-search"), applications: document.querySelector("#applications-grid")
+    copySearch: document.querySelector("#copy-search"), applications: document.querySelector("#applications-grid"),
+    learningIntentions: document.querySelector("#learning-intentions")
   };
 
   const t = key => ui[state.lang][key] || key;
@@ -382,16 +394,34 @@
   function updateMetrics() {
     document.querySelector("#metric-items").textContent = data.entries.length;
     document.querySelector("#metric-sources").textContent = Object.keys(data.sources).length;
+    document.querySelector("#metric-learning-resources").textContent = window.SN_CATALOGUE.resources.length;
     const withoutType = rankedEntries({ type: "all" });
     document.querySelector("#count-all").textContent = withoutType.length;
     document.querySelector("#count-faq").textContent = withoutType.filter(result => result.entry.type === "faq").length;
     document.querySelector("#count-glossary").textContent = withoutType.filter(result => result.entry.type === "glossary").length;
   }
 
-  function buildApplications() {
-    window.SNCatalogue.render(window.SN_CATALOGUE, {
+  let catalogueController;
+
+  function openCatalogueIntention(intentionId) {
+    state.catalogueIntent = intentionId;
+    catalogueController?.applyIntention(intentionId);
+    document.querySelector("#applications").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function buildLearningExperience() {
+    window.SNCatalogue.renderIntentions(window.SN_CATALOGUE, {
+      container: el.learningIntentions,
+      lang: state.lang,
+      activeIntention: state.catalogueIntent,
+      onSelect: openCatalogueIntention
+    });
+    catalogueController = window.SNCatalogue.render(window.SN_CATALOGUE, {
       container: el.applications,
       lang: state.lang,
+      initialIntention: state.catalogueIntent,
+      intentionsContainer: el.learningIntentions,
+      onIntentionChange: intentionId => { state.catalogueIntent = intentionId; },
       pillarLabel: (id, lang) => {
         const pillar = pillarById(id);
         return pillar ? `${id} · ${pillar.short[lang]}` : id;
@@ -404,7 +434,7 @@
     syncInputs();
     updateMetrics();
     buildPillars();
-    buildApplications();
+    buildLearningExperience();
     buildResults();
     buildActiveFilters();
     if (options.syncUrl !== false) syncUrl();
@@ -435,6 +465,10 @@
     state.lang = button.dataset.lang;
     resetVisible();
     render();
+  }));
+  document.querySelectorAll("[data-catalogue-intention]").forEach(link => link.addEventListener("click", event => {
+    event.preventDefault();
+    openCatalogueIntention(link.dataset.catalogueIntention);
   }));
   document.querySelectorAll('input[name="type"]').forEach(input => input.addEventListener("change", () => {
     state.type = input.value;

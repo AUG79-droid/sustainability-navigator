@@ -19,7 +19,7 @@
       <a href="#top" data-i18n="navHome">Inicio</a>
       <a href="#knowledge" data-i18n="navKnowledge">Conocimiento</a>
       <a href="#applications" data-i18n="navApplications">Catálogo</a>
-      <span class="future-nav" aria-disabled="true" data-i18n="navCourses">Cursos</span>
+      <a href="#applications" data-catalogue-intention="learn" data-i18n="navCourses">Cursos</a>
       <span class="future-nav" aria-disabled="true" data-i18n="navPaths">Rutas de aprendizaje</span>
       <a href="#about" data-i18n="navAbout">Acerca de</a>
     </nav>
@@ -35,9 +35,9 @@
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow" data-i18n="eyebrow">Descubrir · Comprender · Decidir</p>
+        <p class="eyebrow" data-i18n="eyebrow">Explorar · Aprender · Practicar · Evaluar</p>
         <h1 id="hero-title">Sustainability <span>Navigator</span></h1>
-        <p class="hero-lead" data-i18n="heroLead">Encuentra conceptos, preguntas frecuentes y referencias para conectar sostenibilidad con decisiones aeronáuticas.</p>
+        <p class="hero-lead" data-i18n="heroLead">Busca conocimiento o elige una experiencia de aprendizaje para avanzar en sostenibilidad aeronáutica.</p>
 
         <form id="search-form" class="search-box" role="search">
           <label class="sr-only" for="search-input" data-i18n="searchLabel">Buscar en el Navigator</label>
@@ -66,9 +66,21 @@
         <div class="hero-metrics">
           <div><strong id="metric-items">90</strong><span data-i18n="entries">fichas</span></div>
           <div><strong id="metric-sources">15</strong><span data-i18n="sources">fuentes</span></div>
+          <div><strong id="metric-learning-resources">22</strong><span data-i18n="learningResources">recursos</span></div>
           <div><strong>ES/EN</strong><span data-i18n="bilingual">bilingüe</span></div>
         </div>
       </aside>
+    </section>
+
+    <section id="learning" class="learning-intentions-section" aria-labelledby="learning-intentions-title">
+      <div class="learning-intentions-heading">
+        <div>
+          <p class="eyebrow" data-i18n="learningStart">Empieza aquí</p>
+          <h2 id="learning-intentions-title" data-i18n="learningIntentionsTitle">¿Cómo quieres aprender hoy?</h2>
+        </div>
+        <p data-i18n="learningIntentionsIntro">Elige una intención para ver una selección del catálogo o utiliza los filtros avanzados para explorar los 22 recursos.</p>
+      </div>
+      <div id="learning-intentions" class="learning-intentions-grid"></div>
     </section>
 
     <section class="pillar-section" aria-labelledby="pillar-title">
@@ -82,15 +94,22 @@
     <section id="applications" class="applications-section" aria-labelledby="applications-title">
       <div class="applications-heading">
         <div>
-          <p class="eyebrow" data-i18n="interactiveLearning">Catálogo de aprendizaje</p>
-          <h2 id="applications-title" data-i18n="applicationsTitle">Aprende con cursos y experiencias interactivas</h2>
+          <p class="eyebrow" data-i18n="interactiveLearning">Catálogo completo</p>
+          <h2 id="applications-title" data-i18n="applicationsTitle">Todos los recursos de aprendizaje</h2>
         </div>
-        <p data-i18n="applicationsIntro">Descubre recursos verificados y filtra por tipo, tema, audiencia, idioma, dificultad o duración.</p>
+        <p data-i18n="applicationsIntro">Combina la vista por intención con filtros de tipo, pilar, audiencia, idioma, dificultad y duración.</p>
       </div>
       <div id="applications-grid" class="catalogue-root"></div>
     </section>
 
-    <section id="knowledge" class="navigator-layout" aria-labelledby="catalog-title" tabindex="-1">
+    <section id="knowledge" class="navigator-layout" aria-labelledby="knowledge-section-title" tabindex="-1">
+      <div class="knowledge-heading">
+        <div>
+          <p class="eyebrow" data-i18n="knowledgeExplorer">Explorar conocimiento</p>
+          <h2 id="knowledge-section-title" data-i18n="knowledgeTitle">Knowledge Navigator</h2>
+        </div>
+        <p data-i18n="knowledgeIntro">Busca conceptos, preguntas frecuentes y referencias conectadas con los mismos seis pilares del catálogo de aprendizaje.</p>
+      </div>
       <aside class="filters" aria-label="Filtros del catálogo">
         <div class="filter-heading"><p class="eyebrow" data-i18n="filters">Filtros</p><button id="clear-filters" type="button" data-i18n="clear">Limpiar</button></div>
         <fieldset>
