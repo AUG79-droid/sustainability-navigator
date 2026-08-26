@@ -15,6 +15,13 @@ Buscador bilingüe y estático de conceptos y preguntas frecuentes sobre sosteni
 - Amplía cada resultado con teoría, aplicación aeronáutica, método, ejemplo, preguntas de decisión y límites.
 - Muestra fuente institucional, fecha de revisión y responsable funcional propuesto en cada ficha.
 - Mantiene biodiversidad de forma explícita dentro de `P6 · Climate, Nature & Biodiversity`.
+- Incorpora un catálogo central bilingüe de aplicaciones educativas con metadatos, pilares relacionados y lanzamiento directo.
+
+## Catálogo de aprendizaje interactivo
+
+La portada registra y presenta actualmente cuatro aplicaciones: Ethical Armor, Phytosanitary Defender, The REACH Compliance Challenge y The Year 15 Challenge. Sus paquetes internos siguen siendo independientes; esta primera integración añade descubrimiento, metadatos y retorno al Hub sin migrarlos.
+
+Los recursos se registran en `catalogue-data.js`. Para añadir una aplicación futura se crea una nueva entrada estructurada con un identificador estable, textos ES/EN, audiencia, idiomas, duración, dificultad, tipo, estado, URL relativa y pilares. `catalogue.js` valida y renderiza las tarjetas, por lo que no es necesario añadir markup de tarjetas a `index.html`.
 
 ## Uso local
 
@@ -27,7 +34,10 @@ No requiere instalación ni servidor. Abre `index.html` en un navegador moderno.
 - `data.js`: pilares, fuentes y 90 fichas bilingües ampliadas.
 - `search-engine.js`: normalización, sinónimos, puntuación, coincidencias aproximadas y sugerencias.
 - `app.js`: filtros, paginación, URL compartible, cambio de idioma y renderizado accesible.
+- `catalogue-data.js`: registro estructurado de aplicaciones y base extensible para nuevos tipos de recurso.
+- `catalogue.js`: validación y renderizado bilingüe del catálogo de aprendizaje.
 - `tests/search-engine.test.cjs`: pruebas del motor y de la estructura bilingüe de aprendizaje.
+- `tests/catalogue.test.cjs`: pruebas del esquema, rutas, integración y retorno al Hub.
 - `VALIDATION_CHECKLIST.md`: controles necesarios antes de una publicación corporativa.
 
 ## Gobernanza y límites
@@ -42,5 +52,7 @@ Este MVP es deliberadamente independiente: no sobrescribe ni elimina los reposit
 node --check search-engine.js
 node --check data.js
 node --check app.js
-node --test tests/search-engine.test.cjs
+node --check catalogue-data.js
+node --check catalogue.js
+node --test tests/*.test.cjs
 ```
