@@ -5,7 +5,9 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   "use strict";
 
-  const SCHEMA_VERSION = 1;
+  const SCHEMA_VERSION = 2;
+  const COMPLETION_RECORD_VERSION = 1;
+  const VERIFICATION_STATE = "local-self-managed";
   const STORAGE_KEY = "sustainability-navigator.progress";
   const RESOURCE_STATUSES = ["in_progress", "completed"];
   const STEP_STATUSES = ["in_progress", "completed", "visited"];
@@ -51,6 +53,41 @@
     return next;
   }
 
+  function migratedCompletionId(pathId, revision, completedAt) {
+    return `migrated:${pathId}:r${revision}:${completedAt}`;
+  }
+
+  function migrateV1(raw) {
+    const next = clone(raw);
+    next.schemaVersion = 2;
+    const upgradePaths = paths => Object.entries(isObject(paths) ? paths : {}).forEach(([pathId, path]) => {
+      if (!isObject(path)) return;
+      path.completionHistory = (Array.isArray(path.completionHistory) ? path.completionHistory : []).filter(isObject).map(item => {
+        if (item.recordVersion) return item;
+        const revision = Number.isInteger(item.revision) && item.revision > 0 ? item.revision : 1;
+        const completedAt = cleanDate(item.completedAt);
+        return {
+          completionId: migratedCompletionId(pathId, revision, completedAt || "unknown"),
+          recordVersion: COMPLETION_RECORD_VERSION,
+          pathId,
+          pathRevision: revision,
+          completedAt,
+          requiredStepEvidence: [],
+          optionalStepEvidenceAtCompletion: [],
+          supplementalOptionalEvidence: [],
+          languagesUsed: [],
+          overallLanguage: null,
+          learningOutcomeIds: [],
+          verificationState: VERIFICATION_STATE,
+          historicalEvidenceIncomplete: true
+        };
+      });
+    });
+    upgradePaths(next.paths);
+    if (isObject(next.history)) upgradePaths(next.history.paths);
+    return next;
+  }
+
   function migrate(raw) {
     if (!isObject(raw)) return { ok: false, reason: "invalid", errors: ["Progress data must be an object"] };
     let working = clone(raw);
@@ -59,6 +96,10 @@
     if (version === 0) {
       working = migrateV0(working);
       version = 1;
+    }
+    if (version === 1) {
+      working = migrateV1(working);
+      version = 2;
     }
     return { ok: true, state: working, migrated: version !== raw.schemaVersion };
   }
@@ -89,15 +130,66 @@
     };
   }
 
-  function sanitiseCompletionHistory(value) {
-    if (!Array.isArray(value)) return [];
-    return value.filter(isObject).map(item => ({
-      revision: Number.isInteger(item.revision) && item.revision > 0 ? item.revision : 1,
-      completedAt: cleanDate(item.completedAt)
-    })).filter(item => item.completedAt);
+  function sanitiseEvidence(value) {
+    if (!isObject(value) || typeof value.stepId !== "string") return null;
+    const requirement = ["required", "optional"].includes(value.requirement) ? value.requirement : null;
+    const intention = ["explore", "learn", "practice", "apply", "assess"].includes(value.intention) ? value.intention : null;
+    return {
+      stepId: value.stepId,
+      resourceId: typeof value.resourceId === "string" ? value.resourceId : null,
+      requirement,
+      intention,
+      completedAt: cleanDate(value.completedAt),
+      language: cleanLanguage(value.language),
+      completionSource: value.completionSource ? cleanSource(value.completionSource) : null,
+      finalAssessment: value.finalAssessment === true,
+      capstone: value.capstone === true,
+      optionalDiagnostic: value.optionalDiagnostic === true
+    };
   }
 
-  function sanitisePath(value) {
+  function sanitiseEvidenceList(value) {
+    if (!Array.isArray(value)) return [];
+    return value.map(sanitiseEvidence).filter(Boolean);
+  }
+
+  function sanitiseCompletionRecord(item, fallbackPathId = null) {
+    if (!isObject(item)) return null;
+    const pathId = typeof item.pathId === "string" ? item.pathId : fallbackPathId;
+    const revision = Number.isInteger(item.pathRevision) && item.pathRevision > 0 ? item.pathRevision : Number.isInteger(item.revision) && item.revision > 0 ? item.revision : 1;
+    const completedAt = cleanDate(item.completedAt);
+    if (!pathId || !completedAt) return null;
+    const completionId = typeof item.completionId === "string" && item.completionId ? item.completionId : migratedCompletionId(pathId, revision, completedAt);
+    const languagesUsed = Array.isArray(item.languagesUsed) ? [...new Set(item.languagesUsed.map(cleanLanguage).filter(Boolean))] : [];
+    const overallLanguage = ["es", "en", "mixed"].includes(item.overallLanguage) ? item.overallLanguage : null;
+    return {
+      completionId,
+      recordVersion: Number.isInteger(item.recordVersion) && item.recordVersion > 0 ? item.recordVersion : COMPLETION_RECORD_VERSION,
+      pathId,
+      pathRevision: revision,
+      completedAt,
+      requiredStepEvidence: sanitiseEvidenceList(item.requiredStepEvidence),
+      optionalStepEvidenceAtCompletion: sanitiseEvidenceList(item.optionalStepEvidenceAtCompletion),
+      supplementalOptionalEvidence: sanitiseEvidenceList(item.supplementalOptionalEvidence),
+      languagesUsed,
+      overallLanguage,
+      learningOutcomeIds: Array.isArray(item.learningOutcomeIds) ? [...new Set(item.learningOutcomeIds.filter(id => typeof id === "string" && id))] : [],
+      verificationState: VERIFICATION_STATE,
+      historicalEvidenceIncomplete: item.historicalEvidenceIncomplete === true
+    };
+  }
+
+  function sanitiseCompletionHistory(value, pathId = null) {
+    if (!Array.isArray(value)) return [];
+    const seen = new Set();
+    return value.map(item => sanitiseCompletionRecord(item, pathId)).filter(item => {
+      if (!item || seen.has(item.completionId)) return false;
+      seen.add(item.completionId);
+      return true;
+    });
+  }
+
+  function sanitisePath(value, pathId = null) {
     if (!isObject(value)) return null;
     const steps = {};
     Object.entries(isObject(value.steps) ? value.steps : {}).forEach(([stepId, step]) => {
@@ -116,7 +208,7 @@
       lastActivityAt: cleanDate(value.lastActivityAt),
       selectedAlternatives: alternatives,
       steps,
-      completionHistory: sanitiseCompletionHistory(value.completionHistory),
+      completionHistory: sanitiseCompletionHistory(value.completionHistory, pathId),
       history
     };
   }
@@ -156,11 +248,18 @@
       if (clean) state.resources[resourceId] = clean;
     });
     Object.entries(isObject(raw.paths) ? raw.paths : {}).forEach(([pathId, value]) => {
-      const clean = sanitisePath(value);
+      const clean = sanitisePath(value, pathId);
       if (clean) state.paths[pathId] = clean;
     });
     state.recentActivity = sanitiseActivity(raw.recentActivity);
-    if (isObject(raw.history)) state.history = clone(raw.history);
+    if (isObject(raw.history)) {
+      state.history.resources = isObject(raw.history.resources) ? clone(raw.history.resources) : {};
+      state.history.paths = {};
+      Object.entries(isObject(raw.history.paths) ? raw.history.paths : {}).forEach(([pathId, value]) => {
+        const clean = sanitisePath(value, pathId);
+        if (clean) state.history.paths[pathId] = clean;
+      });
+    }
     return state;
   }
 
@@ -224,13 +323,13 @@
       if (!sanitiseResource(value)) errors.push(`Invalid resource progress: ${id}`);
     });
     Object.entries(isObject(state.paths) ? state.paths : {}).forEach(([id, value]) => {
-      if (!sanitisePath(value)) errors.push(`Invalid path progress: ${id}`);
+      if (!sanitisePath(value, id)) errors.push(`Invalid path progress: ${id}`);
     });
     return errors;
   }
 
   return {
-    SCHEMA_VERSION, STORAGE_KEY, RESOURCE_STATUSES, STEP_STATUSES, COMPLETION_SOURCES, MAX_RECENT_ACTIVITY,
-    clone, createEmptyState, migrate, sanitise, reconcile, validateState
+    SCHEMA_VERSION, COMPLETION_RECORD_VERSION, VERIFICATION_STATE, STORAGE_KEY, RESOURCE_STATUSES, STEP_STATUSES, COMPLETION_SOURCES, MAX_RECENT_ACTIVITY,
+    clone, createEmptyState, migrate, sanitise, reconcile, validateState, sanitiseCompletionRecord
   };
 });
