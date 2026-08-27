@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evaluación de Decisiones de Ecodiseño y Ciclo de Vida</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#assessment-content">Saltar a la evaluación / Skip to assessment</a>
+  <header class="topbar">
+    <a id="hub-link" class="hub-link" href="../?hubLang=es#learning-paths" data-copy="hub">Volver al Hub</a>
+    <div class="language" aria-label="Idioma / Language">
+      <button type="button" data-language="es" aria-pressed="true">ES</button>
+      <button type="button" data-language="en" aria-pressed="false">EN</button>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="intro" aria-labelledby="assessment-title">
+      <p class="eyebrow" data-copy="eyebrow"></p>
+      <h1 id="assessment-title" data-copy="title"></h1>
+      <p class="lead" data-copy="lead"></p>
+      <p class="notice" data-copy="notice"></p>
+    </section>
+    <section class="assessment-layout">
+      <aside class="map" aria-label="Progreso / Progress">
+        <div class="progress-line"><strong data-copy="progressLabel"></strong><span id="progress-text">0 / 7</span></div>
+        <progress id="progress-bar" max="7" value="0"></progress>
+        <ol id="scenario-nav"></ol>
+      </aside>
+      <section id="assessment-content" class="content" tabindex="-1"></section>
+    </section>
+    <nav class="controls" aria-label="Navegación de la evaluación / Assessment navigation">
+      <button id="previous" type="button" data-copy="previous"></button>
+      <button id="next" type="button" data-copy="next"></button>
+    </nav>
+  </main>
+  <script src="../catalogue-data.js"></script>
+  <script src="../learning-paths-data.js"></script>
+  <script src="../progress-model.js"></script>
+  <script src="../progress-store.js"></script>
+  <script src="../progress-service.js"></script>
+  <script src="assessment.js"></script>
+  <script src="../progress-bridge.js" data-resource-id="eco-design-lifecycle-decision-assessment" data-completion-selector="#eco-design-assessment-complete.active"></script>
+</body>
+</html>
