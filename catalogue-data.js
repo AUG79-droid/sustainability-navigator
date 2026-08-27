@@ -192,6 +192,15 @@
         { min: 75, max: 75, unit: "minutes" }, "intermediate",
         ["P1", "P2", "P4", "P5"], [repository("sustainability-navigator", ["es", "en"])], { internalAssessment: true }),
 
+      resource("eco-design-lifecycle-decision-assessment", "quiz", "scenario-assessment",
+        text("Evaluación de Decisiones de Ecodiseño y Ciclo de Vida", "Eco-Design & Lifecycle Decision Assessment"),
+        text("Evaluación bilingüe basada en escenarios para integrar ciclo de vida, circularidad, materiales, mantenibilidad, evidencia y trade-offs de ingeniería aeroespacial.", "A bilingual scenario-based assessment integrating life cycle, circularity, materials, maintainability, evidence and aerospace engineering trade-offs."),
+        text("Toma de decisiones aplicada de ecodiseño y ciclo de vida", "Applied eco-design and life-cycle decision-making"),
+        ["engineering", "maintenance", "procurement", "innovation", "sustainability"],
+        { es: "eco-design-lifecycle-decision-assessment/", en: "eco-design-lifecycle-decision-assessment/" },
+        { min: 90, max: 90, unit: "minutes" }, "advanced",
+        ["P1", "P2", "P3", "P5", "P6"], [repository("sustainability-navigator", ["es", "en"])], { internalAssessment: true }),
+
       resource("ethical-armor", "application", "interactive-game",
         text("Ethical Armor", "Ethical Armor"),
         text("Juego de inteligencia para practicar diligencia debida, evaluación de riesgos y decisiones responsables en cadenas de suministro de minerales.", "An intelligence game for practising due diligence, risk assessment and responsible decision-making in mineral supply chains."),
