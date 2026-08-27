@@ -23,6 +23,11 @@ test("defines six unique and valid Learning Paths", () => {
   assert.deepEqual(pathsData.paths.map(item => item.id), expectedIds);
   assert.equal(new Set(pathsData.paths.map(item => item.id)).size, 6);
   assert.deepEqual(api.validateLearningPaths(pathsData, catalogue), []);
+  pathsData.paths.forEach(pathItem => {
+    assert.equal(pathItem.outcomeIds.length, pathItem.outcomes.es.length);
+    assert.equal(pathItem.outcomeIds.length, pathItem.outcomes.en.length);
+    assert.equal(new Set(pathItem.outcomeIds).size, pathItem.outcomeIds.length);
+  });
 });
 
 test("references existing catalogue resources without duplicating their metadata", () => {
@@ -82,6 +87,14 @@ test("reports documented subtotals without estimating unknown required durations
     assert.equal(summary.complete, pathItem.id === "responsible-supply-chain-compliance");
     assert.deepEqual([summary.min, summary.max, summary.unknownRequired], expected[pathItem.id], pathItem.id);
   });
+});
+
+test("flags archived required resources for path maintenance without substituting them", () => {
+  const archived = JSON.parse(JSON.stringify(catalogue));
+  archived.resources.find(item => item.id === "sustainability-systems-escape-room").status = "archived";
+  const result = api.pathMaintenance(pathsData.paths[0], archived);
+  assert.equal(result.required, true);
+  assert.deepEqual(result.unavailableResourceIds, ["sustainability-systems-escape-room"]);
 });
 
 test("activates Learning Paths navigation and data-driven rendering", () => {
