@@ -77,7 +77,7 @@ Use this checklist before publishing a catalogue or Learning Path update.
 
 ## 6. Publication safety
 
-- Confirm exactly 22 approved public logical resources and six Learning Paths unless a separately approved catalogue change says otherwise.
+- Confirm exactly 23 approved public logical resources and six Learning Paths unless a separately approved catalogue change says otherwise.
 - Confirm no HOLD/excluded/unrelated inventory record entered the public catalogue.
 - Confirm reports, governance files, tests and repository metadata are absent from the Pages artifact.
 - Confirm browser code contains no token, authorization header or secret.

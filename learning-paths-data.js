@@ -107,7 +107,7 @@
       },
       {
         id: "responsible-supply-chain-compliance",
-        revision: 1,
+        revision: 2,
         title: text("Cadena de Suministro Responsable y Cumplimiento", "Responsible Supply Chain & Compliance"),
         purpose: text(
           "Progresar desde requisitos concretos hasta diligencia debida, análisis de riesgos y decisiones responsables sobre materiales y proveedores.",
@@ -125,6 +125,10 @@
           explore("supply-explore", ["P5", "P1", "P2"], text(
             "Consulta cadena de valor, diligencia debida, riesgo y evidencia de proveedor como orientación recomendada.",
             "Consult value-chain, due-diligence, risk and supplier-evidence content as recommended orientation."
+          )),
+          resource("supply-foundations", "responsible-supply-chain-compliance-foundations", "learn", "required", text(
+            "Construye la base común sobre visibilidad, evidencia, diligencia debida y gobernanza antes de aplicar requisitos especializados.",
+            "Build the shared foundation in visibility, evidence, due diligence and governance before applying specialised requirements."
           )),
           resource("supply-phytosanitary", "phytosanitary-defender", "practice", "required", text(
             "Empieza con una obligación acotada y evidencia observable de nivel foundation.",

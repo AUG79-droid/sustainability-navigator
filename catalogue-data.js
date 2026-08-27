@@ -165,6 +165,15 @@
         { es: pages("trivia-airbus-quest"), en: pages("trivia-airbus-quest-en") }, null, null,
         ["P1", "P3", "P5", "P6"], [repository("trivia-airbus-quest", ["es"]), repository("trivia-airbus-quest-en", ["en"])]),
 
+      resource("responsible-supply-chain-compliance-foundations", "course", "foundation-course",
+        text("Fundamentos de Cadena de Suministro Responsable y Cumplimiento", "Responsible Supply Chain & Compliance Foundations"),
+        text("Curso bilingüe de fundamentos para comprender la visibilidad, la evidencia, la diligencia debida y la gobernanza del cumplimiento en cadenas de suministro aeroespaciales.", "A bilingual foundation course for understanding visibility, evidence, due diligence and compliance governance in aerospace supply chains."),
+        text("Cadena de suministro responsable y fundamentos de cumplimiento", "Responsible supply chain and compliance foundations"),
+        ["procurement", "quality", "engineering", "managers"],
+        { es: "responsible-supply-chain-compliance-foundations/", en: "responsible-supply-chain-compliance-foundations/" },
+        { min: 150, max: 150, unit: "minutes" }, "foundation",
+        ["P1", "P2", "P4", "P5"], [repository("sustainability-navigator", ["es", "en"])], { internalCourse: true }),
+
       resource("ethical-armor", "application", "interactive-game",
         text("Ethical Armor", "Ethical Armor"),
         text("Juego de inteligencia para practicar diligencia debida, evaluación de riesgos y decisiones responsables en cadenas de suministro de minerales.", "An intelligence game for practising due diligence, risk assessment and responsible decision-making in mineral supply chains."),

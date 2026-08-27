@@ -16,10 +16,10 @@ function knowledgeData() {
   return context.window.SN_DATA;
 }
 
-test("registers 22 logical resources in the version 2 catalogue", () => {
+test("registers 23 logical resources in the version 2 catalogue", () => {
   assert.equal(catalogue.version, 2);
-  assert.equal(catalogue.resources.length, 22);
-  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 22);
+  assert.equal(catalogue.resources.length, 23);
+  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 23);
   assert.deepEqual(api.validateCatalogue(catalogue), []);
   assert.deepEqual(catalogue.resources.filter(resource => resource.legacyInternal).map(resource => resource.id).sort(), legacyIds);
 });
@@ -41,7 +41,7 @@ test("uses supported resource kinds and verified nullable metadata", () => {
 
 test("groups confirmed Spanish and English counterparts into one card", () => {
   const bilingual = catalogue.resources.filter(resource => resource.launches.es && resource.launches.en);
-  assert.equal(bilingual.length, 10);
+  assert.equal(bilingual.length, 11);
   const essentials = catalogue.resources.find(resource => resource.id === "sustainable-aviation-essentials");
   assert.equal(essentials.title.es, "Fundamentos de Aviación Sostenible");
   assert.equal(essentials.title.en, "Sustainable Aviation Essentials");
@@ -61,7 +61,7 @@ test("keeps the master course separate and omits excluded or held repositories",
 });
 
 test("catalogue filters compose without inventing unknown values", () => {
-  assert.equal(api.filterResources(catalogue.resources, { kind: "course" }).length, 5);
+  assert.equal(api.filterResources(catalogue.resources, { kind: "course" }).length, 6);
   assert.ok(api.filterResources(catalogue.resources, { language: "es" }).every(resource => resource.launches.es));
   assert.ok(api.filterResources(catalogue.resources, { difficulty: "unknown" }).every(resource => resource.difficulty === null));
   assert.ok(api.filterResources(catalogue.resources, { duration: "unknown" }).every(resource => resource.duration === null));
@@ -74,7 +74,7 @@ test("catalogue filters compose without inventing unknown values", () => {
 
 test("derives the four learner intentions from the single catalogue", () => {
   assert.deepEqual(api.intentionCounts(catalogue.resources), {
-    learn: 5,
+    learn: 6,
     practice: 14,
     assess: 2,
     explore: 1
@@ -105,11 +105,12 @@ test("homepage provides data-driven learner navigation without duplicate cards",
 test("external launches stay external and internal launches preserve Hub language", () => {
   catalogue.resources.forEach(resource => {
     Object.values(resource.launches).forEach(url => {
-      if (resource.legacyInternal) assert.ok(!/^https?:\/\//.test(url), `${resource.id} should stay internal`);
+      if (resource.legacyInternal || resource.internalCourse) assert.ok(!/^https?:\/\//.test(url), `${resource.id} should stay internal`);
       else assert.match(url, /^https:\/\/aug79-droid\.github\.io\//, `${resource.id} should launch its public site`);
     });
   });
   assert.equal(api.launchHref("ethical-armor/", "es"), "ethical-armor/?hubLang=es");
+  assert.equal(api.launchHref("responsible-supply-chain-compliance-foundations/", "en"), "responsible-supply-chain-compliance-foundations/?hubLang=en");
   assert.equal(api.launchHref("https://example.test/resource/", "en"), "https://example.test/resource/");
 });
 
