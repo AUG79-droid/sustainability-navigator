@@ -16,10 +16,10 @@ function knowledgeData() {
   return context.window.SN_DATA;
 }
 
-test("registers 24 logical resources in the version 2 catalogue", () => {
+test("registers 25 logical resources in the version 2 catalogue", () => {
   assert.equal(catalogue.version, 2);
-  assert.equal(catalogue.resources.length, 24);
-  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 24);
+  assert.equal(catalogue.resources.length, 25);
+  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 25);
   assert.deepEqual(api.validateCatalogue(catalogue), []);
   assert.deepEqual(catalogue.resources.filter(resource => resource.legacyInternal).map(resource => resource.id).sort(), legacyIds);
 });
@@ -41,7 +41,7 @@ test("uses supported resource kinds and verified nullable metadata", () => {
 
 test("groups confirmed Spanish and English counterparts into one card", () => {
   const bilingual = catalogue.resources.filter(resource => resource.launches.es && resource.launches.en);
-  assert.equal(bilingual.length, 12);
+  assert.equal(bilingual.length, 13);
   const essentials = catalogue.resources.find(resource => resource.id === "sustainable-aviation-essentials");
   assert.equal(essentials.title.es, "Fundamentos de Aviación Sostenible");
   assert.equal(essentials.title.en, "Sustainable Aviation Essentials");
@@ -76,7 +76,7 @@ test("derives the four learner intentions from the single catalogue", () => {
   assert.deepEqual(api.intentionCounts(catalogue.resources), {
     learn: 7,
     practice: 14,
-    assess: 2,
+    assess: 3,
     explore: 1
   });
   const groupedIds = api.LEARNING_INTENTIONS.flatMap(intention =>
@@ -105,12 +105,13 @@ test("homepage provides data-driven learner navigation without duplicate cards",
 test("external launches stay external and internal launches preserve Hub language", () => {
   catalogue.resources.forEach(resource => {
     Object.values(resource.launches).forEach(url => {
-      if (resource.legacyInternal || resource.internalCourse) assert.ok(!/^https?:\/\//.test(url), `${resource.id} should stay internal`);
+      if (resource.legacyInternal || resource.internalCourse || resource.internalAssessment) assert.ok(!/^https?:\/\//.test(url), `${resource.id} should stay internal`);
       else assert.match(url, /^https:\/\/aug79-droid\.github\.io\//, `${resource.id} should launch its public site`);
     });
   });
   assert.equal(api.launchHref("ethical-armor/", "es"), "ethical-armor/?hubLang=es");
   assert.equal(api.launchHref("responsible-supply-chain-compliance-foundations/", "en"), "responsible-supply-chain-compliance-foundations/?hubLang=en");
+  assert.equal(api.launchHref("supply-chain-compliance-decision-review/", "es"), "supply-chain-compliance-decision-review/?hubLang=es");
   assert.equal(api.launchHref("https://example.test/resource/", "en"), "https://example.test/resource/");
 });
 

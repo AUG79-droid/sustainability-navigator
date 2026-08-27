@@ -152,7 +152,7 @@ test("switches the preferred path language without changing recorded progress", 
 });
 
 test("accepts automatic reports only for verified explicit internal finals", () => {
-  for (const id of ["responsible-supply-chain-compliance-foundations", "eco-design-circularity-aerospace-materials", "ethical-armor", "reach-compliance-challenge", "year-15-challenge"]) {
+  for (const id of ["responsible-supply-chain-compliance-foundations", "eco-design-circularity-aerospace-materials", "supply-chain-compliance-decision-review", "ethical-armor", "reach-compliance-challenge", "year-15-challenge"]) {
     const { service } = harness();
     service.startResource(id, { language: "en" });
     service.reportInternalCompletion(id, "en");
@@ -238,9 +238,9 @@ test("preserves all Hub integration points and exposes the bilingual progress de
   assert.match(html, /id="applications-grid"/);
   assert.match(html, /id="knowledge"/);
   assert.match(html, /id="learning-paths-grid"/);
-  assert.equal(catalogue.resources.length, 24);
+  assert.equal(catalogue.resources.length, 25);
   assert.equal(pathsData.paths.length, 6);
-  assert.equal(pathsData.paths.find(item => item.id === "responsible-supply-chain-compliance").revision, 2);
+  assert.equal(pathsData.paths.find(item => item.id === "responsible-supply-chain-compliance").revision, 3);
   assert.equal(pathsData.paths.find(item => item.id === "eco-design-circularity-materials").revision, 2);
   assert.ok(pathsData.paths.filter(item => !["responsible-supply-chain-compliance", "eco-design-circularity-materials"].includes(item.id)).every(item => item.revision === 1));
 });
@@ -249,6 +249,7 @@ test("injects the strict bridge only into verified finals and leaves Phytosanita
   const verified = {
     "responsible-supply-chain-compliance-foundations/index.html": ["responsible-supply-chain-compliance-foundations", "#course-complete.active"],
     "eco-design-circularity-aerospace-materials/index.html": ["eco-design-circularity-aerospace-materials", "#course-complete.active"],
+    "supply-chain-compliance-decision-review/index.html": ["supply-chain-compliance-decision-review", "#decision-review-complete.active"],
     "ethical-armor/index.html": ["ethical-armor", "#final.active"],
     "reach-compliance-challenge/index.html": ["reach-compliance-challenge", ".final-score"],
     "year-15-challenge/index.html": ["year-15-challenge", ".final-screen"]

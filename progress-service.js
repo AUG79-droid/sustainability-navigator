@@ -7,8 +7,8 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, function (model, storeApi) {
   "use strict";
 
-  const INTERNAL_IDS = new Set(["responsible-supply-chain-compliance-foundations", "eco-design-circularity-aerospace-materials", "ethical-armor", "phytosanitary-defender", "reach-compliance-challenge", "year-15-challenge"]);
-  const AUTOMATIC_INTERNAL_IDS = new Set(["responsible-supply-chain-compliance-foundations", "eco-design-circularity-aerospace-materials", "ethical-armor", "reach-compliance-challenge", "year-15-challenge"]);
+  const INTERNAL_IDS = new Set(["responsible-supply-chain-compliance-foundations", "eco-design-circularity-aerospace-materials", "supply-chain-compliance-decision-review", "ethical-armor", "phytosanitary-defender", "reach-compliance-challenge", "year-15-challenge"]);
+  const AUTOMATIC_INTERNAL_IDS = new Set(["responsible-supply-chain-compliance-foundations", "eco-design-circularity-aerospace-materials", "supply-chain-compliance-decision-review", "ethical-armor", "reach-compliance-challenge", "year-15-challenge"]);
   const resourceIdsForStep = step => step?.kind === "resource-choice" ? step.resourceIds : step?.kind === "resource" ? [step.resourceId] : [];
 
   function createProgressService(options) {
@@ -189,7 +189,7 @@
 
     function reportInternalCompletion(resourceId, language) {
       const resource = resources.get(resourceId);
-      if (!AUTOMATIC_INTERNAL_IDS.has(resourceId) || !INTERNAL_IDS.has(resourceId) || !(resource?.legacyInternal || resource?.internalCourse)) throw new Error("Automatic report is not allowed for this resource");
+      if (!AUTOMATIC_INTERNAL_IDS.has(resourceId) || !INTERNAL_IDS.has(resourceId) || !(resource?.legacyInternal || resource?.internalCourse || resource?.internalAssessment)) throw new Error("Automatic report is not allowed for this resource");
       const pending = state.preferences.pendingLaunch;
       const context = pending?.resourceId === resourceId ? { pathId: pending.pathId, stepId: pending.stepId } : {};
       return completeResource(resourceId, { ...context, language, source: "internal-report" });

@@ -4,6 +4,7 @@
   const APPROVED = {
     "responsible-supply-chain-compliance-foundations": "#course-complete.active",
     "eco-design-circularity-aerospace-materials": "#course-complete.active",
+    "supply-chain-compliance-decision-review": "#decision-review-complete.active",
     "ethical-armor": "#final.active",
     "reach-compliance-challenge": ".final-score",
     "year-15-challenge": ".final-screen"
