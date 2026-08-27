@@ -174,6 +174,15 @@
         { min: 150, max: 150, unit: "minutes" }, "foundation",
         ["P1", "P2", "P4", "P5"], [repository("sustainability-navigator", ["es", "en"])], { internalCourse: true }),
 
+      resource("eco-design-circularity-aerospace-materials", "course", "foundation-course",
+        text("Ecodiseño, Circularidad y Materiales Aeronáuticos", "Eco-Design, Circularity & Aerospace Materials"),
+        text("Curso bilingüe de fundamentos para comparar decisiones de diseño y materiales mediante pensamiento de ciclo de vida, estrategias de circularidad, requisitos técnicos y evidencia trazable.", "A bilingual foundation course for comparing design and material decisions through life-cycle thinking, circularity strategies, technical requirements and traceable evidence."),
+        text("Ecodiseño, circularidad y decisiones sobre materiales aeronáuticos", "Eco-design, circularity and aerospace material decisions"),
+        ["engineering", "maintenance", "procurement", "innovation", "sustainability"],
+        { es: "eco-design-circularity-aerospace-materials/", en: "eco-design-circularity-aerospace-materials/" },
+        { min: 190, max: 190, unit: "minutes" }, "foundation",
+        ["P1", "P2", "P3", "P5", "P6"], [repository("sustainability-navigator", ["es", "en"])], { internalCourse: true }),
+
       resource("ethical-armor", "application", "interactive-game",
         text("Ethical Armor", "Ethical Armor"),
         text("Juego de inteligencia para practicar diligencia debida, evaluación de riesgos y decisiones responsables en cadenas de suministro de minerales.", "An intelligence game for practising due diligence, risk assessment and responsible decision-making in mineral supply chains."),

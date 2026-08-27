@@ -16,10 +16,10 @@ function knowledgeData() {
   return context.window.SN_DATA;
 }
 
-test("registers 23 logical resources in the version 2 catalogue", () => {
+test("registers 24 logical resources in the version 2 catalogue", () => {
   assert.equal(catalogue.version, 2);
-  assert.equal(catalogue.resources.length, 23);
-  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 23);
+  assert.equal(catalogue.resources.length, 24);
+  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 24);
   assert.deepEqual(api.validateCatalogue(catalogue), []);
   assert.deepEqual(catalogue.resources.filter(resource => resource.legacyInternal).map(resource => resource.id).sort(), legacyIds);
 });
@@ -41,7 +41,7 @@ test("uses supported resource kinds and verified nullable metadata", () => {
 
 test("groups confirmed Spanish and English counterparts into one card", () => {
   const bilingual = catalogue.resources.filter(resource => resource.launches.es && resource.launches.en);
-  assert.equal(bilingual.length, 11);
+  assert.equal(bilingual.length, 12);
   const essentials = catalogue.resources.find(resource => resource.id === "sustainable-aviation-essentials");
   assert.equal(essentials.title.es, "Fundamentos de Aviación Sostenible");
   assert.equal(essentials.title.en, "Sustainable Aviation Essentials");
@@ -61,7 +61,7 @@ test("keeps the master course separate and omits excluded or held repositories",
 });
 
 test("catalogue filters compose without inventing unknown values", () => {
-  assert.equal(api.filterResources(catalogue.resources, { kind: "course" }).length, 6);
+  assert.equal(api.filterResources(catalogue.resources, { kind: "course" }).length, 7);
   assert.ok(api.filterResources(catalogue.resources, { language: "es" }).every(resource => resource.launches.es));
   assert.ok(api.filterResources(catalogue.resources, { difficulty: "unknown" }).every(resource => resource.difficulty === null));
   assert.ok(api.filterResources(catalogue.resources, { duration: "unknown" }).every(resource => resource.duration === null));
@@ -74,7 +74,7 @@ test("catalogue filters compose without inventing unknown values", () => {
 
 test("derives the four learner intentions from the single catalogue", () => {
   assert.deepEqual(api.intentionCounts(catalogue.resources), {
-    learn: 6,
+    learn: 7,
     practice: 14,
     assess: 2,
     explore: 1

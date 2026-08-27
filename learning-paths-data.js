@@ -64,7 +64,7 @@
       },
       {
         id: "eco-design-circularity-materials",
-        revision: 1,
+        revision: 2,
         title: text("Ecodiseño, Circularidad y Materiales", "Eco-Design, Circularity & Materials"),
         purpose: text(
           "Recorrer el ciclo de decisión desde la inspiración y el diseño hasta los materiales, el cumplimiento, el mantenimiento y la extensión de vida.",
@@ -82,6 +82,10 @@
           explore("eco-design-explore", ["P2", "P3", "P5"], text(
             "Consulta conceptos de circularidad, ciclo de vida, materiales críticos y trazabilidad como apoyo opcional.",
             "Consult circularity, life-cycle, critical-material and traceability concepts as optional support."
+          )),
+          resource("eco-design-foundations", "eco-design-circularity-aerospace-materials", "learn", "required", text(
+            "Construye la base común de ciclo de vida, circularidad, requisitos, materiales, mantenibilidad y evidencia antes de entrar en las experiencias aplicadas.",
+            "Build the shared foundation in life cycle, circularity, requirements, materials, maintainability and evidence before entering the applied experiences."
           )),
           resource("eco-design-bio", "bio-inspired-innovation-lab", "practice", "required", text(
             "Comienza con observación e ideación antes de aplicar restricciones técnicas.",
