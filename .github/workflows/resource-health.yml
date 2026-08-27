@@ -1,0 +1,28 @@
+name: Resource health
+
+on:
+  schedule:
+    - cron: "17 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Observe public deployments
+        run: node governance/check-content.cjs --health --report
+      - name: Upload non-public health report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resource-health-report
+          path: governance-report/
+          if-no-files-found: warn

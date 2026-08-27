@@ -33,3 +33,51 @@
 ## Criterio de salida del piloto
 
 El piloto está listo cuando el propietario confirma por escrito el alcance, las 90 fichas están validadas o retiradas, los controles técnicos aplicables han pasado y la página identifica con claridad qué contenido es orientación general y qué contenido es referencia interna aprobada.
+# Phase 5B · Maintainer content checklist
+
+Use this checklist before publishing a catalogue or Learning Path update.
+
+## 1. Describe the change
+
+- Confirm whether it is the same logical resource, a URL/repository rename, a technical ID alias, or a genuine replacement.
+- Keep the existing stable ID for title, repository, and URL changes to the same educational product.
+- Do not merge suspected duplicates automatically. Mark them for manual review.
+- Do not add missing duration, difficulty, language or educational claims unless evidence supports them.
+
+## 2. Check publication metadata
+
+- Confirm actual `languages`, editorial `intendedLanguages`, and deployed `launches` independently.
+- Confirm lifecycle is one of: active, hold, temporarily-unavailable, archived, replaced.
+- Keep HOLD, excluded, unrelated, superseded and manual-review inventory records out of the public catalogue.
+- If replacing a genuinely different product, use a new stable ID and `replacedBy`; do not transfer completion.
+
+## 3. Check Learning Paths
+
+- Every resource reference must use an existing stable `resourceId` or approved alias.
+- Ensure each required step and choice group still has a viable active route.
+- Increase the path revision when required order, required resources, alternatives, required/optional roles, final assessment, capstone, or learning-outcome IDs change.
+- A presentation correction, same-resource URL update, or purely optional addition normally does not require a revision increase.
+
+## 4. Run the checks
+
+1. Run `node governance/check-content.cjs`.
+2. Review warnings; fix every blocking error.
+3. Run `node --test tests/*.test.cjs`.
+4. For a detailed private report, run `node governance/check-content.cjs --report --verbose`.
+5. When appropriate, run `node governance/check-content.cjs --health --report`; treat outages as observations requiring review, never as automatic lifecycle changes.
+
+## 5. Check the learner experience
+
+- Verify Spanish and English on desktop and mobile.
+- Verify active launches work.
+- Using a temporary local fixture only, verify unavailable cards remain visible, have no launch control, and explain that progress is preserved.
+- Verify affected Learning Paths show maintenance impact and do not recommend an impossible next step.
+- Verify existing progress and completion history remain available.
+- Confirm no horizontal page overflow and no browser console errors.
+
+## 6. Publication safety
+
+- Confirm exactly 22 approved public logical resources and six Learning Paths unless a separately approved catalogue change says otherwise.
+- Confirm no HOLD/excluded/unrelated inventory record entered the public catalogue.
+- Confirm reports, governance files, tests and repository metadata are absent from the Pages artifact.
+- Confirm browser code contains no token, authorization header or secret.

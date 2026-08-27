@@ -1,0 +1,34 @@
+name: Content validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate governed content
+        env:
+          GOVERNANCE_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || 'HEAD^' }}
+        run: node governance/check-content.cjs --report
+      - name: Run complete automated test suite
+        run: node --test tests/*.test.cjs
+      - name: Upload maintainer report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-governance-report
+          path: governance-report/
+          if-no-files-found: warn
