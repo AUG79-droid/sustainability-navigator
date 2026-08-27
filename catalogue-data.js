@@ -15,7 +15,15 @@
   const text = (es, en) => ({ es, en });
   const resource = (id, kind, subtype, title, description, learningTopic, audienceIds, launches, duration, difficulty, pillarIds, provenance, extra = {}) => ({
     id, kind, subtype, title, description, learningTopic, audienceIds, launches,
-    duration, difficulty, status: "available", pillarIds, provenance, ...extra
+    duration, difficulty, status: "available", lifecycle: "active",
+    languages: Object.keys(launches), intendedLanguages: Object.keys(launches),
+    aliases: [], replacedBy: null,
+    metadataQuality: {
+      duration: duration ? "documented" : "unknown",
+      difficulty: difficulty ? "verified" : "unknown",
+      languages: "verified", publication: "verified", pairing: Object.keys(launches).length > 1 ? "verified" : "unknown"
+    },
+    pillarIds, provenance, ...extra
   });
 
   return {
