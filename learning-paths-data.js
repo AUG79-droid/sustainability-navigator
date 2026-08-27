@@ -21,6 +21,7 @@
     paths: [
       {
         id: "sustainable-aviation-foundations",
+        revision: 1,
         title: text("Fundamentos de Aviación Sostenible", "Sustainable Aviation Foundations"),
         purpose: text(
           "Construir una base común para reconocer los seis pilares de la sostenibilidad aeronáutica y sus principales interdependencias.",
@@ -62,6 +63,7 @@
       },
       {
         id: "eco-design-circularity-materials",
+        revision: 1,
         title: text("Ecodiseño, Circularidad y Materiales", "Eco-Design, Circularity & Materials"),
         purpose: text(
           "Recorrer el ciclo de decisión desde la inspiración y el diseño hasta los materiales, el cumplimiento, el mantenimiento y la extensión de vida.",
@@ -103,6 +105,7 @@
       },
       {
         id: "responsible-supply-chain-compliance",
+        revision: 1,
         title: text("Cadena de Suministro Responsable y Cumplimiento", "Responsible Supply Chain & Compliance"),
         purpose: text(
           "Progresar desde requisitos concretos hasta diligencia debida, análisis de riesgos y decisiones responsables sobre materiales y proveedores.",
@@ -144,6 +147,7 @@
       },
       {
         id: "sustainable-in-service-operations",
+        revision: 1,
         title: text("Operaciones Sostenibles en Servicio", "Sustainable In-Service Operations"),
         purpose: text(
           "Integrar impactos locales, materiales, resiliencia y decisiones bajo presión durante la fase In-Service.",
@@ -189,6 +193,7 @@
       },
       {
         id: "nature-habitat-operational-risk",
+        revision: 1,
         title: text("Naturaleza, Hábitat y Riesgo Operacional", "Nature, Habitat & Operational Risk"),
         purpose: text(
           "Conectar biodiversidad y naturaleza con decisiones sobre emplazamientos, hábitats, fauna, ruido, suelo y misiones.",
@@ -234,6 +239,7 @@
       },
       {
         id: "evidence-systems-decision-making",
+        revision: 1,
         title: text("Evidencia, Sistemas y Toma de Decisiones", "Evidence, Systems & Sustainability Decision-Making"),
         purpose: text(
           "Desarrollar la capacidad avanzada de evaluar evidencia, comprender sistemas y tomar decisiones de sostenibilidad bajo presión.",
