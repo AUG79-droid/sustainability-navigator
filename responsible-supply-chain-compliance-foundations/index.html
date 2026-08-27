@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Bilingual foundation course on responsible aerospace supply chains and compliance.">
+  <title>Fundamentos de Cadena de Suministro Responsable y Cumplimiento</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#course-main">Saltar al contenido / Skip to content</a>
+  <header class="course-header">
+    <a class="hub-link" id="hub-link" href="../#learning-paths" aria-label="Volver al Sustainability Hub / Return to the Sustainability Hub">
+      <span aria-hidden="true">←</span> <span data-copy="hub">Volver al Hub</span>
+    </a>
+    <div class="course-brand" aria-label="Sustainable Aviation Learning Lab">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <span><strong>Sustainable Aviation</strong><small>Learning Lab</small></span>
+    </div>
+    <div class="language-switch" role="group" aria-label="Idioma / Language">
+      <button type="button" data-language="es" aria-pressed="true">ES</button>
+      <button type="button" data-language="en" aria-pressed="false">EN</button>
+    </div>
+  </header>
+
+  <main id="course-main" tabindex="-1">
+    <section class="course-hero" aria-labelledby="course-title">
+      <div>
+        <p class="eyebrow" data-copy="eyebrow">Curso de fundamentos · 150 min</p>
+        <h1 id="course-title" data-copy="title">Fundamentos de Cadena de Suministro Responsable y Cumplimiento</h1>
+        <p class="lead" data-copy="lead">Aprende a convertir una cadena compleja en una secuencia visible de evidencias, riesgos, decisiones y responsabilidades.</p>
+        <ul class="audience-list" aria-label="Audiencia / Audience">
+          <li>Procurement</li><li>Supply chain</li><li>Quality</li><li>Engineering</li><li>Managers</li>
+        </ul>
+      </div>
+      <div class="hero-system" aria-label="Cadena de decisión / Decision chain">
+        <span data-copy="map">Mapear</span><i aria-hidden="true">→</i>
+        <span data-copy="verify">Verificar</span><i aria-hidden="true">→</i>
+        <span data-copy="prioritise">Priorizar</span><i aria-hidden="true">→</i>
+        <span data-copy="act">Actuar</span><i aria-hidden="true">→</i>
+        <span data-copy="govern">Gobernar</span>
+      </div>
+    </section>
+
+    <section class="objectives" aria-labelledby="objectives-title">
+      <p class="eyebrow" data-copy="beforeStart">Antes de comenzar</p>
+      <h2 id="objectives-title" data-copy="objectivesTitle">Objetivos de aprendizaje</h2>
+      <ul id="objectives-list"></ul>
+      <p class="scope-note" data-copy="scopeNote">Este curso ofrece fundamentos educativos. No sustituye asesoramiento jurídico, requisitos contractuales, procedimientos aprobados ni la evaluación de especialistas.</p>
+    </section>
+
+    <div class="course-layout">
+      <nav class="module-nav" aria-label="Módulos del curso">
+        <div class="progress-copy"><strong id="progress-label">0 / 7</strong><span data-copy="progress">módulos visitados</span></div>
+        <progress id="course-progress" max="7" value="0" aria-label="Progreso del curso"></progress>
+        <ol id="module-list"></ol>
+      </nav>
+
+      <section class="module-shell" aria-live="off">
+        <article id="module-content" tabindex="-1"></article>
+        <div class="module-actions">
+          <button id="previous-module" type="button" class="secondary" data-copy="previous">Anterior</button>
+          <button id="next-module" type="button" data-copy="next">Siguiente módulo</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="course-live" class="sr-only" aria-live="polite"></div>
+
+  <script src="course.js"></script>
+  <script src="../catalogue-data.js"></script>
+  <script src="../learning-paths-data.js"></script>
+  <script src="../progress-model.js"></script>
+  <script src="../progress-store.js"></script>
+  <script src="../progress-service.js"></script>
+  <script src="../progress-bridge.js" data-resource-id="responsible-supply-chain-compliance-foundations" data-completion-selector="#course-complete.active"></script>
+</body>
+</html>
