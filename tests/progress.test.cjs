@@ -132,7 +132,9 @@ test("recommends the first required logical step, respects choices and exposes l
   const supply = pathsData.paths.find(item => item.id === "responsible-supply-chain-compliance");
   service.startPath(supply.id, "es");
   next = selectors.nextActivity(service.getState(), supply, catalogue);
-  assert.equal(next.languageLimitation, true);
+  assert.equal(next.step.id, "supply-foundations");
+  assert.equal(next.recommendedResource.id, "responsible-supply-chain-compliance-foundations");
+  assert.equal(next.languageLimitation, false, "the new first required step is available in Spanish");
 });
 
 test("switches the preferred path language without changing recorded progress", () => {
@@ -149,8 +151,8 @@ test("switches the preferred path language without changing recorded progress", 
   assert.deepEqual([after.completedRequired, after.required], [before.completedRequired, before.required]);
 });
 
-test("accepts automatic reports only for the three verified internal finals", () => {
-  for (const id of ["ethical-armor", "reach-compliance-challenge", "year-15-challenge"]) {
+test("accepts automatic reports only for verified explicit internal finals", () => {
+  for (const id of ["responsible-supply-chain-compliance-foundations", "ethical-armor", "reach-compliance-challenge", "year-15-challenge"]) {
     const { service } = harness();
     service.startResource(id, { language: "en" });
     service.reportInternalCompletion(id, "en");
@@ -236,13 +238,15 @@ test("preserves all Hub integration points and exposes the bilingual progress de
   assert.match(html, /id="applications-grid"/);
   assert.match(html, /id="knowledge"/);
   assert.match(html, /id="learning-paths-grid"/);
-  assert.equal(catalogue.resources.length, 22);
+  assert.equal(catalogue.resources.length, 23);
   assert.equal(pathsData.paths.length, 6);
-  assert.ok(pathsData.paths.every(item => item.revision === 1));
+  assert.equal(pathsData.paths.find(item => item.id === "responsible-supply-chain-compliance").revision, 2);
+  assert.ok(pathsData.paths.filter(item => item.id !== "responsible-supply-chain-compliance").every(item => item.revision === 1));
 });
 
 test("injects the strict bridge only into verified finals and leaves Phytosanitary manual", () => {
   const verified = {
+    "responsible-supply-chain-compliance-foundations/index.html": ["responsible-supply-chain-compliance-foundations", "#course-complete.active"],
     "ethical-armor/index.html": ["ethical-armor", "#final.active"],
     "reach-compliance-challenge/index.html": ["reach-compliance-challenge", ".final-score"],
     "year-15-challenge/index.html": ["year-15-challenge", ".final-screen"]
