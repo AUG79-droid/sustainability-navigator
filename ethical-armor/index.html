@@ -8,7 +8,8 @@ function withHubReturn(html) {
   const lang = new URLSearchParams(location.search).get("hubLang") === "en" ? "en" : "es";
   const label = lang === "en" ? "Back to Sustainability Hub" : "Volver al Sustainability Hub";
   const control = `<a class="sn-hub-return" href="../?lang=${lang}#applications" aria-label="${label}">← ${label}</a><style>.sn-hub-return{position:fixed;z-index:2147483647;top:12px;left:12px;padding:10px 14px;border:2px solid rgba(255,255,255,.75);border-radius:999px;background:#071b33;color:#fff!important;font:800 13px/1.2 system-ui,sans-serif;text-decoration:none;box-shadow:0 5px 18px rgba(0,0,0,.3)}.sn-hub-return:focus-visible{outline:3px solid #63d4e7;outline-offset:3px}@media(max-width:600px){.sn-hub-return{top:8px;left:8px;padding:8px 11px;font-size:11px}}</style>`;
-  return /<body[^>]*>/i.test(html) ? html.replace(/<body[^>]*>/i, match => match + control) : control + html;
+  const progress = `<script src="../catalogue-data.js"><\/script><script src="../learning-paths-data.js"><\/script><script src="../progress-model.js"><\/script><script src="../progress-store.js"><\/script><script src="../progress-service.js"><\/script><script src="../progress-bridge.js" data-resource-id="ethical-armor" data-completion-selector="#final.active"><\/script>`;
+  return /<body[^>]*>/i.test(html) ? html.replace(/<body[^>]*>/i, match => match + control + progress) : control + progress + html;
 }
 (async () => {
   const files = ["part-01.txt", "part-02.txt", "part-03.txt", "part-04.txt", "part-05.txt", "part-06.txt"];

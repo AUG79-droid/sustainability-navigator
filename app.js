@@ -37,7 +37,7 @@
       searchReady: "La búsqueda reconoce sinónimos, plurales, tildes y términos en español o inglés.",
       skipToKnowledge: "Saltar al conocimiento", primaryNavigation: "Navegación principal", languageLabel: "Idioma",
       navHome: "Inicio", navKnowledge: "Conocimiento", navApplications: "Catálogo", navCourses: "Cursos",
-      navPaths: "Rutas de aprendizaje", navAbout: "Acerca de", learningStart: "Empieza aquí",
+      navPaths: "Rutas de aprendizaje", navProgress: "Mi progreso", navAbout: "Acerca de", learningStart: "Empieza aquí",
       learningIntentionsTitle: "¿Cómo quieres aprender hoy?",
       learningIntentionsIntro: "Elige una intención para ver una selección del catálogo o utiliza los filtros avanzados para explorar los 22 recursos.",
       learningPathsEyebrow: "Progresiones guiadas", learningPathsTitle: "Rutas de aprendizaje",
@@ -74,7 +74,7 @@
       searchReady: "Search recognises synonyms, plurals, accents and terms in English or Spanish.",
       skipToKnowledge: "Skip to knowledge", primaryNavigation: "Primary navigation", languageLabel: "Language",
       navHome: "Home", navKnowledge: "Knowledge", navApplications: "Catalogue", navCourses: "Courses",
-      navPaths: "Learning Paths", navAbout: "About", learningStart: "Start here",
+      navPaths: "Learning Paths", navProgress: "My progress", navAbout: "About", learningStart: "Start here",
       learningIntentionsTitle: "How do you want to learn today?",
       learningIntentionsIntro: "Choose an intention to see a catalogue selection, or use advanced filters to explore all 22 resources.",
       learningPathsEyebrow: "Guided progressions", learningPathsTitle: "Learning Paths",
@@ -96,8 +96,14 @@
     pagination: document.querySelector("#pagination"), loadMore: document.querySelector("#load-more"), loadMoreStatus: document.querySelector("#load-more-status"),
     copySearch: document.querySelector("#copy-search"), applications: document.querySelector("#applications-grid"),
     learningIntentions: document.querySelector("#learning-intentions"), learningPaths: document.querySelector("#learning-paths-grid"),
-    learningPathDetail: document.querySelector("#learning-path-detail")
+    learningPathDetail: document.querySelector("#learning-path-detail"), progress: document.querySelector("#progress"),
+    progressLive: document.querySelector("#progress-live")
   };
+
+  const progressService = window.SNProgressService.createBrowserService(window.SN_CATALOGUE, window.SN_LEARNING_PATHS, window.localStorage);
+  const progressUi = window.SNProgressUI.create({
+    service: progressService, catalogue: window.SN_CATALOGUE, pathsData: window.SN_LEARNING_PATHS, liveRegion: el.progressLive
+  });
 
   const t = key => ui[state.lang][key] || key;
   const pillarById = id => data.pillars.find(pillar => pillar.id === id);
@@ -427,6 +433,7 @@
       initialIntention: state.catalogueIntent,
       intentionsContainer: el.learningIntentions,
       onIntentionChange: intentionId => { state.catalogueIntent = intentionId; },
+      progressUi,
       pillarLabel: (id, lang) => {
         const pillar = pillarById(id);
         return pillar ? `${id} · ${pillar.short[lang]}` : id;
@@ -438,13 +445,17 @@
       lang: state.lang,
       selectedPathId: state.learningPathId,
       catalogueApi: window.SNCatalogue,
+      progressUi,
       onSelect: pathId => { state.learningPathId = pathId; },
       pillarLabel: (id, lang) => {
         const pillar = pillarById(id);
         return pillar ? `${id} · ${pillar.short[lang]}` : id;
       }
     });
+    progressUi.renderDashboard(el.progress, state.lang);
   }
+
+  progressUi.setRefresh(() => buildLearningExperience());
 
   function render(options = {}) {
     translateStaticUi();
