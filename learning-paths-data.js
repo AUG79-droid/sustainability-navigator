@@ -111,7 +111,7 @@
       },
       {
         id: "responsible-supply-chain-compliance",
-        revision: 2,
+        revision: 3,
         title: text("Cadena de Suministro Responsable y Cumplimiento", "Responsible Supply Chain & Compliance"),
         purpose: text(
           "Progresar desde requisitos concretos hasta diligencia debida, análisis de riesgos y decisiones responsables sobre materiales y proveedores.",
@@ -146,6 +146,10 @@
             "Amplía el foco hacia diligencia debida, minerales y gravedad del riesgo en la cadena.",
             "Broaden the focus to due diligence, minerals and severity of value-chain risk."
           ), { capstone: true }),
+          resource("supply-decision-review", "supply-chain-compliance-decision-review", "assess", "required", text(
+            "Integra la ruta mediante una revisión aplicada de evidencias, incertidumbre, riesgo, escalación y decisiones defendibles.",
+            "Integrate the route through an applied review of evidence, uncertainty, risk, escalation and defensible decisions."
+          ), { finalAssessment: true }),
           resource("supply-minerals", "eco-retrofit-mineral-footprint", "apply", "optional", text(
             "Añade una decisión de aprovisionamiento y huella mineral vinculada al retrofit.",
             "Add a sourcing and mineral-footprint decision linked to retrofit work."

@@ -183,6 +183,15 @@
         { min: 190, max: 190, unit: "minutes" }, "foundation",
         ["P1", "P2", "P3", "P5", "P6"], [repository("sustainability-navigator", ["es", "en"])], { internalCourse: true }),
 
+      resource("supply-chain-compliance-decision-review", "quiz", "scenario-assessment",
+        text("Revisión de Decisiones de Cadena de Suministro y Cumplimiento", "Supply Chain & Compliance Decision Review"),
+        text("Revisión bilingüe basada en escenarios para practicar decisiones sobre evidencia, diligencia debida, cumplimiento, logística, escalación y gobernanza.", "A bilingual scenario-based review for practising decisions about evidence, due diligence, compliance, logistics, escalation and governance."),
+        text("Toma de decisiones aplicada en cadena de suministro y cumplimiento", "Applied supply-chain and compliance decision-making"),
+        ["procurement", "quality", "engineering", "managers", "sustainability"],
+        { es: "supply-chain-compliance-decision-review/", en: "supply-chain-compliance-decision-review/" },
+        { min: 75, max: 75, unit: "minutes" }, "intermediate",
+        ["P1", "P2", "P4", "P5"], [repository("sustainability-navigator", ["es", "en"])], { internalAssessment: true }),
+
       resource("ethical-armor", "application", "interactive-game",
         text("Ethical Armor", "Ethical Armor"),
         text("Juego de inteligencia para practicar diligencia debida, evaluación de riesgos y decisiones responsables en cadenas de suministro de minerales.", "An intelligence game for practising due diligence, risk assessment and responsible decision-making in mineral supply chains."),
