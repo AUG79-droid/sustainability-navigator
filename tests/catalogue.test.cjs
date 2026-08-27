@@ -16,10 +16,10 @@ function knowledgeData() {
   return context.window.SN_DATA;
 }
 
-test("registers 25 logical resources in the version 2 catalogue", () => {
+test("registers 26 logical resources in the version 2 catalogue", () => {
   assert.equal(catalogue.version, 2);
-  assert.equal(catalogue.resources.length, 25);
-  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 25);
+  assert.equal(catalogue.resources.length, 26);
+  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 26);
   assert.deepEqual(api.validateCatalogue(catalogue), []);
   assert.deepEqual(catalogue.resources.filter(resource => resource.legacyInternal).map(resource => resource.id).sort(), legacyIds);
 });
@@ -41,7 +41,7 @@ test("uses supported resource kinds and verified nullable metadata", () => {
 
 test("groups confirmed Spanish and English counterparts into one card", () => {
   const bilingual = catalogue.resources.filter(resource => resource.launches.es && resource.launches.en);
-  assert.equal(bilingual.length, 13);
+  assert.equal(bilingual.length, 14);
   const essentials = catalogue.resources.find(resource => resource.id === "sustainable-aviation-essentials");
   assert.equal(essentials.title.es, "Fundamentos de Aviación Sostenible");
   assert.equal(essentials.title.en, "Sustainable Aviation Essentials");
@@ -76,7 +76,7 @@ test("derives the four learner intentions from the single catalogue", () => {
   assert.deepEqual(api.intentionCounts(catalogue.resources), {
     learn: 7,
     practice: 14,
-    assess: 3,
+    assess: 4,
     explore: 1
   });
   const groupedIds = api.LEARNING_INTENTIONS.flatMap(intention =>

@@ -26,9 +26,9 @@ const valid = (overrides = {}) => ({
 });
 const codes = value => validateCatalogue({ resources: value }, { root, checkInternalFiles: false }).map(item => item.code);
 
-test("the governed public catalogue preserves exactly 25 resources and valid metadata", () => {
+test("the governed public catalogue preserves exactly 26 resources and valid metadata", () => {
   const findings = validateCatalogue(catalogue, { root });
-  assert.equal(catalogue.resources.length, 25);
+  assert.equal(catalogue.resources.length, 26);
   assert.equal(findings.filter(item => item.level === "FAIL").length, 0);
   assert.ok(catalogue.resources.every(resource => resource.lifecycle === "active"));
 });
@@ -143,6 +143,6 @@ test("Pages uses an explicit learner-file allowlist and excludes governance repo
 test("reports are normalized, complete and sanitized", () => {
   const report = normalizeReport({ catalogue, pathsData, inventory, health: [], issues: [{ level: "WARNING", code: "REMOTE", message: "<script> token=secret-value", subject: "remote" }] });
   const output = markdown(report);
-  assert.equal(report.summary.logicalResources, 25); assert.equal(report.summary.paths, 6);
+  assert.equal(report.summary.logicalResources, 26); assert.equal(report.summary.paths, 6);
   assert.doesNotMatch(output, /<script>|secret-value/); assert.match(output, /\[redacted\]/);
 });

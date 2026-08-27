@@ -238,10 +238,10 @@ test("preserves all Hub integration points and exposes the bilingual progress de
   assert.match(html, /id="applications-grid"/);
   assert.match(html, /id="knowledge"/);
   assert.match(html, /id="learning-paths-grid"/);
-  assert.equal(catalogue.resources.length, 25);
+  assert.equal(catalogue.resources.length, 26);
   assert.equal(pathsData.paths.length, 6);
   assert.equal(pathsData.paths.find(item => item.id === "responsible-supply-chain-compliance").revision, 3);
-  assert.equal(pathsData.paths.find(item => item.id === "eco-design-circularity-materials").revision, 2);
+  assert.equal(pathsData.paths.find(item => item.id === "eco-design-circularity-materials").revision, 3);
   assert.ok(pathsData.paths.filter(item => !["responsible-supply-chain-compliance", "eco-design-circularity-materials"].includes(item.id)).every(item => item.revision === 1));
 });
 
@@ -373,7 +373,7 @@ test("distinguishes practice capstones and optional diagnostics from formal asse
   const eco = harness(); completePath(eco.service, "eco-design-circularity-materials", "en");
   const ecoRecord = selectors.completionRecords(eco.service.getState(), catalogue, pathsData)[0];
   assert.equal(ecoRecord.capstoneCompleted, true);
-  assert.equal(ecoRecord.assessmentCompleted, false);
+  assert.equal(ecoRecord.assessmentCompleted, true);
   const inService = harness(); completePath(inService.service, "sustainable-in-service-operations", "en");
   inService.service.completeResource("sustainability-knowledge-check-evidence", { pathId: "sustainable-in-service-operations", stepId: "in-service-diagnostic", language: "en", source: "manual" });
   const inServiceRecord = selectors.completionRecords(inService.service.getState(), catalogue, pathsData)[0];
