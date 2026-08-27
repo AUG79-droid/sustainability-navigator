@@ -60,6 +60,7 @@
     data.paths.forEach((path, pathIndex) => {
       const prefix = `paths[${pathIndex}] (${path?.id || "unknown"})`;
       if (!path?.id) errors.push(`${prefix}: missing id`);
+      if (!Number.isInteger(path?.revision) || path.revision < 1) errors.push(`${prefix}: revision must be a positive integer`);
       if (pathIds.has(path?.id)) errors.push(`${prefix}: duplicate path id`);
       pathIds.add(path?.id);
       ["title", "purpose"].forEach(field => {
@@ -168,7 +169,7 @@
     return duration.min === duration.max ? `${duration.min} ${l.minutes}` : `${duration.min}–${duration.max} ${l.minutes}`;
   }
 
-  function launchLinks(resource, lang, catalogueApi) {
+  function launchLinks(resource, lang, catalogueApi, progressUi, context) {
     const l = labels[lang];
     const wrapper = document.createElement("div");
     wrapper.className = "path-resource-launches";
@@ -179,12 +180,13 @@
       link.textContent = l[`launch_${language}`];
       link.setAttribute("aria-label", `${l[`launch_${language}`]}: ${resource.title[lang]}`);
       if (/^https?:\/\//i.test(resource.launches[language])) link.rel = "noopener";
+      progressUi?.bindLaunch(link, resource, language, context);
       wrapper.append(link);
     });
     return wrapper;
   }
 
-  function renderResource(resource, lang, catalogueApi) {
+  function renderResource(resource, lang, catalogueApi, progressUi, context) {
     const l = labels[lang];
     const wrapper = document.createElement("div");
     wrapper.className = "path-resource-option";
@@ -197,7 +199,8 @@
     const metadata = document.createElement("p");
     metadata.className = "path-resource-meta";
     metadata.textContent = `${l.availableIn}: ${Object.keys(resource.launches).map(item => item.toUpperCase()).join(" / ")} · ${l.duration}: ${durationLabel(resource.duration, l)}`;
-    wrapper.append(heading, topic, metadata, launchLinks(resource, lang, catalogueApi));
+    wrapper.append(heading, topic, metadata, launchLinks(resource, lang, catalogueApi, progressUi, context));
+    if (progressUi) wrapper.append(progressUi.resourceControl(resource, lang, context));
     return wrapper;
   }
 
@@ -253,6 +256,7 @@
     rationale.className = "path-step-rationale";
     rationale.textContent = step.rationale[lang];
     body.append(badges);
+    if (options.progressUi) body.append(options.progressUi.pathStepControl(options.path, step, lang));
 
     if (step.kind === "knowledge-explore") {
       const heading = document.createElement("h3");
@@ -265,6 +269,7 @@
       link.href = "#knowledge";
       link.textContent = l.knowledgeAction;
       body.append(heading, rationale, pillars, link);
+      if (options.progressUi) body.append(options.progressUi.exploreControl(options.path, step, lang));
     } else {
       if (step.kind === "resource-choice") {
         const choiceHint = document.createElement("p");
@@ -275,7 +280,9 @@
       body.append(rationale);
       const resourceOptions = document.createElement("div");
       resourceOptions.className = step.kind === "resource-choice" ? "path-resource-options is-choice" : "path-resource-options";
-      resourceIdsForStep(step).forEach(id => resourceOptions.append(renderResource(resources.get(id), lang, options.catalogueApi)));
+      resourceIdsForStep(step).forEach(id => resourceOptions.append(renderResource(resources.get(id), lang, options.catalogueApi, options.progressUi, {
+        pathId: options.path.id, stepId: step.id
+      })));
       body.append(resourceOptions);
     }
     item.append(rail, body);
@@ -328,13 +335,14 @@
     });
     outcomes.append(outcomesTitle, outcomesList);
     overview.append(languages, duration, outcomes);
+    if (options.progressUi) overview.append(options.progressUi.pathOverview(path, lang));
 
     const progressionTitle = document.createElement("h3");
     progressionTitle.className = "path-progression-title";
     progressionTitle.textContent = l.progression;
     const progression = document.createElement("ol");
     progression.className = "learning-path-progression";
-    path.steps.forEach((step, index) => progression.append(renderStep(step, index, resources, lang, options)));
+    path.steps.forEach((step, index) => progression.append(renderStep(step, index, resources, lang, { ...options, path })));
     detail.replaceChildren(header, overview, progressionTitle, progression);
     detail.hidden = false;
     return title;
@@ -370,6 +378,7 @@
     button.setAttribute("aria-expanded", String(options.selectedPathId === path.id));
     button.addEventListener("click", () => onOpen(path.id));
     card.append(languageList, heading, purpose, metadata, button);
+    if (options.progressUi) card.append(options.progressUi.pathCard(path, lang));
     return card;
   }
 
@@ -398,7 +407,7 @@
       if (!path) return;
       selectedPathId = pathId;
       const title = renderPathDetail(path, catalogue, lang, {
-        detailContainer, catalogueApi: options.catalogueApi, pillarLabel: options.pillarLabel, onClose: close
+        detailContainer, catalogueApi: options.catalogueApi, pillarLabel: options.pillarLabel, progressUi: options.progressUi, onClose: close
       });
       syncExpanded();
       options.onSelect?.(pathId);
@@ -411,7 +420,8 @@
     const cards = data.paths.map(path => renderCard(path, catalogue, lang, {
       pillarLabel: options.pillarLabel,
       detailContainer,
-      selectedPathId
+      selectedPathId,
+      progressUi: options.progressUi
     }, open));
     container.replaceChildren(...cards);
     if (selectedPathId) open(selectedPathId, false);

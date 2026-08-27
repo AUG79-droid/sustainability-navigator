@@ -163,7 +163,7 @@
     return `${url}${separator}hubLang=${uiLanguage}`;
   }
 
-  function renderCard(resource, lang, pillarLabel) {
+  function renderCard(resource, lang, pillarLabel, progressUi) {
     const l = labels[lang];
     const card = document.createElement("article");
     card.className = "application-card";
@@ -205,10 +205,12 @@
       launch.textContent = l[`launch_${language}`];
       launch.setAttribute("aria-label", `${l[`launch_${language}`]}: ${resource.title[lang]}`);
       if (/^https?:\/\//i.test(resource.launches[language])) launch.rel = "noopener";
+      progressUi?.bindLaunch(launch, resource, language);
       launches.append(launch);
     });
 
     card.append(top, title, topic, description, metadata, launches);
+    if (progressUi) card.append(progressUi.resourceControl(resource, lang));
     return card;
   }
 
@@ -368,7 +370,7 @@
     function update() {
       const matches = filterResources(resources, state);
       count.textContent = `${matches.length} ${matches.length === 1 ? l.result : l.results}`;
-      grid.replaceChildren(...matches.map(resource => renderCard(resource, lang, options.pillarLabel)));
+      grid.replaceChildren(...matches.map(resource => renderCard(resource, lang, options.pillarLabel, options.progressUi)));
       empty.hidden = matches.length > 0;
       const activeIntention = intentionById(state.intention);
       intentionContext.hidden = !activeIntention;
