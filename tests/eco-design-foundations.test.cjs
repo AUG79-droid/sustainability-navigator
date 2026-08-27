@@ -35,7 +35,7 @@ test("makes the new course the first required Learn step and increments only app
   assert.equal(required[0].id, "eco-design-foundations");
   assert.equal(required[0].resourceId, "eco-design-circularity-aerospace-materials");
   assert.equal(required[0].intention, "learn");
-  assert.equal(eco.revision, 2);
+  assert.equal(eco.revision, 3);
   assert.equal(pathsData.paths.find(item => item.id === "responsible-supply-chain-compliance").revision, 3);
   assert.ok(pathsData.paths.filter(item => ![eco.id, "responsible-supply-chain-compliance"].includes(item.id)).every(item => item.revision === 1));
   for (const id of ["bio-inspired-innovation-lab", "eco-retrofit-mineral-footprint", "reach-compliance-challenge", "tassg-composite-guardian", "year-15-challenge"]) {

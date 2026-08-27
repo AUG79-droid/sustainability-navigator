@@ -7,8 +7,8 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, function (model, storeApi) {
   "use strict";
 
-  const INTERNAL_IDS = new Set(["responsible-supply-chain-compliance-foundations", "eco-design-circularity-aerospace-materials", "supply-chain-compliance-decision-review", "ethical-armor", "phytosanitary-defender", "reach-compliance-challenge", "year-15-challenge"]);
-  const AUTOMATIC_INTERNAL_IDS = new Set(["responsible-supply-chain-compliance-foundations", "eco-design-circularity-aerospace-materials", "supply-chain-compliance-decision-review", "ethical-armor", "reach-compliance-challenge", "year-15-challenge"]);
+  const INTERNAL_IDS = new Set(["responsible-supply-chain-compliance-foundations", "eco-design-circularity-aerospace-materials", "supply-chain-compliance-decision-review", "eco-design-lifecycle-decision-assessment", "ethical-armor", "phytosanitary-defender", "reach-compliance-challenge", "year-15-challenge"]);
+  const AUTOMATIC_INTERNAL_IDS = new Set(["responsible-supply-chain-compliance-foundations", "eco-design-circularity-aerospace-materials", "supply-chain-compliance-decision-review", "eco-design-lifecycle-decision-assessment", "ethical-armor", "reach-compliance-challenge", "year-15-challenge"]);
   const resourceIdsForStep = step => step?.kind === "resource-choice" ? step.resourceIds : step?.kind === "resource" ? [step.resourceId] : [];
 
   function createProgressService(options) {

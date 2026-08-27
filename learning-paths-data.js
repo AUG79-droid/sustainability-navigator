@@ -64,7 +64,7 @@
       },
       {
         id: "eco-design-circularity-materials",
-        revision: 2,
+        revision: 3,
         title: text("Ecodiseño, Circularidad y Materiales", "Eco-Design, Circularity & Materials"),
         purpose: text(
           "Recorrer el ciclo de decisión desde la inspiración y el diseño hasta los materiales, el cumplimiento, el mantenimiento y la extensión de vida.",
@@ -106,7 +106,11 @@
           resource("eco-design-year-15", "year-15-challenge", "apply", "required", text(
             "Cierra la ruta con una decisión avanzada de ecodiseño, mantenibilidad y ciclo de vida.",
             "Close the path with an advanced eco-design, maintainability and life-cycle decision."
-          ), { capstone: true })
+          ), { capstone: true }),
+          resource("eco-design-assessment", "eco-design-lifecycle-decision-assessment", "assess", "required", text(
+            "Integra la ruta mediante decisiones aplicadas sobre ciclo de vida, circularidad, materiales, mantenibilidad, evidencia y trade-offs.",
+            "Integrate the route through applied decisions about life cycle, circularity, materials, maintainability, evidence and trade-offs."
+          ), { finalAssessment: true })
         ]
       },
       {

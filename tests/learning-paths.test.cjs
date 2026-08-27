@@ -76,7 +76,7 @@ test("derives ES and EN completeness only from required catalogue launches", () 
 test("reports documented subtotals without estimating unknown required durations", () => {
   const expected = {
     "sustainable-aviation-foundations": [225, 360, 1],
-    "eco-design-circularity-materials": [255, 255, 3],
+    "eco-design-circularity-materials": [345, 345, 3],
     "responsible-supply-chain-compliance": [305, 305, 0],
     "sustainable-in-service-operations": [0, 0, 5],
     "nature-habitat-operational-risk": [0, 0, 4],
@@ -117,5 +117,5 @@ test("preserves the catalogue and Knowledge Navigator integration points", () =>
   assert.match(html, /id="applications-grid"/);
   assert.match(html, /id="knowledge"/);
   assert.match(html, /src="search-engine\.js"/);
-  assert.equal(catalogue.resources.length, 25);
+  assert.equal(catalogue.resources.length, 26);
 });

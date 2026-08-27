@@ -45,7 +45,7 @@ jobs:
           fi
           site_files=(index.html styles.css app.js data.js search-engine.js catalogue-data.js catalogue.js learning-paths-data.js learning-paths.js progress-model.js progress-store.js progress-service.js progress-selectors.js progress-bridge.js progress-ui.js completion-ui.js)
           for file in "${site_files[@]}"; do test -f "$file"; cp "$file" _site/; done
-          site_dirs=(responsible-supply-chain-compliance-foundations eco-design-circularity-aerospace-materials supply-chain-compliance-decision-review ethical-armor phytosanitary-defender reach-compliance-challenge year-15-challenge)
+          site_dirs=(responsible-supply-chain-compliance-foundations eco-design-circularity-aerospace-materials supply-chain-compliance-decision-review eco-design-lifecycle-decision-assessment ethical-armor phytosanitary-defender reach-compliance-challenge year-15-challenge)
           for dir in "${site_dirs[@]}"; do test -f "$dir/index.html"; cp -a "$dir" _site/; done
           touch _site/.nojekyll
       - name: Configure Pages
