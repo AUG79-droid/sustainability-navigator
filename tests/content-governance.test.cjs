@@ -26,9 +26,9 @@ const valid = (overrides = {}) => ({
 });
 const codes = value => validateCatalogue({ resources: value }, { root, checkInternalFiles: false }).map(item => item.code);
 
-test("the governed public catalogue preserves exactly 23 resources and valid metadata", () => {
+test("the governed public catalogue preserves exactly 24 resources and valid metadata", () => {
   const findings = validateCatalogue(catalogue, { root });
-  assert.equal(catalogue.resources.length, 23);
+  assert.equal(catalogue.resources.length, 24);
   assert.equal(findings.filter(item => item.level === "FAIL").length, 0);
   assert.ok(catalogue.resources.every(resource => resource.lifecycle === "active"));
 });
@@ -137,12 +137,12 @@ test("Pages uses an explicit learner-file allowlist and excludes governance repo
   const workflow = fs.readFileSync(path.join(root, ".github", "workflows", "direct-open-pages.yml"), "utf8");
   assert.match(workflow, /site_files=\(/); assert.match(workflow, /site_dirs=\(/);
   assert.doesNotMatch(workflow, /rsync -a/); assert.doesNotMatch(workflow, /cp[^\n]*(?:governance|tests|governance-report)/);
-  ["responsible-supply-chain-compliance-foundations", "ethical-armor", "phytosanitary-defender", "reach-compliance-challenge", "year-15-challenge"].forEach(directory => assert.match(workflow, new RegExp(directory)));
+  ["responsible-supply-chain-compliance-foundations", "eco-design-circularity-aerospace-materials", "ethical-armor", "phytosanitary-defender", "reach-compliance-challenge", "year-15-challenge"].forEach(directory => assert.match(workflow, new RegExp(directory)));
 });
 
 test("reports are normalized, complete and sanitized", () => {
   const report = normalizeReport({ catalogue, pathsData, inventory, health: [], issues: [{ level: "WARNING", code: "REMOTE", message: "<script> token=secret-value", subject: "remote" }] });
   const output = markdown(report);
-  assert.equal(report.summary.logicalResources, 23); assert.equal(report.summary.paths, 6);
+  assert.equal(report.summary.logicalResources, 24); assert.equal(report.summary.paths, 6);
   assert.doesNotMatch(output, /<script>|secret-value/); assert.match(output, /\[redacted\]/);
 });
