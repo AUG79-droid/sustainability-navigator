@@ -1,8 +1,8 @@
 (function (root, factory) {
-  const api = factory(root.SNProgressSelectors);
-  if (typeof module === "object" && module.exports) module.exports = factory(require("./progress-selectors.js"));
+  const api = factory(root.SNProgressSelectors, root.SNCompletionUI);
+  if (typeof module === "object" && module.exports) module.exports = factory(require("./progress-selectors.js"), require("./completion-ui.js"));
   else root.SNProgressUI = api;
-})(typeof globalThis !== "undefined" ? globalThis : this, function (selectors) {
+})(typeof globalThis !== "undefined" ? globalThis : this, function (selectors, completionApi) {
   "use strict";
 
   const copy = {
@@ -18,8 +18,8 @@
       next: "Siguiente actividad recomendada", noCurrent: "Inicia una ruta para recibir una recomendación contextual.", routeComplete: "Has completado todos los pasos obligatorios de esta ruta.",
       optional: "Actividades opcionales disponibles", recent: "Completado recientemente", none: "Todavía no hay actividad registrada.",
       export: "Exportar progreso", import: "Importar progreso", reset: "Restablecer progreso", replace: "Reemplazar con esta copia", cancel: "Cancelar",
-      importTitle: "Vista previa de importación", importInvalid: "El archivo no contiene un progreso válido.", importSummary: s => `${s.completedResources} recursos completados y ${s.paths} rutas iniciadas.`,
-      resetTitle: "¿Restablecer todo el progreso?", resetBody: "Solo se eliminará el progreso del Sustainability Hub. Esta acción no se puede deshacer.", confirmReset: "Sí, restablecer progreso",
+      importTitle: "Vista previa de importación", importInvalid: "El archivo no contiene un progreso válido.", importSummary: s => `${s.completedResources} recursos completados, ${s.startedPaths} rutas iniciadas, ${s.completedPaths} rutas completadas, ${s.completionRecords} registros de finalización y ${s.historicalRevisions} revisiones históricas.${s.unavailableReferences.length ? ` Aviso: ${s.unavailableReferences.length} referencias archivadas o no disponibles.` : ""}`,
+      resetTitle: "¿Restablecer todo el progreso?", resetBody: "Se eliminarán el progreso de recursos, el progreso de rutas, el historial de finalización y los registros de finalización guardados localmente. Esta acción no se puede deshacer.", resetOutside: "Los registros ya descargados o impresos están fuera del Hub y no pueden eliminarse desde aquí.", exportBeforeReset: "Exportar progreso antes de restablecer", confirmReset: "Sí, restablecer progreso",
       pendingTitle: "¿Terminaste esta actividad?", continueLater: "Continuar más tarde", storedWarning: "El almacenamiento local no está disponible; los cambios no podrán conservarse.",
       limitation: "El siguiente recurso no está disponible en el idioma preferido.", chooseAlternative: "Elige una de las alternativas antes de continuar.", available: "disponible",
       imported: "Progreso restaurado correctamente.", resetDone: "Progreso restablecido.", exported: "Copia de progreso preparada.", changed: "Progreso actualizado."
@@ -36,8 +36,8 @@
       next: "Next recommended activity", noCurrent: "Start a path to receive a contextual recommendation.", routeComplete: "You have completed every required step in this path.",
       optional: "Optional activities available", recent: "Recently completed", none: "No activity has been recorded yet.",
       export: "Export progress", import: "Import progress", reset: "Reset progress", replace: "Replace with this backup", cancel: "Cancel",
-      importTitle: "Import preview", importInvalid: "The file does not contain valid progress data.", importSummary: s => `${s.completedResources} completed resources and ${s.paths} started paths.`,
-      resetTitle: "Reset all progress?", resetBody: "Only Sustainability Hub progress will be deleted. This action cannot be undone.", confirmReset: "Yes, reset progress",
+      importTitle: "Import preview", importInvalid: "The file does not contain valid progress data.", importSummary: s => `${s.completedResources} completed resources, ${s.startedPaths} started paths, ${s.completedPaths} completed paths, ${s.completionRecords} completion records and ${s.historicalRevisions} historical revisions.${s.unavailableReferences.length ? ` Warning: ${s.unavailableReferences.length} archived or unavailable references.` : ""}`,
+      resetTitle: "Reset all progress?", resetBody: "Resource progress, Learning Path progress, completion history and locally stored completion records will be deleted. This action cannot be undone.", resetOutside: "Previously downloaded or printed records are outside the Hub and cannot be deleted here.", exportBeforeReset: "Export progress before reset", confirmReset: "Yes, reset progress",
       pendingTitle: "Did you finish this activity?", continueLater: "Continue later", storedWarning: "Local storage is unavailable; changes cannot be preserved.",
       limitation: "The next resource is not available in the preferred language.", chooseAlternative: "Choose one alternative before continuing.", available: "available",
       imported: "Progress restored successfully.", resetDone: "Progress reset.", exported: "Progress backup prepared.", changed: "Progress updated."
@@ -51,7 +51,8 @@
     const { service, catalogue, pathsData } = options;
     let refresh = options.onChange || (() => {});
     const announce = message => options.liveRegion && (options.liveRegion.textContent = message);
-    const changed = lang => { announce(copy[lang].changed); refresh(); };
+    const completionUi = completionApi.create({ service, catalogue, pathsData, liveRegion: options.liveRegion });
+    const changed = (lang, result = null) => { if (!completionUi.handleResult(result, lang)) announce(copy[lang].changed); refresh(); };
 
     function bindLaunch(link, resource, lang, context = {}) {
       link.addEventListener("click", () => service.startResource(resource.id, { ...context, language: context.language || lang }));
@@ -70,7 +71,7 @@
       if (context.pathId && globalStatus === "completed" && pathStep?.status !== "completed") {
         const note = document.createElement("p"); note.textContent = l.completedPreviously;
         const apply = button(l.applyPrevious);
-        apply.addEventListener("click", () => { service.creditGlobalCompletion(context.pathId, context.stepId, resource.id); changed(lang); });
+        apply.addEventListener("click", () => { const result = service.creditGlobalCompletion(context.pathId, context.stepId, resource.id); changed(lang, result); });
         wrapper.append(note, apply);
       } else if (globalStatus === "completed") {
         const undo = button(l.undo, "progress-action progress-action-secondary");
@@ -84,7 +85,7 @@
           wrapper.append(start);
         }
         const complete = button(l.markComplete);
-        complete.addEventListener("click", () => { service.completeResource(resource.id, { ...context, language: lang, source: "manual" }); changed(lang); });
+        complete.addEventListener("click", () => { const result = service.completeResource(resource.id, { ...context, language: lang, source: "manual" }); changed(lang, result); });
         wrapper.append(complete);
       }
       return wrapper;
@@ -150,7 +151,7 @@
       if (pending) {
         const resource = catalogue.resources.find(item => item.id === pending.resourceId);
         const heading = document.createElement("strong"); heading.textContent = `${l.pendingTitle} ${resourceTitle(resource, lang)}`;
-        const complete = button(l.markComplete); complete.addEventListener("click", () => { service.completeResource(pending.resourceId, { pathId: pending.pathId, stepId: pending.stepId, language: pending.language || lang, source: "manual" }); changed(lang); });
+        const complete = button(l.markComplete); complete.addEventListener("click", () => { const result = service.completeResource(pending.resourceId, { pathId: pending.pathId, stepId: pending.stepId, language: pending.language || lang, source: "manual" }); changed(lang, result); });
         const later = button(l.continueLater, "progress-action progress-action-secondary"); later.addEventListener("click", () => { service.clearPendingLaunch(); changed(lang); });
         pendingBox.append(heading, complete, later);
       }
@@ -176,25 +177,30 @@
       data.optionalActivities.slice(0, 6).forEach(item => { const li = document.createElement("li"); li.textContent = `${resourceTitle(item.resource, lang)} · ${item.path.title[lang]}`; optionalList.append(li); }); optional.append(optionalList);
       const management = document.createElement("div"); management.className = "progress-management";
       const exportButton = button(l.export); exportButton.dataset.progressAction = "export";
-      exportButton.addEventListener("click", () => {
+      const downloadExport = () => {
         const result = service.exportProgress(); if (!result.ok) return;
         const url = URL.createObjectURL(new Blob([result.json], { type: "application/json" }));
         const link = document.createElement("a"); link.href = url; link.download = result.filename; link.hidden = true;
         document.body.append(link); link.click(); link.remove(); window.setTimeout(() => URL.revokeObjectURL(url), 0); announce(l.exported);
-      });
+      };
+      exportButton.addEventListener("click", downloadExport);
       const importLabel = document.createElement("label"); importLabel.className = "progress-file-label"; importLabel.textContent = l.import;
       const importInput = document.createElement("input"); importInput.type = "file"; importInput.accept = "application/json,.json"; importInput.dataset.progressImport = ""; importLabel.append(importInput);
       const resetButton = button(l.reset, "progress-action progress-danger"); resetButton.dataset.progressAction = "reset";
       management.append(exportButton, importLabel, resetButton);
-      if (service.getStorageStatus() !== "available") { const warning = document.createElement("p"); warning.className = "progress-storage-warning"; warning.textContent = l.storedWarning; container.replaceChildren(title, intro, warning, privacy, metrics, pendingBox, current, recent, optional, management); }
-      else container.replaceChildren(title, intro, privacy, metrics, pendingBox, current, recent, optional, management);
-      wireDialogs(container, lang, importInput, resetButton);
+      const completionPanel = completionUi.renderCompletionPanel(lang);
+      const completionHistory = completionUi.renderHistory(lang);
+      const content = [title, intro, privacy, metrics]; if (completionPanel) content.push(completionPanel); content.push(pendingBox, current, completionHistory, recent, optional, management);
+      if (service.getStorageStatus() !== "available") { const warning = document.createElement("p"); warning.className = "progress-storage-warning"; warning.textContent = l.storedWarning; content.splice(2, 0, warning); }
+      container.replaceChildren(...content);
+      wireDialogs(container, lang, importInput, resetButton, downloadExport);
     }
 
-    function wireDialogs(container, lang, importInput, resetButton) {
+    function wireDialogs(container, lang, importInput, resetButton, downloadExport) {
       const l = copy[lang];
       resetButton.addEventListener("click", () => {
-        const dialog = document.createElement("dialog"); dialog.className = "progress-dialog"; dialog.innerHTML = `<form method="dialog"><h2>${l.resetTitle}</h2><p>${l.resetBody}</p><div class="progress-dialog-actions"><button value="cancel">${l.cancel}</button><button class="progress-danger" value="confirm">${l.confirmReset}</button></div></form>`;
+        const dialog = document.createElement("dialog"); dialog.className = "progress-dialog"; dialog.innerHTML = `<form method="dialog"><h2>${l.resetTitle}</h2><p>${l.resetBody}</p><p>${l.resetOutside}</p><div class="progress-dialog-actions"><button type="button" data-reset-export>${l.exportBeforeReset}</button><button value="cancel">${l.cancel}</button><button class="progress-danger" value="confirm">${l.confirmReset}</button></div></form>`;
+        dialog.querySelector("[data-reset-export]").addEventListener("click", downloadExport);
         document.body.append(dialog); dialog.addEventListener("close", () => { if (dialog.returnValue === "confirm") { service.reset(); announce(l.resetDone); refresh(); } dialog.remove(); resetButton.focus(); }); dialog.showModal();
       });
       importInput.addEventListener("change", async () => {
@@ -205,7 +211,7 @@
       });
     }
 
-    return { setRefresh: value => { refresh = value; }, bindLaunch, resourceControl, pathCard, pathOverview, exploreControl, pathStepControl, renderDashboard };
+    return { setRefresh: value => { refresh = value; completionUi.setRefresh(value); }, bindLaunch, resourceControl, pathCard, pathOverview, exploreControl, pathStepControl, renderDashboard, completionUi };
   }
 
   return { copy, create };
