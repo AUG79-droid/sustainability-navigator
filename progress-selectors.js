@@ -15,11 +15,12 @@
     const ids = idsForStep(step);
     return !ids.length || ids.includes(record.resourceId);
   };
+  const usable = resource => resource && resource.status !== "archived" && !["hold", "temporarily-unavailable", "archived", "replaced"].includes(resource.lifecycle || "active");
 
   function languageAvailability(path, catalogue, language) {
     const resources = new Map(catalogue.resources.map(resource => [resource.id, resource]));
     const required = path.steps.filter(step => step.requirement === "required" && step.kind !== "knowledge-explore");
-    const available = required.filter(step => idsForStep(step).some(id => resources.get(id)?.launches?.[language])).length;
+    const available = required.filter(step => idsForStep(step).some(id => usable(resources.get(id)) && resources.get(id)?.launches?.[language])).length;
     return { language, status: available === required.length ? "complete" : available > 0 ? "partial" : "unavailable", available, total: required.length };
   }
 
@@ -60,8 +61,8 @@
     const optional = path.steps.find(step => step.requirement === "optional" && !stepIsComplete(state, path, step));
     if (!next) return { complete: true, recommendedExplore: explore || null, optional: optional || null };
     const chosen = next.kind === "resource-choice" ? record?.selectedAlternatives?.[next.id] || null : next.resourceId;
-    const candidates = idsForStep(next).map(id => resources.get(id)).filter(Boolean);
-    const selectedResource = chosen ? resources.get(chosen) : null;
+    const candidates = idsForStep(next).map(id => resources.get(id)).filter(usable);
+    const selectedResource = chosen && usable(resources.get(chosen)) ? resources.get(chosen) : null;
     const matchingLanguage = candidates.filter(resource => resource.launches?.[preferredLanguage]);
     const recommendation = selectedResource || (matchingLanguage.length === 1 ? matchingLanguage[0] : null);
     return {
@@ -112,7 +113,7 @@
     return sources.map(({ pathId, completion }) => {
       const path = pathMap.get(pathId) || null;
       const evidence = [...completion.requiredStepEvidence, ...completion.optionalStepEvidenceAtCompletion, ...completion.supplementalOptionalEvidence];
-      const unavailableResourceIds = [...new Set(evidence.map(item => item.resourceId).filter(id => id && (!resourceMap.has(id) || resourceMap.get(id)?.status === "archived")))];
+      const unavailableResourceIds = [...new Set(evidence.map(item => item.resourceId).filter(id => id && (!resourceMap.has(id) || resourceMap.get(id)?.status === "archived" || ["archived", "replaced"].includes(resourceMap.get(id)?.lifecycle))))];
       const currentRevision = path?.revision || null;
       const currentSummary = path ? pathSummary(state, path, catalogue) : null;
       let relationship = "historical";

@@ -23,7 +23,7 @@
       launch_es: "Abrir en español", launch_en: "Abrir en inglés", availableIn: "Disponible en", unknown: "No documentada", minutes: "min",
       total: "Total", documentedSubtotal: "Subtotal documentado", totalUnavailable: "duración total aún no disponible",
       noDocumentedDuration: "Duración total aún no disponible; ningún paso obligatorio tiene duración documentada.",
-      maintenanceRequired: "Esta ruta requiere mantenimiento: contiene un recurso obligatorio archivado o no disponible. No se sustituirá automáticamente.",
+      maintenanceRequired: "Esta ruta está temporalmente afectada por mantenimiento. Tu progreso se conserva y no se sustituirá ningún recurso automáticamente.", unavailableResource: "Temporalmente no disponible; el progreso previo se conserva.",
       requiredCoverage: "pasos obligatorios disponibles", chooseOne: "Completa una de estas alternativas",
       general: "Público general", engineering: "Ingeniería", operations: "Operaciones", managers: "Managers", sustainability: "Sostenibilidad",
       procurement: "Compras y supply chain", maintenance: "Mantenimiento", innovation: "Innovación", quality: "Calidad", "in-service": "In-Service",
@@ -41,7 +41,7 @@
       launch_es: "Open in Spanish", launch_en: "Open in English", availableIn: "Available in", unknown: "Not documented", minutes: "min",
       total: "Total", documentedSubtotal: "Documented subtotal", totalUnavailable: "total duration not yet available",
       noDocumentedDuration: "Total duration is not yet available; no required step has a documented duration.",
-      maintenanceRequired: "This path requires maintenance: it contains an archived or unavailable required resource. It will not be substituted automatically.",
+      maintenanceRequired: "This path is temporarily affected by maintenance. Your progress is preserved and no resource will be substituted automatically.", unavailableResource: "Temporarily unavailable; previous progress is preserved.",
       requiredCoverage: "required steps available", chooseOne: "Complete one of these alternatives",
       general: "General audience", engineering: "Engineering", operations: "Operations", managers: "Managers", sustainability: "Sustainability",
       procurement: "Procurement & supply chain", maintenance: "Maintenance", innovation: "Innovation", quality: "Quality", "in-service": "In-Service",
@@ -53,6 +53,7 @@
   const resourceMap = catalogue => new Map((catalogue?.resources || []).map(resource => [resource.id, resource]));
   const requiredResourceSteps = path => path.steps.filter(step => step.requirement === "required" && step.kind !== "knowledge-explore");
   const languageStatus = (available, total) => total > 0 && available === total ? "complete" : available > 0 ? "partial" : "unavailable";
+  const usable = resource => resource && resource.status !== "archived" && !["hold", "temporarily-unavailable", "archived", "replaced"].includes(resource.lifecycle || "active");
 
   function validateLearningPaths(data, catalogue) {
     const errors = [];
@@ -114,7 +115,7 @@
   function languageAvailability(path, catalogue, language) {
     const resources = resourceMap(catalogue);
     const required = requiredResourceSteps(path);
-    const available = required.filter(step => resourceIdsForStep(step).some(id => Boolean(resources.get(id)?.launches?.[language]))).length;
+    const available = required.filter(step => resourceIdsForStep(step).some(id => usable(resources.get(id)) && Boolean(resources.get(id)?.launches?.[language]))).length;
     return { language, status: languageStatus(available, required.length), availableRequired: available, totalRequired: required.length };
   }
 
@@ -126,7 +127,7 @@
     const resources = resourceMap(catalogue);
     const unavailableResourceIds = requiredResourceSteps(path).flatMap(step => {
       const ids = resourceIdsForStep(step);
-      const unavailable = ids.filter(id => !resources.has(id) || resources.get(id)?.status === "archived");
+      const unavailable = ids.filter(id => !usable(resources.get(id)));
       return unavailable.length === ids.length ? unavailable : [];
     });
     return { required: unavailableResourceIds.length > 0, unavailableResourceIds: [...new Set(unavailableResourceIds)] };
@@ -187,6 +188,11 @@
     const l = labels[lang];
     const wrapper = document.createElement("div");
     wrapper.className = "path-resource-launches";
+    if (!usable(resource)) {
+      wrapper.classList.add("is-unavailable");
+      const notice = document.createElement("p"); notice.className = "path-resource-unavailable"; notice.setAttribute("role", "status"); notice.textContent = l.unavailableResource; wrapper.append(notice);
+      return wrapper;
+    }
     Object.keys(resource.launches).filter(language => ["es", "en"].includes(language)).forEach(language => {
       const link = document.createElement("a");
       link.className = "path-resource-launch";

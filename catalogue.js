@@ -26,7 +26,7 @@
       allAudiences: "Todas las audiencias", allLanguages: "Todos los idiomas", allDifficulties: "Todas las dificultades",
       allDurations: "Cualquier duración", clear: "Limpiar filtros", result: "recurso", results: "recursos", noResults: "No hay recursos que coincidan con estos filtros.",
       kind: "Tipo de recurso", topic: "Tema", audience: "Audiencia", language: "Idioma", duration: "Duración estimada",
-      difficulty: "Dificultad", status: "Estado", pillars: "Pilares relacionados", available: "Disponible",
+      difficulty: "Dificultad", status: "Estado", pillars: "Pilares relacionados", available: "Disponible", "temporarily-unavailable": "Temporalmente no disponible", unavailableNotice: "Este recurso sigue visible, pero no puede abrirse temporalmente. Tu progreso y tu historial se conservan.",
       unknown: "No documentada", minutes: "min", short: "Hasta 30 min", medium: "31–60 min", long: "Más de 60 min",
       foundation: "Inicial", intermediate: "Intermedia", advanced: "Avanzada", progressive: "Progresiva",
       application: "Aplicación", course: "Curso", quiz: "Quiz", simulator: "Simulador", game: "Juego", "knowledge-resource": "Recurso de conocimiento",
@@ -47,7 +47,7 @@
       allAudiences: "All audiences", allLanguages: "All languages", allDifficulties: "All difficulties",
       allDurations: "Any duration", clear: "Clear filters", result: "resource", results: "resources", noResults: "No resources match these filters.",
       kind: "Resource type", topic: "Topic", audience: "Audience", language: "Language", duration: "Estimated duration",
-      difficulty: "Difficulty", status: "Status", pillars: "Related pillars", available: "Available",
+      difficulty: "Difficulty", status: "Status", pillars: "Related pillars", available: "Available", "temporarily-unavailable": "Temporarily unavailable", unavailableNotice: "This resource remains visible, but cannot currently be launched. Your progress and completion history are preserved.",
       unknown: "Not documented", minutes: "min", short: "Up to 30 min", medium: "31–60 min", long: "More than 60 min",
       foundation: "Foundation", intermediate: "Intermediate", advanced: "Advanced", progressive: "Progressive",
       application: "Application", course: "Course", quiz: "Quiz", simulator: "Simulator", game: "Game", "knowledge-resource": "Knowledge resource",
@@ -66,11 +66,13 @@
 
   const normalise = value => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   const languagesOf = resource => Object.keys(resource.launches || {}).filter(language => ["es", "en"].includes(language));
+  const discoverable = resource => !["hold", "archived", "replaced"].includes(resource.lifecycle || "active");
+  const launchable = resource => (resource.lifecycle || "active") === "active";
   const intentionById = id => LEARNING_INTENTIONS.find(intention => intention.id === id);
 
   function resourcesForIntention(resources, intentionId) {
     const intention = intentionById(intentionId);
-    return intention ? resources.filter(resource => intention.kinds.includes(resource.kind)) : [...resources];
+    return intention ? resources.filter(resource => discoverable(resource) && intention.kinds.includes(resource.kind)) : resources.filter(discoverable);
   }
 
   function intentionCounts(resources) {
@@ -131,7 +133,7 @@
         resource.title.es, resource.title.en, resource.description.es, resource.description.en,
         resource.learningTopic.es, resource.learningTopic.en
       ].join(" "));
-      return (!filters.intention || filters.intention === "all" || resourcesForIntention([resource], filters.intention).length === 1)
+      return discoverable(resource) && (!filters.intention || filters.intention === "all" || resourcesForIntention([resource], filters.intention).length === 1)
         && (!query || searchable.includes(query))
         && (selected.kind === "all" || resource.kind === selected.kind)
         && (selected.pillar === "all" || resource.pillarIds.includes(selected.pillar))
@@ -176,7 +178,7 @@
     kind.textContent = l[resource.kind] || resource.kind;
     const status = document.createElement("span");
     status.className = "application-status";
-    status.textContent = l[resource.status] || resource.status;
+    status.textContent = l[resource.lifecycle] || l[resource.status] || resource.lifecycle || resource.status;
     top.append(kind, status);
 
     const title = document.createElement("h3");
@@ -198,7 +200,15 @@
 
     const launches = document.createElement("div");
     launches.className = "application-launches";
-    languagesOf(resource).forEach(language => {
+    if (!launchable(resource)) {
+      launches.classList.add("is-unavailable");
+      const notice = document.createElement("p");
+      notice.className = "application-unavailable-notice";
+      notice.setAttribute("role", "status");
+      notice.textContent = l.unavailableNotice;
+      launches.append(notice);
+    }
+    languagesOf(resource).filter(() => launchable(resource)).forEach(language => {
       const launch = document.createElement("a");
       launch.className = "application-launch";
       launch.href = launchHref(resource.launches[language], lang);
@@ -315,7 +325,7 @@
       query: "", kind: "all", pillar: "all", audience: "all", language: "all", difficulty: "all", duration: "all",
       intention: intentionById(options?.initialIntention) ? options.initialIntention : "all"
     };
-    const resources = catalogue.resources;
+    const resources = catalogue.resources.filter(discoverable);
 
     const discovery = document.createElement("div");
     discovery.className = "catalogue-discovery";
@@ -417,6 +427,6 @@
   return {
     REQUIRED_FIELDS, KINDS, DIFFICULTIES, LEARNING_INTENTIONS,
     validateResource, validateCatalogue, durationBucket, filterResources, resourcesForIntention, intentionCounts,
-    launchHref, syncIntentionButtons, renderIntentions, render
+    launchHref, discoverable, launchable, syncIntentionButtons, renderIntentions, render
   };
 });

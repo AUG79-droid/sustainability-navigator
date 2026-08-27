@@ -24,10 +24,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Node
-        if: ${{ hashFiles('package.json') != '' }}
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Validate content and run tests
+        run: |
+          node governance/check-content.cjs
+          node --test tests/*.test.cjs
       - name: Prepare site
         shell: bash
         run: |
@@ -40,8 +43,10 @@ jobs:
               if node -e "const p=require('./package.json'); process.exit((p.dependencies&&p.dependencies.vite)||(p.devDependencies&&p.devDependencies.vite)?0:1)"; then npm run build -- --base=./; else npm run build; fi
             fi
           fi
-          if [ -d dist ]; then cp -a dist/. _site/; elif [ -d build ]; then cp -a build/. _site/; elif [ -d out ]; then cp -a out/. _site/; else rsync -a --exclude='.git' --exclude='.github' --exclude='node_modules' --exclude='_site' ./ _site/; fi
-          if [ ! -f _site/index.html ]; then printf '%s\n' '<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Repository</title><style>body{font-family:Arial,sans-serif;background:#081525;color:#eef6ff;padding:32px;line-height:1.6}</style><h1>Repository available</h1><p>This repository does not contain a directly runnable index page.</p>' > _site/index.html; fi
+          site_files=(index.html styles.css app.js data.js search-engine.js catalogue-data.js catalogue.js learning-paths-data.js learning-paths.js progress-model.js progress-store.js progress-service.js progress-selectors.js progress-bridge.js progress-ui.js completion-ui.js)
+          for file in "${site_files[@]}"; do test -f "$file"; cp "$file" _site/; done
+          site_dirs=(ethical-armor phytosanitary-defender reach-compliance-challenge year-15-challenge)
+          for dir in "${site_dirs[@]}"; do test -f "$dir/index.html"; cp -a "$dir" _site/; done
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5

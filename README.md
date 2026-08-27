@@ -56,3 +56,34 @@ node --check catalogue-data.js
 node --check catalogue.js
 node --test tests/*.test.cjs
 ```
+# Content governance and resource health
+
+The public catalogue remains the single source of learner-facing resources. Each logical resource has one stable `id`; Spanish and English launches belong to that same record. Learning Paths keep referencing those IDs, so progress and completion history remain attached to stable identities.
+
+Before publishing any catalogue or Learning Path change:
+
+1. Open a terminal in this repository.
+2. Run `node governance/check-content.cjs`.
+3. Read the final line. `PASS` means there are no blocking publication errors. Warnings identify honest unknown metadata or items needing human review; they do not invent missing information.
+4. Run `node --test tests/*.test.cjs`.
+5. Correct every `FAIL · Must fix before publication` finding before requesting review.
+
+Use `node governance/check-content.cjs --report --verbose` to create a private JSON and Markdown maintainer report in `governance-report/`. Add `--health` only when Internet access is available. Network observations never edit catalogue lifecycle, never publish a HOLD item, and never become editorial truth automatically.
+
+## Lifecycle and languages
+
+- `active`: visible and launchable.
+- `hold`: not public; publication requires explicit human approval.
+- `temporarily-unavailable`: visible with a bilingual maintenance notice, but not launchable. Existing progress and history remain intact.
+- `archived`: absent from normal discovery while historical completion evidence remains resolvable.
+- `replaced`: absent from normal discovery and linked to a genuine successor with `replacedBy`; completion is not transferred.
+
+`languages` records editions that actually exist. `intendedLanguages` records editorial intent. `launches` records deployed destinations. An English-only resource is valid; bilingual Hub interface copy does not make its educational content bilingual.
+
+Aliases are reserved for a technical ID migration of the same logical resource. A repository rename, URL update or presentation-title correction normally keeps the canonical ID. A genuinely different pedagogical replacement receives a new ID and must not inherit completion automatically.
+
+The non-public inventory in `governance/inventory-data.cjs` records HOLD and other disposition decisions. It is deliberately excluded from GitHub Pages.
+
+## Automated checks
+
+Pull requests, pushes to `main`, and manual runs execute deterministic content validation plus the complete test suite. A separate weekly/manual workflow observes external launch health with limited requests, timeouts and no remote JavaScript execution. Its reports are workflow artifacts, not learner-facing files. GitHub Pages uses an explicit allowlist containing only the Hub and the four internal applications.

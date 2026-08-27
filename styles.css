@@ -111,3 +111,15 @@ footer{padding:28px clamp(20px,5vw,72px);display:flex;justify-content:space-betw
   .completion-record{padding:0}.completion-record h2,.completion-path-title,.completion-evidence-section h3,.completion-outcomes h3,.completion-pillars h3{color:#111}.completion-limitation{border:2px solid #111;background:#fff;color:#111}.completion-backup-distinction,.completion-history-warning{border-left:3px solid #111;background:#fff;color:#111}.completion-print-name-value:not([hidden]),.completion-name-notice:not([hidden]){display:block!important;color:#111}.completion-evidence-item,.completion-name-field{break-inside:avoid;border-color:#555;background:#fff}.completion-marker,.completion-supplemental{border:1px solid #555;background:#fff;color:#111}.completion-generated{color:#333}
 }
 .learning-path-open,.path-close-button,.path-resource-launch{min-height:44px}.path-resource-launch{align-items:center}
+.application-unavailable-notice,
+.path-resource-unavailable {
+  margin: 0;
+  padding: .8rem 1rem;
+  border: 1px solid #d6a84b;
+  border-radius: .65rem;
+  background: rgba(214, 168, 75, .12);
+  color: inherit;
+  line-height: 1.45;
+}
+
+.application-status { white-space: nowrap; }
