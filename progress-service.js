@@ -36,7 +36,7 @@
       const result = store.save(state);
       if (result.ok) { state = result.state; storageStatus = "available"; emit(event); }
       else storageStatus = result.reason;
-      return result;
+      return { ...result, event };
     };
     const ensurePath = (pathId, language = "es") => {
       const path = findPath(pathId);
@@ -55,13 +55,63 @@
       const ids = resourceIdsForStep(step);
       return !ids.length || ids.includes(value.resourceId);
     };
+    const evidenceForStep = (record, step) => {
+      const value = record.steps[step.id];
+      if (!value || value.status !== "completed") return null;
+      return {
+        stepId: step.id,
+        resourceId: value.resourceId || null,
+        requirement: step.requirement,
+        intention: step.intention,
+        completedAt: value.completedAt || null,
+        language: value.language || null,
+        completionSource: value.completionSource || null,
+        finalAssessment: step.finalAssessment === true,
+        capstone: step.capstone === true,
+        optionalDiagnostic: step.requirement === "optional" && step.intention === "assess" && step.finalAssessment !== true
+      };
+    };
     const recordPathCompletion = pathId => {
       const path = findPath(pathId), record = state.paths[pathId];
-      if (!path || !record) return;
+      if (!path || !record) return null;
       const required = path.steps.filter(step => step.requirement === "required" && step.kind !== "knowledge-explore");
-      if (!required.length || !required.every(step => stepCompleted(record, step))) return;
+      if (!required.length || !required.every(step => stepCompleted(record, step))) return null;
       const revision = path.revision || 1;
-      if (!record.completionHistory.some(item => item.revision === revision)) record.completionHistory.push({ revision, completedAt: now() });
+      if (record.completionHistory.some(item => item.pathRevision === revision)) return null;
+      const completedAt = now();
+      const requiredStepEvidence = required.map(step => evidenceForStep(record, step)).filter(Boolean);
+      const optionalStepEvidenceAtCompletion = path.steps.filter(step => step.requirement === "optional" && stepCompleted(record, step)).map(step => evidenceForStep(record, step)).filter(Boolean);
+      const languagesUsed = [...new Set([...requiredStepEvidence, ...optionalStepEvidenceAtCompletion].map(item => item.language).filter(Boolean))];
+      const completion = {
+        completionId: `${path.id}:r${revision}:${completedAt}`,
+        recordVersion: model.COMPLETION_RECORD_VERSION,
+        pathId: path.id,
+        pathRevision: revision,
+        completedAt,
+        requiredStepEvidence,
+        optionalStepEvidenceAtCompletion,
+        supplementalOptionalEvidence: [],
+        languagesUsed,
+        overallLanguage: languagesUsed.length === 1 ? languagesUsed[0] : languagesUsed.length > 1 ? "mixed" : null,
+        learningOutcomeIds: Array.isArray(path.outcomeIds) ? [...path.outcomeIds] : [],
+        verificationState: model.VERIFICATION_STATE,
+        historicalEvidenceIncomplete: false
+      };
+      record.completionHistory.push(completion);
+      return completion;
+    };
+    const recordSupplementalOptional = (pathId, stepId) => {
+      const path = findPath(pathId), record = state.paths[pathId];
+      const step = path?.steps.find(item => item.id === stepId);
+      if (!path || !record || step?.requirement !== "optional") return null;
+      const completion = record.completionHistory.find(item => item.pathRevision === (path.revision || 1));
+      const evidence = evidenceForStep(record, step);
+      if (!completion || !evidence) return null;
+      const alreadyInitial = completion.optionalStepEvidenceAtCompletion.some(item => item.stepId === stepId);
+      const alreadySupplemental = completion.supplementalOptionalEvidence.some(item => item.stepId === stepId);
+      if (alreadyInitial || alreadySupplemental) return null;
+      completion.supplementalOptionalEvidence.push(evidence);
+      return evidence;
     };
     const setGlobal = (resourceId, status, language, source) => {
       if (!resources.has(resourceId)) throw new Error(`Unknown resource: ${resourceId}`);
@@ -117,6 +167,7 @@
       const source = context.source || "manual";
       if (!model.COMPLETION_SOURCES.includes(source)) throw new Error("Unsupported completion source");
       setGlobal(resourceId, "completed", context.language, source);
+      let completion = null, supplemental = null;
       if (context.pathId && context.stepId) {
         const step = findStep(context.pathId, context.stepId);
         if (!step || !resourceIdsForStep(step).includes(resourceId)) throw new Error("Resource does not belong to this path step");
@@ -127,11 +178,13 @@
           startedAt: record.steps[step.id]?.startedAt || state.resources[resourceId].startedAt || now(), completedAt: now(),
           lastActivityAt: now(), completionSource: source
         };
-        recordPathCompletion(context.pathId);
+        completion = recordPathCompletion(context.pathId);
+        if (!completion) supplemental = recordSupplementalOptional(context.pathId, context.stepId);
       }
       if (state.preferences.pendingLaunch?.resourceId === resourceId) state.preferences.pendingLaunch = null;
       activity("resource-completed", { resourceId, pathId: context.pathId, stepId: context.stepId });
-      return persist({ type: "resource-completed", resourceId });
+      const event = completion ? { type: "path-completed", resourceId, pathId: context.pathId, completionId: completion.completionId } : supplemental ? { type: "supplemental-optional-completed", resourceId, pathId: context.pathId, stepId: context.stepId } : { type: "resource-completed", resourceId };
+      return persist(event);
     }
 
     function reportInternalCompletion(resourceId, language) {
@@ -152,9 +205,10 @@
         status: "completed", resourceId, language: state.resources[resourceId].language,
         startedAt: state.resources[resourceId].startedAt || now(), completedAt: now(), lastActivityAt: now(), completionSource: "previous-completion"
       };
-      recordPathCompletion(pathId);
+      const completion = recordPathCompletion(pathId);
+      const supplemental = completion ? null : recordSupplementalOptional(pathId, stepId);
       activity("previous-completion-applied", { resourceId, pathId, stepId });
-      return persist({ type: "previous-completion-applied", resourceId, pathId, stepId });
+      return persist(completion ? { type: "path-completed", resourceId, pathId, completionId: completion.completionId } : supplemental ? { type: "supplemental-optional-completed", resourceId, pathId, stepId } : { type: "previous-completion-applied", resourceId, pathId, stepId });
     }
 
     function visitExplore(pathId, stepId) {
@@ -186,6 +240,12 @@
       if (!record?.steps[stepId]) return { ok: true, state: getState() };
       const previous = record.steps[stepId];
       record.steps[stepId] = { ...previous, status: previous.resourceId ? "in_progress" : "visited", completedAt: null, completionSource: null, lastActivityAt: now() };
+      const path = findPath(pathId), revision = path?.revision || 1;
+      if (path?.steps.find(step => step.id === stepId)?.requirement === "required") record.completionHistory = record.completionHistory.filter(item => item.pathRevision !== revision);
+      else record.completionHistory.forEach(item => {
+        item.optionalStepEvidenceAtCompletion = item.optionalStepEvidenceAtCompletion.filter(evidence => evidence.stepId !== stepId);
+        item.supplementalOptionalEvidence = item.supplementalOptionalEvidence.filter(evidence => evidence.stepId !== stepId);
+      });
       activity("path-step-undone", { pathId, stepId, resourceId: previous.resourceId });
       return persist({ type: "path-step-undone", pathId, stepId });
     }

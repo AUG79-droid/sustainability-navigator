@@ -31,7 +31,7 @@
     const completedOptional = optional.filter(step => stepIsComplete(state, path, step)).length;
     const currentComplete = required.length > 0 && completedRequired === required.length;
     const currentRevision = path.revision || 1;
-    const earlierCompletion = record?.completionHistory?.some(item => item.revision < currentRevision);
+    const earlierCompletion = record?.completionHistory?.some(item => item.pathRevision < currentRevision);
     const status = !record ? "not_started" : currentComplete ? "completed" : earlierCompletion ? "update_available" : "in_progress";
     return {
       pathId: path.id, status, started: Boolean(record), required: required.length, completedRequired,
@@ -78,7 +78,8 @@
     const completedResources = Object.entries(state.resources).filter(([id, value]) => resourceMap.has(id) && value.status === "completed");
     const summaries = pathsData.paths.map(path => pathSummary(state, path, catalogue));
     const started = summaries.filter(item => item.started);
-    const completed = summaries.filter(item => item.status === "completed");
+    const records = completionRecords(state, catalogue, pathsData);
+    const completed = new Set(records.map(item => item.record.pathId));
     const activePath = currentPath(state, pathsData);
     let assessments = 0, capstones = 0;
     pathsData.paths.forEach(path => path.steps.forEach(step => {
@@ -96,11 +97,44 @@
     });
     return {
       completedResources: completedResources.length, totalResources: catalogue.resources.length,
-      pathsStarted: started.length, pathsCompleted: completed.length, assessmentsCompleted: assessments, capstonesCompleted: capstones,
+      pathsStarted: started.length, pathsCompleted: completed.size, assessmentsCompleted: assessments, capstonesCompleted: capstones,
       currentPath: activePath, currentSummary: activePath ? pathSummary(state, activePath, catalogue) : null,
-      next: activePath ? nextActivity(state, activePath, catalogue) : null, recent, optionalActivities
+      next: activePath ? nextActivity(state, activePath, catalogue) : null, recent, optionalActivities, completionRecords: records
     };
   }
 
-  return { idsForStep, resourceStatus, pathRecord, stepRecord, stepIsComplete, languageAvailability, pathSummary, currentPath, nextActivity, dashboard };
+  function completionRecords(state, catalogue, pathsData) {
+    const pathMap = new Map(pathsData.paths.map(path => [path.id, path]));
+    const resourceMap = new Map(catalogue.resources.map(resource => [resource.id, resource]));
+    const sources = [];
+    Object.entries(state.paths || {}).forEach(([pathId, record]) => (record.completionHistory || []).forEach(completion => sources.push({ pathId, completion })));
+    Object.entries(state.history?.paths || {}).forEach(([pathId, record]) => (record.completionHistory || []).forEach(completion => sources.push({ pathId, completion })));
+    return sources.map(({ pathId, completion }) => {
+      const path = pathMap.get(pathId) || null;
+      const evidence = [...completion.requiredStepEvidence, ...completion.optionalStepEvidenceAtCompletion, ...completion.supplementalOptionalEvidence];
+      const unavailableResourceIds = [...new Set(evidence.map(item => item.resourceId).filter(id => id && (!resourceMap.has(id) || resourceMap.get(id)?.status === "archived")))];
+      const currentRevision = path?.revision || null;
+      const currentSummary = path ? pathSummary(state, path, catalogue) : null;
+      let relationship = "historical";
+      if (unavailableResourceIds.length) relationship = "contains_archived";
+      else if (path && completion.pathRevision === currentRevision) relationship = "current";
+      else if (path && completion.pathRevision < currentRevision && currentSummary?.status === "update_available") relationship = "update_available";
+      const assessmentCompleted = evidence.some(item => item.finalAssessment);
+      const capstoneCompleted = evidence.some(item => item.capstone);
+      const diagnosticCompleted = evidence.some(item => item.optionalDiagnostic);
+      return {
+        record: completion, path, relationship, currentRevision, unavailableResourceIds,
+        assessmentCompleted, capstoneCompleted, diagnosticCompleted,
+        requiredCount: completion.requiredStepEvidence.length,
+        optionalAtCompletionCount: completion.optionalStepEvidenceAtCompletion.length,
+        supplementalCount: completion.supplementalOptionalEvidence.length
+      };
+    }).sort((a, b) => Date.parse(b.record.completedAt || 0) - Date.parse(a.record.completedAt || 0));
+  }
+
+  function completionRecord(state, catalogue, pathsData, completionId) {
+    return completionRecords(state, catalogue, pathsData).find(item => item.record.completionId === completionId) || null;
+  }
+
+  return { idsForStep, resourceStatus, pathRecord, stepRecord, stepIsComplete, languageAvailability, pathSummary, currentPath, nextActivity, dashboard, completionRecords, completionRecord };
 });

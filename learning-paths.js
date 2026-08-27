@@ -23,6 +23,7 @@
       launch_es: "Abrir en español", launch_en: "Abrir en inglés", availableIn: "Disponible en", unknown: "No documentada", minutes: "min",
       total: "Total", documentedSubtotal: "Subtotal documentado", totalUnavailable: "duración total aún no disponible",
       noDocumentedDuration: "Duración total aún no disponible; ningún paso obligatorio tiene duración documentada.",
+      maintenanceRequired: "Esta ruta requiere mantenimiento: contiene un recurso obligatorio archivado o no disponible. No se sustituirá automáticamente.",
       requiredCoverage: "pasos obligatorios disponibles", chooseOne: "Completa una de estas alternativas",
       general: "Público general", engineering: "Ingeniería", operations: "Operaciones", managers: "Managers", sustainability: "Sostenibilidad",
       procurement: "Compras y supply chain", maintenance: "Mantenimiento", innovation: "Innovación", quality: "Calidad", "in-service": "In-Service",
@@ -40,6 +41,7 @@
       launch_es: "Open in Spanish", launch_en: "Open in English", availableIn: "Available in", unknown: "Not documented", minutes: "min",
       total: "Total", documentedSubtotal: "Documented subtotal", totalUnavailable: "total duration not yet available",
       noDocumentedDuration: "Total duration is not yet available; no required step has a documented duration.",
+      maintenanceRequired: "This path requires maintenance: it contains an archived or unavailable required resource. It will not be substituted automatically.",
       requiredCoverage: "required steps available", chooseOne: "Complete one of these alternatives",
       general: "General audience", engineering: "Engineering", operations: "Operations", managers: "Managers", sustainability: "Sustainability",
       procurement: "Procurement & supply chain", maintenance: "Maintenance", innovation: "Innovation", quality: "Quality", "in-service": "In-Service",
@@ -66,6 +68,8 @@
       ["title", "purpose"].forEach(field => {
         if (!path?.[field]?.es || !path?.[field]?.en) errors.push(`${prefix}: ${field} must contain es and en`);
       });
+      if (!Array.isArray(path.outcomeIds) || path.outcomeIds.length !== path.outcomes?.es?.length || path.outcomeIds.length !== path.outcomes?.en?.length) errors.push(`${prefix}: outcomeIds must map one-to-one to bilingual outcomes`);
+      else if (new Set(path.outcomeIds).size !== path.outcomeIds.length || path.outcomeIds.some(id => typeof id !== "string" || !id)) errors.push(`${prefix}: outcomeIds must be unique non-empty strings`);
       if (!Array.isArray(path?.outcomes?.es) || !path.outcomes.es.length || !Array.isArray(path?.outcomes?.en) || !path.outcomes.en.length) {
         errors.push(`${prefix}: outcomes must contain non-empty es and en arrays`);
       }
@@ -116,6 +120,16 @@
 
   function languageAvailabilityForPath(path, catalogue) {
     return { es: languageAvailability(path, catalogue, "es"), en: languageAvailability(path, catalogue, "en") };
+  }
+
+  function pathMaintenance(path, catalogue) {
+    const resources = resourceMap(catalogue);
+    const unavailableResourceIds = requiredResourceSteps(path).flatMap(step => {
+      const ids = resourceIdsForStep(step);
+      const unavailable = ids.filter(id => !resources.has(id) || resources.get(id)?.status === "archived");
+      return unavailable.length === ids.length ? unavailable : [];
+    });
+    return { required: unavailableResourceIds.length > 0, unavailableResourceIds: [...new Set(unavailableResourceIds)] };
   }
 
   function durationSummary(path, catalogue) {
@@ -335,6 +349,8 @@
     });
     outcomes.append(outcomesTitle, outcomesList);
     overview.append(languages, duration, outcomes);
+    const maintenance = pathMaintenance(path, catalogue);
+    if (maintenance.required) { const warning = document.createElement("p"); warning.className = "path-maintenance-warning"; warning.textContent = l.maintenanceRequired; overview.append(warning); }
     if (options.progressUi) overview.append(options.progressUi.pathOverview(path, lang));
 
     const progressionTitle = document.createElement("h3");
@@ -378,6 +394,8 @@
     button.setAttribute("aria-expanded", String(options.selectedPathId === path.id));
     button.addEventListener("click", () => onOpen(path.id));
     card.append(languageList, heading, purpose, metadata, button);
+    const maintenance = pathMaintenance(path, catalogue);
+    if (maintenance.required) { const warning = document.createElement("p"); warning.className = "path-maintenance-warning"; warning.textContent = l.maintenanceRequired; card.insertBefore(warning, button); }
     if (options.progressUi) card.append(options.progressUi.pathCard(path, lang));
     return card;
   }
@@ -435,6 +453,6 @@
   return {
     INTENTIONS, REQUIREMENTS, STEP_KINDS, RESOURCE_METADATA_FIELDS,
     resourceIdsForStep, requiredResourceSteps, validateLearningPaths,
-    languageAvailability, languageAvailabilityForPath, durationSummary, durationText, render
+    languageAvailability, languageAvailabilityForPath, pathMaintenance, durationSummary, durationText, render
   };
 });

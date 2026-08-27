@@ -34,6 +34,7 @@
           ["Reconocer el alcance de los seis pilares.", "Explicar conceptos fundamentales de sostenibilidad en aviación.", "Aplicar los fundamentos a una decisión colaborativa o de misión.", "Comprobar conocimientos transversales."],
           ["Recognise the scope of the six pillars.", "Explain core sustainability concepts in aviation.", "Apply the foundations to a collaborative or mission decision.", "Check cross-cutting knowledge."]
         ),
+        outcomeIds: ["six-pillar-scope", "aviation-sustainability-foundations", "collaborative-mission-application", "cross-cutting-knowledge-check"],
         steps: [
           explore("foundations-explore", ["P1", "P2", "P3", "P4", "P5", "P6"], text(
             "Explora vocabulario y preguntas clave antes del curso. Esta recomendación no bloquea el progreso mientras el contenido siga pendiente de validación editorial.",
@@ -76,6 +77,7 @@
           ["Aplicar pensamiento de ciclo de vida.", "Relacionar innovación con materiales y trazabilidad.", "Reconocer obligaciones químicas relevantes.", "Comparar reparación, sustitución y extensión de vida."],
           ["Apply life-cycle thinking.", "Connect innovation with materials and traceability.", "Recognise relevant chemicals obligations.", "Compare repair, replacement and life extension."]
         ),
+        outcomeIds: ["life-cycle-thinking", "materials-innovation-traceability", "chemicals-obligations", "repair-replacement-life-extension"],
         steps: [
           explore("eco-design-explore", ["P2", "P3", "P5"], text(
             "Consulta conceptos de circularidad, ciclo de vida, materiales críticos y trazabilidad como apoyo opcional.",
@@ -118,6 +120,7 @@
           ["Diferenciar evidencia, trazabilidad y diligencia debida.", "Aplicar un enfoque proporcional al riesgo.", "Reconocer fundamentos de ISPM-15 y REACH.", "Documentar vacíos, excepciones y acciones correctivas."],
           ["Distinguish evidence, traceability and due diligence.", "Apply a risk-proportionate approach.", "Recognise ISPM-15 and REACH foundations.", "Document gaps, exceptions and corrective actions."]
         ),
+        outcomeIds: ["evidence-traceability-due-diligence", "risk-proportionate-approach", "ispm15-reach-foundations", "gaps-exceptions-corrective-actions"],
         steps: [
           explore("supply-explore", ["P5", "P1", "P2"], text(
             "Consulta cadena de valor, diligencia debida, riesgo y evidencia de proveedor como orientación recomendada.",
@@ -160,6 +163,7 @@
           ["Interpretar ruido, hábitat, suelo y huella operacional.", "Integrar sostenibilidad con seguridad y continuidad.", "Evaluar mantenimiento y reparación de composites.", "Tomar decisiones interdependientes bajo presión."],
           ["Interpret noise, habitat, soil and operational footprint.", "Integrate sustainability with safety and continuity.", "Evaluate composite maintenance and repair.", "Make interconnected decisions under pressure."]
         ),
+        outcomeIds: ["operational-footprint-interpretation", "sustainability-safety-continuity", "composite-maintenance-repair", "interconnected-decisions-under-pressure"],
         steps: [
           explore("in-service-explore", ["P1", "P2", "P5", "P6"], text(
             "Consulta rendimiento, ruido, reparación, resiliencia y naturaleza como apoyo recomendado.",
@@ -206,6 +210,7 @@
           ["Diferenciar clima, naturaleza, impacto y dependencia.", "Utilizar información específica del lugar.", "Relacionar hábitat, suelo y fauna con decisiones operacionales.", "Integrar naturaleza y seguridad en decisiones de misión."],
           ["Distinguish climate, nature, impact and dependency.", "Use location-specific information.", "Connect habitat, soil and wildlife with operational decisions.", "Integrate nature and safety into mission decisions."]
         ),
+        outcomeIds: ["climate-nature-impact-dependency", "location-specific-information", "habitat-soil-wildlife-decisions", "nature-safety-mission-decisions"],
         steps: [
           explore("nature-explore", ["P6", "P1"], text(
             "Consulta biodiversidad, ecosistemas, conectividad, adaptación y ruido como exploración recomendada.",
@@ -252,6 +257,7 @@
           ["Evaluar alcance, método y límites de la evidencia.", "Analizar interdependencias y consecuencias no intencionadas.", "Incorporar incertidumbre y trazabilidad.", "Tomar y comprobar decisiones bajo presión."],
           ["Assess the scope, method and limits of evidence.", "Analyse interdependencies and unintended consequences.", "Incorporate uncertainty and traceability.", "Make and check decisions under pressure."]
         ),
+        outcomeIds: ["evidence-scope-method-limits", "interdependencies-unintended-consequences", "uncertainty-traceability", "decisions-under-pressure"],
         steps: [
           resource("decision-diagnostic", "sustainability-knowledge-check-evidence", "assess", "optional", text(
             "Detecta brechas antes de comenzar; es un diagnóstico, no la evaluación final.",

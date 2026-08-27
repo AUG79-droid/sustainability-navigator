@@ -89,6 +89,13 @@
       const state = model.reconcile(migration.state, catalogue, pathsData);
       const errors = model.validateState(state);
       if (errors.length) return { ok: false, reason: "invalid", errors };
+      const currentPaths = new Map((pathsData?.paths || []).map(path => [path.id, path]));
+      const currentResources = new Set((catalogue?.resources || []).filter(resource => resource.status !== "archived").map(resource => resource.id));
+      const records = [];
+      Object.entries(state.paths).forEach(([pathId, path]) => (path.completionHistory || []).forEach(record => records.push({ pathId, record })));
+      Object.entries(state.history?.paths || {}).forEach(([pathId, path]) => (path.completionHistory || []).forEach(record => records.push({ pathId, record })));
+      const unavailableReferences = [...new Set(records.flatMap(({ record }) => [...(record.requiredStepEvidence || []), ...(record.optionalStepEvidenceAtCompletion || []), ...(record.supplementalOptionalEvidence || [])]).map(item => item.resourceId).filter(id => id && !currentResources.has(id)))];
+      const historicalRevisions = records.filter(({ pathId, record }) => !currentPaths.has(pathId) || record.pathRevision < (currentPaths.get(pathId)?.revision || 1)).length;
       return {
         ok: true,
         exportedAt: typeof parsed.exportedAt === "string" ? parsed.exportedAt : null,
@@ -96,7 +103,12 @@
         summary: {
           resources: Object.keys(state.resources).length,
           completedResources: Object.values(state.resources).filter(item => item.status === "completed").length,
-          paths: Object.keys(state.paths).length
+          paths: Object.keys(state.paths).length,
+          startedPaths: Object.keys(state.paths).length,
+          completedPaths: new Set(records.map(item => item.pathId)).size,
+          completionRecords: records.length,
+          historicalRevisions,
+          unavailableReferences
         }
       };
     }

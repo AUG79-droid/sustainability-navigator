@@ -28,6 +28,15 @@ function completeFoundation(service) {
   service.completeResource("tas-sustainability-knowledge-check", { pathId: "sustainable-aviation-foundations", stepId: "foundations-assessment", language: "es", source: "manual" });
 }
 
+function completePath(service, pathId, language = "en") {
+  const pathItem = pathsData.paths.find(item => item.id === pathId);
+  service.startPath(pathId, language);
+  pathItem.steps.filter(step => step.requirement === "required" && step.kind !== "knowledge-explore").forEach(step => {
+    const resourceId = step.kind === "resource-choice" ? step.resourceIds[0] : step.resourceId;
+    service.completeResource(resourceId, { pathId, stepId: step.id, language, source: "manual" });
+  });
+}
+
 test("uses the approved versioned key and handles empty, corrupt, unsupported and migrated storage", () => {
   assert.equal(model.STORAGE_KEY, "sustainability-navigator.progress");
   const empty = harness();
@@ -164,7 +173,7 @@ test("preserves completion across path revisions and flags a new required step a
   const updated = harness({ storage, pathsData: revised });
   const summary = selectors.pathSummary(updated.service.getState(), path, catalogue);
   assert.equal(summary.status, "update_available");
-  assert.ok(updated.service.getState().paths[path.id].completionHistory.some(item => item.revision === 1));
+  assert.ok(updated.service.getState().paths[path.id].completionHistory.some(item => item.pathRevision === 1));
   const optionalRevision = JSON.parse(JSON.stringify(pathsData));
   optionalRevision.paths[0].revision = 2;
   optionalRevision.paths[0].steps.push({ id: "new-optional", kind: "resource", resourceId: "bio-inspired-innovation-lab", intention: "practice", requirement: "optional", rationale: { es: "Opcional", en: "Optional" } });
@@ -245,4 +254,159 @@ test("injects the strict bridge only into verified finals and leaves Phytosanita
     assert.ok(html.includes(`data-completion-selector=\"${selector}\"`));
   });
   assert.doesNotMatch(fs.readFileSync(path.join(root, "phytosanitary-defender/index.html"), "utf8"), /progress-bridge\.js/);
+});
+
+test("migrates schema v1 completion history to private schema v2 records without fabricating evidence", () => {
+  const v1 = model.createEmptyState(catalogue.version, pathsData.version);
+  v1.schemaVersion = 1;
+  v1.paths["sustainable-aviation-foundations"] = {
+    definitionRevision: 1, preferredLanguage: "es", startedAt: "2026-08-20T10:00:00.000Z", lastActivityAt: "2026-08-20T11:00:00.000Z",
+    selectedAlternatives: {}, steps: {}, completionHistory: [{ revision: 1, completedAt: "2026-08-20T11:00:00.000Z" }], history: { steps: {} }
+  };
+  const storage = storeApi.createMemoryStorage({ [model.STORAGE_KEY]: JSON.stringify(v1) });
+  const loaded = harness({ storage }).service.getState();
+  const record = loaded.paths["sustainable-aviation-foundations"].completionHistory[0];
+  assert.equal(loaded.schemaVersion, 2);
+  assert.equal(record.pathRevision, 1);
+  assert.equal(record.verificationState, "local-self-managed");
+  assert.equal(record.historicalEvidenceIncomplete, true);
+  assert.deepEqual(record.requiredStepEvidence, []);
+  assert.equal(record.completedAt, "2026-08-20T11:00:00.000Z");
+});
+
+test("imports a schema v1 backup and rejects unsupported future backups", () => {
+  const { service } = harness();
+  const old = { schemaVersion: 1, preferences: { dashboardLanguage: "es" }, resources: {}, paths: {}, recentActivity: [], history: { resources: {}, paths: {} } };
+  const preview = service.previewImport(JSON.stringify({ format: storeApi.EXPORT_FORMAT, exportedAt: "2026-08-20T10:00:00.000Z", progress: old }));
+  assert.equal(preview.ok, true);
+  assert.equal(preview.state.schemaVersion, 2);
+  const future = service.previewImport(JSON.stringify({ format: storeApi.EXPORT_FORMAT, progress: { schemaVersion: 99 } }));
+  assert.equal(future.ok, false);
+  assert.equal(future.reason, "unsupported");
+});
+
+test("creates one self-managed evidence record for each completed path revision", () => {
+  const { service } = harness();
+  completeFoundation(service);
+  let records = service.getState().paths["sustainable-aviation-foundations"].completionHistory;
+  assert.equal(records.length, 1);
+  const record = records[0];
+  assert.equal(record.recordVersion, 1);
+  assert.equal(record.pathId, "sustainable-aviation-foundations");
+  assert.equal(record.pathRevision, 1);
+  assert.equal(record.requiredStepEvidence.length, 3);
+  assert.equal(record.optionalStepEvidenceAtCompletion.length, 0);
+  assert.equal(record.verificationState, "local-self-managed");
+  assert.deepEqual(record.learningOutcomeIds, pathsData.paths[0].outcomeIds);
+  assert.deepEqual(Object.keys(record).filter(key => ["title", "description", "launches", "duration", "repositoryUrl", "score", "answers", "learnerName"].includes(key)), []);
+  service.completeResource("tas-sustainability-knowledge-check", { pathId: "sustainable-aviation-foundations", stepId: "foundations-assessment", language: "es", source: "manual" });
+  records = service.getState().paths["sustainable-aviation-foundations"].completionHistory;
+  assert.equal(records.length, 1, "repeating a final step must not duplicate the revision record");
+});
+
+test("snapshots optional evidence at completion and appends later optional evidence without changing completion time", () => {
+  const { service } = harness();
+  service.startPath("sustainable-aviation-foundations", "es");
+  service.completeResource("tas-sustainability-quest", { pathId: "sustainable-aviation-foundations", stepId: "foundations-quest", language: "es", source: "manual" });
+  completeFoundation(service);
+  const before = service.getState().paths["sustainable-aviation-foundations"].completionHistory[0];
+  assert.deepEqual(before.optionalStepEvidenceAtCompletion.map(item => item.stepId), ["foundations-quest"]);
+  service.completeResource("airpower-mission-green-2026", { pathId: "sustainable-aviation-foundations", stepId: "foundations-mission", language: "en", source: "manual" });
+  const after = service.getState().paths["sustainable-aviation-foundations"].completionHistory[0];
+  assert.equal(after.completedAt, before.completedAt);
+  assert.deepEqual(after.requiredStepEvidence, before.requiredStepEvidence);
+  assert.deepEqual(after.optionalStepEvidenceAtCompletion, before.optionalStepEvidenceAtCompletion);
+  assert.deepEqual(after.learningOutcomeIds, before.learningOutcomeIds);
+  assert.deepEqual(after.optionalStepEvidenceAtCompletion.map(item => item.stepId), ["foundations-quest"]);
+  assert.deepEqual(after.supplementalOptionalEvidence.map(item => item.stepId), ["foundations-mission"]);
+});
+
+test("records language evidence honestly and labels assessments without a pass claim", () => {
+  const { service } = harness();
+  service.startPath("sustainable-aviation-foundations", "es");
+  service.completeResource("sustainable-aviation-essentials", { pathId: "sustainable-aviation-foundations", stepId: "foundations-course", language: "es", source: "manual" });
+  service.completeResource("sustainability-systems-escape-room", { pathId: "sustainable-aviation-foundations", stepId: "foundations-systems", language: "en", source: "manual" });
+  service.completeResource("tas-sustainability-knowledge-check", { pathId: "sustainable-aviation-foundations", stepId: "foundations-assessment", language: "en", source: "manual" });
+  const record = service.getState().paths["sustainable-aviation-foundations"].completionHistory[0];
+  assert.deepEqual(record.languagesUsed.sort(), ["en", "es"]);
+  assert.equal(record.overallLanguage, "mixed");
+  const assessment = record.requiredStepEvidence.find(item => item.stepId === "foundations-assessment");
+  assert.equal(assessment.finalAssessment, true);
+  assert.equal(Object.hasOwn(assessment, "passed"), false);
+  assert.equal(Object.hasOwn(assessment, "score"), false);
+});
+
+test("classifies current, update-available and archived completion records", () => {
+  const base = harness(); completeFoundation(base.service); const saved = base.service.getState();
+  let records = selectors.completionRecords(saved, catalogue, pathsData);
+  assert.equal(records[0].relationship, "current");
+  assert.equal(records[0].assessmentCompleted, true);
+  const revised = JSON.parse(JSON.stringify(pathsData)); revised.paths[0].revision = 2;
+  revised.paths[0].steps.push({ id: "new-required", kind: "resource", resourceId: "bio-inspired-innovation-lab", intention: "practice", requirement: "required", rationale: { es: "Nueva", en: "New" } });
+  records = selectors.completionRecords(model.reconcile(saved, catalogue, revised), catalogue, revised);
+  assert.equal(records[0].relationship, "update_available");
+  const archivedCatalogue = JSON.parse(JSON.stringify(catalogue)); archivedCatalogue.resources.find(item => item.id === "sustainable-aviation-essentials").status = "archived";
+  records = selectors.completionRecords(saved, archivedCatalogue, pathsData);
+  assert.equal(records[0].relationship, "contains_archived");
+});
+
+test("retains revision 1 and creates a distinct revision 2 record after new requirements are completed", () => {
+  const original = harness(); completeFoundation(original.service); const first = original.service.getState();
+  const revised = JSON.parse(JSON.stringify(pathsData)); const pathItem = revised.paths[0]; pathItem.revision = 2;
+  pathItem.steps.push({ id: "foundations-new-required", kind: "resource", resourceId: "bio-inspired-innovation-lab", intention: "practice", requirement: "required", rationale: { es: "Nueva práctica", en: "New practice" } });
+  const updated = harness({ storage: storeApi.createMemoryStorage({ [model.STORAGE_KEY]: JSON.stringify(first) }), pathsData: revised });
+  updated.service.completeResource("bio-inspired-innovation-lab", { pathId: pathItem.id, stepId: "foundations-new-required", language: "en", source: "manual" });
+  const records = updated.service.getState().paths[pathItem.id].completionHistory;
+  assert.deepEqual(records.map(item => item.pathRevision), [1, 2]);
+  assert.notEqual(records[0].completionId, records[1].completionId);
+  assert.equal(records[0].completedAt, first.paths[pathItem.id].completionHistory[0].completedAt);
+});
+
+test("distinguishes practice capstones and optional diagnostics from formal assessments", () => {
+  const eco = harness(); completePath(eco.service, "eco-design-circularity-materials", "en");
+  const ecoRecord = selectors.completionRecords(eco.service.getState(), catalogue, pathsData)[0];
+  assert.equal(ecoRecord.capstoneCompleted, true);
+  assert.equal(ecoRecord.assessmentCompleted, false);
+  const inService = harness(); completePath(inService.service, "sustainable-in-service-operations", "en");
+  inService.service.completeResource("sustainability-knowledge-check-evidence", { pathId: "sustainable-in-service-operations", stepId: "in-service-diagnostic", language: "en", source: "manual" });
+  const inServiceRecord = selectors.completionRecords(inService.service.getState(), catalogue, pathsData)[0];
+  assert.equal(inServiceRecord.diagnosticCompleted, true);
+  assert.equal(inServiceRecord.assessmentCompleted, false);
+  assert.equal(inServiceRecord.capstoneCompleted, true);
+});
+
+test("exports completion history without identity or unsupported achievement claims and reset removes it", () => {
+  const { service } = harness(); completeFoundation(service);
+  const exported = service.exportProgress();
+  assert.equal(JSON.parse(exported.json).progress.schemaVersion, 2);
+  assert.doesNotMatch(exported.json, /learnerName|certificate|credential|badge|score|passed/i);
+  const preview = service.previewImport(exported.json);
+  assert.deepEqual([preview.summary.completedPaths, preview.summary.completionRecords], [1, 1]);
+  service.reset();
+  assert.deepEqual(service.getState().paths, {});
+  assert.deepEqual(service.getState().history.paths, {});
+});
+
+test("never upgrades imported completion records beyond local-self-managed verification", () => {
+  const source = harness(); completeFoundation(source.service);
+  const payload = JSON.parse(source.service.exportProgress().json);
+  payload.progress.paths["sustainable-aviation-foundations"].completionHistory[0].verificationState = "externally-verified";
+  const target = harness(); const preview = target.service.previewImport(JSON.stringify(payload));
+  assert.equal(preview.ok, true);
+  assert.equal(preview.state.paths["sustainable-aviation-foundations"].completionHistory[0].verificationState, "local-self-managed");
+});
+
+test("loads the completion UI before progress UI and keeps optional print identity out of persistence", () => {
+  const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
+  const ui = fs.readFileSync(path.join(root, "completion-ui.js"), "utf8");
+  const css = fs.readFileSync(path.join(root, "styles.css"), "utf8");
+  assert.ok(html.indexOf("completion-ui.js") < html.indexOf("progress-ui.js"));
+  assert.match(ui, /Personal Learning Completion Record/);
+  assert.match(ui, /not an accredited qualification or proof of professional competence/);
+  assert.match(ui, /Final assessment completed — pass result not recorded/);
+  assert.match(ui, /Practice capstone completed/);
+  assert.match(ui, /Optional diagnostic completed/);
+  assert.doesNotMatch(ui, /localStorage|learnerName/);
+  assert.match(css, /@media print/);
+  assert.match(css, /prefers-reduced-motion/);
 });
