@@ -119,8 +119,8 @@
         text("Noise & Habitat — Missions 01–06", "Noise & Habitat — Missions 01–06"),
         text("Curso operacional basado en seis misiones sobre ruido, hábitat y decisiones de servicio bajo presión.", "An operational six-mission course about noise, habitat and in-service decisions under pressure."),
         text("Ruido, hábitat y operaciones", "Noise, habitat and operations"),
-        ["in-service", "operations", "environment"], { en: pages("noise-habitat-operations-under-pressure") }, null, "foundation",
-        ["P1", "P4", "P6"], [repository("noise-habitat-operations-under-pressure", ["en"])]),
+        ["in-service", "operations", "environment"], { es: pages("noise-habitat-operations-under-pressure") + "?hubLang=es", en: pages("noise-habitat-operations-under-pressure") + "?hubLang=en" }, null, "foundation",
+        ["P1", "P4", "P6"], [repository("noise-habitat-operations-under-pressure", ["es", "en"])]),
 
       resource("strategic-soil-footprint-mapper", "simulator", "tactical-mission-simulator",
         text("Strategic Soil & Footprint Mapper", "Strategic Soil & Footprint Mapper"),
