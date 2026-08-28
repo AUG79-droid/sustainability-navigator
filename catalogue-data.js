@@ -216,11 +216,11 @@
         ["P5", "P1"], [repository("sustainability-navigator", ["en"])], { legacyInternal: true }),
 
       resource("reach-compliance-challenge", "application", "scenario-challenge",
-        text("The REACH Compliance Challenge", "The REACH Compliance Challenge"),
+        text("El Reto de Cumplimiento REACH", "The REACH Compliance Challenge"),
         text("Experiencia basada en escenarios para reconocer obligaciones, evidencias y decisiones clave de cumplimiento bajo REACH.", "A scenario-based experience for recognising key REACH obligations, evidence and compliance decisions."),
         text("Cumplimiento químico REACH", "REACH chemicals compliance"),
-        ["engineering", "procurement", "sustainability"], { en: "reach-compliance-challenge/" }, { min: 30, max: 30, unit: "minutes" }, "intermediate",
-        ["P2", "P5"], [repository("sustainability-navigator", ["en"])], { legacyInternal: true }),
+        ["engineering", "procurement", "sustainability"], { es: "reach-compliance-challenge/", en: "reach-compliance-challenge/" }, { min: 30, max: 30, unit: "minutes" }, "intermediate",
+        ["P2", "P5"], [repository("sustainability-navigator", ["es", "en"])], { legacyInternal: true }),
 
       resource("year-15-challenge", "application", "scenario-challenge",
         text("The Year 15 Challenge", "The Year 15 Challenge"),

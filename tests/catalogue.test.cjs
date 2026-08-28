@@ -41,7 +41,7 @@ test("uses supported resource kinds and verified nullable metadata", () => {
 
 test("groups confirmed Spanish and English counterparts into one card", () => {
   const bilingual = catalogue.resources.filter(resource => resource.launches.es && resource.launches.en);
-  assert.equal(bilingual.length, 14);
+  assert.equal(bilingual.length, 15);
   const essentials = catalogue.resources.find(resource => resource.id === "sustainable-aviation-essentials");
   assert.equal(essentials.title.es, "Fundamentos de Aviación Sostenible");
   assert.equal(essentials.title.en, "Sustainable Aviation Essentials");
