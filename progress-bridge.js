@@ -51,6 +51,10 @@
     }
   }
   const observer = new MutationObserver(inspect);
-  observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
-  inspect();
+  function startObserver() {
+    observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
+    inspect();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", startObserver, { once: true });
+  else startObserver();
 })();
