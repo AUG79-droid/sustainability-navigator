@@ -84,6 +84,14 @@
         { es: pages("curso-biodiversidad-airbus"), en: pages("curso-biodiversidad-airbus-en") }, { min: 180, max: 300, unit: "minutes" }, "foundation",
         ["P1", "P2", "P3", "P5", "P6"], [repository("curso-biodiversidad-airbus", ["es"]), repository("curso-biodiversidad-airbus-en", ["en"])]),
 
+      resource("esg-essentials-air-power-services", "course", "foundation-digital-course",
+        text("ESG Essentials", "ESG Essentials"),
+        text("Curso digital en inglés de fundamentos ESG para conectar evidencia, personas, gobernanza y decisiones de negocio en servicios de potencia aérea.", "An English digital foundation course connecting ESG evidence, people, governance and better business decisions in Air Power Services."),
+        text("Environmental, Social & Governance for Air Power Services", "Environmental, Social & Governance for Air Power Services"),
+        ["general", "engineering", "operations", "procurement", "managers", "sustainability"],
+        { en: pages("esg-essentials-air-power-services") }, { min: 459, max: 459, unit: "minutes" }, "foundation",
+        ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("esg-essentials-air-power-services", ["en"])], { fullTitle: "Environmental, Social & Governance for Air Power Services", noPriorExpertiseRequired: true }),
+
       resource("eco-retrofit-mineral-footprint", "game", "responsible-sourcing-game",
         text("Eco-Retrofit · The Mineral Footprint", "Eco-Retrofit · The Mineral Footprint"),
         text("Juego serio para explorar la huella mineral y las decisiones de aprovisionamiento responsable asociadas al retrofit.", "A serious game exploring mineral footprints and responsible-sourcing decisions in retrofit work."),

@@ -16,10 +16,10 @@ function knowledgeData() {
   return context.window.SN_DATA;
 }
 
-test("registers 26 logical resources in the version 2 catalogue", () => {
+test("registers 27 logical resources in the version 2 catalogue", () => {
   assert.equal(catalogue.version, 2);
-  assert.equal(catalogue.resources.length, 26);
-  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 26);
+  assert.equal(catalogue.resources.length, 27);
+  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 27);
   assert.deepEqual(api.validateCatalogue(catalogue), []);
   assert.deepEqual(catalogue.resources.filter(resource => resource.legacyInternal).map(resource => resource.id).sort(), legacyIds);
 });
@@ -61,7 +61,7 @@ test("keeps the master course separate and omits excluded or held repositories",
 });
 
 test("catalogue filters compose without inventing unknown values", () => {
-  assert.equal(api.filterResources(catalogue.resources, { kind: "course" }).length, 7);
+  assert.equal(api.filterResources(catalogue.resources, { kind: "course" }).length, 8);
   assert.ok(api.filterResources(catalogue.resources, { language: "es" }).every(resource => resource.launches.es));
   assert.ok(api.filterResources(catalogue.resources, { difficulty: "unknown" }).every(resource => resource.difficulty === null));
   assert.ok(api.filterResources(catalogue.resources, { duration: "unknown" }).every(resource => resource.duration === null));
@@ -74,7 +74,7 @@ test("catalogue filters compose without inventing unknown values", () => {
 
 test("derives the four learner intentions from the single catalogue", () => {
   assert.deepEqual(api.intentionCounts(catalogue.resources), {
-    learn: 7,
+    learn: 8,
     practice: 14,
     assess: 4,
     explore: 1
@@ -88,6 +88,17 @@ test("derives the four learner intentions from the single catalogue", () => {
     api.filterResources(catalogue.resources, { intention: "practice", kind: "simulator" }).map(resource => resource.kind),
     Array(5).fill("simulator")
   );
+});
+
+test("registers the English ESG Essentials course as a verified foundation resource", () => {
+  const course = catalogue.resources.find(resource => resource.id === "esg-essentials-air-power-services");
+  assert.ok(course);
+  assert.equal(course.title.en, "ESG Essentials");
+  assert.equal(course.fullTitle, "Environmental, Social & Governance for Air Power Services");
+  assert.deepEqual(course.launches, { en: "https://aug79-droid.github.io/esg-essentials-air-power-services/" });
+  assert.deepEqual(course.duration, { min: 459, max: 459, unit: "minutes" });
+  assert.equal(course.difficulty, "foundation");
+  assert.deepEqual(course.pillarIds, ["P1", "P2", "P3", "P4", "P5", "P6"]);
 });
 
 test("homepage provides data-driven learner navigation without duplicate cards", () => {

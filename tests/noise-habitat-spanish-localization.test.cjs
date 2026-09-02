@@ -12,8 +12,8 @@ const inventory = require("../governance/inventory-data.cjs");
 const id = "noise-habitat-missions";
 const resource = catalogue.resources.find(item => item.id === id);
 
-test("keeps one bilingual Noise & Habitat identity in catalogue 26", () => {
-  assert.equal(catalogue.resources.length, 26);
+test("keeps one bilingual Noise & Habitat identity in catalogue 27", () => {
+  assert.equal(catalogue.resources.length, 27);
   assert.equal(catalogue.resources.filter(item => item.id === id).length, 1);
   assert.deepEqual(resource.languages, ["es", "en"]);
   assert.deepEqual(resource.launches, {
