@@ -30,7 +30,7 @@
     version: 2,
     resources: [
       resource("airpower-mission-green-2026", "game", "decision-game",
-        text("Airpower Mission Green 2026", "Airpower Mission Green 2026"),
+        text("Reto Airpower de Sostenibilidad 2026", "Airpower Sustainability Challenge 2026"),
         text("Juego de decisiones sobre misiones aéreas que integra rendimiento operacional, impacto ambiental, resiliencia y responsabilidad.", "A mission decision game integrating operational performance, environmental impact, resilience and responsibility."),
         text("Decisiones de sostenibilidad en misiones aéreas", "Sustainability decisions in air missions"),
         ["operations", "sustainability"],
@@ -93,8 +93,8 @@
         ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("esg-essentials-air-power-services", ["en"])], { fullTitle: "Environmental, Social & Governance for Air Power Services", noPriorExpertiseRequired: true }),
 
       resource("eco-retrofit-mineral-footprint", "game", "responsible-sourcing-game",
-        text("Eco-Retrofit · The Mineral Footprint", "Eco-Retrofit · The Mineral Footprint"),
-        text("Juego serio para explorar la huella mineral y las decisiones de aprovisionamiento responsable asociadas al retrofit.", "A serious game exploring mineral footprints and responsible-sourcing decisions in retrofit work."),
+        text("La huella mineral · Reto de modernización", "The Mineral Footprint · Retrofit Challenge"),
+        text("Juego serio para explorar la huella mineral y las decisiones de aprovisionamiento responsable asociadas a la modernización.", "A serious game exploring mineral footprints and responsible-sourcing decisions in retrofit work."),
         text("Huella mineral y aprovisionamiento responsable", "Mineral footprint and responsible sourcing"),
         ["engineering", "procurement", "sustainability"], { en: pages("eco-retrofit-mineral-footprint") }, null, null,
         ["P2", "P5", "P6"], [repository("eco-retrofit-mineral-footprint", ["en"])]),
