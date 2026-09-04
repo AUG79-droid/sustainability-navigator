@@ -14,13 +14,13 @@ Hub de aprendizaje bilingüe y estático para explorar conocimiento y recursos d
 - Amplía cada resultado con teoría, aplicación aeronáutica, método, ejemplo, preguntas de decisión y límites.
 - Muestra fuente institucional, fecha de revisión y responsable funcional propuesto en cada ficha.
 - Mantiene biodiversidad de forma explícita dentro de `P6 · Climate, Nature & Biodiversity`.
-- Incorpora un catálogo central de 27 recursos lógicos de aprendizaje. Las ediciones ES/EN confirmadas de un mismo producto se agrupan en una única ficha.
+- Incorpora un catálogo central de 29 recursos lógicos de aprendizaje. Las ediciones ES/EN confirmadas de un mismo producto se agrupan en una única ficha.
 - Integra seis Learning Paths construidos a partir de los recursos del catálogo.
 - Mantiene el progreso asociado a identificadores estables de recurso, incluso cuando cambia el título visible, la URL o el repositorio técnico del mismo producto educativo.
 
 ## Catálogo de aprendizaje interactivo
 
-El catálogo público contiene actualmente 27 recursos lógicos entre cursos, aplicaciones, simuladores, juegos, evaluaciones y recursos de conocimiento. Los recursos externos se abren en sus despliegues públicos; varias experiencias históricas se integran dentro del propio Navigator mediante cargadores internos y conservan retorno al Hub.
+El catálogo público contiene actualmente 29 recursos lógicos entre cursos, aplicaciones, simuladores, juegos, evaluaciones y recursos de conocimiento. Los recursos externos se abren en sus despliegues públicos; varias experiencias históricas se integran dentro del propio Navigator mediante cargadores internos y conservan retorno al Hub.
 
 Los recursos se registran en `catalogue-data.js`. Cada producto educativo conserva un identificador estable. Un cambio de título visible, URL o nombre de repositorio del mismo producto no crea un recurso nuevo ni transfiere el progreso a otro identificador. Los elementos en `HOLD` permanecen fuera del catálogo público hasta aprobación explícita.
 
@@ -48,7 +48,7 @@ No requiere instalación ni servidor para consultar la versión estática. Abre 
 - `data.js`: pilares, fuentes y 90 fichas bilingües ampliadas.
 - `search-engine.js`: normalización, sinónimos, puntuación, coincidencias aproximadas y sugerencias.
 - `app.js`: filtros, paginación, URL compartible, cambio de idioma y renderizado accesible.
-- `catalogue-data.js`: fuente estructurada de los 27 recursos lógicos.
+- `catalogue-data.js`: fuente estructurada de los 29 recursos lógicos.
 - `catalogue.js`: validación y renderizado bilingüe del catálogo de aprendizaje.
 - `learning-paths-data.js`: definición de las seis Learning Paths.
 - `governance/inventory-data.cjs`: inventario no público de recursos en HOLD u otras disposiciones.

@@ -238,7 +238,7 @@ test("preserves all Hub integration points and exposes the bilingual progress de
   assert.match(html, /id="applications-grid"/);
   assert.match(html, /id="knowledge"/);
   assert.match(html, /id="learning-paths-grid"/);
-  assert.equal(catalogue.resources.length, 27);
+  assert.equal(catalogue.resources.length, 29);
   assert.equal(pathsData.paths.length, 6);
   assert.equal(pathsData.paths.find(item => item.id === "responsible-supply-chain-compliance").revision, 3);
   assert.equal(pathsData.paths.find(item => item.id === "eco-design-circularity-materials").revision, 3);
