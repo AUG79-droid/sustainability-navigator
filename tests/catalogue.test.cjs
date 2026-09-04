@@ -16,10 +16,10 @@ function knowledgeData() {
   return context.window.SN_DATA;
 }
 
-test("registers 27 logical resources in the version 2 catalogue", () => {
+test("registers 29 logical resources in the version 2 catalogue", () => {
   assert.equal(catalogue.version, 2);
-  assert.equal(catalogue.resources.length, 27);
-  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 27);
+  assert.equal(catalogue.resources.length, 29);
+  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 29);
   assert.deepEqual(api.validateCatalogue(catalogue), []);
   assert.deepEqual(catalogue.resources.filter(resource => resource.legacyInternal).map(resource => resource.id).sort(), legacyIds);
 });
@@ -41,7 +41,7 @@ test("uses supported resource kinds and verified nullable metadata", () => {
 
 test("groups confirmed Spanish and English counterparts into one card", () => {
   const bilingual = catalogue.resources.filter(resource => resource.launches.es && resource.launches.en);
-  assert.equal(bilingual.length, 16);
+  assert.equal(bilingual.length, 17);
   const essentials = catalogue.resources.find(resource => resource.id === "sustainable-aviation-essentials");
   assert.equal(essentials.title.es, "Fundamentos de Aviación Sostenible");
   assert.equal(essentials.title.en, "Sustainable Aviation Essentials");
@@ -51,17 +51,17 @@ test("groups confirmed Spanish and English counterparts into one card", () => {
   assert.equal(library.provenance.length, 1, "one bilingual repository remains one logical resource");
 });
 
-test("keeps the master course separate and omits excluded or held repositories", () => {
+test("keeps the master course separate and includes the repaired approved courses", () => {
   const master = catalogue.resources.find(resource => resource.id === "sustainable-aviation-foundations-master");
   assert.equal(master.title.en, "Sustainable Aviation Foundations — Master Course");
   assert.deepEqual(Object.keys(master.launches), ["en"]);
   const repositories = catalogue.resources.flatMap(resource => resource.provenance.map(item => item.repositoryName));
-  assert.ok(!repositories.includes("advanced-sustainability-air-power-services"));
-  assert.ok(!repositories.includes("aero-skills-launchpad"));
+  assert.ok(repositories.includes("advanced-sustainability-air-power-services"));
+  assert.ok(repositories.includes("aero-skills-launchpad"));
 });
 
 test("catalogue filters compose without inventing unknown values", () => {
-  assert.equal(api.filterResources(catalogue.resources, { kind: "course" }).length, 8);
+  assert.equal(api.filterResources(catalogue.resources, { kind: "course" }).length, 10);
   assert.ok(api.filterResources(catalogue.resources, { language: "es" }).every(resource => resource.launches.es));
   assert.ok(api.filterResources(catalogue.resources, { difficulty: "unknown" }).every(resource => resource.difficulty === null));
   assert.ok(api.filterResources(catalogue.resources, { duration: "unknown" }).every(resource => resource.duration === null));
@@ -74,7 +74,7 @@ test("catalogue filters compose without inventing unknown values", () => {
 
 test("derives the four learner intentions from the single catalogue", () => {
   assert.deepEqual(api.intentionCounts(catalogue.resources), {
-    learn: 8,
+    learn: 10,
     practice: 14,
     assess: 4,
     explore: 1

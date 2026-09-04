@@ -230,6 +230,21 @@
         ["engineering", "procurement", "sustainability"], { es: "reach-compliance-challenge/", en: "reach-compliance-challenge/" }, { min: 30, max: 30, unit: "minutes" }, "intermediate",
         ["P2", "P5"], [repository("sustainability-navigator", ["es", "en"])], { legacyInternal: true }),
 
+      resource("aero-skills-launchpad", "course", "modular-digital-course",
+        text("AeroSkills · Rendimiento ambiental en aviación", "AeroSkills · Aviation Environmental Performance"),
+        text("Curso modular en inglés sobre desempeño ambiental en aviación, con evaluación de impactos de ciclo de vida, efectos climáticos, SAF, hidrógeno, eficiencia operacional, regulación y circularidad.", "An English modular course on aviation environmental performance covering life-cycle impacts, climate effects, SAF, hydrogen, operational efficiency, regulation and circularity."),
+        text("Rendimiento ambiental y decisiones basadas en evidencia", "Environmental performance and evidence-based decisions"),
+        ["engineering", "operations", "sustainability"], { en: pages("aero-skills-launchpad") }, null, "intermediate",
+        ["P1", "P2", "P3", "P5", "P6"], [repository("aero-skills-launchpad", ["en"])]),
+
+      resource("advanced-sustainability-air-power-services", "course", "advanced-digital-course",
+        text("Sostenibilidad avanzada en Air Power In-Service", "Advanced Sustainability in Air Power In-Service"),
+        text("Curso avanzado bilingüe de 15 módulos para integrar misión, seguridad, coste, disponibilidad y desempeño ambiental en decisiones de Air Power In-Service.", "A bilingual 15-module advanced course integrating mission, safety, cost, availability and environmental performance in Air Power In-Service decisions."),
+        text("Sostenibilidad aplicada a decisiones In-Service", "Sustainability applied to In-Service decisions"),
+        ["engineering", "operations", "managers", "sustainability"],
+        { es: pages("advanced-sustainability-air-power-services"), en: pages("advanced-sustainability-air-power-services") }, null, "advanced",
+        ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("advanced-sustainability-air-power-services", ["es", "en"])], { noPriorExpertiseRequired: true }),
+
       resource("year-15-challenge", "application", "scenario-challenge",
         text("The Year 15 Challenge", "The Year 15 Challenge"),
         text("Aplicación de ingeniería y ecodiseño para explorar decisiones de ciclo de vida, mantenibilidad y extensión de la vida útil.", "An engineering and eco-design application for exploring life-cycle, maintainability and service-life extension decisions."),
