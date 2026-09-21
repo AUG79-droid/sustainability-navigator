@@ -162,8 +162,8 @@
         text("TASSG Composite Guardian", "TASSG Composite Guardian"),
         text("Juego serio de mantenimiento In-Service sobre decisiones de protección, reparación y sostenibilidad de materiales compuestos.", "An In-Service maintenance serious game about composite protection, repair and sustainability decisions."),
         text("Mantenimiento sostenible de materiales compuestos", "Sustainable composite maintenance"),
-        ["maintenance", "in-service", "environment"], { en: pages("tassg-composite-guardian") }, null, null,
-        ["P1", "P2", "P6"], [repository("tassg-composite-guardian", ["en"])]),
+        ["maintenance", "in-service", "environment"], { es: pages("tassg-composite-guardian") + "?hubLang=es", en: pages("tassg-composite-guardian") + "?hubLang=en" }, null, null,
+        ["P1", "P2", "P6"], [repository("tassg-composite-guardian", ["es", "en"])]),
 
       resource("tas-sustainability-quest", "game", "team-quiz-game",
         text("TAS Sustainability Quest", "TAS Sustainability Quest"),
