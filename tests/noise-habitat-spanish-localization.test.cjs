@@ -21,7 +21,7 @@ test("keeps one bilingual Noise & Habitat identity in catalogue 29", () => {
     en: "https://aug79-droid.github.io/noise-habitat-operations-under-pressure/?hubLang=en"
   });
   assert.deepEqual(resource.provenance[0].languages, ["es", "en"]);
-  assert.equal(catalogue.resources.filter(item => item.languages.includes("es") && item.languages.includes("en")).length, 17);
+  assert.equal(catalogue.resources.filter(item => item.languages.includes("es") && item.languages.includes("en")).length, 18);
   const reach = catalogue.resources.find(item => item.id === "reach-compliance-challenge");
   assert.deepEqual(reach.languages, ["es", "en"]);
   assert.ok(reach.launches.es && reach.launches.en);
@@ -39,7 +39,7 @@ test("recalculates only the real Spanish path coverage and preserves revisions",
   });
   const inService = paths.paths.find(item => item.id === "sustainable-in-service-operations");
   const nature = paths.paths.find(item => item.id === "nature-habitat-operational-risk");
-  assert.deepEqual(pathApi.languageAvailability(inService, catalogue, "es"), { language: "es", status: "partial", availableRequired: 2, totalRequired: 5 });
+  assert.deepEqual(pathApi.languageAvailability(inService, catalogue, "es"), { language: "es", status: "partial", availableRequired: 3, totalRequired: 5 });
   assert.deepEqual(pathApi.languageAvailability(nature, catalogue, "es"), { language: "es", status: "partial", availableRequired: 2, totalRequired: 4 });
 });
 
