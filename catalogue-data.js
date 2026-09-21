@@ -134,8 +134,8 @@
         text("Strategic Soil & Footprint Mapper", "Strategic Soil & Footprint Mapper"),
         text("Simulador táctico para analizar suelo, huella territorial y decisiones operacionales.", "A tactical simulator for analysing soil, territorial footprint and operational decisions."),
         text("Suelo, huella territorial y planificación", "Soil, territorial footprint and planning"),
-        ["in-service", "operations", "environment"], { en: pages("strategic-soil-footprint-mapper") }, null, null,
-        ["P1", "P6"], [repository("strategic-soil-footprint-mapper", ["en"])]),
+        ["in-service", "operations", "environment"], { es: pages("strategic-soil-footprint-mapper") + "?hubLang=es", en: pages("strategic-soil-footprint-mapper") + "?hubLang=en" }, null, null,
+        ["P1", "P6"], [repository("strategic-soil-footprint-mapper", ["es", "en"])]),
 
       resource("sustainability-knowledge-check-evidence", "quiz", "evidence-diagnostic",
         text("Sustainability Knowledge Check — Evidence Review", "Sustainability Knowledge Check — Evidence Review"),
