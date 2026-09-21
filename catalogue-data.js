@@ -220,8 +220,8 @@
         text("Phytosanitary Defender", "Phytosanitary Defender"),
         text("Reto interactivo para aplicar los fundamentos de ISPM-15 a embalajes de madera y decisiones de cumplimiento fitosanitario.", "An interactive challenge for applying ISPM-15 fundamentals to wood packaging and phytosanitary compliance decisions."),
         text("Cumplimiento fitosanitario ISPM-15", "ISPM-15 phytosanitary compliance"),
-        ["operations", "procurement", "quality"], { en: "phytosanitary-defender/" }, { min: 20, max: 20, unit: "minutes" }, "foundation",
-        ["P5", "P1"], [repository("sustainability-navigator", ["en"])], { legacyInternal: true }),
+        ["operations", "procurement", "quality"], { es: "phytosanitary-defender/?hubLang=es", en: "phytosanitary-defender/?hubLang=en" }, { min: 20, max: 20, unit: "minutes" }, "foundation",
+        ["P5", "P1"], [repository("sustainability-navigator", ["es", "en"])], { legacyInternal: true }),
 
       resource("reach-compliance-challenge", "application", "scenario-challenge",
         text("El Reto de Cumplimiento REACH", "The REACH Compliance Challenge"),
