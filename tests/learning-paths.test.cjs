@@ -61,7 +61,7 @@ test("models the foundation course as one required alternative-choice group", ()
 test("derives ES and EN completeness only from required catalogue launches", () => {
   const expected = {
     "sustainable-aviation-foundations": ["complete", "complete"],
-    "eco-design-circularity-materials": ["partial", "complete"],
+    "eco-design-circularity-materials": ["complete", "complete"],
     "responsible-supply-chain-compliance": ["complete", "complete"],
     "sustainable-in-service-operations": ["complete", "complete"],
     "nature-habitat-operational-risk": ["complete", "complete"],
