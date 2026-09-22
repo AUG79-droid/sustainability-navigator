@@ -213,8 +213,8 @@
         text("Ethical Armor", "Ethical Armor"),
         text("Juego de inteligencia para practicar diligencia debida, evaluación de riesgos y decisiones responsables en cadenas de suministro de minerales.", "An intelligence game for practising due diligence, risk assessment and responsible decision-making in mineral supply chains."),
         text("Diligencia debida y minerales responsables", "Due diligence and responsible minerals"),
-        ["procurement", "managers", "sustainability"], { en: "ethical-armor/" }, { min: 30, max: 30, unit: "minutes" }, "intermediate",
-        ["P5", "P4"], [repository("sustainability-navigator", ["en"])], { legacyInternal: true }),
+        ["procurement", "managers", "sustainability"], { es: "ethical-armor-bilingual/?hubLang=es", en: "ethical-armor-bilingual/?hubLang=en" }, { min: 30, max: 30, unit: "minutes" }, "intermediate",
+        ["P5", "P4"], [repository("sustainability-navigator", ["es", "en"])], { legacyInternal: true }),
 
       resource("phytosanitary-defender", "application", "interactive-challenge",
         text("Phytosanitary Defender", "Phytosanitary Defender"),
