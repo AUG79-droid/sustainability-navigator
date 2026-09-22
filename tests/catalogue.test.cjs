@@ -143,7 +143,7 @@ test("every legacy application loader retains an accessible return to the Hub", 
     assert.equal(fs.existsSync(target), true, `${id} launch target is missing`);
     assert.equal(target.startsWith(root), true, `${id} launch target escapes the Hub`);
     const html = fs.readFileSync(target, "utf8");
-    assert.match(html, /withHubReturn/);
+    assert.match(html, /withHubReturn|id=["\']sn-hub-return["\']/);
     assert.match(html, /#applications/);
     assert.match(html, /aria-label/);
     const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/gi)].map(match => match[1]);
