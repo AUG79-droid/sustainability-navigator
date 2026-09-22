@@ -65,7 +65,7 @@ test("derives ES and EN completeness only from required catalogue launches", () 
     "responsible-supply-chain-compliance": ["complete", "complete"],
     "sustainable-in-service-operations": ["complete", "complete"],
     "nature-habitat-operational-risk": ["complete", "complete"],
-    "evidence-systems-decision-making": ["partial", "complete"]
+    "evidence-systems-decision-making": ["complete", "complete"]
   };
   pathsData.paths.forEach(pathItem => {
     const availability = api.languageAvailabilityForPath(pathItem, catalogue);
