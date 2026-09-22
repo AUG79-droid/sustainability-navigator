@@ -246,11 +246,11 @@
         ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("advanced-sustainability-air-power-services", ["es", "en"])], { noPriorExpertiseRequired: true }),
 
       resource("year-15-challenge", "application", "scenario-challenge",
-        text("The Year 15 Challenge", "The Year 15 Challenge"),
+        text("El reto del Año 15", "The Year 15 Challenge"),
         text("Aplicación de ingeniería y ecodiseño para explorar decisiones de ciclo de vida, mantenibilidad y extensión de la vida útil.", "An engineering and eco-design application for exploring life-cycle, maintainability and service-life extension decisions."),
         text("Ingeniería, ecodiseño y ciclo de vida", "Engineering, eco-design and life cycle"),
-        ["engineering", "operations", "managers"], { en: "year-15-challenge/" }, { min: 35, max: 35, unit: "minutes" }, "advanced",
-        ["P2", "P1"], [repository("sustainability-navigator", ["en"])], { legacyInternal: true })
+        ["engineering", "operations", "managers"], { es: "year-15-challenge/?hubLang=es", en: "year-15-challenge/?hubLang=en" }, { min: 35, max: 35, unit: "minutes" }, "advanced",
+        ["P2", "P1"], [repository("sustainability-navigator", ["es", "en"])], { legacyInternal: true })
     ]
   };
 });
