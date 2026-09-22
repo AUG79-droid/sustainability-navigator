@@ -41,8 +41,9 @@ function validateCatalogue(catalogue, options = {}) {
 
     Object.entries(resource.launches || {}).forEach(([language, destination]) => {
       if (isInternal(destination)) {
-        if (!POLICY.internalPathPattern.test(destination)) issues.push(issue("FAIL", "UNSAFE_INTERNAL_PATH", `Unsafe internal launch path: ${destination}.`, subject));
-        else if (options.checkInternalFiles !== false && !fs.existsSync(path.join(root, destination, "index.html"))) issues.push(issue("FAIL", "MISSING_INTERNAL_INDEX", `Internal launch has no index.html: ${destination}.`, subject));
+        const internalPath = destination.split(/[?#]/, 1)[0];
+        if (!POLICY.internalPathPattern.test(internalPath)) issues.push(issue("FAIL", "UNSAFE_INTERNAL_PATH", `Unsafe internal launch path: ${destination}.`, subject));
+        else if (options.checkInternalFiles !== false && !fs.existsSync(path.join(root, internalPath, "index.html"))) issues.push(issue("FAIL", "MISSING_INTERNAL_INDEX", `Internal launch has no index.html: ${destination}.`, subject));
       } else if (!isHttps(destination)) issues.push(issue("FAIL", "MALFORMED_EXTERNAL_URL", `External launch must use HTTPS: ${destination}.`, subject));
       const normalized = exactLaunch(destination);
       if (normalized) { if (launches.has(normalized) && launches.get(normalized) !== subject) issues.push(issue("FAIL", "DUPLICATE_LAUNCH", `Launch destination duplicates ${launches.get(normalized)}.`, subject)); else launches.set(normalized, subject); }
