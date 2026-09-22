@@ -95,7 +95,10 @@ test("registers ESG Essentials as a verified bilingual foundation resource", () 
   assert.ok(course);
   assert.equal(course.title.en, "ESG Essentials");
   assert.equal(course.fullTitle, "Environmental, Social & Governance for Air Power Services");
-  assert.deepEqual(course.launches, {\n    es: "https://aug79-droid.github.io/esg-essentials-air-power-services/?hubLang=es",\n    en: "https://aug79-droid.github.io/esg-essentials-air-power-services/?hubLang=en"\n  });
+  assert.deepEqual(course.launches, {
+    es: "https://aug79-droid.github.io/esg-essentials-air-power-services/?hubLang=es",
+    en: "https://aug79-droid.github.io/esg-essentials-air-power-services/?hubLang=en"
+  });
   assert.deepEqual(course.duration, { min: 459, max: 459, unit: "minutes" });
   assert.equal(course.difficulty, "foundation");
   assert.deepEqual(course.pillarIds, ["P1", "P2", "P3", "P4", "P5", "P6"]);
