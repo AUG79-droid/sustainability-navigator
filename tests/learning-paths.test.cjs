@@ -62,7 +62,7 @@ test("derives ES and EN completeness only from required catalogue launches", () 
   const expected = {
     "sustainable-aviation-foundations": ["complete", "complete"],
     "eco-design-circularity-materials": ["partial", "complete"],
-    "responsible-supply-chain-compliance": ["partial", "complete"],
+    "responsible-supply-chain-compliance": ["complete", "complete"],
     "sustainable-in-service-operations": ["partial", "complete"],
     "nature-habitat-operational-risk": ["partial", "complete"],
     "evidence-systems-decision-making": ["partial", "complete"]
