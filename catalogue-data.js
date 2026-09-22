@@ -96,8 +96,8 @@
         text("La huella mineral · Reto de modernización", "The Mineral Footprint · Retrofit Challenge"),
         text("Juego serio para explorar la huella mineral y las decisiones de aprovisionamiento responsable asociadas a la modernización.", "A serious game exploring mineral footprints and responsible-sourcing decisions in retrofit work."),
         text("Huella mineral y aprovisionamiento responsable", "Mineral footprint and responsible sourcing"),
-        ["engineering", "procurement", "sustainability"], { en: pages("eco-retrofit-mineral-footprint") }, null, null,
-        ["P2", "P5", "P6"], [repository("eco-retrofit-mineral-footprint", ["en"])]),
+        ["engineering", "procurement", "sustainability"], { es: pages("eco-retrofit-mineral-footprint") + "?hubLang=es", en: pages("eco-retrofit-mineral-footprint") + "?hubLang=en" }, null, null,
+        ["P2", "P5", "P6"], [repository("eco-retrofit-mineral-footprint", ["es", "en"])]),
 
       resource("sustainability-systems-escape-room", "game", "escape-room",
         text("Escape Room de Sistemas de Sostenibilidad", "Sustainability Systems Escape Room"),
