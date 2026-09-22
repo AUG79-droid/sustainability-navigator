@@ -130,15 +130,6 @@
         ["in-service", "operations", "environment"], { es: pages("noise-habitat-operations-under-pressure") + "?hubLang=es", en: pages("noise-habitat-operations-under-pressure") + "?hubLang=en" }, null, "foundation",
         ["P1", "P4", "P6"], [repository("noise-habitat-operations-under-pressure", ["es", "en"])]),
 
-      resource("modularity-matrix", "game", "eco-design-runner",
-        text("The Modularity Matrix · Reto de diseño modular", "The Modularity Matrix · Modular Design Challenge"),
-        text("Juego de ingeniería y ecodiseño para practicar modularidad, interfaces controladas, desmontaje, modernización y recuperación de valor a lo largo del ciclo de vida.", "An engineering and eco-design game for practising modularity, controlled interfaces, disassembly, retrofit and value recovery across the lifecycle."),
-        text("Modularidad, ecodiseño y modernización durante el ciclo de vida", "Modularity, eco-design and through-life retrofit"),
-        ["engineering", "innovation", "sustainability"],
-        { es: pages("noise-habitat-operations-under-pressure") + "modularity-matrix/?hubLang=es", en: pages("noise-habitat-operations-under-pressure") + "modularity-matrix/?hubLang=en" },
-        { min: 20, max: 30, unit: "minutes" }, "intermediate",
-        ["P2", "P3", "P6"], [repository("noise-habitat-operations-under-pressure", ["es", "en"])]),
-
       resource("strategic-soil-footprint-mapper", "simulator", "tactical-mission-simulator",
         text("Strategic Soil & Footprint Mapper", "Strategic Soil & Footprint Mapper"),
         text("Simulador táctico para analizar suelo, huella territorial y decisiones operacionales.", "A tactical simulator for analysing soil, territorial footprint and operational decisions."),
