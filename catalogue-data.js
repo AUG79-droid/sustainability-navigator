@@ -49,8 +49,8 @@
         text("BIO-RADAR · Runway Wildlife Prevention", "BIO-RADAR · Runway Wildlife Prevention"),
         text("Juego serio sobre prevención de fauna en pista y decisiones de gestión de biodiversidad y seguridad operacional.", "A serious game about runway wildlife prevention and biodiversity and operational-safety decisions."),
         text("Gestión de fauna y prevención en pista", "Wildlife management and runway prevention"),
-        ["operations", "flight-safety", "environment"], { en: pages("bio-radar-runway-prevention") }, null, null,
-        ["P1", "P6"], [repository("bio-radar-runway-prevention", ["en"])]),
+        ["operations", "flight-safety", "environment"], { es: pages("bio-radar-runway-prevention") + "?hubLang=es", en: pages("bio-radar-runway-prevention") + "?hubLang=en" }, null, null,
+        ["P1", "P6"], [repository("bio-radar-runway-prevention", ["es", "en"])]),
 
       resource("sustainability-evidence-decisions", "course", "advanced-digital-course",
         text("Sostenibilidad aeronáutica: evidencias y decisiones", "Sustainability in Aviation: Evidence & Decisions"),
