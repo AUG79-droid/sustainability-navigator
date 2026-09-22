@@ -49,8 +49,8 @@
         text("BIO-RADAR · Runway Wildlife Prevention", "BIO-RADAR · Runway Wildlife Prevention"),
         text("Juego serio sobre prevención de fauna en pista y decisiones de gestión de biodiversidad y seguridad operacional.", "A serious game about runway wildlife prevention and biodiversity and operational-safety decisions."),
         text("Gestión de fauna y prevención en pista", "Wildlife management and runway prevention"),
-        ["operations", "flight-safety", "environment"], { en: pages("bio-radar-runway-prevention") }, null, null,
-        ["P1", "P6"], [repository("bio-radar-runway-prevention", ["en"])]),
+        ["operations", "flight-safety", "environment"], { es: pages("bio-radar-runway-prevention") + "?hubLang=es", en: pages("bio-radar-runway-prevention") + "?hubLang=en" }, null, null,
+        ["P1", "P6"], [repository("bio-radar-runway-prevention", ["es", "en"])]),
 
       resource("sustainability-evidence-decisions", "course", "advanced-digital-course",
         text("Sostenibilidad aeronáutica: evidencias y decisiones", "Sustainability in Aviation: Evidence & Decisions"),
@@ -96,8 +96,8 @@
         text("La huella mineral · Reto de modernización", "The Mineral Footprint · Retrofit Challenge"),
         text("Juego serio para explorar la huella mineral y las decisiones de aprovisionamiento responsable asociadas a la modernización.", "A serious game exploring mineral footprints and responsible-sourcing decisions in retrofit work."),
         text("Huella mineral y aprovisionamiento responsable", "Mineral footprint and responsible sourcing"),
-        ["engineering", "procurement", "sustainability"], { en: pages("eco-retrofit-mineral-footprint") }, null, null,
-        ["P2", "P5", "P6"], [repository("eco-retrofit-mineral-footprint", ["en"])]),
+        ["engineering", "procurement", "sustainability"], { es: pages("eco-retrofit-mineral-footprint") + "?hubLang=es", en: pages("eco-retrofit-mineral-footprint") + "?hubLang=en" }, null, null,
+        ["P2", "P5", "P6"], [repository("eco-retrofit-mineral-footprint", ["es", "en"])]),
 
       resource("sustainability-systems-escape-room", "game", "escape-room",
         text("Escape Room de Sistemas de Sostenibilidad", "Sustainability Systems Escape Room"),
@@ -141,8 +141,8 @@
         text("Sustainability Knowledge Check — Evidence Review", "Sustainability Knowledge Check — Evidence Review"),
         text("Diagnóstico basado en evidencias para comprobar conocimientos transversales de sostenibilidad.", "An evidence-based diagnostic for checking cross-cutting sustainability knowledge."),
         text("Diagnóstico y revisión de evidencias", "Knowledge diagnostic and evidence review"),
-        ["general", "managers", "sustainability"], { en: pages("sustainability-knowledge-check") }, { min: 15, max: 20, unit: "minutes" }, null,
-        ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("sustainability-knowledge-check", ["en"])]),
+        ["general", "managers", "sustainability"], { es: pages("sustainability-knowledge-check") + "?hubLang=es", en: pages("sustainability-knowledge-check") + "?hubLang=en" }, { min: 15, max: 20, unit: "minutes" }, null,
+        ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("sustainability-knowledge-check", ["es", "en"])]),
 
       resource("sustainable-aviation-foundations-master", "course", "master-course",
         text("Sustainable Aviation Foundations — Master Course", "Sustainable Aviation Foundations — Master Course"),
@@ -258,8 +258,8 @@
         text("The Year 15 Challenge", "The Year 15 Challenge"),
         text("Aplicación de ingeniería y ecodiseño para explorar decisiones de ciclo de vida, mantenibilidad y extensión de la vida útil.", "An engineering and eco-design application for exploring life-cycle, maintainability and service-life extension decisions."),
         text("Ingeniería, ecodiseño y ciclo de vida", "Engineering, eco-design and life cycle"),
-        ["engineering", "operations", "managers"], { en: "year-15-challenge/" }, { min: 35, max: 35, unit: "minutes" }, "advanced",
-        ["P2", "P1"], [repository("sustainability-navigator", ["en"])], { legacyInternal: true })
+        ["engineering", "operations", "managers"], { es: "year-15-challenge/?hubLang=es", en: "year-15-challenge/?hubLang=en" }, { min: 35, max: 35, unit: "minutes" }, "advanced",
+        ["P2", "P1"], [repository("sustainability-navigator", ["es", "en"])], { legacyInternal: true })
     ]
   };
 });
