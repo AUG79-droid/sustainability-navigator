@@ -41,7 +41,7 @@ test("uses supported resource kinds and verified nullable metadata", () => {
 
 test("groups confirmed Spanish and English counterparts into one card", () => {
   const bilingual = catalogue.resources.filter(resource => resource.launches.es && resource.launches.en);
-  assert.equal(bilingual.length, 18);
+  assert.equal(bilingual.length, 19);
   const essentials = catalogue.resources.find(resource => resource.id === "sustainable-aviation-essentials");
   assert.equal(essentials.title.es, "Fundamentos de Aviación Sostenible");
   assert.equal(essentials.title.en, "Sustainable Aviation Essentials");
@@ -138,7 +138,8 @@ test("every legacy application loader retains an accessible return to the Hub", 
   legacyIds.forEach(id => {
     const resource = catalogue.resources.find(item => item.id === id);
     const url = resource.launches.en;
-    const target = path.resolve(root, url, "index.html");
+    const internalPath = url.split(/[?#]/, 1)[0];
+    const target = path.resolve(root, internalPath, "index.html");
     assert.equal(fs.existsSync(target), true, `${id} launch target is missing`);
     assert.equal(target.startsWith(root), true, `${id} launch target escapes the Hub`);
     const html = fs.readFileSync(target, "utf8");
