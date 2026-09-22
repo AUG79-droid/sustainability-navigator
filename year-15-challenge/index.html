@@ -12,7 +12,8 @@ html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;background
 </style>
 </head>
 <body>
-<div id="boot"><div class="card"><b>THE YEAR 15 CHALLENGE</b><p>Loading the approved Engineering &amp; Eco-Design experience…</p><div class="bar"><i></i></div></div></div>
+<div id="boot"><div class="card"><b>THE YEAR 15 CHALLENGE</b><p id="boot-copy">Loading the approved Engineering &amp; Eco-Design experience…</p><div class="bar"><i></i></div></div></div>
+<script>(function(){const es=new URLSearchParams(location.search).get('hubLang')!=='en';if(es){document.documentElement.lang='es';const e=document.getElementById('boot-copy');if(e)e.textContent='Cargando la experiencia aprobada de Ingeniería y Ecodiseño…';}})();</script>
 <script>
 function withHubReturn(html){
  const lang=new URLSearchParams(location.search).get('hubLang')==='en'?'en':'es';
@@ -38,7 +39,7 @@ function withHubReturn(html){
   const html=await new Response(stream).text();
   document.open();document.write(withHubReturn(html));document.close();
  }catch(e){
-  document.getElementById('boot').innerHTML=`<div class="card"><b>THE YEAR 15 CHALLENGE</b><p>${e.message}</p><button onclick="location.reload()">RETRY</button><p><a href="../#applications">Back to Sustainability Hub</a></p></div>`;
+  const es=new URLSearchParams(location.search).get('hubLang')!=='en'; document.getElementById('boot').innerHTML=`<div class="card"><b>THE YEAR 15 CHALLENGE</b><p>${e.message}</p><button onclick="location.reload()">${es?'REINTENTAR':'RETRY'}</button><p><a href="../?lang=${es?'es':'en'}#applications">${es?'Volver al Sustainability Hub':'Back to Sustainability Hub'}</a></p></div>`;
  }
 })();
 </script>
