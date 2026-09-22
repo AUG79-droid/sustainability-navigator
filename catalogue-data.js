@@ -223,6 +223,15 @@
         ["operations", "procurement", "quality"], { es: "phytosanitary-defender/?hubLang=es", en: "phytosanitary-defender/?hubLang=en" }, { min: 20, max: 20, unit: "minutes" }, "foundation",
         ["P5", "P1"], [repository("sustainability-navigator", ["es", "en"])], { legacyInternal: true }),
 
+      resource("modularity-matrix", "game", "eco-design-runner",
+        text("The Modularity Matrix", "The Modularity Matrix"),
+        text("Juego de ecodiseño para practicar modularidad, interfaces, desmontaje, modernización y recuperación de valor durante el ciclo de vida.", "An eco-design game for practising modularity, interfaces, disassembly, retrofit and value recovery through the life cycle."),
+        text("Modularidad, ecodiseño y modernización", "Modularity, eco-design and retrofit"),
+        ["engineering", "maintenance", "innovation", "sustainability"],
+        { es: pages("noise-habitat-operations-under-pressure") + "modularity-matrix/?hubLang=es", en: pages("noise-habitat-operations-under-pressure") + "modularity-matrix/?hubLang=en" },
+        { min: 20, max: 30, unit: "minutes" }, "intermediate",
+        ["P1", "P2", "P3", "P6"], [repository("noise-habitat-operations-under-pressure", ["es", "en"])], { embeddedApplication: true }),
+
       resource("reach-compliance-challenge", "application", "scenario-challenge",
         text("El Reto de Cumplimiento REACH", "The REACH Compliance Challenge"),
         text("Experiencia basada en escenarios para reconocer obligaciones, evidencias y decisiones clave de cumplimiento bajo REACH.", "A scenario-based experience for recognising key REACH obligations, evidence and compliance decisions."),
