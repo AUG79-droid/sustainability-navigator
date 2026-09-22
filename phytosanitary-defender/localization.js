@@ -152,21 +152,7 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => { languageControl(); apply(); });
   else { languageControl(); apply(); }
 
-  const observer = new MutationObserver(mutations => {
-    if (lang !== "es") return;
-    for (const mutation of mutations) {
-      for (const node of mutation.addedNodes) {
-        if (node.nodeType === 1) walk(node);
-        else if (node.nodeType === 3 && node.parentElement) {
-          const next = translate(node.nodeValue);
-          if (next !== node.nodeValue) node.nodeValue = next;
-        }
-      }
-      if (mutation.type === "characterData" && mutation.target) {
-        const next = translate(mutation.target.nodeValue);
-        if (next !== mutation.target.nodeValue) mutation.target.nodeValue = next;
-      }
-    }
-  });
-  observer.observe(document.documentElement, {subtree:true,childList:true,characterData:true});
+  // Static application: translate once after DOM construction.
+  // Do not observe the document while it is being parsed; on this image-heavy page
+  // that repeatedly re-walked the DOM and could stall the browser.
 })();
