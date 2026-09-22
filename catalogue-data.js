@@ -145,11 +145,11 @@
         ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("sustainability-knowledge-check", ["es", "en"])]),
 
       resource("sustainable-aviation-foundations-master", "course", "master-course",
-        text("Sustainable Aviation Foundations — Master Course", "Sustainable Aviation Foundations — Master Course"),
-        text("Curso master extenso y avanzado sobre los fundamentos, sistemas y decisiones de sostenibilidad en aviación.", "An in-depth advanced master course on sustainable-aviation foundations, systems and decisions."),
+        text("Fundamentos de Aviación Sostenible — Curso maestro", "Sustainable Aviation Foundations — Master Course"),
+        text("Curso maestro bilingüe, extenso y avanzado sobre fundamentos, sistemas y decisiones de sostenibilidad en aviación.", "An in-depth bilingual advanced master course on sustainable-aviation foundations, systems and decisions."),
         text("Fundamentos avanzados de aviación sostenible", "Advanced sustainable aviation foundations"),
-        ["sustainability", "managers", "engineering", "operations"], { en: pages("sustainable-aviation-foundations") }, { min: 420, max: 540, unit: "minutes" }, "advanced",
-        ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("sustainable-aviation-foundations", ["en"])]),
+        ["sustainability", "managers", "engineering", "operations"], { es: pages("sustainable-aviation-foundations") + "?hubLang=es", en: pages("sustainable-aviation-foundations") + "?hubLang=en" }, { min: 420, max: 540, unit: "minutes" }, "advanced",
+        ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("sustainable-aviation-foundations", ["es", "en"])]),
 
       resource("tass-readiness-resilience-simulator", "simulator", "mission-simulator",
         text("TASS Readiness & Resilience Simulator", "TASS Readiness & Resilience Simulator"),
