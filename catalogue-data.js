@@ -86,11 +86,11 @@
 
       resource("esg-essentials-air-power-services", "course", "foundation-digital-course",
         text("ESG Essentials", "ESG Essentials"),
-        text("Curso digital en inglés de fundamentos ESG para conectar evidencia, personas, gobernanza y decisiones de negocio en servicios de potencia aérea.", "An English digital foundation course connecting ESG evidence, people, governance and better business decisions in Air Power Services."),
+        text("Curso digital bilingüe de fundamentos ESG para conectar evidencia, personas, gobernanza y decisiones de negocio en Air Power Services.", "A bilingual digital foundation course connecting ESG evidence, people, governance and better business decisions in Air Power Services."),
         text("Environmental, Social & Governance for Air Power Services", "Environmental, Social & Governance for Air Power Services"),
         ["general", "engineering", "operations", "procurement", "managers", "sustainability"],
-        { en: pages("esg-essentials-air-power-services") }, { min: 459, max: 459, unit: "minutes" }, "foundation",
-        ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("esg-essentials-air-power-services", ["en"])], { fullTitle: "Environmental, Social & Governance for Air Power Services", noPriorExpertiseRequired: true }),
+        { es: pages("esg-essentials-air-power-services") + "?hubLang=es", en: pages("esg-essentials-air-power-services") + "?hubLang=en" }, { min: 459, max: 459, unit: "minutes" }, "foundation",
+        ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("esg-essentials-air-power-services", ["es", "en"])], { fullTitle: "Environmental, Social & Governance for Air Power Services", noPriorExpertiseRequired: true }),
 
       resource("eco-retrofit-mineral-footprint", "game", "responsible-sourcing-game",
         text("La huella mineral · Reto de modernización", "The Mineral Footprint · Retrofit Challenge"),

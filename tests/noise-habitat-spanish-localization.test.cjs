@@ -21,7 +21,7 @@ test("keeps one bilingual Noise & Habitat identity in catalogue 29", () => {
     en: "https://aug79-droid.github.io/noise-habitat-operations-under-pressure/?hubLang=en"
   });
   assert.deepEqual(resource.provenance[0].languages, ["es", "en"]);
-  assert.equal(catalogue.resources.filter(item => item.languages.includes("es") && item.languages.includes("en")).length, 26);
+  assert.equal(catalogue.resources.filter(item => item.languages.includes("es") && item.languages.includes("en")).length, 27);
   const reach = catalogue.resources.find(item => item.id === "reach-compliance-challenge");
   assert.deepEqual(reach.languages, ["es", "en"]);
   assert.ok(reach.launches.es && reach.launches.en);

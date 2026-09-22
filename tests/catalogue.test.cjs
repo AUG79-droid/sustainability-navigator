@@ -41,7 +41,7 @@ test("uses supported resource kinds and verified nullable metadata", () => {
 
 test("groups confirmed Spanish and English counterparts into one card", () => {
   const bilingual = catalogue.resources.filter(resource => resource.launches.es && resource.launches.en);
-  assert.equal(bilingual.length, 26);
+  assert.equal(bilingual.length, 27);
   const essentials = catalogue.resources.find(resource => resource.id === "sustainable-aviation-essentials");
   assert.equal(essentials.title.es, "Fundamentos de Aviación Sostenible");
   assert.equal(essentials.title.en, "Sustainable Aviation Essentials");
@@ -90,12 +90,12 @@ test("derives the four learner intentions from the single catalogue", () => {
   );
 });
 
-test("registers the English ESG Essentials course as a verified foundation resource", () => {
+test("registers ESG Essentials as a verified bilingual foundation resource", () => {
   const course = catalogue.resources.find(resource => resource.id === "esg-essentials-air-power-services");
   assert.ok(course);
   assert.equal(course.title.en, "ESG Essentials");
   assert.equal(course.fullTitle, "Environmental, Social & Governance for Air Power Services");
-  assert.deepEqual(course.launches, { en: "https://aug79-droid.github.io/esg-essentials-air-power-services/" });
+  assert.deepEqual(course.launches, {\n    es: "https://aug79-droid.github.io/esg-essentials-air-power-services/?hubLang=es",\n    en: "https://aug79-droid.github.io/esg-essentials-air-power-services/?hubLang=en"\n  });
   assert.deepEqual(course.duration, { min: 459, max: 459, unit: "minutes" });
   assert.equal(course.difficulty, "foundation");
   assert.deepEqual(course.pillarIds, ["P1", "P2", "P3", "P4", "P5", "P6"]);
