@@ -63,7 +63,7 @@ test("derives ES and EN completeness only from required catalogue launches", () 
     "sustainable-aviation-foundations": ["complete", "complete"],
     "eco-design-circularity-materials": ["partial", "complete"],
     "responsible-supply-chain-compliance": ["complete", "complete"],
-    "sustainable-in-service-operations": ["partial", "complete"],
+    "sustainable-in-service-operations": ["complete", "complete"],
     "nature-habitat-operational-risk": ["partial", "complete"],
     "evidence-systems-decision-making": ["partial", "complete"]
   };
