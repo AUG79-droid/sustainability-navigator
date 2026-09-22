@@ -53,6 +53,47 @@
     ["Real wooden shipping crate used as a training example","Caja de madera real utilizada como ejemplo de entrenamiento"],["Inspect point A","Inspeccionar punto A"],["Inspect point B","Inspeccionar punto B"],["Close magnifier","Cerrar lupa"],["Enlarged wooden crate","Caja de madera ampliada"]
   ]);
 
+  [
+    ["Practical two. Activate the bark gauge, compare both samples, apply the width-and-area rule and choose the statement supported by the evidence. If you fail twice, ARIA will reveal the correct assessment so you can continue.","Práctica dos. Activa el medidor de corteza, compara ambas muestras, aplica la regla de anchura y superficie y elige la afirmación respaldada por las evidencias. Si fallas dos veces, ARIA mostrará la evaluación correcta para que puedas continuar."],
+    ["Activate the bark gauge, inspect both samples and decide whether the visible residual bark fits the training tolerance. Use both width and surface area; do not decide from width alone.","Activa el medidor de corteza, inspecciona ambas muestras y decide si la corteza residual visible cumple la tolerancia del ejercicio. Utiliza tanto la anchura como la superficie; no decidas solo por la anchura."],
+    ["ARIA · Practical 02 instructions","ARIA · Instrucciones de la práctica 02"],
+    ["Activate the gauge first. Sample A is 22 mm wide. Sample B is 41 mm wide with an area of 34 cm². Apply the rule to each sample, then choose the statement that matches the evidence.","Activa primero el medidor. La muestra A tiene 22 mm de anchura. La muestra B tiene 41 mm de anchura y una superficie de 34 cm². Aplica la regla a cada muestra y después elige la afirmación que coincida con las evidencias."],
+    ["Training rule:","Regla del ejercicio:"],
+    ["an individual piece of residual bark narrower than 30 mm may remain regardless of length. If it is wider than 30 mm, its individual surface area must stay below 50 cm² in this exercise.","un fragmento individual de corteza residual de menos de 30 mm de anchura puede permanecer independientemente de su longitud. Si supera los 30 mm de anchura, su superficie individual debe mantenerse por debajo de 50 cm² en este ejercicio."],
+    ["A long but narrow strip of residual bark.","Una franja larga pero estrecha de corteza residual."],
+    ["A wider, short piece whose surface area must also be checked.","Un fragmento más ancho y corto cuya superficie también debe comprobarse."],
+    ["Width · 22 mm","Anchura · 22 mm"],["Width · 41 mm","Anchura · 41 mm"],["Area · 34 cm²","Superficie · 34 cm²"],
+    ["📏 Activate bark gauge","📏 Activar medidor de corteza"],
+    ["Choose the correct assessment","Elige la evaluación correcta"],
+    ["Use the measurements and the training rule above.","Utiliza las medidas y la regla del ejercicio indicadas arriba."],
+    ["Reject both samples","Rechazar ambas muestras"],
+    ["Any visible bark automatically makes the packaging non-compliant.","Cualquier corteza visible hace automáticamente que el embalaje no sea conforme."],
+    ["Sample A is acceptable; reject Sample B","La muestra A es aceptable; rechaza la muestra B"],
+    ["Sample B is wider than 30 mm, so width alone is enough to reject it.","La muestra B supera los 30 mm de anchura, por lo que la anchura por sí sola bastaría para rechazarla."],
+    ["Both samples fit the training tolerance","Ambas muestras cumplen la tolerancia del ejercicio"],
+    ["Sample A is narrow; Sample B is wider, but its individual area remains below the exercise limit.","La muestra A es estrecha; la muestra B es más ancha, pero su superficie individual permanece por debajo del límite del ejercicio."],
+    ["Activate the bark gauge before answering.","Activa el medidor de corteza antes de responder."],
+    ["Continue to wrap-up","Continuar al cierre"],
+    ["Final debrief. Review what you practised: inspect the mark and the wood, use evidence instead of assumptions, apply the bark rule correctly, and hold or escalate when findings create doubt.","Cierre final. Revisa lo practicado: inspeccionar la marca y la madera, utilizar evidencias en lugar de suposiciones, aplicar correctamente la regla de corteza y retener o escalar cuando los hallazgos generen dudas."],
+    ["Release the spare. Not the pest.","Libera el repuesto. No la plaga."],
+    ["Fast logistics and strong phytosanitary control are not competing goals. The point is to release critical material with evidence that the packaging has been checked properly.","Una logística rápida y un control fitosanitario sólido no son objetivos incompatibles. La clave es liberar material crítico con evidencias de que el embalaje se ha comprobado correctamente."],
+    ["ARIA · Final debrief","ARIA · Cierre final"],
+    ["A mark is evidence, not a substitute for inspection. Residual bark needs the correct rule, not guesswork. Suspicious physical findings should be held and escalated instead of being ignored under schedule pressure.","Una marca es una evidencia, no un sustituto de la inspección. La corteza residual debe evaluarse con la regla correcta, no por intuición. Los hallazgos físicos sospechosos deben retenerse y escalarse en lugar de ignorarse por presión de plazo."],
+    ["What you practised","Qué has practicado"],
+    ["Mark review, physical inspection, evidence logging, residual-bark assessment and a release-or-hold decision.","Revisión de la marca, inspección física, registro de evidencias, evaluación de corteza residual y decisión de liberar o retener."],
+    ["Operational consequence","Consecuencia operativa"],
+    ["Credible controls support customs flow and operational availability while reducing the chance of transporting biological risk across borders.","Los controles fiables favorecen el flujo aduanero y la disponibilidad operativa, al tiempo que reducen la posibilidad de transportar riesgo biológico entre fronteras."],
+    ["ISO 14001 connection","Relación con ISO 14001"],
+    ["Weak operational control can require investigation and corrective action. The game does not automatically classify every mistake as a major nonconformity.","Un control operacional débil puede requerir investigación y acción correctiva. El juego no clasifica automáticamente cada error como una no conformidad mayor."],
+    ["Final result","Resultado final"],["practical checks completed","comprobaciones prácticas completadas"],
+    ["Independent correct answer: +10 points","Respuesta correcta independiente: +10 puntos"],
+    ["ARIA-assisted answer after two failed attempts: +5 points","Respuesta asistida por ARIA tras dos intentos fallidos: +5 puntos"],
+    ["Start again","Empezar de nuevo"],
+    ["Reviewed","Revisado"],
+    ["Click ","Pulsa "],
+    [", read the dimensions shown beside each sample and then decide which statement correctly interprets the rule.",", lee las dimensiones mostradas junto a cada muestra y decide qué afirmación interpreta correctamente la regla."]
+  ].forEach(([en,es]) => exact.set(en,es));
+
   const partial = [
     ["Evidence reviewed:","Evidencias revisadas:"],
     ["Back to Sustainability Hub","Volver al Sustainability Hub"],
@@ -107,7 +148,7 @@
     document.body.appendChild(box);
   }
 
-  function apply() { walk(document.body); }
+  function apply() { if (lang === "es") document.title = translate(document.title); walk(document.body); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => { languageControl(); apply(); });
   else { languageControl(); apply(); }
 
