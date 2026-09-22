@@ -40,7 +40,7 @@ test("recalculates only the real Spanish path coverage and preserves revisions",
   const inService = paths.paths.find(item => item.id === "sustainable-in-service-operations");
   const nature = paths.paths.find(item => item.id === "nature-habitat-operational-risk");
   assert.deepEqual(pathApi.languageAvailability(inService, catalogue, "es"), { language: "es", status: "complete", availableRequired: 5, totalRequired: 5 });
-  assert.deepEqual(pathApi.languageAvailability(nature, catalogue, "es"), { language: "es", status: "partial", availableRequired: 3, totalRequired: 4 });
+  assert.deepEqual(pathApi.languageAvailability(nature, catalogue, "es"), { language: "es", status: "complete", availableRequired: 4, totalRequired: 4 });
 });
 
 test("keeps Noise manual and preserves completion bridge boundaries", () => {
