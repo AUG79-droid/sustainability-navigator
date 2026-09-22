@@ -49,8 +49,8 @@
         text("BIO-RADAR · Runway Wildlife Prevention", "BIO-RADAR · Runway Wildlife Prevention"),
         text("Juego serio sobre prevención de fauna en pista y decisiones de gestión de biodiversidad y seguridad operacional.", "A serious game about runway wildlife prevention and biodiversity and operational-safety decisions."),
         text("Gestión de fauna y prevención en pista", "Wildlife management and runway prevention"),
-        ["operations", "flight-safety", "environment"], { es: pages("bio-radar-runway-prevention") + "?hubLang=es", en: pages("bio-radar-runway-prevention") + "?hubLang=en" }, null, null,
-        ["P1", "P6"], [repository("bio-radar-runway-prevention", ["es", "en"])]),
+        ["operations", "flight-safety", "environment"], { en: pages("bio-radar-runway-prevention") }, null, null,
+        ["P1", "P6"], [repository("bio-radar-runway-prevention", ["en"])]),
 
       resource("sustainability-evidence-decisions", "course", "advanced-digital-course",
         text("Sostenibilidad aeronáutica: evidencias y decisiones", "Sustainability in Aviation: Evidence & Decisions"),
@@ -96,8 +96,8 @@
         text("La huella mineral · Reto de modernización", "The Mineral Footprint · Retrofit Challenge"),
         text("Juego serio para explorar la huella mineral y las decisiones de aprovisionamiento responsable asociadas a la modernización.", "A serious game exploring mineral footprints and responsible-sourcing decisions in retrofit work."),
         text("Huella mineral y aprovisionamiento responsable", "Mineral footprint and responsible sourcing"),
-        ["engineering", "procurement", "sustainability"], { es: pages("eco-retrofit-mineral-footprint") + "?hubLang=es", en: pages("eco-retrofit-mineral-footprint") + "?hubLang=en" }, null, null,
-        ["P2", "P5", "P6"], [repository("eco-retrofit-mineral-footprint", ["es", "en"])]),
+        ["engineering", "procurement", "sustainability"], { en: pages("eco-retrofit-mineral-footprint") }, null, null,
+        ["P2", "P5", "P6"], [repository("eco-retrofit-mineral-footprint", ["en"])]),
 
       resource("sustainability-systems-escape-room", "game", "escape-room",
         text("Escape Room de Sistemas de Sostenibilidad", "Sustainability Systems Escape Room"),
@@ -134,15 +134,15 @@
         text("Strategic Soil & Footprint Mapper", "Strategic Soil & Footprint Mapper"),
         text("Simulador táctico para analizar suelo, huella territorial y decisiones operacionales.", "A tactical simulator for analysing soil, territorial footprint and operational decisions."),
         text("Suelo, huella territorial y planificación", "Soil, territorial footprint and planning"),
-        ["in-service", "operations", "environment"], { es: pages("strategic-soil-footprint-mapper") + "?hubLang=es", en: pages("strategic-soil-footprint-mapper") + "?hubLang=en" }, null, null,
-        ["P1", "P6"], [repository("strategic-soil-footprint-mapper", ["es", "en"])]),
+        ["in-service", "operations", "environment"], { en: pages("strategic-soil-footprint-mapper") }, null, null,
+        ["P1", "P6"], [repository("strategic-soil-footprint-mapper", ["en"])]),
 
       resource("sustainability-knowledge-check-evidence", "quiz", "evidence-diagnostic",
         text("Sustainability Knowledge Check — Evidence Review", "Sustainability Knowledge Check — Evidence Review"),
         text("Diagnóstico basado en evidencias para comprobar conocimientos transversales de sostenibilidad.", "An evidence-based diagnostic for checking cross-cutting sustainability knowledge."),
         text("Diagnóstico y revisión de evidencias", "Knowledge diagnostic and evidence review"),
-        ["general", "managers", "sustainability"], { es: pages("sustainability-knowledge-check") + "?hubLang=es", en: pages("sustainability-knowledge-check") + "?hubLang=en" }, { min: 15, max: 20, unit: "minutes" }, null,
-        ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("sustainability-knowledge-check", ["es", "en"])]),
+        ["general", "managers", "sustainability"], { en: pages("sustainability-knowledge-check") }, { min: 15, max: 20, unit: "minutes" }, null,
+        ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("sustainability-knowledge-check", ["en"])]),
 
       resource("sustainable-aviation-foundations-master", "course", "master-course",
         text("Sustainable Aviation Foundations — Master Course", "Sustainable Aviation Foundations — Master Course"),
@@ -162,8 +162,8 @@
         text("TASSG Composite Guardian", "TASSG Composite Guardian"),
         text("Juego serio de mantenimiento In-Service sobre decisiones de protección, reparación y sostenibilidad de materiales compuestos.", "An In-Service maintenance serious game about composite protection, repair and sustainability decisions."),
         text("Mantenimiento sostenible de materiales compuestos", "Sustainable composite maintenance"),
-        ["maintenance", "in-service", "environment"], { es: pages("tassg-composite-guardian") + "?hubLang=es", en: pages("tassg-composite-guardian") + "?hubLang=en" }, null, null,
-        ["P1", "P2", "P6"], [repository("tassg-composite-guardian", ["es", "en"])]),
+        ["maintenance", "in-service", "environment"], { en: pages("tassg-composite-guardian") }, null, null,
+        ["P1", "P2", "P6"], [repository("tassg-composite-guardian", ["en"])]),
 
       resource("tas-sustainability-quest", "game", "team-quiz-game",
         text("TAS Sustainability Quest", "TAS Sustainability Quest"),
@@ -213,8 +213,8 @@
         text("Ethical Armor", "Ethical Armor"),
         text("Juego de inteligencia para practicar diligencia debida, evaluación de riesgos y decisiones responsables en cadenas de suministro de minerales.", "An intelligence game for practising due diligence, risk assessment and responsible decision-making in mineral supply chains."),
         text("Diligencia debida y minerales responsables", "Due diligence and responsible minerals"),
-        ["procurement", "managers", "sustainability"], { es: "ethical-armor/?hubLang=es", en: "ethical-armor/?hubLang=en" }, { min: 30, max: 30, unit: "minutes" }, "intermediate",
-        ["P5", "P4"], [repository("sustainability-navigator", ["es", "en"])], { legacyInternal: true }),
+        ["procurement", "managers", "sustainability"], { en: "ethical-armor/" }, { min: 30, max: 30, unit: "minutes" }, "intermediate",
+        ["P5", "P4"], [repository("sustainability-navigator", ["en"])], { legacyInternal: true }),
 
       resource("phytosanitary-defender", "application", "interactive-challenge",
         text("Phytosanitary Defender", "Phytosanitary Defender"),
@@ -249,8 +249,8 @@
         text("The Year 15 Challenge", "The Year 15 Challenge"),
         text("Aplicación de ingeniería y ecodiseño para explorar decisiones de ciclo de vida, mantenibilidad y extensión de la vida útil.", "An engineering and eco-design application for exploring life-cycle, maintainability and service-life extension decisions."),
         text("Ingeniería, ecodiseño y ciclo de vida", "Engineering, eco-design and life cycle"),
-        ["engineering", "operations", "managers"], { es: "year-15-challenge/?hubLang=es", en: "year-15-challenge/?hubLang=en" }, { min: 35, max: 35, unit: "minutes" }, "advanced",
-        ["P2", "P1"], [repository("sustainability-navigator", ["es", "en"])], { legacyInternal: true })
+        ["engineering", "operations", "managers"], { en: "year-15-challenge/" }, { min: 35, max: 35, unit: "minutes" }, "advanced",
+        ["P2", "P1"], [repository("sustainability-navigator", ["en"])], { legacyInternal: true })
     ]
   };
 });
