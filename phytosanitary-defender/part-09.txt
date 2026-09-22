@@ -36,13 +36,302 @@ nbV3W47UFuRosuWfojuz0jOoPE2I9IvQOpNus0osIAHoqaIGBgbmqU/YFSv1r9KlRMfgy/i2foUlEmok
         </div>
       </section>
 
-      <section class="screen" id="practice2" data-guide="Practical two. First click Activate bark gauge. Then compare Sample A, which is 22 millimetres wide, and Sample B, which is 41 millimetres wide with a 34 square centimetre area. Finally, choose the correct statement. If you fail twice, I reveal the answer so you can continue.">
+      <section class="screen" id="practice2" data-guide="Practical two. Activate the bark gauge, compare both samples, apply the width-and-area rule and choose the statement supported by the evidence. If you fail twice, ARIA will reveal the correct assessment so you can continue.">
         <div class="screen-head">
           <div>
             <span class="tag">Practical 02</span>
             <h2>Apply the bark-tolerance rule correctly</h2>
-            <p>This second practical challenge is simpler once you know the rule. Activate the bark gauge, inspect the measurements on both sample boards and choose the correct statement. You get feedback after each attempt.</p>
+            <p>Activate the bark gauge, inspect both samples and decide whether the visible residual bark fits the training tolerance. Use both width and surface area; do not decide from width alone.</p>
           </div>
         </div>
+
         <div class="aria-brief">
-          <div class="mini-avatar"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQYFBAcGBgYIBwcICxILCwoKCxYPEA0SGhYbGhkWGRgcICgiHB4mHhgZIzAkJiorLS4tGyIyNTEsNSgsLSz/2wBDAQcICAsJCxULCxUsHRkdLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCz/wgARCAB4ALQDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAABAUAAwYCAQf/xAAaAQADAQEBAQAAAAAAAAAAAAACAwQBAAUG/9oADAMBAAIQAxAAAAGiaOrCV93cS3e9xnopqtMFRHigDlHFxZR53GGIjRM0lf4trYqrrcPnd1cAoTIAk1QqNncW13eV9DzYevDr/Y0zF612poRh1jZM0LSAyVt1DvJadFLdXRYG4e69e5OmOEoojKOBbYfc9lMwVWnMgtzOhIghV1Z4PVLWoZF8mHdraV0denreCyIuBgo74lZ5pYzSGvbOxSzmATaXGsGmFRk30AxaZ5vqme09bPZOPC7rirsiyGa+h4xwoDWC0XEmLTV0veukSTzrFUTVF9C84NKZCl2mRYviaKODtnlGnlexpO0njEn8rvCwxkgK7DkXF+YOp0A70Irer5fSIyWvrZPmtGu0TpTQj6w1SmdZ9q30XRgDmnUprL5rpUQ/ds7TClzdilVmpEbMX8x3+XxnJ088711X0zDayzzqA3l5qwo2yxvaOvJDNWmmQhZ9BDFFon0xGMFgv14+RG4tiVkthZ57XMFnmHITDxeA1miJeZcXZz0ugzVqnaDFanLEtL6YlcjVzHzDPaSVTALZFHyRItxexkpjSuZOIayRaeRZNzQdyR+vlApM3YIJCANJI6e+Sb3/xAAoEAACAgEDBAEEAwEAAAAAAAACAwEEABESEwUUISIxFSMyQRAgM0L/2gAIAQEAAQUCM5kVM2DDJ15J05JzkxjZIa7OPH7jBmshpGug4IYMkvCaIGMhqBDu5Ykh/GdcZE7I/HPouuF0Qsmkytm3xsxNSGj9JVOWenV66iCNzvJ/otYyAOcBT5yaVraGomMjoMBJq8hjS1VEesoPIa2MhrZzbJTx+OLOPPaMvTvrMhkyzAXrG0ZyusdAXGAEZ1GgNhJeV0y0wNYwcKI0hQjBR5gcr++QEDj7ESKLQFm3DRLMt0GdrJEIz8lE4Go4q7K8W3dDbxqNdyyc2Nq7Sj2tlqxjka3IpkoZwpjcQtwOZJLtTDF8TAlK/wCb0FNVh65pun9xvJob8C2QQ4naLl8D1H7YqGJDp1OVrsktWMuLbjOolk3bEyBlkFOTEFkREf0sQXb2KoQJbhIPaVrhkyiFLp1xeArFwV6665dZnc5bJXlYSmiugmcsgkUDGeuDkf3t
+          <div class="mini-avatar"><img src="data:image/jpeg;base64,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" alt="ARIA" /></div>
+          <div>
+            <strong>ARIA · Practical 02 instructions</strong>
+            <p>Activate the gauge first. Sample A is 22 mm wide. Sample B is 41 mm wide with an area of 34 cm². Apply the rule to each sample, then choose the statement that matches the evidence.</p>
+          </div>
+          <button class="voice-btn hear-brief" data-target="practice2">▶ Hear Aria</button>
+        </div>
+
+        <div class="rule-banner">
+          <strong>Training rule:</strong> an individual piece of residual bark narrower than 30 mm may remain regardless of length. If it is wider than 30 mm, its individual surface area must stay below 50 cm² in this exercise.
+        </div>
+
+        <div class="board-grid" style="margin-top:18px">
+          <div class="wood-card">
+            <h3>Sample A</h3>
+            <p>A long but narrow strip of residual bark.</p>
+            <div class="plank-frame">
+              <div class="sample-wood">
+                <div style="position:absolute;left:45%;top:18px;bottom:18px;width:22%;border-radius:18px;background:linear-gradient(90deg,#75431f,#5e331b,#7c4825);box-shadow:inset 0 0 0 2px rgba(69,35,16,.24)"></div>
+                <div class="measure-tag" id="measureA" style="right:16px;top:22px">Width · 22 mm</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wood-card">
+            <h3>Sample B</h3>
+            <p>A wider, short piece whose surface area must also be checked.</p>
+            <div class="plank-frame">
+              <div class="sample-wood">
+                <div style="position:absolute;left:31%;top:78px;width:40%;height:110px;border-radius:26px 18px 30px 16px;background:linear-gradient(135deg,#6b3b1d,#513018,#744524);box-shadow:inset 0 0 0 2px rgba(69,35,16,.24)"></div>
+                <div class="measure-tag" id="measureB1" style="right:16px;top:22px">Width · 41 mm</div>
+                <div class="measure-tag" id="measureB2" style="right:16px;top:72px">Area · 34 cm²</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-nav" style="margin-top:14px">
+          <button class="cta" id="barkGauge" type="button">📏 Activate bark gauge</button>
+        </div>
+
+        <div class="card" style="margin-top:18px">
+          <h3>Choose the correct assessment</h3>
+          <p>Use the measurements and the training rule above.</p>
+          <div class="choices" id="choices2">
+            <button class="choice" data-answer="reject-both">Reject both samples<small>Any visible bark automatically makes the packaging non-compliant.</small></button>
+            <button class="choice" data-answer="reject-b">Sample A is acceptable; reject Sample B<small>Sample B is wider than 30 mm, so width alone is enough to reject it.</small></button>
+            <button class="choice" data-answer="accept-both">Both samples fit the training tolerance<small>Sample A is narrow; Sample B is wider, but its individual area remains below the exercise limit.</small></button>
+          </div>
+          <div class="feedback" id="feedback2"></div>
+          <div class="locked-msg" id="gaugeReminder">Activate the bark gauge before answering.</div>
+        </div>
+
+        <div class="footer-nav">
+          <button class="cta goto" data-target="theory2">← Back</button>
+          <button class="cta primary goto hidden" id="toWrap" data-target="wrap">Continue to wrap-up</button>
+        </div>
+      </section>
+
+      <section class="screen" id="wrap" data-guide="Final debrief. Review what you practised: inspect the mark and the wood, use evidence instead of assumptions, apply the bark rule correctly, and hold or escalate when findings create doubt.">
+        <div class="screen-head">
+          <div>
+            <span class="tag">Wrap-up</span>
+            <h2>Release the spare. Not the pest.</h2>
+            <p>Fast logistics and strong phytosanitary control are not competing goals. The point is to release critical material with evidence that the packaging has been checked properly.</p>
+          </div>
+        </div>
+
+        <div class="aria-brief">
+          <div class="mini-avatar"><img src="data:image/jpeg;base64,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" alt="ARIA" /></div>
+          <div>
+            <strong>ARIA · Final debrief</strong>
+            <p>A mark is evidence, not a substitute for inspection. Residual bark needs the correct rule, not guesswork. Suspicious physical findings should be held and escalated instead of being ignored under schedule pressure.</p>
+          </div>
+          <button class="voice-btn hear-brief" data-target="wrap">▶ Hear Aria</button>
+        </div>
+
+        <div class="grid-2">
+          <div class="card"><h3>What you practised</h3><p>Mark review, physical inspection, evidence logging, residual-bark assessment and a release-or-hold decision.</p></div>
+          <div class="card"><h3>Operational consequence</h3><p>Credible controls support customs flow and operational availability while reducing the chance of transporting biological risk across borders.</p></div>
+          <div class="card"><h3>ISO 14001 connection</h3><p>Weak operational control can require investigation and corrective action. The game does not automatically classify every mistake as a major nonconformity.</p></div>
+          <div class="result-box">
+            <strong>Final result</strong>
+            <div style="font-size:34px;font-weight:900;margin-top:8px"><span id="finalScore">0</span> / 20</div>
+            <ul>
+              <li><span id="finalChecks">0</span> / 2 practical checks completed</li>
+              <li>Independent correct answer: +10 points</li>
+              <li>ARIA-assisted answer after two failed attempts: +5 points</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-nav">
+          <button class="cta goto" data-target="practice2">← Back</button>
+          <button class="cta primary" id="restartGame" type="button">Start again</button>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+(() => {
+  const byId = id => document.getElementById(id);
+  const ES = document.documentElement.lang === "es";
+  const t = (en, es) => ES ? es : en;
+  let score = 0;
+  let completed = 0;
+  let p1Attempts = 0;
+  let p2Attempts = 0;
+  let p1Done = false;
+  let p2Done = false;
+  let gaugeOn = false;
+  const inspected = new Set();
+
+  function syncHud(){
+    byId("score").textContent = score;
+    byId("progress").textContent = completed + " / 2";
+    if(byId("finalScore")) byId("finalScore").textContent = score;
+    if(byId("finalChecks")) byId("finalChecks").textContent = completed;
+  }
+
+  function showScreen(id){
+    document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s.id === id));
+    document.querySelectorAll(".nav button[data-screen]").forEach(b => b.classList.toggle("active", b.dataset.screen === id));
+    const screen = byId(id);
+    const guide = screen?.getAttribute("data-guide");
+    if(guide && byId("sidebarGuide")) byId("sidebarGuide").textContent = guide;
+    window.scrollTo({top:0,behavior:"smooth"});
+    syncHud();
+  }
+
+  document.querySelectorAll(".nav button[data-screen], .goto[data-target]").forEach(btn => {
+    btn.addEventListener("click", () => showScreen(btn.dataset.screen || btn.dataset.target));
+  });
+
+  function speak(text){
+    if(!("speechSynthesis" in window) || !text) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = ES ? "es-ES" : "en-GB";
+    const avatar = byId("sidebarAvatar");
+    avatar?.classList.add("speaking");
+    u.onend = () => avatar?.classList.remove("speaking");
+    u.onerror = () => avatar?.classList.remove("speaking");
+    speechSynthesis.speak(u);
+  }
+
+  byId("speakCurrent")?.addEventListener("click", () => speak(byId("sidebarGuide")?.textContent));
+  document.querySelectorAll(".hear-brief").forEach(btn => btn.addEventListener("click", () => {
+    const screen = byId(btn.dataset.target);
+    const text = screen?.querySelector(".aria-brief p")?.textContent || screen?.getAttribute("data-guide");
+    speak(text);
+  }));
+
+  const modal = byId("magnifierModal");
+  byId("toolMagnifier")?.addEventListener("click", () => {
+    modal?.classList.add("show");
+    modal?.setAttribute("aria-hidden","false");
+  });
+  byId("closeMagnifier")?.addEventListener("click", () => {
+    modal?.classList.remove("show");
+    modal?.setAttribute("aria-hidden","true");
+  });
+  modal?.addEventListener("click", e => {
+    if(e.target === modal){ modal.classList.remove("show"); modal.setAttribute("aria-hidden","true"); }
+  });
+
+  byId("toolSurface")?.addEventListener("click", () => {
+    const n = byId("stageNote");
+    n.textContent = t(
+      "Inspect the wood itself: look for bore holes, galleries, fresh frass, suspicious surface damage or other evidence that conflicts with an apparently acceptable mark.",
+      "Inspecciona la propia madera: busca orificios, galerías, serrín reciente, daños superficiales sospechosos u otras evidencias que contradigan una marca aparentemente aceptable."
+    );
+    n.classList.add("show");
+  });
+  byId("toolEvidence")?.addEventListener("click", () => byId("inspectionCard")?.scrollIntoView({behavior:"smooth",block:"center"}));
+
+  function inspectPoint(letter){
+    if(inspected.has(letter)) return;
+    inspected.add(letter);
+    byId("spot"+letter)?.classList.add("done");
+    const state = byId("state"+letter);
+    if(state){ state.textContent = t("Reviewed","Revisado"); state.classList.remove("pending"); state.classList.add("ok"); }
+    byId("evidence"+letter)?.classList.add("show");
+    byId("counter1").textContent = t("Evidence reviewed: ","Evidencias revisadas: ") + inspected.size + " / 2";
+  }
+  byId("spotA")?.addEventListener("click", () => inspectPoint("A"));
+  byId("spotB")?.addEventListener("click", () => inspectPoint("B"));
+
+  function setFeedback(el, kind, text){
+    el.className = "feedback show " + kind;
+    el.textContent = text;
+  }
+  function lockChoices(container){
+    container.querySelectorAll(".choice").forEach(b => b.disabled = true);
+  }
+
+  byId("choices1")?.querySelectorAll(".choice").forEach(btn => btn.addEventListener("click", () => {
+    const feedback = byId("feedback1");
+    if(p1Done) return;
+    if(inspected.size < 2){
+      setFeedback(feedback,"help",t(
+        "Inspect both yellow points before deciding. The mark alone is not enough.",
+        "Inspecciona los dos puntos amarillos antes de decidir. La marca por sí sola no es suficiente."
+      ));
+      return;
+    }
+    if(btn.dataset.answer === "hold"){
+      p1Done = true; score += 10; completed++;
+      btn.classList.add("correct"); lockChoices(byId("choices1")); byId("toTheory2").classList.remove("hidden");
+      setFeedback(feedback,"ok",t(
+        "Correct. The readable mark does not cancel the suspicious physical findings. Hold the packaging and escalate for phytosanitary review.",
+        "Correcto. Una marca legible no anula los hallazgos físicos sospechosos. Retén el embalaje y escala el caso para revisión fitosanitaria."
+      ));
+    } else {
+      p1Attempts++;
+      btn.classList.add("wrong");
+      if(p1Attempts < 2){
+        setFeedback(feedback,"no",t(
+          "Not quite. Use the physical evidence as well as the mark. Two suspicious findings mean the shipment should not be released yet.",
+          "No exactamente. Utiliza la evidencia física además de la marca. Dos hallazgos sospechosos significan que el envío todavía no debe liberarse."
+        ));
+      } else {
+        p1Done = true; score += 5; completed++;
+        const correct = byId("choices1").querySelector('[data-answer="hold"]');
+        correct.classList.add("correct"); lockChoices(byId("choices1")); byId("toTheory2").classList.remove("hidden");
+        setFeedback(feedback,"help",t(
+          "ARIA assist: the correct decision is HOLD FOR PHYTOSANITARY REVIEW. The mark is present, but the physical evidence requires escalation before international release.",
+          "Ayuda de ARIA: la decisión correcta es RETENER PARA REVISIÓN FITOSANITARIA. La marca está presente, pero la evidencia física exige escalar el caso antes de autorizar la salida internacional."
+        ));
+      }
+    }
+    syncHud();
+  }));
+
+  byId("barkGauge")?.addEventListener("click", () => {
+    gaugeOn = true;
+    ["measureA","measureB1","measureB2"].forEach(id => byId(id)?.classList.add("show"));
+    byId("gaugeReminder").textContent = t(
+      "Gauge active. Compare width and surface area before answering.",
+      "Medidor activado. Compara anchura y superficie antes de responder."
+    );
+  });
+
+  byId("choices2")?.querySelectorAll(".choice").forEach(btn => btn.addEventListener("click", () => {
+    const feedback = byId("feedback2");
+    if(p2Done) return;
+    if(!gaugeOn){
+      setFeedback(feedback,"help",t(
+        "Activate the bark gauge first so the measurements are visible.",
+        "Activa primero el medidor de corteza para ver las medidas."
+      ));
+      return;
+    }
+    if(btn.dataset.answer === "accept-both"){
+      p2Done = true; score += 10; completed++;
+      btn.classList.add("correct"); lockChoices(byId("choices2")); byId("toWrap").classList.remove("hidden");
+      setFeedback(feedback,"ok",t(
+        "Correct. Sample A is narrower than 30 mm. Sample B is wider, but its individual area is 34 cm², below the 50 cm² exercise limit.",
+        "Correcto. La muestra A tiene menos de 30 mm de anchura. La muestra B es más ancha, pero su superficie individual es de 34 cm², por debajo del límite de 50 cm² utilizado en el ejercicio."
+      ));
+    } else {
+      p2Attempts++;
+      btn.classList.add("wrong");
+      if(p2Attempts < 2){
+        setFeedback(feedback,"no",t(
+          "Not quite. Width alone is not enough. Check the surface area of Sample B.",
+          "No exactamente. La anchura por sí sola no basta. Comprueba la superficie de la muestra B."
+        ));
+      } else {
+        p2Done = true; score += 5; completed++;
+        const correct = byId("choices2").querySelector('[data-answer="accept-both"]');
+        correct.classList.add("correct"); lockChoices(byId("choices2")); byId("toWrap").classList.remove("hidden");
+        setFeedback(feedback,"help",t(
+          "ARIA assist: Sample A is below 30 mm wide. Sample B is wider than 30 mm, but its area is 34 cm², below the 50 cm² limit used in this exercise. Both samples fit the training tolerance.",
+          "Ayuda de ARIA: la muestra A tiene menos de 30 mm de anchura. La muestra B supera los 30 mm, pero su superficie es de 34 cm², por debajo del límite de 50 cm² utilizado en este ejercicio. Ambas muestras cumplen la tolerancia del ejercicio."
+        ));
+      }
+    }
+    syncHud();
+  }));
+
+  byId("restartGame")?.addEventListener("click", () => location.reload());
+  syncHud();
+})();
+</script>
+</body>
+</html>
