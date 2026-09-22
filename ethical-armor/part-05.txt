@@ -4,7 +4,7 @@
 </section>
 <section class="screen" data-guide="Deep theory six. Eco-design can reduce supply lock-in through material efficiency, substitution readiness, modularity, multi-source compatibility, circularity and design-for-information while preserving aerospace qualification." id="t6">
 <div class="head"><div><div class="stepno">Theory after Milestone 6 · Deep dive</div><h2>Eco-design can redesign the sourcing problem</h2><p>Ethical sourcing becomes stronger when Engineering reduces structural dependency instead of leaving Procurement to manage a design that has only one technically possible supply route.</p></div></div>
-<div class="guide-strip"><img alt="ARIA" src="aria.svg"/><div><b>ARIA · Core idea</b><span>The most resilient supply chain is often the one the architecture does not over-constrain. Engineering can preserve future sourcing options without relaxing safety, performance or qualification.</span></div><button class="btn voice" data-speak="t6">▶ Hear ARIA</button></div>
+<div class="guide-strip"><img alt="ARIA" src="aria-original.jpg"/><div><b>ARIA · Core idea</b><span>The most resilient supply chain is often the one the architecture does not over-constrain. Engineering can preserve future sourcing options without relaxing safety, performance or qualification.</span></div><button class="btn voice" data-speak="t6">▶ Hear ARIA</button></div>
 <div class="theory-grid three">
 <article class="theory-block"><div class="theory-kicker">Lever 1</div><h3>Reduce material intensity</h3><p>Revisit geometry, topology, magnetic architecture, thickness, yield loss and manufacturing route to determine whether the same function can be achieved with less of a constrained material. The objective is not “use less at any cost”; it is to remove unnecessary dependence while preserving technical margins.</p></article>
 <article class="theory-block"><div class="theory-kicker">Lever 2</div><h3>Design for substitution</h3><p>Where feasible, specify the performance envelope and interfaces so future alternatives can be evaluated without redesigning the whole system. This can include alternative grades, processing routes, recycled feedstock or material families — but only after the required qualification and safety evidence.</p></article>
@@ -49,7 +49,7 @@
 <div class="footer-nav"><button class="btn secondary" data-back="">← Back</button><button class="btn primary" data-go="home">Return to start</button></div>
 </section>
 </main>
-<div class="aria" id="aria"><img alt="ARIA digital supply-chain guide" src="aria.svg"/><div class="aria-copy"><strong>ARIA · Supply Chain Intelligence Analyst</strong><p id="ariaText">Welcome. I guide every investigation step.</p><button id="speakBtn">▶ Hear ARIA</button><button class="minimize" id="ariaMin">–</button></div></div>
+<div class="aria" id="aria"><img alt="ARIA digital supply-chain guide" src="aria-original.jpg"/><div class="aria-copy"><strong>ARIA · Supply Chain Intelligence Analyst</strong><p id="ariaText">Welcome. I guide every investigation step.</p><button id="speakBtn">▶ Hear ARIA</button><button class="minimize" id="ariaMin">–</button></div></div>
 <script>
 const screens=[...document.querySelectorAll('.screen')];let current='home',stack=[];const completed=new Set();let score=0;
 const scoreHud=document.getElementById('scoreHud'), milestoneHud=document.getElementById('milestoneHud'), aria=document.getElementById('aria'), ariaText=document.getElementById('ariaText');
