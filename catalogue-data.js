@@ -138,11 +138,11 @@
         ["P1", "P6"], [repository("strategic-soil-footprint-mapper", ["es", "en"])]),
 
       resource("sustainability-knowledge-check-evidence", "quiz", "evidence-diagnostic",
-        text("Sustainability Knowledge Check — Evidence Review", "Sustainability Knowledge Check — Evidence Review"),
+        text("Evaluación de conocimientos de sostenibilidad — Revisión de evidencias", "Sustainability Knowledge Check — Evidence Review"),
         text("Diagnóstico basado en evidencias para comprobar conocimientos transversales de sostenibilidad.", "An evidence-based diagnostic for checking cross-cutting sustainability knowledge."),
         text("Diagnóstico y revisión de evidencias", "Knowledge diagnostic and evidence review"),
-        ["general", "managers", "sustainability"], { en: pages("sustainability-knowledge-check") }, { min: 15, max: 20, unit: "minutes" }, null,
-        ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("sustainability-knowledge-check", ["en"])]),
+        ["general", "managers", "sustainability"], { es: pages("sustainability-knowledge-check") + "?hubLang=es", en: pages("sustainability-knowledge-check") + "?hubLang=en" }, { min: 15, max: 20, unit: "minutes" }, null,
+        ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("sustainability-knowledge-check", ["es", "en"])]),
 
       resource("sustainable-aviation-foundations-master", "course", "master-course",
         text("Sustainable Aviation Foundations — Master Course", "Sustainable Aviation Foundations — Master Course"),
