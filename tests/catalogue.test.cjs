@@ -54,7 +54,11 @@ test("groups confirmed Spanish and English counterparts into one card", () => {
 test("keeps the master course separate and includes the repaired approved courses", () => {
   const master = catalogue.resources.find(resource => resource.id === "sustainable-aviation-foundations-master");
   assert.equal(master.title.en, "Sustainable Aviation Foundations — Master Course");
-  assert.deepEqual(Object.keys(master.launches), ["en"]);
+  assert.equal(master.title.es, "Fundamentos de Aviación Sostenible — Curso maestro");
+  assert.deepEqual(master.launches, {
+    es: "https://aug79-droid.github.io/sustainable-aviation-foundations/?hubLang=es",
+    en: "https://aug79-droid.github.io/sustainable-aviation-foundations/?hubLang=en"
+  });
   const repositories = catalogue.resources.flatMap(resource => resource.provenance.map(item => item.repositoryName));
   assert.ok(repositories.includes("advanced-sustainability-air-power-services"));
   assert.ok(repositories.includes("aero-skills-launchpad"));
@@ -66,7 +70,7 @@ test("catalogue filters compose without inventing unknown values", () => {
   assert.ok(api.filterResources(catalogue.resources, { difficulty: "unknown" }).every(resource => resource.difficulty === null));
   assert.ok(api.filterResources(catalogue.resources, { duration: "unknown" }).every(resource => resource.duration === null));
   assert.deepEqual(api.filterResources(catalogue.resources, { query: "aviación", kind: "course", language: "es" }).map(resource => resource.id).sort(), [
-    "introduction-sustainability-aviation", "sustainable-aviation-essentials"
+    "introduction-sustainability-aviation", "sustainable-aviation-essentials", "sustainable-aviation-foundations-master"
   ]);
   assert.equal(api.durationBucket({ min: 45, max: 60, unit: "minutes" }), "medium");
   assert.equal(api.durationBucket(null), "unknown");
