@@ -64,7 +64,7 @@ test("derives ES and EN completeness only from required catalogue launches", () 
     "eco-design-circularity-materials": ["partial", "complete"],
     "responsible-supply-chain-compliance": ["complete", "complete"],
     "sustainable-in-service-operations": ["complete", "complete"],
-    "nature-habitat-operational-risk": ["partial", "complete"],
+    "nature-habitat-operational-risk": ["complete", "complete"],
     "evidence-systems-decision-making": ["partial", "complete"]
   };
   pathsData.paths.forEach(pathItem => {
