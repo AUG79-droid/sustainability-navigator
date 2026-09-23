@@ -4,6 +4,7 @@
 <body style="margin:0;background:#f5f0e8;font-family:Arial,sans-serif">
 <div id="loading" style="min-height:100vh;display:grid;place-items:center;color:#18343b;font-weight:700">Loading The REACH Compliance Challenge…</div>
 <script src="spanish-translations.js?v=phase-6b-task-5a-final"></script>
+<script>(function(){const es=new URLSearchParams(location.search).get("hubLang")==="es";if(es){document.documentElement.lang="es";document.title="El Reto de Cumplimiento REACH";const e=document.getElementById("loading");if(e)e.textContent="Cargando El Reto de Cumplimiento REACH…";}})();</script>
 <script>
 function withHubReturn(html) {
   const lang = new URLSearchParams(location.search).get("hubLang") === "en" ? "en" : "es";
@@ -33,7 +34,7 @@ function withHubReturn(html) {
     const localised = selectedLanguage === "es" ? window.SNReachLocalize(html) : html;
     document.open(); document.write(withHubReturn(localised)); document.close();
   } catch (error) {
-    document.getElementById("loading").innerHTML = `Unable to load the challenge. Please refresh. ${error.message} <a href="../#applications">Back to Sustainability Hub</a>`;
+    const es = new URLSearchParams(location.search).get("hubLang") === "es"; document.getElementById("loading").innerHTML = es ? `No se ha podido cargar el reto. Actualiza la página. <a href="../?lang=es#applications">Volver al Sustainability Hub</a>` : `Unable to load the challenge. Please refresh. <a href="../?lang=en#applications">Back to Sustainability Hub</a>`;
   }
 })();
 </script>
