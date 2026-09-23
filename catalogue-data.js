@@ -227,7 +227,7 @@
         text("El Reto de Cumplimiento REACH", "The REACH Compliance Challenge"),
         text("Experiencia basada en escenarios para reconocer obligaciones, evidencias y decisiones clave de cumplimiento bajo REACH.", "A scenario-based experience for recognising key REACH obligations, evidence and compliance decisions."),
         text("Cumplimiento químico REACH", "REACH chemicals compliance"),
-        ["engineering", "procurement", "sustainability"], { es: "reach-compliance-challenge/", en: "reach-compliance-challenge/" }, { min: 30, max: 30, unit: "minutes" }, "intermediate",
+        ["engineering", "procurement", "sustainability"], { es: "reach-compliance-challenge/?hubLang=es", en: "reach-compliance-challenge/?hubLang=en" }, { min: 30, max: 30, unit: "minutes" }, "intermediate",
         ["P2", "P5"], [repository("sustainability-navigator", ["es", "en"])], { legacyInternal: true }),
 
       resource("aero-skills-launchpad", "course", "modular-digital-course",
