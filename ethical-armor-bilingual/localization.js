@@ -7,7 +7,7 @@
   const pairs=window.ETHICAL_ARMOR_ES||[];
   const exact=new Map(pairs);
   const partial=[
-    ["Back to Sustainability Hub","Volver al Sustainability Hub"],
+    ["Back to Sustainability Hub","Volver al Sustainability Hub"],["5 tiers","5 niveles"],
     ["Continue to Milestone","Continuar al Hito"],
     ["Milestone ","Hito "],
     ["Theory after","Teoría después de"],
