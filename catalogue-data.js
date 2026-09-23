@@ -112,7 +112,7 @@
         text("Biblioteca bilingüe de historias técnicas y recursos de aprendizaje sobre sostenibilidad aplicada a la aviación.", "A bilingual library of technical stories and learning resources about sustainability in aviation."),
         text("Historias técnicas de sostenibilidad aeronáutica", "Technical sustainable-aviation stories"),
         ["general", "environment", "sustainability"],
-        { es: pages("factory-biodiversity-library"), en: pages("factory-biodiversity-library") }, null, null,
+        { es: pages("factory-biodiversity-library") + "?hubLang=es", en: pages("factory-biodiversity-library") + "?hubLang=en" }, null, null,
         ["P1", "P2", "P3", "P6"], [repository("factory-biodiversity-library", ["es", "en"])]),
 
       resource("introduction-sustainability-aviation", "course", "introductory-course",
@@ -232,17 +232,17 @@
 
       resource("aero-skills-launchpad", "course", "modular-digital-course",
         text("AeroSkills · Rendimiento ambiental en aviación", "AeroSkills · Aviation Environmental Performance"),
-        text("Curso modular en inglés sobre desempeño ambiental en aviación, con evaluación de impactos de ciclo de vida, efectos climáticos, SAF, hidrógeno, eficiencia operacional, regulación y circularidad.", "An English modular course on aviation environmental performance covering life-cycle impacts, climate effects, SAF, hydrogen, operational efficiency, regulation and circularity."),
+        text("Curso modular bilingüe sobre desempeño ambiental en aviación, con evaluación de impactos de ciclo de vida, efectos climáticos, SAF, hidrógeno, eficiencia operacional, regulación y circularidad.", "A bilingual modular course on aviation environmental performance covering life-cycle impacts, climate effects, SAF, hydrogen, operational efficiency, regulation and circularity."),
         text("Rendimiento ambiental y decisiones basadas en evidencia", "Environmental performance and evidence-based decisions"),
-        ["engineering", "operations", "sustainability"], { en: pages("aero-skills-launchpad") }, null, "intermediate",
-        ["P1", "P2", "P3", "P5", "P6"], [repository("aero-skills-launchpad", ["en"])]),
+        ["engineering", "operations", "sustainability"], { es: pages("aero-skills-launchpad") + "?hubLang=es", en: pages("aero-skills-launchpad") + "?hubLang=en" }, null, "intermediate",
+        ["P1", "P2", "P3", "P5", "P6"], [repository("aero-skills-launchpad", ["es", "en"])]),
 
       resource("advanced-sustainability-air-power-services", "course", "advanced-digital-course",
         text("Sostenibilidad avanzada en Air Power In-Service", "Advanced Sustainability in Air Power In-Service"),
         text("Curso avanzado bilingüe de 15 módulos para integrar misión, seguridad, coste, disponibilidad y desempeño ambiental en decisiones de Air Power In-Service.", "A bilingual 15-module advanced course integrating mission, safety, cost, availability and environmental performance in Air Power In-Service decisions."),
         text("Sostenibilidad aplicada a decisiones In-Service", "Sustainability applied to In-Service decisions"),
         ["engineering", "operations", "managers", "sustainability"],
-        { es: pages("advanced-sustainability-air-power-services"), en: pages("advanced-sustainability-air-power-services") }, null, "advanced",
+        { es: pages("advanced-sustainability-air-power-services") + "?hubLang=es", en: pages("advanced-sustainability-air-power-services") + "?hubLang=en" }, null, "advanced",
         ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("advanced-sustainability-air-power-services", ["es", "en"])], { noPriorExpertiseRequired: true }),
 
       resource("year-15-challenge", "application", "scenario-challenge",

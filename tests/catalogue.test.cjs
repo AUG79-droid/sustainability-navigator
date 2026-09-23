@@ -41,7 +41,7 @@ test("uses supported resource kinds and verified nullable metadata", () => {
 
 test("groups confirmed Spanish and English counterparts into one card", () => {
   const bilingual = catalogue.resources.filter(resource => resource.launches.es && resource.launches.en);
-  assert.equal(bilingual.length, 28);
+  assert.equal(bilingual.length, 29);
   const essentials = catalogue.resources.find(resource => resource.id === "sustainable-aviation-essentials");
   assert.equal(essentials.title.es, "Fundamentos de Aviación Sostenible");
   assert.equal(essentials.title.en, "Sustainable Aviation Essentials");
@@ -49,6 +49,12 @@ test("groups confirmed Spanish and English counterparts into one card", () => {
   assert.match(essentials.launches.en, /curso-biodiversidad-airbus-en\/$/);
   const library = catalogue.resources.find(resource => resource.id === "sustainable-aviation-learning-library");
   assert.equal(library.provenance.length, 1, "one bilingual repository remains one logical resource");
+  assert.match(library.launches.es, /\?hubLang=es$/);
+  assert.match(library.launches.en, /\?hubLang=en$/);
+  const aeroSkills = catalogue.resources.find(resource => resource.id === "aero-skills-launchpad");
+  assert.deepEqual(aeroSkills.provenance[0].languages, ["es", "en"]);
+  assert.match(aeroSkills.launches.es, /\?hubLang=es$/);
+  assert.match(aeroSkills.launches.en, /\?hubLang=en$/);
 });
 
 test("keeps the master course separate and includes the repaired approved courses", () => {
@@ -70,6 +76,7 @@ test("catalogue filters compose without inventing unknown values", () => {
   assert.ok(api.filterResources(catalogue.resources, { difficulty: "unknown" }).every(resource => resource.difficulty === null));
   assert.ok(api.filterResources(catalogue.resources, { duration: "unknown" }).every(resource => resource.duration === null));
   assert.deepEqual(api.filterResources(catalogue.resources, { query: "aviación", kind: "course", language: "es" }).map(resource => resource.id).sort(), [
+    "aero-skills-launchpad",
     "introduction-sustainability-aviation", "sustainable-aviation-essentials", "sustainable-aviation-foundations-master"
   ]);
   assert.equal(api.durationBucket({ min: 45, max: 60, unit: "minutes" }), "medium");
