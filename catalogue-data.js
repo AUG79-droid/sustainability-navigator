@@ -178,7 +178,7 @@
         text("Curso bilingüe de fundamentos para comprender la visibilidad, la evidencia, la diligencia debida y la gobernanza del cumplimiento en cadenas de suministro aeroespaciales.", "A bilingual foundation course for understanding visibility, evidence, due diligence and compliance governance in aerospace supply chains."),
         text("Cadena de suministro responsable y fundamentos de cumplimiento", "Responsible supply chain and compliance foundations"),
         ["procurement", "quality", "engineering", "managers"],
-        { es: "responsible-supply-chain-compliance-foundations/", en: "responsible-supply-chain-compliance-foundations/" },
+        { es: "responsible-supply-chain-compliance-foundations/?hubLang=es", en: "responsible-supply-chain-compliance-foundations/?hubLang=en" },
         { min: 150, max: 150, unit: "minutes" }, "foundation",
         ["P1", "P2", "P4", "P5"], [repository("sustainability-navigator", ["es", "en"])], { internalCourse: true }),
 
@@ -187,7 +187,7 @@
         text("Curso bilingüe de fundamentos para comparar decisiones de diseño y materiales mediante pensamiento de ciclo de vida, estrategias de circularidad, requisitos técnicos y evidencia trazable.", "A bilingual foundation course for comparing design and material decisions through life-cycle thinking, circularity strategies, technical requirements and traceable evidence."),
         text("Ecodiseño, circularidad y decisiones sobre materiales aeronáuticos", "Eco-design, circularity and aerospace material decisions"),
         ["engineering", "maintenance", "procurement", "innovation", "sustainability"],
-        { es: "eco-design-circularity-aerospace-materials/", en: "eco-design-circularity-aerospace-materials/" },
+        { es: "eco-design-circularity-aerospace-materials/?hubLang=es", en: "eco-design-circularity-aerospace-materials/?hubLang=en" },
         { min: 190, max: 190, unit: "minutes" }, "foundation",
         ["P1", "P2", "P3", "P5", "P6"], [repository("sustainability-navigator", ["es", "en"])], { internalCourse: true }),
 
@@ -196,7 +196,7 @@
         text("Revisión bilingüe basada en escenarios para practicar decisiones sobre evidencia, diligencia debida, cumplimiento, logística, escalación y gobernanza.", "A bilingual scenario-based review for practising decisions about evidence, due diligence, compliance, logistics, escalation and governance."),
         text("Toma de decisiones aplicada en cadena de suministro y cumplimiento", "Applied supply-chain and compliance decision-making"),
         ["procurement", "quality", "engineering", "managers", "sustainability"],
-        { es: "supply-chain-compliance-decision-review/", en: "supply-chain-compliance-decision-review/" },
+        { es: "supply-chain-compliance-decision-review/?hubLang=es", en: "supply-chain-compliance-decision-review/?hubLang=en" },
         { min: 75, max: 75, unit: "minutes" }, "intermediate",
         ["P1", "P2", "P4", "P5"], [repository("sustainability-navigator", ["es", "en"])], { internalAssessment: true }),
 
@@ -205,7 +205,7 @@
         text("Evaluación bilingüe basada en escenarios para integrar ciclo de vida, circularidad, materiales, mantenibilidad, evidencia y trade-offs de ingeniería aeroespacial.", "A bilingual scenario-based assessment integrating life cycle, circularity, materials, maintainability, evidence and aerospace engineering trade-offs."),
         text("Toma de decisiones aplicada de ecodiseño y ciclo de vida", "Applied eco-design and life-cycle decision-making"),
         ["engineering", "maintenance", "procurement", "innovation", "sustainability"],
-        { es: "eco-design-lifecycle-decision-assessment/", en: "eco-design-lifecycle-decision-assessment/" },
+        { es: "eco-design-lifecycle-decision-assessment/?hubLang=es", en: "eco-design-lifecycle-decision-assessment/?hubLang=en" },
         { min: 90, max: 90, unit: "minutes" }, "advanced",
         ["P1", "P2", "P3", "P5", "P6"], [repository("sustainability-navigator", ["es", "en"])], { internalAssessment: true }),
 
