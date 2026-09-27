@@ -101,6 +101,25 @@ test("derives the four learner intentions from the single catalogue", () => {
   );
 });
 
+test("maps one supplied preview to each top learning-intention card", () => {
+  assert.deepEqual(api.INTENTION_PREVIEWS, {
+    learn: "assets/intention-previews/courses.png",
+    practice: "assets/intention-previews/games-simulators.png",
+    assess: "assets/intention-previews/quizzes-assessments.png",
+    explore: "assets/intention-previews/knowledge-resources.png"
+  });
+  assert.equal(new Set(Object.values(api.INTENTION_PREVIEWS)).size, 4);
+  Object.values(api.INTENTION_PREVIEWS).forEach(relative => {
+    const target = path.resolve(root, relative);
+    assert.equal(target.startsWith(path.join(root, "assets", "intention-previews")), true);
+    assert.equal(fs.existsSync(target), true, `${relative} is missing`);
+    assert.ok(fs.statSync(target).size > 10_000, `${relative} is unexpectedly small`);
+  });
+  const source = fs.readFileSync(path.join(root, "catalogue.js"), "utf8");
+  assert.match(source, /card\.append\(preview, button\)/);
+  assert.match(source, /preview\.className = "learning-intention-preview"/);
+});
+
 test("registers ESG Essentials as a verified bilingual foundation resource", () => {
   const course = catalogue.resources.find(resource => resource.id === "esg-essentials-air-power-services");
   assert.ok(course);

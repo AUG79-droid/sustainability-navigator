@@ -18,6 +18,12 @@
     { id: "assess", kinds: ["quiz"], number: "03" },
     { id: "explore", kinds: ["knowledge-resource"], number: "04", knowledgeTarget: "#knowledge" }
   ];
+  const INTENTION_PREVIEWS = {
+    learn: "assets/intention-previews/courses.png",
+    practice: "assets/intention-previews/games-simulators.png",
+    assess: "assets/intention-previews/quizzes-assessments.png",
+    explore: "assets/intention-previews/knowledge-resources.png"
+  };
 
   const labels = {
     es: {
@@ -291,6 +297,13 @@
       card.className = `learning-intention-card intention-${intention.id}`;
       card.dataset.intentionId = intention.id;
 
+      const preview = document.createElement("img");
+      preview.className = "learning-intention-preview";
+      preview.src = INTENTION_PREVIEWS[intention.id];
+      preview.alt = l[`${intention.id}Title`];
+      preview.loading = "lazy";
+      preview.decoding = "async";
+
       const button = document.createElement("button");
       button.type = "button";
       button.className = "learning-intention-primary";
@@ -324,7 +337,7 @@
       button.setAttribute("aria-label", `${l[`${intention.id}Action`]} · ${count.textContent}`);
       button.append(header, title, description, footer);
       button.addEventListener("click", () => options.onSelect?.(intention.id));
-      card.append(button);
+      card.append(preview, button);
 
       if (intention.knowledgeTarget) {
         const knowledgeLink = document.createElement("a");
@@ -450,7 +463,7 @@
   }
 
   return {
-    REQUIRED_FIELDS, KINDS, DIFFICULTIES, LEARNING_INTENTIONS,
+    REQUIRED_FIELDS, KINDS, DIFFICULTIES, LEARNING_INTENTIONS, INTENTION_PREVIEWS,
     validateResource, validateCatalogue, durationBucket, filterResources, resourcesForIntention, intentionCounts,
     launchHref, previewSrc, discoverable, launchable, syncIntentionButtons, renderIntentions, render
   };
