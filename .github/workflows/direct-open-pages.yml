@@ -47,6 +47,8 @@ jobs:
           for file in "${site_files[@]}"; do test -f "$file"; cp "$file" _site/; done
           site_dirs=(responsible-supply-chain-compliance-foundations eco-design-circularity-aerospace-materials supply-chain-compliance-decision-review eco-design-lifecycle-decision-assessment ethical-armor ethical-armor-bilingual phytosanitary-defender phytosanitary-defender-bilingual reach-compliance-challenge year-15-challenge)
           for dir in "${site_dirs[@]}"; do test -f "$dir/index.html"; cp -a "$dir" _site/; done
+          asset_dirs=(assets)
+          for dir in "${asset_dirs[@]}"; do test -d "$dir"; cp -a "$dir" _site/; done
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5

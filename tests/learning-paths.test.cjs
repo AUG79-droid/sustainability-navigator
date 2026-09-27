@@ -119,3 +119,21 @@ test("preserves the catalogue and Knowledge Navigator integration points", () =>
   assert.match(html, /src="search-engine\.js"/);
   assert.equal(catalogue.resources.length, 29);
 });
+
+test("every Learning Path uses one representative preview from its own resources", () => {
+  const expected = {
+    "sustainable-aviation-foundations": "sustainable-aviation-essentials",
+    "eco-design-circularity-materials": "eco-design-circularity-aerospace-materials",
+    "responsible-supply-chain-compliance": "responsible-supply-chain-compliance-foundations",
+    "sustainable-in-service-operations": "tassg-composite-guardian",
+    "nature-habitat-operational-risk": "bio-radar-runway-prevention",
+    "evidence-systems-decision-making": "sustainability-evidence-decisions"
+  };
+  pathsData.paths.forEach(pathItem => {
+    const ids = new Set(pathItem.steps.flatMap(api.resourceIdsForStep));
+    const previewId = api.previewResourceIdForPath(pathItem);
+    assert.equal(previewId, expected[pathItem.id]);
+    assert.equal(ids.has(previewId), true, `${pathItem.id}: preview must belong to the path`);
+    assert.ok(catalogue.resources.some(resource => resource.id === previewId), `${pathItem.id}: unknown preview resource ${previewId}`);
+  });
+});

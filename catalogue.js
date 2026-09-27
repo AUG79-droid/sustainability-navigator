@@ -165,11 +165,32 @@
     return `${url}${separator}hubLang=${uiLanguage}`;
   }
 
+  function previewSrc(resourceId, uiLanguage) {
+    const language = uiLanguage === "en" ? "en" : "es";
+    return `assets/previews/${resourceId}-${language}.png`;
+  }
+
+  function previewImage(resource, lang, className = "application-preview-image") {
+    const image = document.createElement("img");
+    image.className = className;
+    image.src = previewSrc(resource.id, lang);
+    image.alt = `${resource.title[lang]} — ${lang === "en" ? "application preview" : "vista previa de la aplicación"}`;
+    image.loading = "lazy";
+    image.decoding = "async";
+    image.width = 1425;
+    image.height = 891;
+    return image;
+  }
+
   function renderCard(resource, lang, pillarLabel, progressUi) {
     const l = labels[lang];
     const card = document.createElement("article");
     card.className = "application-card";
     card.dataset.resourceId = resource.id;
+
+    const preview = document.createElement("figure");
+    preview.className = "application-preview";
+    preview.append(previewImage(resource, lang));
 
     const top = document.createElement("div");
     top.className = "application-card-top";
@@ -180,6 +201,7 @@
     status.className = "application-status";
     status.textContent = l[resource.lifecycle] || l[resource.status] || resource.lifecycle || resource.status;
     top.append(kind, status);
+    preview.append(top);
 
     const title = document.createElement("h3");
     title.textContent = resource.title[lang];
@@ -219,8 +241,11 @@
       launches.append(launch);
     });
 
-    card.append(top, title, topic, description, metadata, launches);
-    if (progressUi) card.append(progressUi.resourceControl(resource, lang));
+    const content = document.createElement("div");
+    content.className = "application-card-content";
+    content.append(title, topic, description, metadata, launches);
+    if (progressUi) content.append(progressUi.resourceControl(resource, lang));
+    card.append(preview, content);
     return card;
   }
 
@@ -427,6 +452,6 @@
   return {
     REQUIRED_FIELDS, KINDS, DIFFICULTIES, LEARNING_INTENTIONS,
     validateResource, validateCatalogue, durationBucket, filterResources, resourcesForIntention, intentionCounts,
-    launchHref, discoverable, launchable, syncIntentionButtons, renderIntentions, render
+    launchHref, previewSrc, discoverable, launchable, syncIntentionButtons, renderIntentions, render
   };
 });

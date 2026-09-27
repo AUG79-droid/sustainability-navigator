@@ -9,6 +9,14 @@
   const REQUIREMENTS = ["required", "optional", "recommended-explore"];
   const STEP_KINDS = ["resource", "resource-choice", "knowledge-explore"];
   const RESOURCE_METADATA_FIELDS = ["title", "description", "learningTopic", "launches", "duration", "difficulty", "languages", "language", "provenance", "status", "subtype"];
+  const PATH_PREVIEW_RESOURCES = {
+    "sustainable-aviation-foundations": "sustainable-aviation-essentials",
+    "eco-design-circularity-materials": "eco-design-circularity-aerospace-materials",
+    "responsible-supply-chain-compliance": "responsible-supply-chain-compliance-foundations",
+    "sustainable-in-service-operations": "tassg-composite-guardian",
+    "nature-habitat-operational-risk": "bio-radar-runway-prevention",
+    "evidence-systems-decision-making": "sustainability-evidence-decisions"
+  };
 
   const labels = {
     es: {
@@ -51,6 +59,11 @@
 
   const resourceIdsForStep = step => step.kind === "resource-choice" ? step.resourceIds : step.kind === "resource" ? [step.resourceId] : [];
   const resourceMap = catalogue => new Map((catalogue?.resources || []).map(resource => [resource.id, resource]));
+  const previewResourceIdForPath = path => {
+    const pathResourceIds = new Set(path.steps.flatMap(resourceIdsForStep));
+    const preferred = PATH_PREVIEW_RESOURCES[path.id];
+    return pathResourceIds.has(preferred) ? preferred : [...pathResourceIds][0];
+  };
   const requiredResourceSteps = path => path.steps.filter(step => step.requirement === "required" && step.kind !== "knowledge-explore");
   const languageStatus = (available, total) => total > 0 && available === total ? "complete" : available > 0 ? "partial" : "unavailable";
   const usable = resource => resource && resource.status !== "archived" && !["hold", "temporarily-unavailable", "archived", "replaced"].includes(resource.lifecycle || "active");
@@ -211,6 +224,14 @@
     const wrapper = document.createElement("div");
     wrapper.className = "path-resource-option";
     wrapper.dataset.resourceId = resource.id;
+    const preview = document.createElement("img");
+    preview.className = "path-resource-preview";
+    preview.src = catalogueApi.previewSrc(resource.id, lang);
+    preview.alt = `${resource.title[lang]} — ${lang === "en" ? "application preview" : "vista previa de la aplicación"}`;
+    preview.loading = "lazy";
+    preview.decoding = "async";
+    preview.width = 1425;
+    preview.height = 891;
     const heading = document.createElement("h4");
     heading.textContent = resource.title[lang];
     const topic = document.createElement("p");
@@ -219,7 +240,7 @@
     const metadata = document.createElement("p");
     metadata.className = "path-resource-meta";
     metadata.textContent = `${l.availableIn}: ${Object.keys(resource.launches).map(item => item.toUpperCase()).join(" / ")} · ${l.duration}: ${durationLabel(resource.duration, l)}`;
-    wrapper.append(heading, topic, metadata, launchLinks(resource, lang, catalogueApi, progressUi, context));
+    wrapper.append(preview, heading, topic, metadata, launchLinks(resource, lang, catalogueApi, progressUi, context));
     if (progressUi) wrapper.append(progressUi.resourceControl(resource, lang, context));
     return wrapper;
   }
@@ -375,6 +396,21 @@
     const card = document.createElement("article");
     card.className = "learning-path-card";
     card.dataset.pathId = path.id;
+    const resources = resourceMap(catalogue);
+    const previewResource = resources.get(previewResourceIdForPath(path));
+    const preview = document.createElement("figure");
+    preview.className = "learning-path-preview";
+    preview.setAttribute("aria-label", lang === "en" ? "Representative resource in this learning path" : "Recurso representativo de esta ruta de aprendizaje");
+    if (previewResource) {
+      const image = document.createElement("img");
+      image.src = options.catalogueApi.previewSrc(previewResource.id, lang);
+      image.alt = previewResource.title[lang];
+      image.loading = "lazy";
+      image.decoding = "async";
+      image.width = 1425;
+      image.height = 891;
+      preview.append(image);
+    }
     const availability = languageAvailabilityForPath(path, catalogue);
     const heading = document.createElement("h3");
     heading.textContent = path.title[lang];
@@ -399,10 +435,13 @@
     button.setAttribute("aria-controls", options.detailContainer.id);
     button.setAttribute("aria-expanded", String(options.selectedPathId === path.id));
     button.addEventListener("click", () => onOpen(path.id));
-    card.append(languageList, heading, purpose, metadata, button);
+    const content = document.createElement("div");
+    content.className = "learning-path-card-content";
+    content.append(languageList, heading, purpose, metadata, button);
+    card.append(preview, content);
     const maintenance = pathMaintenance(path, catalogue);
-    if (maintenance.required) { const warning = document.createElement("p"); warning.className = "path-maintenance-warning"; warning.textContent = l.maintenanceRequired; card.insertBefore(warning, button); }
-    if (options.progressUi) card.append(options.progressUi.pathCard(path, lang));
+    if (maintenance.required) { const warning = document.createElement("p"); warning.className = "path-maintenance-warning"; warning.textContent = l.maintenanceRequired; content.insertBefore(warning, button); }
+    if (options.progressUi) content.append(options.progressUi.pathCard(path, lang));
     return card;
   }
 
@@ -443,6 +482,7 @@
 
     const cards = data.paths.map(path => renderCard(path, catalogue, lang, {
       pillarLabel: options.pillarLabel,
+      catalogueApi: options.catalogueApi,
       detailContainer,
       selectedPathId,
       progressUi: options.progressUi
@@ -457,8 +497,8 @@
   }
 
   return {
-    INTENTIONS, REQUIREMENTS, STEP_KINDS, RESOURCE_METADATA_FIELDS,
+    INTENTIONS, REQUIREMENTS, STEP_KINDS, RESOURCE_METADATA_FIELDS, PATH_PREVIEW_RESOURCES,
     resourceIdsForStep, requiredResourceSteps, validateLearningPaths,
-    languageAvailability, languageAvailabilityForPath, pathMaintenance, durationSummary, durationText, render
+    languageAvailability, languageAvailabilityForPath, pathMaintenance, durationSummary, durationText, previewResourceIdForPath, render
   };
 });

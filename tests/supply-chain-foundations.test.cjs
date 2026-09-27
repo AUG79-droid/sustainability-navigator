@@ -21,7 +21,7 @@ test("registers one bilingual internal foundation course with documented metadat
   assert.equal(resource.kind, "course");
   assert.equal(resource.subtype, "foundation-course");
   assert.deepEqual(resource.languages, ["es", "en"]);
-  assert.deepEqual(resource.launches, { es: "responsible-supply-chain-compliance-foundations/", en: "responsible-supply-chain-compliance-foundations/" });
+  assert.deepEqual(resource.launches, { es: "responsible-supply-chain-compliance-foundations/?hubLang=es", en: "responsible-supply-chain-compliance-foundations/?hubLang=en" });
   assert.deepEqual(resource.duration, { min: 150, max: 150, unit: "minutes" });
   assert.equal(resource.difficulty, "foundation");
   assert.equal(resource.internalCourse, true);

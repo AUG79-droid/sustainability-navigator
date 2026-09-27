@@ -21,7 +21,7 @@ test("registers one bilingual internal Eco-Design foundation course", () => {
   assert.equal(resource.subtype, "foundation-course");
   assert.deepEqual(resource.languages, ["es", "en"]);
   assert.deepEqual(resource.intendedLanguages, ["es", "en"]);
-  assert.deepEqual(resource.launches, { es: "eco-design-circularity-aerospace-materials/", en: "eco-design-circularity-aerospace-materials/" });
+  assert.deepEqual(resource.launches, { es: "eco-design-circularity-aerospace-materials/?hubLang=es", en: "eco-design-circularity-aerospace-materials/?hubLang=en" });
   assert.deepEqual(resource.duration, { min: 190, max: 190, unit: "minutes" });
   assert.equal(resource.difficulty, "foundation");
   assert.equal(resource.internalCourse, true);
