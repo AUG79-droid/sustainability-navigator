@@ -174,7 +174,7 @@
   function previewSrc(resourceId, uiLanguage) {
     const language = uiLanguage === "en" ? "en" : "es";
     const filename = `assets/previews/${resourceId}-${language}.png`;
-    return resourceId === "strategic-soil-footprint-mapper" ? `${filename}?v=soil-20261009` : filename;
+    return resourceId === "strategic-soil-footprint-mapper" ? `${filename}?v=soil-20261009` : resourceId === "esg-essentials-air-power-services" ? `${filename}?v=esg-20261009` : filename;
   }
 
   function previewImage(resource, lang, className = "application-preview-image") {
