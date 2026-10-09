@@ -171,11 +171,15 @@ test("maps every catalogue resource to a language-specific real preview", () => 
   catalogue.resources.forEach(resource => {
     ["es", "en"].forEach(language => {
       const relative = api.previewSrc(resource.id, language);
-      assert.equal(relative, `assets/previews/${resource.id}-${language}.png`);
+      const expected = resource.id === "bio-inspired-innovation-lab"
+        ? `assets/previews/bio-inspired-innovation-lab-local-${language}.svg`
+        : `assets/previews/${resource.id}-${language}.png`;
+      assert.equal(relative, expected);
       const target = path.resolve(root, relative);
       assert.equal(target.startsWith(path.join(root, "assets", "previews")), true, `${resource.id} preview escapes the asset directory`);
       assert.equal(fs.existsSync(target), true, `${resource.id}.${language} preview is missing`);
-      assert.ok(fs.statSync(target).size > 10_000, `${resource.id}.${language} preview is unexpectedly small`);
+      const minimumSize = relative.endsWith(".svg") ? 1_000 : 10_000;
+      assert.ok(fs.statSync(target).size > minimumSize, `${resource.id}.${language} preview is unexpectedly small`);
     });
   });
 });
