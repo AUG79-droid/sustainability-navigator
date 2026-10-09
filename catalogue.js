@@ -173,7 +173,8 @@
 
   function previewSrc(resourceId, uiLanguage) {
     const language = uiLanguage === "en" ? "en" : "es";
-    return `assets/previews/${resourceId}-${language}.png`;
+    const filename = `assets/previews/${resourceId}-${language}.png`;
+    return resourceId === "strategic-soil-footprint-mapper" ? `${filename}?v=soil-20261009` : filename;
   }
 
   function previewImage(resource, lang, className = "application-preview-image") {
