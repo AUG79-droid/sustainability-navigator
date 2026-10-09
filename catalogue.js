@@ -173,11 +173,6 @@
 
   function previewSrc(resourceId, uiLanguage) {
     const language = uiLanguage === "en" ? "en" : "es";
-    // Serve the Bio-Inspired Innovation Lab preview from this site to avoid
-    // external image failures. Language-specific previews are provided.
-    if (resourceId === "bio-inspired-innovation-lab") {
-      return `assets/previews/bio-inspired-innovation-lab-local-${language}.svg`;
-    }
     return `assets/previews/${resourceId}-${language}.png`;
   }
 
