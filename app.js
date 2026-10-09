@@ -455,7 +455,20 @@
     progressUi.renderDashboard(el.progress, state.lang);
   }
 
-  progressUi.setRefresh(() => buildLearningExperience());
+  // Keep the visible learning-path detail in sync when the user changes the
+  // current route using its progress button. Merely exploring a route must not
+  // change the current route or the displayed selection.
+  let lastCurrentPathId = progressService.getState().preferences.currentPathId;
+  progressUi.setRefresh(() => {
+    const currentPathId = progressService.getState().preferences.currentPathId;
+    if (currentPathId !== lastCurrentPathId) {
+      lastCurrentPathId = currentPathId;
+      if (currentPathId && window.SN_LEARNING_PATHS.paths.some(path => path.id === currentPathId)) {
+        state.learningPathId = currentPathId;
+      }
+    }
+    buildLearningExperience();
+  });
 
   function render(options = {}) {
     translateStaticUi();
