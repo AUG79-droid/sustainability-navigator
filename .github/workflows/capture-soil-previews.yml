@@ -1,0 +1,30 @@
+name: Refresh Strategic Soil previews
+on:
+  push:
+    paths:
+      - .github/workflows/capture-soil-previews.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install Chromium
+        run: npx --yes playwright@1.55.0 install --with-deps chromium
+      - name: Capture latest deployed game covers
+        run: |
+          npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "1425,891" --wait-for-timeout 9000 "https://aug79-droid.github.io/strategic-soil-footprint-mapper/?hubLang=es" assets/previews/strategic-soil-footprint-mapper-es.png
+          npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "1425,891" --wait-for-timeout 9000 "https://aug79-droid.github.io/strategic-soil-footprint-mapper/?hubLang=en" assets/previews/strategic-soil-footprint-mapper-en.png
+      - name: Publish revised previews
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/previews/strategic-soil-footprint-mapper-es.png assets/previews/strategic-soil-footprint-mapper-en.png
+          git commit -m "Refresh Strategic Soil previews from live release"
+          git pull --rebase origin main
+          git push
