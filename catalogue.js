@@ -173,6 +173,12 @@
 
   function previewSrc(resourceId, uiLanguage) {
     const language = uiLanguage === "en" ? "en" : "es";
+    // Use the original application's hero artwork instead of its unusable
+    // screenshot preview, in both catalogue and learning-path cards.
+    if (resourceId === "bio-inspired-innovation-lab") {
+      const repository = language === "en" ? "bio-airbus-ignite-en" : "bio-airbus-ignite";
+      return `https://aug79-droid.github.io/${repository}/hero-biolab.jpg`;
+    }
     return `assets/previews/${resourceId}-${language}.png`;
   }
 
