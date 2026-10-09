@@ -170,7 +170,8 @@ test("the homepage loads the data-driven catalogue before the Hub controller", (
 test("maps every catalogue resource to a language-specific real preview", () => {
   catalogue.resources.forEach(resource => {
     ["es", "en"].forEach(language => {
-      const relative = api.previewSrc(resource.id, language);
+      const imageUrl = api.previewSrc(resource.id, language);
+      const relative = imageUrl.split("?")[0];
       assert.equal(relative, `assets/previews/${resource.id}-${language}.png`);
       const target = path.resolve(root, relative);
       assert.equal(target.startsWith(path.join(root, "assets", "previews")), true, `${resource.id} preview escapes the asset directory`);
