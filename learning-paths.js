@@ -21,7 +21,7 @@
   const labels = {
     es: {
       paths: "rutas", steps: "pasos", startingLevel: "Nivel inicial", audience: "Audiencia", pillars: "Pilares",
-      languages: "Disponibilidad por idioma", duration: "Duración", outcomes: "Resultados de aprendizaje", progression: "Progresión recomendada",
+      languages: "Disponibilidad por idioma", duration: "Duración", outcomes: "Resultados de aprendizaje", progression: "Tu ruta de aprendizaje",
       foundation: "Inicial", intermediate: "Intermedio", advanced: "Avanzado", progressive: "Progresivo",
       complete: "Completa", partial: "Parcial", unavailable: "No disponible", openPath: "Ver ruta", closePath: "Volver a las seis rutas",
       explore: "Explorar", learn: "Aprender", practice: "Practicar", apply: "Aplicar", assess: "Evaluar",
@@ -39,7 +39,7 @@
     },
     en: {
       paths: "paths", steps: "steps", startingLevel: "Starting level", audience: "Audience", pillars: "Pillars",
-      languages: "Language availability", duration: "Duration", outcomes: "Learning outcomes", progression: "Recommended progression",
+      languages: "Language availability", duration: "Duration", outcomes: "Learning outcomes", progression: "Your learning path",
       foundation: "Foundation", intermediate: "Intermediate", advanced: "Advanced", progressive: "Progressive",
       complete: "Complete", partial: "Partial", unavailable: "Unavailable", openPath: "View path", closePath: "Back to all six paths",
       explore: "Explore", learn: "Learn", practice: "Practice", apply: "Apply", assess: "Assess",
