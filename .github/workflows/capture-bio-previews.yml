@@ -26,4 +26,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add assets/previews/bio-inspired-innovation-lab-es.png assets/previews/bio-inspired-innovation-lab-en.png
           git commit -m "Use genuine Bio-Inspired Innovation Lab covers (ES and EN)"
+          git pull --rebase origin main
           git push
