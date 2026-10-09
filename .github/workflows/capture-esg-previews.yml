@@ -1,0 +1,30 @@
+name: Refresh ESG Essentials previews
+on:
+  push:
+    paths:
+      - .github/workflows/capture-esg-previews.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install Chromium
+        run: npx --yes playwright@1.55.0 install --with-deps chromium
+      - name: Capture latest ESG Essentials covers
+        run: |
+          npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "1425,891" --wait-for-timeout 10000 "https://aug79-droid.github.io/esg-essentials-air-power-services/?hubLang=es" assets/previews/esg-essentials-air-power-services-es.png
+          npx --yes playwright@1.55.0 screenshot --browser chromium --viewport-size "1425,891" --wait-for-timeout 10000 "https://aug79-droid.github.io/esg-essentials-air-power-services/?hubLang=en" assets/previews/esg-essentials-air-power-services-en.png
+      - name: Commit current screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/previews/esg-essentials-air-power-services-es.png assets/previews/esg-essentials-air-power-services-en.png
+          git commit -m "Refresh ESG Essentials previews from published course"
+          git pull --rebase origin main
+          git push
