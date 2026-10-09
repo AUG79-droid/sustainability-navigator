@@ -245,10 +245,11 @@ footer{padding:28px clamp(20px,5vw,72px);display:flex;justify-content:space-betw
 .path-resource-preview{
   display:block;
   width:100%;
-  aspect-ratio:16/7;
+  height:auto;
+  aspect-ratio:auto;
   border-bottom:1px solid #dce5eb;
-  object-fit:cover;
-  object-position:top center;
+  object-fit:contain;
+  object-position:center;
 }
 .path-resource-option>h4,
 .path-resource-option>.path-resource-topic,
