@@ -171,10 +171,7 @@ test("maps every catalogue resource to a language-specific real preview", () => 
   catalogue.resources.forEach(resource => {
     ["es", "en"].forEach(language => {
       const relative = api.previewSrc(resource.id, language);
-      const expected = resource.id === "bio-inspired-innovation-lab"
-        ? `assets/previews/bio-inspired-innovation-lab-local-${language}.svg`
-        : `assets/previews/${resource.id}-${language}.png`;
-      assert.equal(relative, expected);
+      assert.equal(relative, `assets/previews/${resource.id}-${language}.png`);
       const target = path.resolve(root, relative);
       assert.equal(target.startsWith(path.join(root, "assets", "previews")), true, `${resource.id} preview escapes the asset directory`);
       assert.equal(fs.existsSync(target), true, `${resource.id}.${language} preview is missing`);
