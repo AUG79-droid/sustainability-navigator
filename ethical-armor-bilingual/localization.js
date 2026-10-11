@@ -15,6 +15,11 @@
     ["Knowledge check","Comprobación de conocimientos"],
     ["Evidence","Evidencia"],
     ["Supplier","Proveedor"],
+    ["YOUR NEXT ACTION → OPEN","TU SIGUIENTE ACCIÓN → ABRIR"],
+    ["TIER ","NIVEL "],
+    ["Tier ","Nivel "],
+    ["REFINER","REFINADOR"],
+    ["EXTRACTION","EXTRACCIÓN"],
     ["Route ","Ruta "],
     ["Lead time","Plazo"],
     ["Score","Puntuación"],
@@ -25,8 +30,7 @@
   function tr(v){
     if(lang!=="es"||!v)return v;
     const t=v.trim();
-    if(exact.has(t))return v.replace(t,exact.get(t));
-    let out=v;
+    let out=exact.has(t)?v.replace(t,exact.get(t)):v;
     for(const [a,b] of partial)out=out.split(a).join(b);
     return out;
   }
