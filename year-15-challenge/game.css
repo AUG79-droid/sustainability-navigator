@@ -64,6 +64,10 @@ a{color:inherit}
 .learning-list li{font-size:16px;line-height:1.45}
 .story-panel{background:linear-gradient(155deg,#0e2e35,#193d44 70%,#334d50);color:#fff;display:flex;flex-direction:column;padding:32px}
 .story-ribbon{align-self:flex-start;border:1px solid #658a87;border-radius:99px;color:#bce1dc;font-size:12px;font-weight:850;letter-spacing:.09em;padding:7px 11px}
+.story-photo{margin:17px 0 0;border-radius:13px;overflow:hidden;border:1px solid rgba(255,255,255,.22);background:#243e46}
+.story-photo img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center center}
+.story-photo figcaption{background:rgba(6,22,26,.85);padding:8px 11px;color:#d7e5e3;font-size:11px;line-height:1.4}
+.story-photo[hidden]{display:none!important}
 .story-number{font-size:clamp(95px,11vw,168px);line-height:1;font-weight:900;letter-spacing:-.07em;text-align:center;padding:46px 0 28px;border-bottom:1px solid rgba(255,255,255,.2)}
 .story-number small{display:block;font-size:15px;letter-spacing:.1em;font-weight:800;color:#f5b082;margin:2px 0 0}
 .timeline{display:grid;gap:13px;margin-top:27px}
