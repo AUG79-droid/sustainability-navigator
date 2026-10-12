@@ -273,7 +273,7 @@ root.SCReviewTheory={
  ]
 };
 root.SCReviewTheoryReferences={
- origin:[{name:"OECD · Responsible mineral due diligence",url:"https://www.oecd.org/en/topics/sub-issues/due-diligence-guidance-for-responsible-mineral-supply-chains.html"},{name:"OECD · Responsible business conduct",url:"https://www.oecd.org/en/publications/oecd-due-diligence-guidance-for-responsible-business-conduct_15f5f4b3-en.html"}],
+ origin:[{name:"OECD · Responsible mineral due diligence",url:"https://www.oecd.org/en/topics/sub-issues/due-diligence-guidance-for-responsible-business-conduct/responsible-mineral-supply-chains.html"},{name:"OECD · Responsible business conduct",url:"https://www.oecd.org/en/publications/oecd-due-diligence-guidance-for-responsible-business-conduct_15f5f4b3-en.html"}],
  rights:[{name:"OECD · Due diligence guidance",url:"https://www.oecd.org/en/publications/oecd-due-diligence-guidance-for-responsible-business-conduct_15f5f4b3-en.html"}],
  chemical:[{name:"ECHA · Safety data sheets",url:"https://echa.europa.eu/safety-data-sheets"}],
  packaging:[{name:"IPPC · ISPM 15 implementation guide",url:"https://ippc.int/es/publications/92080/"}],
