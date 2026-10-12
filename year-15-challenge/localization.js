@@ -20,7 +20,7 @@ function tr(v){
  if(additionalMap.has(t)) return v.replace(t,additionalMap.get(t));
  if(exact.has(t)) return v.replace(t,exact.get(t));
  let o=v;
- for(const [a,b] of sortedAdditions){if(a.length>=5 && o.includes(a))o=o.split(a).join(b);}
+ for(const [a,b] of sortedAdditions){if(a==="STABLE"){o=o.replace(/\bSTABLE\b/g,"ESTABLE");continue;}if(a.length>=5 && o.includes(a))o=o.split(a).join(b);}
  for(const [a,b] of exact){ if(a.length>=18 && o.includes(a)) o=o.split(a).join(b); }
  for(const [a,b] of phrases){ o=o.split(a).join(b); }
  return o;
