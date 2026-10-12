@@ -86,6 +86,16 @@ img{display:block;max-width:100%}
 .card h3{margin:0 0 10px;font-size:24px}
 .card p{margin:0;color:var(--muted);line-height:1.6;font-size:16px}
 .card ul{margin:10px 0 0 18px;color:var(--muted);line-height:1.7}
+.card ol{margin:10px 0 0 20px;color:var(--muted);line-height:1.7}
+.theory-wide{grid-column:1/-1}
+.card .standard-note{margin-top:12px;padding:12px 14px;border-left:4px solid var(--teal);border-radius:12px;background:#eefbf8;color:#173c3a;line-height:1.55}
+.card .standard-note strong{color:#0b5f59}
+.source-list a{color:#075e72;font-weight:800;text-underline-offset:3px}
+.source-list small{display:block;margin-top:8px;color:var(--muted);line-height:1.55}
+.term-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.term{padding:12px;border:1px solid var(--line);border-radius:14px;background:#f7fbfb}
+.term strong{display:block;margin-bottom:4px;color:#113d48}
+.term span{color:var(--muted);line-height:1.45}
 .footer-nav{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:20px}
 .cta{padding:14px 20px;border-radius:16px;border:1px solid var(--line);background:var(--panel);font-weight:800;color:var(--ink)}
 .cta.primary{background:var(--teal);border-color:var(--teal);color:#fff}
@@ -150,7 +160,7 @@ img{display:block;max-width:100%}
   .shell{grid-template-columns:1fr}
   .sidebar{position:relative;top:auto}
   .practice-grid{grid-template-columns:1fr}
-  .steps,.grid-2,.board-grid{grid-template-columns:1fr}
+  .steps,.grid-2,.board-grid,.term-grid{grid-template-columns:1fr}
   .screen-head h2{font-size:38px}
   .aria-brief{grid-template-columns:72px 1fr}
   .aria-brief .hear-brief{grid-column:1 / -1}
@@ -277,7 +287,7 @@ img{display:block;max-width:100%}
             <ul>
               <li>Check that the shipping mark is legible and plausible.</li>
               <li>Inspect physical evidence on the wood rather than trusting the mark blindly.</li>
-              <li>Apply a simplified residual-bark rule.</li>
+              <li>Apply the exact ISPM 15 residual-bark thresholds used in the case.</li>
               <li>Decide whether the shipment is released, held or escalated.</li>
             </ul>
           </div>
@@ -292,12 +302,12 @@ img{display:block;max-width:100%}
         </div>
       </section>
 
-      <section class="screen" id="theory1" data-guide="Theory page one explains the basic logic. A compliant-looking mark is helpful, but it does not replace physical inspection. In the next screen, you will inspect two evidence points on the wood and then decide the shipment status.">
+      <section class="screen" id="theory1" data-guide="Theory page one explains the scope, exemptions, approved treatments, official mark, reuse and repair rules, and inspection logic of ISPM 15. A compliant-looking mark is important evidence, but the standard does not provide continuing protection from later contamination or infestation.">
         <div class="screen-head">
           <div>
             <span class="tag">Theory 01</span>
             <h2>ISPM-15 basics for non-specialists</h2>
-            <p>You do not need to become a phytosanitary expert. For this game, keep one idea in mind: a wood-packaging mark helps, but it does not cancel the need for a physical inspection if the wood condition creates doubt.</p>
+            <p>This page gives you the regulatory foundation needed for the case: what ISPM 15 covers, what the official mark means, which treatments it recognizes, and why current physical findings still require attention.</p>
           </div>
         </div>
         <div class="aria-brief">
@@ -309,10 +319,69 @@ img{display:block;max-width:100%}
           <button class="voice-btn hear-brief" data-target="theory1">▶ Hear Aria</button>
         </div>
         <div class="grid-2">
-          <div class="card"><h3>What the standard tries to prevent</h3><p>Wood packaging can carry insects or organisms across borders. Controls such as treatment and marking are meant to reduce that risk before the pallet or crate enters a new ecosystem.</p></div>
-          <div class="card"><h3>Why the logistics team should care</h3><p>If the packaging is suspicious, the shipment can be held, rejected or quarantined. In operational terms, that means delays, customs friction and poor evidence of control.</p></div>
-          <div class="card"><h3>What you inspect in this game</h3><ul><li>The mark is legible.</li><li>The wood surface does not show evidence that makes release unsafe.</li><li>Any doubt is escalated instead of ignored.</li></ul></div>
-          <div class="card"><h3>Decision logic</h3><p><strong>Release</strong> only if the evidence supports it. <strong>Hold</strong> when the mark exists but physical findings create concern. <strong>Reject</strong> only when the case clearly justifies that stronger decision.</p></div>
+          <div class="card theory-wide">
+            <h3>1 · Purpose and limits of ISPM 15</h3>
+            <p>Raw wood can retain insects, nematodes and other pests from living or dead trees. Because pallets, crates and dunnage are traded, reused and repaired worldwide, their true origin and phytosanitary history can be difficult to reconstruct. ISPM 15 therefore establishes internationally accepted measures that <strong>significantly reduce</strong>—but do not claim to eliminate—this pathway for quarantine pests.</p>
+            <div class="standard-note"><strong>Important limit:</strong> an ISPM 15 treatment is not continuing protection. Treated packaging can later be contaminated or infested. A valid-looking mark is evidence that an approved measure was applied under the authority of a national plant protection organization (NPPO); it is not proof that the wood is free from every organism at the time of inspection.</div>
+          </div>
+
+          <div class="card">
+            <h3>2 · What is regulated</h3>
+            <p>The standard covers wood packaging made from raw wood that may provide a pest pathway, including:</p>
+            <ul><li>pallets, crates, boxes and packing cases;</li><li>dunnage used to secure or support cargo;</li><li>cable drums, spools and reels;</li><li>packaging accompanying consignments that would not otherwise receive a phytosanitary inspection.</li></ul>
+          </div>
+
+          <div class="card">
+            <h3>3 · What is normally exempt</h3>
+            <p>Low-risk articles listed by ISPM 15 include:</p>
+            <ul><li>wood packaging made entirely from wood 6 mm thick or less;</li><li>plywood, particle board, oriented strand board and veneer produced using glue, heat or pressure;</li><li>sawdust, shavings and wood wool;</li><li>certain heated barrels and processed gift boxes;</li><li>wood components permanently attached to freight vehicles or containers.</li></ul>
+          </div>
+
+          <div class="card theory-wide">
+            <h3>4 · The compliance chain: debark, treat, authorize, mark</h3>
+            <ol><li><strong>Debarked wood:</strong> compliant packaging must be made from debarked wood, subject to the limited residual-bark tolerance explained in Theory 02.</li><li><strong>Approved treatment:</strong> an authorized provider applies a treatment schedule prescribed or approved by the NPPO.</li><li><strong>Official oversight:</strong> treatment and use of the mark remain under the authority of the exporting country's NPPO.</li><li><strong>Traceable mark:</strong> the internationally recognized mark identifies the country, responsible producer or treatment provider, and treatment code.</li></ol>
+            <p class="standard-note"><strong>The mark replaces a separate phytosanitary certificate for the wood packaging itself</strong> when the standard applies. It does not certify the goods inside the package and does not override technically justified requirements or official action by the importing country.</p>
+          </div>
+
+          <div class="card">
+            <h3>5 · Approved treatment codes</h3>
+            <div class="term-grid">
+              <div class="term"><strong>HT · Heat treatment</strong><span>Conventional steam or dry heat: the entire wood profile, including the core, must reach at least 56 °C for 30 continuous minutes.</span></div>
+              <div class="term"><strong>DH · Dielectric heating</strong><span>Microwave or radio-frequency heating under the schedules and dimensional limits specified by the standard.</span></div>
+              <div class="term"><strong>MB · Methyl bromide</strong><span>Fumigation according to an approved concentration–time schedule. Methyl bromide depletes the ozone layer, so the IPPC recommends replacement or reduction where alternatives are available.</span></div>
+              <div class="term"><strong>SF · Sulphuryl fluoride</strong><span>Fumigation under an approved concentration–time schedule, with restrictions on wood dimensions, moisture and minimum temperature.</span></div>
+            </div>
+            <div class="standard-note"><strong>Do not infer the treatment from colour or appearance.</strong> Read the treatment code in the official mark.</div>
+          </div>
+
+          <div class="card">
+            <h3>6 · How to read the mark</h3>
+            <p>A conforming mark contains four required elements:</p>
+            <ul><li>the IPPC symbol on the left;</li><li>the two-letter ISO country code;</li><li>a unique producer or treatment-provider code assigned by the NPPO;</li><li>the treatment code: HT, DH, MB or SF.</li></ul>
+            <p class="standard-note">It must be legible, durable, non-transferable, not hand drawn and visible in use—preferably on at least two opposite sides. Red and orange should be avoided because they are used for dangerous-goods labels. No extra information belongs inside the mark border.</p>
+          </div>
+
+          <div class="card">
+            <h3>7 · Reuse, repair and remanufacture</h3>
+            <ul><li><strong>Reuse:</strong> a compliant unit that has not been repaired, remanufactured or otherwise altered does not need routine re-treatment or re-marking during its service life.</li><li><strong>Repair:</strong> when up to about one third of components are replaced, added raw-wood components must be compliant and individually marked. If compliance or origin is doubtful, the NPPO may require re-treatment, destruction or prevention from international movement.</li><li><strong>Remanufacture:</strong> replacing more than about one third of components requires old marks to be permanently obliterated, the whole unit to be re-treated and a new mark applied.</li></ul>
+          </div>
+
+          <div class="card">
+            <h3>8 · Inspection and decision discipline</h3>
+            <p>First verify that the mark is complete, plausible, legible and physically associated with the unit. Then inspect the wood and joints for live pests or credible signs such as fresh frass, galleries, exit holes or unexplained deterioration. Also check bark and any repairs or mixed components.</p>
+            <p class="standard-note"><strong>Game decision versus legal action:</strong> in this scenario, suspicious findings trigger a hold and escalation. In real operations, only the competent authority and the applicable national procedure determine whether the material is detained, treated, disposed of, removed from the consignment or refused entry. Do not destroy, fumigate or reject material on your own initiative.</p>
+          </div>
+
+          <div class="card">
+            <h3>9 · Why logistics and biodiversity share the same control</h3>
+            <p>Forest pests introduced through packaging can affect forest health and biodiversity. The same failure can also stop cargo, create storage and rework, disrupt urgent supply and generate a traceability problem. Good control is therefore preventive environmental management and operational resilience—not paperwork added after the event.</p>
+          </div>
+
+          <div class="card theory-wide source-list">
+            <h3>Authoritative sources and further reading</h3>
+            <ul><li><a href="https://www.ippc.int/en/publications/640/" target="_blank" rel="noopener noreferrer">IPPC · ISPM 15 official publication record</a></li><li><a href="https://www.fao.org/3/mb160e/mb160e.pdf" target="_blank" rel="noopener noreferrer">FAO/IPPC · ISPM 15 full official text (English)</a></li><li><a href="https://www.fao.org/3/mb160s/mb160s.pdf" target="_blank" rel="noopener noreferrer">FAO/IPPC · ISPM 15 full official text (Spanish)</a></li><li><a href="https://doi.org/10.4060/cc5059en" target="_blank" rel="noopener noreferrer">IPPC · Guide to regulation of wood packaging material (2023, English)</a></li><li><a href="https://doi.org/10.4060/cc5059es" target="_blank" rel="noopener noreferrer">IPPC · Guide to regulation of wood packaging material (2023, Spanish)</a></li></ul>
+            <small>This learning page summarizes the official standard for training. Always check the current import requirements, NPPO instructions and organizational procedures for the actual route and country.</small>
+          </div>
         </div>
         <div class="footer-nav">
           <button class="cta goto" data-target="home">← Back</button>
@@ -404,12 +473,12 @@ img{display:block;max-width:100%}
         </div>
       </section>
 
-      <section class="screen" id="theory2" data-guide="Theory page two explains the residual-bark rule used in the second practical. Bark is not judged by intuition. One narrow piece can remain regardless of length, and a wider piece can still remain if its area stays within the permitted limit used in the exercise.">
+      <section class="screen" id="theory2" data-guide="Theory page two applies the exact residual-bark tolerance in ISPM 15 Annex 1. An individual piece less than 3 centimetres wide may remain regardless of length. A piece greater than 3 centimetres wide may remain only when its individual surface area is less than 50 square centimetres.">
         <div class="screen-head">
           <div>
             <span class="tag">Theory 02</span>
             <h2>Understand the residual-bark rule before you act</h2>
-            <p>People often think “any visible bark means rejection”. This game deliberately teaches a more precise rule. The learner must use the size information shown on the screen instead of deciding by guesswork.</p>
+            <p>“Any visible bark means rejection” is incorrect. ISPM 15 requires debarked wood but permits limited residual bark under two exact, measurable conditions. Learn both thresholds before assessing the samples.</p>
           </div>
         </div>
         <div class="aria-brief">
@@ -421,10 +490,36 @@ img{display:block;max-width:100%}
           <button class="voice-btn hear-brief" data-target="theory2">▶ Hear Aria</button>
         </div>
         <div class="grid-2">
-          <div class="card"><h3>Main rule in this training case</h3><p>A narrow individual piece of residual bark can remain regardless of length. A wider individual piece can remain only if its surface area stays within the permitted limit used in the exercise.</p></div>
-          <div class="card"><h3>What the player must do</h3><p>Click <strong>Activate bark gauge</strong>, read the dimensions shown beside each sample and then decide which statement correctly interprets the rule.</p></div>
-          <div class="card"><h3>Why the control matters</h3><p>If the team reads the tolerance rule incorrectly, they either stop acceptable material or release non-compliant packaging. Both outcomes weaken logistics performance and compliance confidence.</p></div>
-          <div class="card"><h3>How the game helps</h3><p>If the learner answers incorrectly, they receive immediate feedback. On the second failed attempt, the correct answer is revealed and the route forward unlocks automatically.</p></div>
+          <div class="card theory-wide">
+            <h3>1 · Start from the correct principle</h3>
+            <p>ISPM 15 requires wood packaging to be made from <strong>debarked wood</strong>, regardless of which approved treatment is used. “Debarked” does not mean that every microscopic trace of bark must be absent: Annex 1 defines a measurable tolerance for small, visually separate and clearly distinct pieces that remain after debarking.</p>
+            <div class="standard-note"><strong>This is the actual Annex 1 rule used by the game—not a fictional training threshold.</strong> Any number of separate residual-bark pieces may remain only when every individual piece meets one of the two conditions below.</div>
+          </div>
+
+          <div class="card"><h3>2 · Condition A: width under 3 cm</h3><p>An individual piece of residual bark may remain when it is <strong>less than 3 cm wide</strong>—that is, less than 30 mm—regardless of its length.</p><p class="standard-note">Measure the greatest relevant width. The wording is “less than 3 cm”: a piece exactly 3 cm wide does not satisfy this first condition.</p></div>
+
+          <div class="card"><h3>3 · Condition B: wider piece under 50 cm²</h3><p>If an individual piece is <strong>greater than 3 cm wide</strong>, it may remain only when the total surface area of that individual piece is <strong>less than 50 cm²</strong>.</p><p class="standard-note">Area is assessed piece by piece. Do not add together several clearly separate pieces, and do not reject a wider piece from width alone. The wording is “less than 50 cm²”: exactly 50 cm² is not below the limit.</p></div>
+
+          <div class="card">
+            <h3>4 · Apply the rule in four steps</h3>
+            <ol><li>Confirm that the bark areas are visually separate and clearly distinct.</li><li>Measure each individual piece separately.</li><li>If a piece is under 30 mm wide, it fits Condition A regardless of length.</li><li>If it is over 30 mm wide, calculate or measure its individual area and confirm that it is below 50 cm².</li></ol>
+            <p class="standard-note">If a borderline measurement cannot be resolved reliably, do not guess: hold and escalate according to the applicable inspection procedure.</p>
+          </div>
+
+          <div class="card"><h3>5 · Treatment sequence matters</h3><p>For methyl bromide (MB) and sulphuryl fluoride (SF), bark must be removed <strong>before</strong> treatment because bark can affect fumigation efficacy. For heat treatment, bark may be removed before or after treatment. When a heat-treatment method has a dimensional limitation, such as dielectric heating, remaining bark is included in the dimension measurement.</p></div>
+
+          <div class="card">
+            <h3>6 · Common errors to avoid</h3>
+            <ul><li><strong>“Any bark means rejection”:</strong> false; the standard provides a tolerance.</li><li><strong>“A treatment mark makes bark irrelevant”:</strong> false; debarked wood is required in addition to approved treatment.</li><li><strong>“Width over 30 mm always fails”:</strong> false; check individual area.</li><li><strong>“50 cm² is acceptable”:</strong> false; the area must be less than 50 cm².</li><li><strong>“The game decides legal disposition”:</strong> false; actual action follows the competent authority and local procedure.</li></ul>
+          </div>
+
+          <div class="card"><h3>7 · Apply it to the next challenge</h3><p><strong>Sample A</strong> is 22 mm wide, so it satisfies Condition A regardless of length. <strong>Sample B</strong> is 41 mm wide, so width alone cannot decide it; its measured area is 34 cm², which is below 50 cm² and therefore satisfies Condition B.</p><p class="standard-note">Both samples fit the residual-bark tolerance represented in the exercise. This conclusion addresses bark only; a complete release decision would still consider the mark, treatment evidence, physical condition and route requirements.</p></div>
+
+          <div class="card theory-wide source-list">
+            <h3>Rule source</h3>
+            <p>The thresholds above come directly from ISPM 15, Annex 1, “Use of debarked wood”. Review the official texts from IPPC/FAO:</p>
+            <ul><li><a href="https://www.fao.org/3/mb160e/mb160e.pdf" target="_blank" rel="noopener noreferrer">ISPM 15 · Annex 1 (English)</a></li><li><a href="https://www.fao.org/3/mb160s/mb160s.pdf" target="_blank" rel="noopener noreferrer">ISPM 15 · Annex 1 (Spanish)</a></li></ul>
+          </div>
         </div>
         <div class="footer-nav">
           <button class="cta goto" data-target="practice1">← Back</button>
