@@ -111,33 +111,21 @@ const lessonLabels={
 };
 function safeText(v){return String(v==null?"":v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
 function displayDecisionFeedback(s,i,chosenIndex){
- const decision=s.decisions[i],selected=decision.opts[chosenIndex],correct=decision.opts.find(function(o){return o.strong;});
- const theory=window.SCReviewTheory&&window.SCReviewTheory[s.id]&&window.SCReviewTheory[s.id][i];
- const lc=lessonLabels[lang],f=document.getElementById("f"+i);
- if(!f||!selected||!correct){return;}
- f.hidden=false;f.className="feedback "+(selected.strong?"stronger":"weaker");
- const others=decision.opts.filter(function(o){return !o.strong;});
- let content='<div class="feedback-summary"><p class="feedback-kicker">'+safeText(lc.your)+'</p><p>'+safeText((selected.strong?copy.strong:copy.weak)[lang]+selected.feedback[lang])+'</p></div>';
- content+='<div class="correct-answer"><p class="feedback-kicker">'+safeText(lc.correct)+'</p><p class="correct-answer-text">'+safeText(correct.text[lang])+'</p></div>';
- if(theory){
-   content+='<section class="learning-explanation"><h4>'+safeText(lc.theory)+' · '+safeText(theory.title[lang])+'</h4>';
-   content+='<div class="learning-section"><h5>'+safeText(lc.why)+'</h5><p>'+safeText(theory.why[lang])+'</p></div>';
-   content+='<div class="learning-section"><h5>'+safeText(lc.principle)+'</h5><p>'+safeText(theory.principle[lang])+'</p></div>';
-   content+='<div class="learning-section"><h5>'+safeText(lc.actions)+'</h5><ol>'+theory.steps[lang].map(function(x){return '<li>'+safeText(x)+'</li>';}).join("")+'</ol></div>';
-   content+='<div class="learning-section caution-note"><h5>'+safeText(lc.limits)+'</h5><p>'+safeText(theory.limits[lang])+'</p></div>';
-   content+='<div class="learning-section transfer-note"><h5>'+safeText(lc.practical)+'</h5><p>'+safeText(theory.atWork[lang])+'</p></div>';
-   content+='<div class="learning-section alternatives"><h5>'+safeText(lc.other)+'</h5><ul>'+others.map(function(o){return '<li><strong>'+safeText(o.text[lang])+'</strong><p>'+safeText(o.feedback[lang])+'</p></li>';}).join("")+'</ul></div>';
-   const refs=(window.SCReviewTheoryReferences&&window.SCReviewTheoryReferences[s.id])||[];
-   if(refs.length){
-     content+='<div class="theory-sources"><h5>'+safeText(lc.references)+'</h5><ul>'+refs.map(function(ref){var url=lang==="en"&&ref.url==="https://ippc.int/es/publications/92080/"?"https://ippc.int/en/publications/92080/":ref.url;return '<li><a target="_blank" rel="noopener noreferrer" href="'+safeText(url)+'">'+safeText(ref.name)+'</a></li>';}).join("")+'</ul></div>';
-   }
-   content+='<p class="training-caveat">'+safeText(lc.education)+'</p></section>';
+ const decision=s.decisions[i],selected=decision.opts[chosenIndex],correct=decision.opts.find(o=>o.strong);
+ const target=document.getElementById("f"+i);
+ if(!target||!selected||!correct)return;
+ target.hidden=false;
+ target.className="feedback "+(selected.strong?"stronger":"weaker");
+ const verdict=(selected.strong?copy.strong:copy.weak)[lang].trim();
+ let message='<div class="feedback-summary feedback-brief" role="status"><p><strong>'+safeText(verdict)+'</strong> '+safeText(selected.feedback[lang])+'</p>';
+ if(!selected.strong){
+   message+='<p class="brief-correct"><strong>'+safeText(lang==="es"?"Alternativa más sólida:":"Stronger option:")+'</strong> '+safeText(correct.text[lang])+'</p>';
  }
- f.innerHTML=content;
+ target.innerHTML=message+'</div>';
 }
-
 function renderScenario(s){
- const alreadyReviewed=state.reviewed.includes(s.id)&&attempted(s);
+ const complete=attempted(s);
+ if(complete&&!state.reviewed.includes(s.id)){state.reviewed.push(s.id);save();}
  $("#content").innerHTML='<p class="scenario-index">'+(current+1)+' / 6</p><h2>'+safeText(s.title[lang])+'</h2>'
   +'<h3>'+safeText(copy.context[lang])+'</h3><p>'+safeText(s.context[lang])+'</p>'
   +'<div class="evidence"><h3>'+safeText(copy.evidence[lang])+'</h3><p>'+safeText(s.evidence[lang])+'</p>'
@@ -148,43 +136,41 @@ function renderScenario(s){
       +x.opts.map(function(o,j){
         return '<label class="option"><input type="radio" name="d'+i+'" value="'+j+'" '+(state.answers[s.id+"-"+i]===j?'checked':'')+'><span>'+safeText(o.text[lang])+'</span></label>';
        }).join("")
-      +'<div id="f'+i+'" class="feedback" tabindex="-1" hidden></div></fieldset>';
+      +'<div id="f'+i+'" class="feedback" aria-live="polite" hidden></div></fieldset>';
     }).join("")
-  +'<button class="submit">'+safeText(alreadyReviewed?lessonLabels[lang].again:copy.decide[lang])+'</button>'
-  +'<p id="status" role="status"></p>';
+  +'<p id="status" role="status"></p>'
+  +'<button class="submit" '+(complete?'':'disabled')+'>'+safeText(chapterLabels[lang].open)+'</button>';
+ const refreshStatus=function(){
+    const answered=s.decisions.filter((_,i)=>state.answers[s.id+"-"+i]!==undefined).length;
+    const all=answered===s.decisions.length;
+    $(".submit").disabled=!all;
+    $("#status").textContent=all
+      ?(lang==="es"?"Las tres respuestas están revisadas. Continúa con la teoría del tema.":"All three answers have feedback. Continue to the topic's full theory chapter.")
+      :(lang==="es"?"Respuestas completadas: "+answered+" de 3. Al elegir cada respuesta verás una explicación breve.":"Answers completed: "+answered+" of 3. Selecting an answer shows brief feedback.");
+ };
  $(".submit").onclick=function(){reviewScenario(s);};
- if(alreadyReviewed){
-   s.decisions.forEach(function(d,i){displayDecisionFeedback(s,i,state.answers[s.id+"-"+i]);});
-   $("#status").textContent=lessonLabels[lang].change;
- }
- var chapterButton=document.createElement("button");chapterButton.type="button";chapterButton.className="chapter-entry";chapterButton.textContent=chapterLabels[lang].open;chapterButton.hidden=!alreadyReviewed;chapterButton.onclick=function(){showChapter(current);};$("#status").insertAdjacentElement("afterend",chapterButton);
+ s.decisions.forEach(function(d,i){
+    const chosen=state.answers[s.id+"-"+i];
+    if(Number.isInteger(chosen)&&chosen>=0&&chosen<d.opts.length)displayDecisionFeedback(s,i,chosen);
+ });
  document.querySelectorAll('.decision input[type="radio"]').forEach(function(input){
    input.addEventListener("change",function(){
-     var n=input.name.replace("d",""),box=document.getElementById("f"+n);
-     if(box){box.hidden=true;}
-     $("#status").textContent=lessonLabels[lang].change;
+     const index=Number(input.name.slice(1)),choice=Number(input.value);
+     state.answers[s.id+"-"+index]=choice;
+     displayDecisionFeedback(s,index,choice);
+     if(attempted(s)&&!state.reviewed.includes(s.id))state.reviewed.push(s.id);
+     save();nav();buttons();refreshStatus();
    });
  });
+ refreshStatus();
 }
 function reviewScenario(s){
- const vals=s.decisions.map(function(_,i){return document.querySelector('input[name="d'+i+'"]:checked');});
- if(vals.some(function(v){return !v;})){
+ if(!attempted(s)){
    $("#status").textContent=copy.answer[lang];
-   $("#status").scrollIntoView({block:"nearest",behavior:"smooth"});
    return;
  }
- vals.forEach(function(v,i){
-   const chosen=Number(v.value);
-   state.answers[s.id+"-"+i]=chosen;
- });
  if(!state.reviewed.includes(s.id))state.reviewed.push(s.id);
- save();nav();buttons();
- vals.forEach(function(v,i){displayDecisionFeedback(s,i,Number(v.value));});
- $(".submit").textContent=lessonLabels[lang].again;
- $("#status").textContent=lessonLabels[lang].reviewed;
- var chapterButton=$(".chapter-entry");if(chapterButton){chapterButton.hidden=false;chapterButton.onclick=function(){showChapter(current);};}
- const first=document.getElementById("f0");
- if(first){first.focus({preventScroll:true});first.scrollIntoView({block:"start",behavior:"smooth"});}
+ save();showChapter(current);
 }
 function renderFinal(){const score={},total={};scenarios.forEach(s=>s.decisions.forEach((x,i)=>{total[x.theme]=(total[x.theme]||0)+1;const selected=x.opts[state.answers[`${s.id}-${i}`]];if(selected?.strong)score[x.theme]=(score[x.theme]||0)+1;}));const rows=Object.keys(themes).map(k=>`<li><strong>${themes[k][lang]}</strong>: ${score[k]||0}/${total[k]||0}</li>`).join(""),strength=Object.keys(themes).filter(k=>(score[k]||0)===total[k]),areas=Object.keys(themes).filter(k=>(score[k]||0)<total[k]),labels=items=>items.length?items.map(k=>`<li>${themes[k][lang]}</li>`).join(""):`<li>${copy.none[lang]}</li>`;$("#content").innerHTML=`<h2>${copy.reviewTitle[lang]}</h2><p>${copy.reviewIntro[lang]}</p><ul>${rows}</ul><h3>${copy.strengths[lang]}</h3><ul>${labels(strength)}</ul><h3>${copy.areas[lang]}</h3><ul>${labels(areas)}</ul><div class="review"><p>${copy.limitation[lang]}</p><h3>${copy.revisit[lang]}</h3><ul><li><a href="../responsible-supply-chain-compliance-foundations/?hubLang=${lang}">Responsible Supply Chain & Compliance Foundations</a></li><li><a href="../ethical-armor/?hubLang=en">Ethical Armor</a></li><li><a href="../reach-compliance-challenge/?hubLang=en">The REACH Compliance Challenge</a></li><li><a href="../phytosanitary-defender/?hubLang=en">Phytosanitary Defender</a></li></ul></div><button class="submit final-review">${copy.reviewAction[lang]}</button>${state.final?complete():""}`;$(".final-review").onclick=finish;}
 function complete(){return `<section id="decision-review-complete" class="complete active" tabindex="-1"><h3>${copy.completed[lang]}</h3><p>${copy.limitation[lang]}</p></section>`;}function finish(){if(!state.studied.every(id=>scenarios.some(s=>s.id===id))||state.studied.length<6||!allAttempted())return;state.final=true;save();if(!$("#decision-review-complete"))$("#content").insertAdjacentHTML("beforeend",complete());nav();$("#decision-review-complete").focus();}
