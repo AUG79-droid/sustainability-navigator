@@ -1,7 +1,9 @@
 (function(){
 "use strict";
 const p=new URLSearchParams(location.search);
-const req=p.get("hubLang")||p.get("lang")||localStorage.getItem("year15-language");
+let savedLanguage=null;
+try{savedLanguage=localStorage.getItem("year15-language")}catch(e){}
+const req=p.get("hubLang")||p.get("lang")||savedLanguage;
 const lang=req==="en"?"en":"es";
 try{localStorage.setItem("year15-language",lang)}catch(e){}
 document.documentElement.lang=lang;
@@ -107,7 +109,7 @@ function control(){
  b.querySelectorAll("button").forEach(x=>{x.type="button";x.style.cssText="border:0;background:transparent;color:#fff;font:inherit;cursor:pointer;padding:2px 4px";if(x.dataset.l===lang)x.style.textDecoration="underline";x.onclick=()=>{const u=new URL(location.href);u.searchParams.set("hubLang",x.dataset.l);location.href=u.toString()}});
  document.body.appendChild(b);
 }
-function apply(){control();walk(document.body)}
+function apply(){document.title=lang==="es"?"El reto del año 15":"The Year 15 Challenge";control();walk(document.body)}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",apply);else apply();
 new MutationObserver(ms=>{if(lang!=="es")return;for(const m of ms){for(const n of m.addedNodes){if(n.nodeType===1)walk(n);else if(n.nodeType===3){const x=tr(n.nodeValue);if(x!==n.nodeValue)n.nodeValue=x}}if(m.type==="characterData"){const x=tr(m.target.nodeValue);if(x!==m.target.nodeValue)m.target.nodeValue=x}}}).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
 window.YEAR15_LANG=lang; window.YEAR15_TR=tr;
