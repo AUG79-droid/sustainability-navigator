@@ -92,6 +92,51 @@ function advanceChapter(){
  if(!state.studied.includes(id))state.studied.push(id);
  save();show(current+1);
 }
+const lessonLabels={
+ es:{
+   correct:"SOLUCIÓN CORRECTA Y JUSTIFICACIÓN",your:"Tu elección y su resultado",theory:"EXPLICACIÓN TEÓRICA",why:"Por qué es correcta",principle:"Principio o criterio aplicable",
+   actions:"Cómo aplicarlo paso a paso",limits:"Qué límites o precauciones debes recordar",practical:"Para llevarlo a tu trabajo",
+   other:"Por qué no son adecuadas las otras opciones",references:"Fuentes oficiales para profundizar",
+   education:"Explicación formativa general. En una decisión real deben comprobarse la norma aplicable, los procedimientos internos y la autoridad competente.",
+   change:"Puedes cambiar tus respuestas y pulsar «Revisar decisiones» otra vez.",again:"Volver a revisar decisiones",
+   reviewed:"Revisión de las tres decisiones completada. Lee las explicaciones antes de continuar."
+ },
+ en:{
+   correct:"CORRECT ANSWER AND REASONING",your:"Your choice and its outcome",theory:"DETAILED LEARNING EXPLANATION",why:"Why this is correct",principle:"Applicable principle or decision criterion",
+   actions:"How to apply it step by step",limits:"Limits and precautions to remember",practical:"Apply this at work",
+   other:"Why the other options are not appropriate",references:"Official resources for further reading",
+   education:"General educational explanation. In a real decision, check applicable rules, internal procedures and the competent authority.",
+   change:"You can change your answers and select 'Review decisions' again.",again:"Review decisions again",
+   reviewed:"Review of all three decisions complete. Read the explanations before continuing."
+ }
+};
+function safeText(v){return String(v==null?"":v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function displayDecisionFeedback(s,i,chosenIndex){
+ const decision=s.decisions[i],selected=decision.opts[chosenIndex],correct=decision.opts.find(function(o){return o.strong;});
+ const theory=window.SCReviewTheory&&window.SCReviewTheory[s.id]&&window.SCReviewTheory[s.id][i];
+ const lc=lessonLabels[lang],f=document.getElementById("f"+i);
+ if(!f||!selected||!correct){return;}
+ f.hidden=false;f.className="feedback "+(selected.strong?"stronger":"weaker");
+ const others=decision.opts.filter(function(o){return !o.strong;});
+ let content='<div class="feedback-summary"><p class="feedback-kicker">'+safeText(lc.your)+'</p><p>'+safeText((selected.strong?copy.strong:copy.weak)[lang]+selected.feedback[lang])+'</p></div>';
+ content+='<div class="correct-answer"><p class="feedback-kicker">'+safeText(lc.correct)+'</p><p class="correct-answer-text">'+safeText(correct.text[lang])+'</p></div>';
+ if(theory){
+   content+='<section class="learning-explanation"><h4>'+safeText(lc.theory)+' · '+safeText(theory.title[lang])+'</h4>';
+   content+='<div class="learning-section"><h5>'+safeText(lc.why)+'</h5><p>'+safeText(theory.why[lang])+'</p></div>';
+   content+='<div class="learning-section"><h5>'+safeText(lc.principle)+'</h5><p>'+safeText(theory.principle[lang])+'</p></div>';
+   content+='<div class="learning-section"><h5>'+safeText(lc.actions)+'</h5><ol>'+theory.steps[lang].map(function(x){return '<li>'+safeText(x)+'</li>';}).join("")+'</ol></div>';
+   content+='<div class="learning-section caution-note"><h5>'+safeText(lc.limits)+'</h5><p>'+safeText(theory.limits[lang])+'</p></div>';
+   content+='<div class="learning-section transfer-note"><h5>'+safeText(lc.practical)+'</h5><p>'+safeText(theory.atWork[lang])+'</p></div>';
+   content+='<div class="learning-section alternatives"><h5>'+safeText(lc.other)+'</h5><ul>'+others.map(function(o){return '<li><strong>'+safeText(o.text[lang])+'</strong><p>'+safeText(o.feedback[lang])+'</p></li>';}).join("")+'</ul></div>';
+   const refs=(window.SCReviewTheoryReferences&&window.SCReviewTheoryReferences[s.id])||[];
+   if(refs.length){
+     content+='<div class="theory-sources"><h5>'+safeText(lc.references)+'</h5><ul>'+refs.map(function(ref){var url=lang==="en"&&ref.url==="https://ippc.int/es/publications/92080/"?"https://ippc.int/en/publications/92080/":ref.url;return '<li><a target="_blank" rel="noopener noreferrer" href="'+safeText(url)+'">'+safeText(ref.name)+'</a></li>';}).join("")+'</ul></div>';
+   }
+   content+='<p class="training-caveat">'+safeText(lc.education)+'</p></section>';
+ }
+ f.innerHTML=content;
+}
+
 function renderScenario(s){
  const alreadyReviewed=state.reviewed.includes(s.id)&&attempted(s);
  $("#content").innerHTML='<p class="scenario-index">'+(current+1)+' / 6</p><h2>'+safeText(s.title[lang])+'</h2>'
