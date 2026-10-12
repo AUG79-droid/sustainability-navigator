@@ -68,7 +68,7 @@ function tr(v){
  let o=v;
  for(const [a,b] of sortedAdditions){if(a==="STABLE"){o=o.replace(/\bSTABLE\b/g,"ESTABLE");continue;}if(a.length>=5 && o.includes(a))o=o.split(a).join(b);}
  for(const [a,b] of exact){ if(a.length>=18 && o.includes(a)) o=o.split(a).join(b); }
- for(const [a,b] of phrases){const rx=new RegExp("\\b"+a.replace(/[.*+?^${}()|[\]\\]/g,"\\ for(const [a,b] of phrases){ o=o.split(a).join(b); }")+"\\b","g");o=o.replace(rx,b); }
+ for(const [a,b] of phrases){const rx=new RegExp("\\b"+a+"\\b","g");o=o.replace(rx,b); }
  return o;
 }
 function walk(root){
