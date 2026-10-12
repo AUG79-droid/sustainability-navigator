@@ -208,7 +208,7 @@
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
   function html(s){return esc(s);}
   function speakerStop(){if("speechSynthesis" in window)window.speechSynthesis.cancel();}
-  function go(p){speakerStop();state.page=p;state.showGuide=false;save();render();window.scrollTo({top:0,behavior:"instant"});}
+  function go(p){speakerStop();state.page=p;state.showGuide=false;save();render(true);window.scrollTo({top:0,behavior:"instant"});}
   function score(){return state.confirmed.reduce(function(total,x,i){return total+(x&&state.answers[i]===chapters[i].correct?1:0);},0);}
   function guideText(){if(state.page===-2)return t.guideCover;if(state.page===-1)return t.guideHow;if(state.page===4)return t.guideFinal;return state.confirmed[state.page]?t.guideResult:t.guideMission;}
   function guideBox(){
@@ -237,7 +237,7 @@
     var output="";
     if(reviewed&&sel!==null){
       var o=d.options[sel],correct=sel===m.correct;
-      output='<section class="feedback '+(correct?'positive':'caution')+'" aria-live="polite"><p class="eyebrow">'+html(t.result)+'</p><h3>'+(correct?html(t.good):html(t.needs))+'</h3><p>'+html(o.feedback)+'</p><strong>'+html(t.effects)+'</strong><ul>'+o.effects.map(function(e){return '<li>'+html(e)+'</li>';}).join("")+'</ul><div class="takeaway"><p class="eyebrow">'+html(t.lesson)+'</p><h4>'+html(d.afterTitle)+'</h4><p>'+html(d.after)+'</p></div><p class="transfer"><strong>'+html(t.apply)+':</strong> '+html(d.transfer)+'</p></section>';
+      output='<section tabindex="-1" class="feedback '+(correct?'positive':'caution')+'" aria-live="polite"><p class="eyebrow">'+html(t.result)+'</p><h3>'+(correct?html(t.good):html(t.needs))+'</h3><p>'+html(o.feedback)+'</p><strong>'+html(t.effects)+'</strong><ul>'+o.effects.map(function(e){return '<li>'+html(e)+'</li>';}).join("")+'</ul><div class="takeaway"><p class="eyebrow">'+html(t.lesson)+'</p><h4>'+html(d.afterTitle)+'</h4><p>'+html(d.after)+'</p></div><p class="transfer"><strong>'+html(t.apply)+':</strong> '+html(d.transfer)+'</p></section>';
     }
     return '<section class="view mission-view"><div class="step-top"><div><p class="eyebrow">'+html(d.kicker)+' · '+(i+1)+'/4</p><h1 tabindex="-1" id="screen-heading">'+html(d.title)+'</h1><p class="sublead">'+html(d.intro)+'</p></div><div class="chapter-index">'+String(i+1).padStart(2,"0")+' <span>/ 04</span></div></div><div class="mission-grid"><section class="evidence-card"><p class="eyebrow">'+html(t.learnFirst)+'</p><h2>'+html(d.theoryTitle)+'</h2><p>'+html(d.theory)+'</p><div class="facts"><strong>'+html(d.factsTitle)+'</strong><ol>'+facts+'</ol></div></section><section class="decision-card"><p class="eyebrow">'+html(t.choose)+'</p><h2>'+html(d.question)+'</h2><div class="choices" role="group" aria-label="'+html(d.question)+'">'+opts+'</div>'+(!reviewed?'<p class="decision-note" aria-live="polite">'+(sel===null?html(t.pickFirst):"")+'</p><button class="button button-primary confirm" type="button" data-action="confirm" '+(sel===null?'disabled':'')+'>'+html(t.confirm)+' →</button>':"")+'</section></div>'+output+'<div class="bottom-nav"><button type="button" class="button button-outline" data-action="back">← '+html(t.back)+'</button>'+(reviewed?'<div class="forward"><button class="button button-ghost" type="button" data-action="retry">'+html(t.rethink)+'</button><button class="button button-primary" type="button" data-action="next">'+html(i===3?t.finish:t.next)+' →</button></div>':"")+'</div></section>';
   }
@@ -245,12 +245,12 @@
     var rows=chapters.map(function(m,i){var answered=state.answers[i],ok=answered===m.correct;return '<div class="recap-item"><span>'+(i+1)+'</span><div><strong>'+html(m[lang].title)+'</strong><p>'+html(m[lang].afterTitle)+'</p></div><b class="'+(ok?"ok":"review")+'">'+(ok?'✓':'↻')+'</b></div>';}).join("");
     return '<section class="view final-screen"><p class="eyebrow">'+html(t.finish)+'</p><h1 tabindex="-1" id="screen-heading">'+html(t.finishTitle)+'</h1><p class="sublead">'+html(t.finishIntro)+'</p><div class="finish-grid"><div class="finish-score"><span class="score-number">'+score()+' <small>/ 4</small></span><h2>'+html(t.scoreLabel)+'</h2><p>'+html(t.scoreNote)+'</p><div class="finish-message">'+html(t.complete)+'</div></div><div class="recap">'+rows+'</div></div><div class="reflection"><p class="eyebrow">'+html(t.reflectionTitle)+'</p><h2>'+html(t.reflection)+'</h2><ul>'+t.finishLessons.map(function(x){return '<li>'+html(x)+'</li>';}).join("")+'</ul></div><div class="button-row"><button type="button" class="button button-outline" data-action="review">'+html(t.review)+'</button><button type="button" class="button button-primary" data-action="restart">'+html(t.restart)+' →</button></div></section>';
   }
-  function render(){
+  function render(focusHeading){
     document.title=(lang==="es"?"Año 15 · El valor de lo que conservamos":"Year 15 · The value of what we retain");
     var body=state.page===-2?cover():state.page===-1?how():state.page===4?finalPage():mission();
     root.innerHTML=header()+'<main class="app-frame">'+guideBox()+body+'<footer class="footnote">'+html(t.saved)+' · '+html(t.coverDisclaimer)+'</footer></main>';
     var heading=document.getElementById("screen-heading");
-    if(heading&&state.page!==-2){heading.focus({preventScroll:true});}
+    if(heading&&focusHeading){heading.focus({preventScroll:true});}
   }
   function speak(){
     if(!("speechSynthesis" in window)||!("SpeechSynthesisUtterance" in window)){window.alert(t.voiceFail);return;}
@@ -274,8 +274,8 @@
     if(action==="how"){go(-1);return;}
     if(action==="mission-start"){go(0);return;}
     if(action==="back"){go(i===-1?-2:i===0?-1:i===4?3:i-1);return;}
-    if(action==="choose"&&i>=0&&i<4&&!state.confirmed[i]){state.answers[i]=Number(button.dataset.index);save();render();return;}
-    if(action==="confirm"&&i>=0&&i<4&&state.answers[i]!==null){state.confirmed[i]=true;save();render();return;}
+    if(action==="choose"&&i>=0&&i<4&&!state.confirmed[i]){state.answers[i]=Number(button.dataset.index);save();render();if(root.querySelector){var choice=root.querySelector(".choice.selected");if(choice)choice.focus();}return;}
+    if(action==="confirm"&&i>=0&&i<4&&state.answers[i]!==null){state.confirmed[i]=true;save();render();if(root.querySelector){var result=root.querySelector(".feedback");if(result)result.focus();}return;}
     if(action==="retry"&&i>=0&&i<4){state.answers[i]=null;state.confirmed[i]=false;save();render();return;}
     if(action==="next"&&i>=0&&i<4&&state.confirmed[i]){go(i===3?4:i+1);return;}
     if(action==="review"){go(0);return;}
