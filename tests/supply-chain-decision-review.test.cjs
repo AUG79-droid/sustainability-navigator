@@ -7,3 +7,36 @@ test("preserves the Task 3 Supply Chain assessment while Eco-Design advances",()
 test("implements six scenarios, eighteen applied decisions, thematic review and exact final state",()=>{const js=fs.readFileSync(path.join(dir,"review.js"),"utf8"),html=fs.readFileSync(path.join(dir,"index.html"),"utf8"),css=fs.readFileSync(path.join(dir,"styles.css"),"utf8");assert.doesNotThrow(()=>new vm.Script(js));for(const id of ["origin","rights","chemical","packaging","obsolescence","conditional"])assert.match(js,new RegExp(`id:\\"${id}\\"`));assert.equal((js.match(/d\(\[/g)||[]).length,18);for(const theme of ["traceability","evidence","due","regulatory","logistics","escalation","governance"])assert.match(js,new RegExp(theme));assert.match(js,/allAttempted\(\)/);assert.match(js,/state\.final=true/);assert.match(html,/data-completion-selector="#decision-review-complete\.active"/);assert.match(js,/not a formal grade, certification or proof of professional competence/i);assert.match(css,/@media\(max-width:420px\)/);assert.match(css,/focus-visible/);});
 test("preserves Supply Chain revisions 1 and 2 and leaves the new assessment outstanding",()=>{const storage=store.createMemoryStorage();const make=(data,time)=>serviceApi.createBrowserService(catalogue,data,storage,()=>time);const v1=JSON.parse(JSON.stringify(paths)),p1=v1.paths.find(x=>x.id==="responsible-supply-chain-compliance");p1.revision=1;p1.steps=p1.steps.filter(x=>!["supply-foundations","supply-decision-review"].includes(x.id));let s=make(v1,"2026-08-01T10:00:00.000Z");s.startPath(p1.id,"en");for(const x of p1.steps.filter(x=>x.requirement==="required"))s.completeResource(x.resourceId,{pathId:p1.id,stepId:x.id,language:"en",source:"manual"});const v2=JSON.parse(JSON.stringify(paths)),p2=v2.paths.find(x=>x.id===p1.id);p2.revision=2;p2.steps=p2.steps.filter(x=>x.id!=="supply-decision-review");s=make(v2,"2026-08-02T10:00:00.000Z");for(const x of p2.steps.filter(x=>x.requirement==="required"))s.completeResource(x.resourceId,{pathId:p2.id,stepId:x.id,language:"en",source:"manual"});const current=make(paths,"2026-08-03T10:00:00.000Z"),state=current.getState(),record=state.paths[p1.id],summary=selectors.pathSummary(state,paths.paths.find(x=>x.id===p1.id),catalogue),next=selectors.nextActivity(state,paths.paths.find(x=>x.id===p1.id),catalogue);assert.deepEqual(record.completionHistory.map(x=>x.pathRevision).sort(),[1,2]);assert.equal(summary.status,"update_available");assert.equal(next.step.id,"supply-decision-review");assert.equal(record.steps["supply-decision-review"],undefined);assert.ok(record.completionHistory.every(x=>!x.requiredStepEvidence.some(e=>e.resourceId==="supply-chain-compliance-decision-review")));});
 test("strict bridge only accepts the explicit reviewed-final selector",()=>{const b=fs.readFileSync(path.join(root,"progress-bridge.js"),"utf8"),s=fs.readFileSync(path.join(root,"progress-service.js"),"utf8");assert.match(b,/"supply-chain-compliance-decision-review": "#decision-review-complete\.active"/);assert.match(s,/AUTOMATIC_INTERNAL_IDS[^\n]+supply-chain-compliance-decision-review/);});
+
+
+test("shows brief immediate feedback and six complete separate bilingual theory chapters",()=>{
+ const js=fs.readFileSync(path.join(dir,"review.js"),"utf8");
+ const theory=fs.readFileSync(path.join(dir,"scenario-theory-pages.js"),"utf8");
+ const html=fs.readFileSync(path.join(dir,"index.html"),"utf8");
+ assert.match(js,/input\.addEventListener\("change",function\(\)\{/);
+ assert.match(js,/displayDecisionFeedback\(s,index,choice\)/);
+ assert.match(js,/feedback-summary feedback-brief/);
+ assert.doesNotMatch(js,/class="learning-explanation"/);
+ assert.match(js,/if\(!attempted\(s\)\)/);
+ assert.match(js,/save\(\);showChapter\(current\)/);
+ assert.match(js,/function renderChapter\(s\)/);
+ assert.match(js,/function advanceChapter\(\)/);
+ assert.match(js,/state\.studied\.length<6/);
+ assert.match(html,/scenario-theory-pages\.js/);
+ assert.match(html,/decision-theory\.js/);
+ assert.ok(html.indexOf("scenario-theory-pages.js")<html.indexOf("review.js"));
+ assert.doesNotThrow(()=>new vm.Script(theory));
+ const ctx={window:{}};vm.runInNewContext(theory,ctx);
+ const ids=["origin","rights","chemical","packaging","obsolescence","conditional"];
+ ids.forEach(id=>{
+  const data=ctx.window.SCReviewChapters[id];
+  assert.ok(data,id);
+  for(const lang of ["es","en"]){
+   const item=data[lang];
+   assert.equal(item.sections.length,4,id+" "+lang);
+   assert.equal(item.glossary.length,5,id+" "+lang);
+   assert.equal(item.checklist.length,4,id+" "+lang);
+   assert.ok(item.intro.length>=2&&item.example.length>100&&item.conclusion.length>100,id+" "+lang);
+  }
+ });
+});
