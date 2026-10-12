@@ -28,53 +28,69 @@ d(["¿Qué puede ser condicional?","What may be conditional?"],"governance",[["C
 d(["¿Qué debe detenerse?","What must stop?"],"regulatory",[["Una liberación que no cumple un requisito obligatorio ni dispone de excepción válida","A release that fails a mandatory gate with no authorised exception",true,"La urgencia no crea autoridad técnica o regulatoria.","Urgency does not create technical or regulatory authority."],["Toda investigación","All investigation",false,"Puede continuar trabajo controlado para cerrar evidencia.","Controlled work may continue to close evidence."],["Solo lo costoso","Only expensive work",false,"La parada se basa en requisitos y riesgo, no coste.","A stop is based on requirements and risk, not cost."]]),
 d(["¿Cómo cierras la revisión?","How do you close the review?"],"governance",[["Con la palabra aprobado","With the word approved",false,"No muestra el alcance, las condiciones ni los motivos para revisar la decisión.","It shows neither scope, conditions nor triggers."],["Con decisiones por autoridad competente, evidencias, información pendiente, acciones, fechas, eficacia y motivos de revisión","With decisions by authority, evidence, gaps, actions, dates, effectiveness and triggers",true,"El registro de auditoría permite reconstruir la decisión y evita aplicar una aprobación parcial fuera de su alcance.","The audit trail supports reconstruction and prevents partial approval being used out of scope."],["Borrando borradores anteriores","By deleting earlier drafts",false,"El control de versiones debe conservar evolución y rationale según gobernanza aplicable.","Version control should retain evolution and rationale under applicable governance."]])]}];
 const themes={traceability:t("Trazabilidad","Traceability"),evidence:t("Evidencia","Evidence"),due:t("Diligencia debida","Due diligence"),regulatory:t("Cumplimiento regulatorio/producto","Regulatory/product compliance"),logistics:t("Logística","Logistics"),escalation:t("Escalación","Escalation"),governance:t("Gobernanza","Governance")};
-let lang=new URLSearchParams(location.search).get("hubLang")==="en"?"en":"es",current=0,state={answers:{},reviewed:[],final:false};const key="sn-assessment-supply-chain-compliance-decision-review-v1";try{state={...state,...JSON.parse(localStorage.getItem(key)||"{}")};}catch(_){}const $=s=>document.querySelector(s),save=()=>{try{localStorage.setItem(key,JSON.stringify(state));}catch(_){}},attempted=s=>s.decisions.every((_,i)=>state.answers[`${s.id}-${i}`]!==undefined),allAttempted=()=>scenarios.every(attempted);
+let lang=new URLSearchParams(location.search).get("hubLang")==="en"?"en":"es",current=0,view="scenario",state={answers:{},reviewed:[],studied:[],final:false};const key="sn-assessment-supply-chain-compliance-decision-review-v1";try{state={...state,...JSON.parse(localStorage.getItem(key)||"{}")};}catch(_){}state.studied=Array.isArray(state.studied)?state.studied:[];state.reviewed=Array.isArray(state.reviewed)?state.reviewed:[];state.answers=state.answers&&typeof state.answers==="object"?state.answers:{};const $=s=>document.querySelector(s),save=()=>{try{localStorage.setItem(key,JSON.stringify(state));}catch(_){}},attempted=s=>s.decisions.every((_,i)=>state.answers[`${s.id}-${i}`]!==undefined),allAttempted=()=>scenarios.every(attempted);
 function applyCopy(){document.documentElement.lang=lang;document.title=copy.title[lang];document.querySelectorAll("[data-copy]").forEach(n=>n.textContent=copy[n.dataset.copy][lang]);document.querySelectorAll("[data-lang]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===lang)));$("#hub").href=`../?hubLang=${lang}#learning-paths`;document.querySelector("nav")?.setAttribute("aria-label",lang==="es"?"Escenarios":"Scenarios");}
-function nav(){const unlocked=scenarios.findIndex(s=>!attempted(s));const max=unlocked<0?6:unlocked;$("#nav").innerHTML=[...scenarios,{title:copy.reviewTitle}].map((s,i)=>`<li><button data-go="${i}" ${i>max?"disabled":""} ${i===current?'aria-current="step"':""}>${i<6?`${i+1}. `:""}${s.title[lang]}</button></li>`).join("");document.querySelectorAll("[data-go]:not(:disabled)").forEach(b=>b.onclick=()=>show(+b.dataset.go));const count=scenarios.filter(attempted).length+(state.final?1:0);$("#progress").textContent=`${count} / 7`;$("#bar").value=count;}
-
-const lessonLabels={
- es:{
-   correct:"SOLUCIÓN CORRECTA Y JUSTIFICACIÓN",your:"Tu elección y su resultado",theory:"EXPLICACIÓN TEÓRICA",why:"Por qué es correcta",principle:"Principio o criterio aplicable",
-   actions:"Cómo aplicarlo paso a paso",limits:"Qué límites o precauciones debes recordar",practical:"Para llevarlo a tu trabajo",
-   other:"Por qué no son adecuadas las otras opciones",references:"Fuentes oficiales para profundizar",
-   education:"Explicación formativa general. En una decisión real deben comprobarse la norma aplicable, los procedimientos internos y la autoridad competente.",
-   change:"Puedes cambiar tus respuestas y pulsar «Revisar decisiones» otra vez.",again:"Volver a revisar decisiones",
-   reviewed:"Revisión de las tres decisiones completada. Lee las explicaciones antes de continuar."
- },
- en:{
-   correct:"CORRECT ANSWER AND REASONING",your:"Your choice and its outcome",theory:"DETAILED LEARNING EXPLANATION",why:"Why this is correct",principle:"Applicable principle or decision criterion",
-   actions:"How to apply it step by step",limits:"Limits and precautions to remember",practical:"Apply this at work",
-   other:"Why the other options are not appropriate",references:"Official resources for further reading",
-   education:"General educational explanation. In a real decision, check applicable rules, internal procedures and the competent authority.",
-   change:"You can change your answers and select 'Review decisions' again.",again:"Review decisions again",
-   reviewed:"Review of all three decisions complete. Read the explanations before continuing."
- }
+const chapterLabels={
+ es:{open:"Ver página completa de teoría →",short:"Teoría",chapter:"CAPÍTULO DE APRENDIZAJE",subtitle:"Explicación completa tras las tres decisiones",intro:"Has terminado las preguntas del escenario. Ahora puedes estudiar el tema con calma, relacionar conceptos y ver cómo se aplican en la práctica.",relevance:"POR QUÉ IMPORTA",caseTitle:"EL CASO EXPLICADO",example:"EJEMPLO APLICADO",glossary:"GLOSARIO",checklist:"COMPROBACIONES ANTES DE DECIDIR",takeaway:"IDEA CLAVE",reviewAnswers:"LO APRENDIDO EN LAS TRES DECISIONES",sources:"FUENTES PARA PROFUNDIZAR",next:"Continuar al siguiente escenario",last:"Continuar a la revisión final",back:"Volver a las preguntas",notice:"Material de aprendizaje general. Ante un caso real hay que comprobar la legislación, los procedimientos internos y las personas autorizadas que correspondan."},
+ en:{open:"Open full theory chapter →",short:"Theory",chapter:"LEARNING CHAPTER",subtitle:"Complete explanation after the three decisions",intro:"You have answered the scenario's questions. Now study the topic in depth, connect the concepts and see how they apply in practice.",relevance:"WHY IT MATTERS",caseTitle:"UNDERSTANDING THE CASE",example:"WORKED EXAMPLE",glossary:"GLOSSARY",checklist:"CHECK BEFORE DECIDING",takeaway:"KEY TAKEAWAY",reviewAnswers:"WHAT THE THREE DECISIONS TAUGHT",sources:"FURTHER READING",next:"Continue to next scenario",last:"Continue to final review",back:"Back to questions",notice:"General learning material. For real cases, check the applicable laws, internal procedures and competent decision-makers."}
 };
-function safeText(v){return String(v==null?"":v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
-function displayDecisionFeedback(s,i,chosenIndex){
- const decision=s.decisions[i],selected=decision.opts[chosenIndex],correct=decision.opts.find(function(o){return o.strong;});
- const theory=window.SCReviewTheory&&window.SCReviewTheory[s.id]&&window.SCReviewTheory[s.id][i];
- const lc=lessonLabels[lang],f=document.getElementById("f"+i);
- if(!f||!selected||!correct){return;}
- f.hidden=false;f.className="feedback "+(selected.strong?"stronger":"weaker");
- const others=decision.opts.filter(function(o){return !o.strong;});
- let content='<div class="feedback-summary"><p class="feedback-kicker">'+safeText(lc.your)+'</p><p>'+safeText((selected.strong?copy.strong:copy.weak)[lang]+selected.feedback[lang])+'</p></div>';
- content+='<div class="correct-answer"><p class="feedback-kicker">'+safeText(lc.correct)+'</p><p class="correct-answer-text">'+safeText(correct.text[lang])+'</p></div>';
- if(theory){
-   content+='<section class="learning-explanation"><h4>'+safeText(lc.theory)+' · '+safeText(theory.title[lang])+'</h4>';
-   content+='<div class="learning-section"><h5>'+safeText(lc.why)+'</h5><p>'+safeText(theory.why[lang])+'</p></div>';
-   content+='<div class="learning-section"><h5>'+safeText(lc.principle)+'</h5><p>'+safeText(theory.principle[lang])+'</p></div>';
-   content+='<div class="learning-section"><h5>'+safeText(lc.actions)+'</h5><ol>'+theory.steps[lang].map(function(x){return '<li>'+safeText(x)+'</li>';}).join("")+'</ol></div>';
-   content+='<div class="learning-section caution-note"><h5>'+safeText(lc.limits)+'</h5><p>'+safeText(theory.limits[lang])+'</p></div>';
-   content+='<div class="learning-section transfer-note"><h5>'+safeText(lc.practical)+'</h5><p>'+safeText(theory.atWork[lang])+'</p></div>';
-   content+='<div class="learning-section alternatives"><h5>'+safeText(lc.other)+'</h5><ul>'+others.map(function(o){return '<li><strong>'+safeText(o.text[lang])+'</strong><p>'+safeText(o.feedback[lang])+'</p></li>';}).join("")+'</ul></div>';
-   const refs=(window.SCReviewTheoryReferences&&window.SCReviewTheoryReferences[s.id])||[];
-   if(refs.length){
-     content+='<div class="theory-sources"><h5>'+safeText(lc.references)+'</h5><ul>'+refs.map(function(ref){var url=lang==="en"&&ref.url==="https://ippc.int/es/publications/92080/"?"https://ippc.int/en/publications/92080/":ref.url;return '<li><a target="_blank" rel="noopener noreferrer" href="'+safeText(url)+'">'+safeText(ref.name)+'</a></li>';}).join("")+'</ul></div>';
-   }
-   content+='<p class="training-caveat">'+safeText(lc.education)+'</p></section>';
- }
- f.innerHTML=content;
+function nav(){
+ const unlocked=scenarios.findIndex(s=>!state.studied.includes(s.id));
+ const max=unlocked<0?6:unlocked;
+ const lesson=chapterLabels[lang];
+ $("#nav").innerHTML=[...scenarios,{title:copy.reviewTitle}].map(function(s,i){
+   const allowed=i<=max,seen=i<6&&state.reviewed.includes(s.id)&&attempted(s);
+   const selected=i===current&&(view==="scenario"||view==="chapter");
+   return '<li class="nav-entry"><button data-go="'+i+'" '+(allowed?'':'disabled')+' '+(selected&&view==="scenario"?'aria-current="step"':'')+'>'+(i<6?(i+1)+'. ':'')+safeText(s.title[lang])+'</button>'
+     +(seen?'<button class="nav-theory" data-chapter="'+i+'" '+(selected&&view==="chapter"?'aria-current="step"':'')+'>'+safeText(lesson.short)+'</button>':'')+'</li>';
+ }).join("");
+ document.querySelectorAll("[data-go]:not(:disabled)").forEach(b=>b.onclick=()=>show(+b.dataset.go));
+ document.querySelectorAll("[data-chapter]").forEach(b=>b.onclick=()=>showChapter(+b.dataset.chapter));
+ const count=state.studied.filter(id=>scenarios.some(s=>s.id===id)).length+(state.final?1:0);
+ $("#progress").textContent=count+" / 7";$("#bar").value=count;
+}
+function renderChapter(s){
+ const page=window.SCReviewChapters?.[s.id]?.[lang],l=chapterLabels[lang];
+ if(!page){$("#content").innerHTML="<h2>"+safeText(l.chapter)+"</h2><p>"+safeText(l.intro)+"</p>";return;}
+ const paragraphs=xs=>xs.map(x=>'<p>'+safeText(x)+'</p>').join("");
+ const sectionHTML=page.sections.map(function(x,i){
+   return '<section class="chapter-section"><h3>'+safeText(x[0])+'</h3>'+paragraphs(x[1])+'</section>';
+ }).join("");
+ const glossary=page.glossary.map(x=>'<div class="glossary-entry"><dt>'+safeText(x[0])+'</dt><dd>'+safeText(x[1])+'</dd></div>').join("");
+ const checklist=page.checklist.map(x=>'<li>'+safeText(x)+'</li>').join("");
+ const lessons=s.decisions.map(function(x,i){
+   const choice=x.opts.find(o=>o.strong),explanation=window.SCReviewTheory?.[s.id]?.[i];
+   return '<li><strong>'+safeText(x.q[lang])+'</strong><p>'+safeText(choice.text[lang])+'</p>'+(explanation?'<small>'+safeText(explanation.title[lang])+'</small>':'')+'</li>';
+ }).join("");
+ const refs=(window.SCReviewTheoryReferences?.[s.id]||[]).map(function(ref){
+    const url=lang==="en"&&ref.url==="https://ippc.int/es/publications/92080/"?"https://ippc.int/en/publications/92080/":ref.url;
+    return '<li><a href="'+safeText(url)+'" target="_blank" rel="noopener noreferrer">'+safeText(ref.name)+'</a></li>';
+ }).join("");
+ $("#content").innerHTML='<div class="chapter-page"><header class="chapter-heading"><p class="chapter-eyebrow">'+safeText(l.chapter)+' · '+(current+1)+' / 6</p><h2>'+safeText(s.title[lang])+'</h2><p class="chapter-subtitle">'+safeText(page.subtitle)+'</p><p class="chapter-overview">'+safeText(l.intro)+'</p></header>'
+  +'<section class="chapter-intro">'+paragraphs(page.intro)+'</section>'
+  +'<aside class="chapter-importance"><h3>'+safeText(l.relevance)+'</h3><p>'+safeText(page.whyItMatters||page.intro[0])+'</p></aside>'
+  +'<section class="chapter-case"><h3>'+safeText(l.caseTitle)+'</h3><p>'+safeText(page.story||page.intro[1])+'</p></section>'
+  +sectionHTML
+  +'<section class="chapter-example"><h3>'+safeText(l.example)+'</h3><p>'+safeText(page.example)+'</p></section>'
+  +'<section class="chapter-glossary"><h3>'+safeText(l.glossary)+'</h3><dl>'+glossary+'</dl></section>'
+  +'<section class="chapter-checklist"><h3>'+safeText(l.checklist)+'</h3><ul>'+checklist+'</ul></section>'
+  +'<section class="chapter-answers"><h3>'+safeText(l.reviewAnswers)+'</h3><ol>'+lessons+'</ol></section>'
+  +'<section class="chapter-takeaway"><h3>'+safeText(l.takeaway)+'</h3><p>'+safeText(page.conclusion)+'</p></section>'
+  +(refs?'<section class="chapter-references"><h3>'+safeText(l.sources)+'</h3><ul>'+refs+'</ul></section>':'')
+  +'<p class="chapter-disclaimer">'+safeText(l.notice)+'</p>'
+  +'<div class="chapter-bottom-actions"><button type="button" class="chapter-back" id="chapter-back">'+safeText(l.back)+'</button><button type="button" class="chapter-continue" id="chapter-continue">'+safeText(current===5?l.last:l.next)+' →</button></div></div>';
+ $("#chapter-back").onclick=()=>show(current);
+ $("#chapter-continue").onclick=()=>advanceChapter();
+}
+function showChapter(index){
+ if(index<0||index>5||!attempted(scenarios[index])||!state.reviewed.includes(scenarios[index].id))return;
+ current=index;view="chapter";state.active={index,view};save();applyCopy();nav();renderChapter(scenarios[index]);buttons();$("#content").focus();window.scrollTo?.({top:0,behavior:"instant"});
+}
+function advanceChapter(){
+ if(view!=="chapter"||current>=6)return;
+ const id=scenarios[current].id;
+ if(!state.studied.includes(id))state.studied.push(id);
+ save();show(current+1);
 }
 function renderScenario(s){
  const alreadyReviewed=state.reviewed.includes(s.id)&&attempted(s);
@@ -97,6 +113,7 @@ function renderScenario(s){
    s.decisions.forEach(function(d,i){displayDecisionFeedback(s,i,state.answers[s.id+"-"+i]);});
    $("#status").textContent=lessonLabels[lang].change;
  }
+ var chapterButton=document.createElement("button");chapterButton.type="button";chapterButton.className="chapter-entry";chapterButton.textContent=chapterLabels[lang].open;chapterButton.hidden=!alreadyReviewed;chapterButton.onclick=function(){showChapter(current);};$("#status").insertAdjacentElement("afterend",chapterButton);
  document.querySelectorAll('.decision input[type="radio"]').forEach(function(input){
    input.addEventListener("change",function(){
      var n=input.name.replace("d",""),box=document.getElementById("f"+n);
@@ -121,11 +138,43 @@ function reviewScenario(s){
  vals.forEach(function(v,i){displayDecisionFeedback(s,i,Number(v.value));});
  $(".submit").textContent=lessonLabels[lang].again;
  $("#status").textContent=lessonLabels[lang].reviewed;
+ var chapterButton=$(".chapter-entry");if(chapterButton){chapterButton.hidden=false;chapterButton.onclick=function(){showChapter(current);};}
  const first=document.getElementById("f0");
  if(first){first.focus({preventScroll:true});first.scrollIntoView({block:"start",behavior:"smooth"});}
 }
 function renderFinal(){const score={},total={};scenarios.forEach(s=>s.decisions.forEach((x,i)=>{total[x.theme]=(total[x.theme]||0)+1;const selected=x.opts[state.answers[`${s.id}-${i}`]];if(selected?.strong)score[x.theme]=(score[x.theme]||0)+1;}));const rows=Object.keys(themes).map(k=>`<li><strong>${themes[k][lang]}</strong>: ${score[k]||0}/${total[k]||0}</li>`).join(""),strength=Object.keys(themes).filter(k=>(score[k]||0)===total[k]),areas=Object.keys(themes).filter(k=>(score[k]||0)<total[k]),labels=items=>items.length?items.map(k=>`<li>${themes[k][lang]}</li>`).join(""):`<li>${copy.none[lang]}</li>`;$("#content").innerHTML=`<h2>${copy.reviewTitle[lang]}</h2><p>${copy.reviewIntro[lang]}</p><ul>${rows}</ul><h3>${copy.strengths[lang]}</h3><ul>${labels(strength)}</ul><h3>${copy.areas[lang]}</h3><ul>${labels(areas)}</ul><div class="review"><p>${copy.limitation[lang]}</p><h3>${copy.revisit[lang]}</h3><ul><li><a href="../responsible-supply-chain-compliance-foundations/?hubLang=${lang}">Responsible Supply Chain & Compliance Foundations</a></li><li><a href="../ethical-armor/?hubLang=en">Ethical Armor</a></li><li><a href="../reach-compliance-challenge/?hubLang=en">The REACH Compliance Challenge</a></li><li><a href="../phytosanitary-defender/?hubLang=en">Phytosanitary Defender</a></li></ul></div><button class="submit final-review">${copy.reviewAction[lang]}</button>${state.final?complete():""}`;$(".final-review").onclick=finish;}
-function complete(){return `<section id="decision-review-complete" class="complete active" tabindex="-1"><h3>${copy.completed[lang]}</h3><p>${copy.limitation[lang]}</p></section>`;}function finish(){if(!allAttempted())return;state.final=true;save();if(!$("#decision-review-complete"))$("#content").insertAdjacentHTML("beforeend",complete());nav();$("#decision-review-complete").focus();}
-function buttons(){$("#prev").disabled=current===0;$("#next").hidden=current===6;if(current<6){$("#next").disabled=!attempted(scenarios[current]);$("#next").textContent=current===5?copy.final[lang]:copy.next[lang];}}
-function show(i){current=Math.max(0,Math.min(6,i));applyCopy();nav();current<6?renderScenario(scenarios[current]):renderFinal();buttons();$("#content").focus();}document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;const u=new URL(location.href);u.searchParams.set("hubLang",lang);history.replaceState(null,"",u);show(current);});$("#prev").onclick=()=>show(current-1);$("#next").onclick=()=>show(current+1);show(0);
+function complete(){return `<section id="decision-review-complete" class="complete active" tabindex="-1"><h3>${copy.completed[lang]}</h3><p>${copy.limitation[lang]}</p></section>`;}function finish(){if(!state.studied.every(id=>scenarios.some(s=>s.id===id))||state.studied.length<6||!allAttempted())return;state.final=true;save();if(!$("#decision-review-complete"))$("#content").insertAdjacentHTML("beforeend",complete());nav();$("#decision-review-complete").focus();}
+function buttons(){
+ $("#prev").disabled=current===0&&view!=="chapter";
+ $("#next").hidden=current===6;
+ if(current<6){
+   $("#next").disabled=view==="scenario"&&(!attempted(scenarios[current])||!state.reviewed.includes(scenarios[current].id));
+   $("#next").textContent=view==="chapter"?(current===5?chapterLabels[lang].last:chapterLabels[lang].next):chapterLabels[lang].open;
+ }
+}
+function show(i){
+ const target=Math.max(0,Math.min(6,i)),firstUnstudied=scenarios.findIndex(s=>!state.studied.includes(s.id));
+ const max=firstUnstudied<0?6:firstUnstudied;
+ current=Math.min(target,max);view="scenario";state.active={index:current,view};save();
+ applyCopy();nav();current<6?renderScenario(scenarios[current]):renderFinal();buttons();$("#content").focus();window.scrollTo?.({top:0,behavior:"instant"});
+}
+document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{
+ lang=b.dataset.lang;const u=new URL(location.href);u.searchParams.set("hubLang",lang);history.replaceState(null,"",u);
+ if(view==="chapter")showChapter(current);else show(current);
+});
+$("#prev").onclick=()=>{
+ if(view==="chapter"){show(current);return;}
+ if(current===0)return;
+ if(current===6){showChapter(5);return;}
+ if(state.studied.includes(scenarios[current-1].id))showChapter(current-1);else show(current-1);
+};
+$("#next").onclick=()=>{
+ if(current===6)return;
+ if(view==="chapter"){advanceChapter();return;}
+ showChapter(current);
+};
+const active=state.active;
+if(active&&active.view==="chapter"&&Number.isInteger(active.index)&&active.index>=0&&active.index<6&&attempted(scenarios[active.index])&&state.reviewed.includes(scenarios[active.index].id)){showChapter(active.index);}
+else if(active&&Number.isInteger(active.index)){show(active.index);}
+else show(0);
 })();
