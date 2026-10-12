@@ -104,8 +104,8 @@
             "Apply materials and compliance to composite protection, repair and maintenance."
           )),
           resource("eco-design-year-15", "year-15-challenge", "apply", "required", text(
-            "Cierra la ruta con una decisión avanzada de ecodiseño, mantenibilidad y ciclo de vida.",
-            "Close the path with an advanced eco-design, maintainability and life-cycle decision."
+            "Aplica lo aprendido mediante cuatro decisiones accesibles sobre recursos, sustitución, reutilización y comunicación con evidencias.",
+            "Apply what you learned through four accessible decisions on resources, replacement, reuse and evidence-based communication."
           ), { capstone: true }),
           resource("eco-design-assessment", "eco-design-lifecycle-decision-assessment", "assess", "required", text(
             "Integra la ruta mediante decisiones aplicadas sobre ciclo de vida, circularidad, materiales, mantenibilidad, evidencia y trade-offs.",
