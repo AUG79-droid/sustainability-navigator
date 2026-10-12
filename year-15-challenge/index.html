@@ -16,6 +16,17 @@
     </div>
   </div>
   <script src="./game.js?v=20261012-rebuild-v2"></script>
+  <script>
+    function withHubReturn() {
+      var link = document.querySelector(".hub-link");
+      if (!link) return;
+      var language = new URLSearchParams(location.search).get("hubLang") === "en" ? "en" : "es";
+      link.id = "sn-hub-return";
+      link.href = "../?hubLang=" + language + "#applications";
+      link.setAttribute("aria-label", language === "es" ? "Volver al catálogo de aplicaciones de Sustainability Navigator" : "Return to the Sustainability Navigator application catalogue");
+    }
+    withHubReturn();
+  </script>
   <!-- Sustainability Navigator integration: completion is recorded locally when the final view appears. -->
   <script src="../catalogue-data.js"></script>
   <script src="../learning-paths-data.js"></script>
