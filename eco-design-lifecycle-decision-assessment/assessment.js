@@ -28,13 +28,180 @@ d("¿Qué decisión es proporcional?","Which decision is proportionate?","system
 d("¿Qué claim puede comunicarse?","Which claim may be communicated?","lifecycle",[o("El upgrade es sostenible","The upgrade is sustainable",false,"Es absoluto y excede evidencia heterogénea. No declara alcance, comparación ni incertidumbre.","This is absolute and exceeds mixed evidence. It states neither scope, comparison nor uncertainty."),o("Bajo límites y supuestos documentados, el escenario evaluado muestra mejoras en indicadores concretos, pendientes de evidencia y gates identificados","Under documented boundaries and assumptions, the assessed scenario shows improvements in specified indicators, subject to identified evidence and gates",true,"El claim es proporcional, trazable y revisable; no transforma un resultado de modelo en certificación global.","The claim is proportional, traceable and reviewable; it does not transform a model result into global certification."),o("Cero impacto de ciclo de vida","Zero life-cycle impact",false,"No es defendible: toda opción tiene cargas y límites de medición.","This is not defensible: every option has burdens and measurement limits.")])]}];
 const themes={lifecycle:t("Marco de ciclo de vida","Life-cycle framing"),circularity:t("Circularidad","Circularity"),tradeoffs:t("Trade-offs de ingeniería","Engineering trade-offs"),materials:t("Materiales","Materials"),maintainability:t("Mantenibilidad y modularidad","Maintainability and modularity"),evidence:t("Evidencia e incertidumbre","Evidence and uncertainty"),systems:t("Decisión a nivel sistema","System-level decision-making")};
 const resources={lifecycle:["eco-design-circularity-aerospace-materials","Eco-Design, Circularity & Aerospace Materials"],circularity:["year-15-challenge","The Year 15 Challenge"],tradeoffs:["bio-inspired-innovation-lab","Bio-Inspired Innovation Lab"],materials:["eco-retrofit-mineral-footprint","Eco-Retrofit · The Mineral Footprint"],maintainability:["tassg-composite-guardian","TASSG Composite Guardian"],evidence:["reach-compliance-challenge","The REACH Compliance Challenge"],systems:["year-15-challenge","The Year 15 Challenge"]};
-let lang=new URLSearchParams(location.search).get("hubLang")==="en"?"en":"es",current=0,state={answers:{},reviewed:[],final:false};const storageKey="sn-assessment-eco-design-lifecycle-v1",$=s=>document.querySelector(s);try{state={...state,...JSON.parse(localStorage.getItem(storageKey)||"{}")};}catch(_){}const save=()=>{try{localStorage.setItem(storageKey,JSON.stringify(state));}catch(_){}},attempted=s=>s.decisions.every((_,i)=>state.answers[`${s.id}-${i}`]!==undefined),allAttempted=()=>scenarios.every(attempted);
-function applyCopy(){document.documentElement.lang=lang;document.title=copy.title[lang];document.querySelectorAll("[data-copy]").forEach(n=>n.textContent=copy[n.dataset.copy][lang]);document.querySelectorAll("[data-language]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.language===lang)));$("#hub-link").href=`../?hubLang=${lang}#learning-paths`;}
-function nav(){const first=scenarios.findIndex(s=>!attempted(s)),max=first<0?6:first;$("#scenario-nav").innerHTML=[...scenarios,{title:copy.finalTitle}].map((s,i)=>`<li><button type="button" data-go="${i}" ${i>max?"disabled":""} ${i===current?'aria-current="step"':""}>${i<6?`${i+1}. `:""}${s.title[lang]}</button></li>`).join("");document.querySelectorAll("[data-go]:not(:disabled)").forEach(b=>b.onclick=()=>show(+b.dataset.go));const count=scenarios.filter(attempted).length+(state.final?1:0);$("#progress-text").textContent=`${count} / 7`;$("#progress-bar").value=count;}
-function renderScenario(s){$("#assessment-content").innerHTML=`<p>${current+1} / 6</p><h2>${s.title[lang]}</h2><p>${s.context[lang]}</p><div class="brief"><section><h3>${copy.requirements[lang]}</h3><p>${s.requirements[lang]}</p></section><section><h3>${copy.evidence[lang]}</h3><p>${s.evidence[lang]}</p></section><section><h3>${copy.uncertainty[lang]}</h3><p>${s.uncertainty[lang]}</p></section><section><h3>${copy.context[lang]}</h3><p>${copy.notice[lang]}</p></section></div>${s.decisions.map((x,i)=>`<fieldset><legend>${x.q[lang]}</legend>${x.options.map((a,j)=>`<label class="option"><input type="radio" name="decision-${i}" value="${j}" ${state.answers[`${s.id}-${i}`]===j?"checked":""}>${a.text[lang]}</label>`).join("")}<div id="feedback-${i}" class="feedback" hidden></div></fieldset>`).join("")}<button type="button" class="submit">${copy.review[lang]}</button><p id="scenario-status" role="status"></p>`;$(".submit").onclick=()=>reviewScenario(s);}
-function reviewScenario(s){const choices=s.decisions.map((_,i)=>document.querySelector(`input[name="decision-${i}"]:checked`));if(choices.some(v=>!v)){$("#scenario-status").textContent=copy.answerAll[lang];return;}choices.forEach((v,i)=>{const n=+v.value,a=s.decisions[i].options[n];state.answers[`${s.id}-${i}`]=n;const f=$(`#feedback-${i}`);f.hidden=false;f.className=`feedback ${a.strong?"":"weaker"}`;f.textContent=(a.strong?copy.strong:copy.weaker)[lang]+a.feedback[lang];});if(!state.reviewed.includes(s.id))state.reviewed.push(s.id);save();nav();buttons();}
+
+let lang=new URLSearchParams(location.search).get("hubLang")==="en"?"en":"es",
+ current=0,view="scenario",state={answers:{},reviewed:[],studied:[],active:null,final:false};
+const storageKey="sn-assessment-eco-design-lifecycle-v1",$=s=>document.querySelector(s);
+try{state={...state,...JSON.parse(localStorage.getItem(storageKey)||"{}")};}catch(_){}
+state.answers=state.answers&&typeof state.answers==="object"?state.answers:{};
+state.reviewed=Array.isArray(state.reviewed)?state.reviewed:[];
+state.studied=Array.isArray(state.studied)?state.studied.filter(x=>scenarios.some(s=>s.id===x)):[];
+const save=()=>{try{localStorage.setItem(storageKey,JSON.stringify(state));}catch(_){}},
+ attempted=s=>s.decisions.every((_,i)=>Number.isInteger(state.answers[s.id+"-"+i])),
+ allAttempted=()=>scenarios.every(attempted);
+const lessonLabels={
+ es:{
+  chapter:"CAPÍTULO DE APRENDIZAJE",intro:"Ya has respondido las tres decisiones. Ahora estudia el tema completo antes de pasar al siguiente caso.",
+  open:"Ver página completa de teoría →",short:"Teoría",next:"Continuar al siguiente escenario",last:"Ir a la revisión final",
+  back:"Volver a las preguntas",example:"EJEMPLO APLICADO",glossary:"GLOSARIO EXPLICADO",
+  checklist:"QUÉ COMPROBAR EN UNA DECISIÓN REAL",takeaway:"IDEA PRINCIPAL",recap:"QUÉ ENSEÑAN LAS TRES DECISIONES",
+  facts:"EL CASO QUE ACABAS DE RESOLVER",sources:"Marco de aprendizaje",empty:"Responde las tres preguntas para abrir la teoría.",
+  progress:"Preguntas contestadas",answered:"Las tres decisiones están respondidas. Puedes abrir el capítulo completo.",
+  disclaimer:"Ejemplo educativo ficticio. No es una aprobación de ingeniería, una evaluación ambiental verificada ni una decisión real sobre aeronavegabilidad.",
+  more:"La explicación teórica completa llegará al finalizar las tres preguntas.",
+  alternative:"Alternativa más sólida:"
+ },
+ en:{
+  chapter:"LEARNING CHAPTER",intro:"You have answered all three decisions. Now study the whole topic before moving to the next case.",
+  open:"Open full theory chapter →",short:"Theory",next:"Continue to next scenario",last:"Go to final review",
+  back:"Back to questions",example:"WORKED EXAMPLE",glossary:"EXPLAINED TERMS",
+  checklist:"WHAT TO CHECK IN A REAL DECISION",takeaway:"KEY TAKEAWAY",recap:"LESSONS FROM THE THREE DECISIONS",
+  facts:"THE CASE YOU JUST COMPLETED",sources:"Learning framework",empty:"Answer all three questions to unlock the theory.",
+  progress:"Questions answered",answered:"All three decisions have been answered. Open the full chapter when ready.",
+  disclaimer:"Fictional educational case. Not engineering approval, a verified environmental impact assessment or a real airworthiness decision.",
+  more:"Full theory follows after the three questions.",
+  alternative:"Better-supported option:"
+ }
+};
+const escapeHTML=v=>String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function applyCopy(){
+ document.documentElement.lang=lang;document.title=copy.title[lang];
+ document.querySelectorAll("[data-copy]").forEach(n=>{if(copy[n.dataset.copy])n.textContent=copy[n.dataset.copy][lang]});
+ document.querySelectorAll("[data-language]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.language===lang)));
+ $("#hub-link").href="../?hubLang="+lang+"#learning-paths";
+}
+function nav(){
+ const first=scenarios.findIndex(s=>!state.studied.includes(s.id));
+ const max=first<0?6:first;
+ const label=lessonLabels[lang];
+ $("#scenario-nav").innerHTML=[...scenarios,{title:copy.finalTitle}].map((s,i)=>{
+   const available=i<=max,selected=i===current;
+   const showTheory=i<6&&attempted(s)&&state.reviewed.includes(s.id);
+   return '<li class="scenario-nav-item"><button type="button" data-go="'+i+'" '+(available?'':'disabled')+' '+(selected&&view==="scenario"?'aria-current="step"':'')+'>'+(i<6?(i+1)+'. ':'')+escapeHTML(s.title[lang])+'</button>'
+   +(showTheory?'<button class="nav-theory" type="button" data-theory="'+i+'" '+(selected&&view==="chapter"?'aria-current="step"':'')+'>'+escapeHTML(label.short)+'</button>':'')+'</li>';
+ }).join("");
+ document.querySelectorAll("[data-go]:not(:disabled)").forEach(b=>b.onclick=()=>show(+b.dataset.go));
+ document.querySelectorAll("[data-theory]").forEach(b=>b.onclick=()=>showChapter(+b.dataset.theory));
+ const count=state.studied.length+(state.final?1:0);
+ $("#progress-text").textContent=count+" / 7";$("#progress-bar").value=count;
+}
+function briefFeedback(s,i,n){
+ const d=s.decisions[i],a=d.options[n],strongest=d.options.find(x=>x.strong),f=$("#feedback-"+i);
+ if(!a||!f)return;
+ f.hidden=false;f.className="feedback feedback-short "+(a.strong?"":"weaker");
+ let html='<p><strong>'+escapeHTML((a.strong?copy.strong:copy.weaker)[lang].trim())+'</strong> '+escapeHTML(a.feedback[lang])+'</p>';
+ if(!a.strong)html+='<p class="brief-correct"><strong>'+escapeHTML(lessonLabels[lang].alternative)+'</strong> '+escapeHTML(strongest.text[lang])+'</p>';
+ f.innerHTML=html;
+}
+function renderScenario(s){
+ const label=lessonLabels[lang];
+ $("#assessment-content").innerHTML='<p class="scenario-index">'+(current+1)+' / 6</p><h2>'+escapeHTML(s.title[lang])+'</h2><p>'+escapeHTML(s.context[lang])+'</p>'
+  +'<div class="brief"><section><h3>'+escapeHTML(copy.requirements[lang])+'</h3><p>'+escapeHTML(s.requirements[lang])+'</p></section>'
+  +'<section><h3>'+escapeHTML(copy.evidence[lang])+'</h3><p>'+escapeHTML(s.evidence[lang])+'</p></section>'
+  +'<section><h3>'+escapeHTML(copy.uncertainty[lang])+'</h3><p>'+escapeHTML(s.uncertainty[lang])+'</p></section>'
+  +'<section><h3>'+escapeHTML(copy.context[lang])+'</h3><p>'+escapeHTML(copy.notice[lang])+'</p></section></div>'
+  +s.decisions.map((d,i)=>'<fieldset class="decision"><legend>'+(i+1)+'. '+escapeHTML(d.q[lang])+'</legend>'
+   +d.options.map((o,j)=>'<label class="option"><input type="radio" name="decision-'+i+'" value="'+j+'" '+(state.answers[s.id+"-"+i]===j?'checked':'')+'><span>'+escapeHTML(o.text[lang])+'</span></label>').join("")
+   +'<div id="feedback-'+i+'" class="feedback feedback-short" aria-live="polite" hidden></div></fieldset>').join("")
+  +'<p id="scenario-status" role="status"></p>'
+  +'<button type="button" class="submit" disabled>'+escapeHTML(label.open)+'</button>';
+ s.decisions.forEach((d,i)=>{
+  const n=state.answers[s.id+"-"+i];
+  if(Number.isInteger(n)&&n>=0&&n<d.options.length)briefFeedback(s,i,n);
+ });
+ function status(){
+   const answered=s.decisions.filter((_,i)=>Number.isInteger(state.answers[s.id+"-"+i])).length;
+   $(".submit").disabled=answered!==3;
+   $("#scenario-status").textContent=answered===3?label.answered:label.progress+": "+answered+" / 3. "+label.more;
+ }
+ document.querySelectorAll('.decision input[type="radio"]').forEach(input=>input.addEventListener("change",()=>{
+  const i=Number(input.name.split("-")[1]),n=Number(input.value);
+  state.answers[s.id+"-"+i]=n;
+  briefFeedback(s,i,n);
+  if(attempted(s)&&!state.reviewed.includes(s.id))state.reviewed.push(s.id);
+  save();status();nav();buttons();
+ }));
+ $(".submit").onclick=()=>{if(attempted(s))showChapter(current)};
+ status();
+}
+function renderChapter(s){
+ const d=window.EcoDesignTheoryPages?.[s.id]?.[lang],l=lessonLabels[lang],h=escapeHTML;
+ if(!d){$("#assessment-content").innerHTML='<h2>'+h(l.chapter)+'</h2><p>'+h(l.empty)+'</p>';return;}
+ const paragraphs=a=>a.map(v=>'<p>'+h(v)+'</p>').join("");
+ const sections=d.sections.map(x=>'<section class="lesson-section"><h3>'+h(x[0])+'</h3>'+paragraphs(x[1])+'</section>').join("");
+ const glossary=d.glossary.map(x=>'<div class="glossary-term"><dt>'+h(x[0])+'</dt><dd>'+h(x[1])+'</dd></div>').join("");
+ const checklist=d.checklist.map(x=>'<li>'+h(x)+'</li>').join("");
+ const recap=s.decisions.map(x=>'<li><strong>'+h(x.q[lang])+'</strong><p>'+h(x.options.find(o=>o.strong).text[lang])+'</p></li>').join("");
+ $("#assessment-content").innerHTML='<article class="lesson-page"><header class="lesson-heading"><p class="lesson-eyebrow">'+h(l.chapter)+' · '+(current+1)+' / 6</p><h2>'+h(s.title[lang])+'</h2><p class="lesson-subtitle">'+h(d.subtitle)+'</p><p class="lesson-overview">'+h(l.intro)+'</p></header>'
+  +'<div class="lesson-intro">'+paragraphs(d.intro)+'</div>'
+  +'<section class="lesson-case"><h3>'+h(l.facts)+'</h3><p>'+h(s.context[lang])+'</p><div class="lesson-case-grid">'
+  +'<div><h4>'+h(copy.requirements[lang])+'</h4><p>'+h(s.requirements[lang])+'</p></div>'
+  +'<div><h4>'+h(copy.evidence[lang])+'</h4><p>'+h(s.evidence[lang])+'</p></div>'
+  +'<div><h4>'+h(copy.uncertainty[lang])+'</h4><p>'+h(s.uncertainty[lang])+'</p></div></div></section>'
+  +sections
+  +'<section class="lesson-example"><h3>'+h(l.example)+'</h3><p>'+h(d.example)+'</p></section>'
+  +'<section class="lesson-glossary"><h3>'+h(l.glossary)+'</h3><dl>'+glossary+'</dl></section>'
+  +'<section class="lesson-checklist"><h3>'+h(l.checklist)+'</h3><ul>'+checklist+'</ul></section>'
+  +'<section class="lesson-recap"><h3>'+h(l.recap)+'</h3><ol>'+recap+'</ol></section>'
+  +'<section class="lesson-takeaway"><h3>'+h(l.takeaway)+'</h3><p>'+h(d.takeaway)+'</p></section>'
+  +'<p class="lesson-disclaimer">'+h(l.disclaimer)+'</p>'
+  +'<div class="lesson-actions"><button type="button" id="lesson-back">'+h(l.back)+'</button>'
+  +'<button type="button" id="lesson-continue">'+h(current===5?l.last:l.next)+' →</button></div></article>';
+ $("#lesson-back").onclick=()=>show(current);
+ $("#lesson-continue").onclick=()=>advanceChapter();
+}
+function showChapter(i){
+ const s=scenarios[i];
+ if(!s||!attempted(s)||!state.reviewed.includes(s.id))return;
+ current=i;view="chapter";state.active={index:current,view};save();
+ applyCopy();nav();renderChapter(s);buttons();
+ $("#assessment-content").focus();window.scrollTo?.({top:0,behavior:"instant"});
+}
+function advanceChapter(){
+ if(view!=="chapter"||current>=6)return;
+ const id=scenarios[current].id;
+ if(!state.studied.includes(id))state.studied.push(id);
+ save();show(current+1);
+}
+
 function scores(){const value={},total={};scenarios.forEach(s=>s.decisions.forEach((d,i)=>{total[d.theme]=(total[d.theme]||0)+1;const a=d.options[state.answers[`${s.id}-${i}`]];if(a?.strong)value[d.theme]=(value[d.theme]||0)+1;}));return{value,total};}
 function renderFinal(){const {value,total}=scores(),keys=Object.keys(themes),strengths=keys.filter(k=>(value[k]||0)===total[k]),areas=keys.filter(k=>(value[k]||0)<total[k]),list=xs=>xs.length?xs.map(k=>`<li>${themes[k][lang]}</li>`).join(""):`<li>${copy.none[lang]}</li>`,recommend=[...new Set(areas.length?areas:keys)].map(k=>resources[k]).filter(Boolean).slice(0,6);$("#assessment-content").innerHTML=`<h2>${copy.finalTitle[lang]}</h2><p>${copy.finalIntro[lang]}</p><ul class="theme-grid">${keys.map(k=>`<li><strong>${themes[k][lang]}</strong><br>${value[k]||0}/${total[k]||0}</li>`).join("")}</ul><h3>${copy.strengths[lang]}</h3><ul>${list(strengths)}</ul><h3>${copy.areas[lang]}</h3><ul>${list(areas)}</ul><section class="review-box"><h3>${copy.recommend[lang]}</h3><ul>${recommend.map(r=>`<li><a href="../${r[0].includes('eco-design-circularity')?r[0]+'/?hubLang='+lang:r[0].startsWith('reach-')||r[0].startsWith('year-')?r[0]+'/?hubLang=en':'../?hubLang='+lang+'&resource='+r[0]+'#applications'}">${r[1]}</a></li>`).join("")}</ul><p>${copy.limitation[lang]}</p></section><button type="button" class="submit final-action">${copy.completeAction[lang]}</button>${state.final?completeMarkup():""}`;$(".final-action").onclick=finish;}
-function completeMarkup(){return `<section id="eco-design-assessment-complete" class="complete active" tabindex="-1"><h3>${copy.completed[lang]}</h3><p>${copy.limitation[lang]}</p></section>`;}function finish(){if(!allAttempted())return;state.final=true;save();if(!$("#eco-design-assessment-complete"))$("#assessment-content").insertAdjacentHTML("beforeend",completeMarkup());nav();$("#eco-design-assessment-complete").focus();}
-function buttons(){$("#previous").disabled=current===0;$("#next").hidden=current===6;if(current<6){$("#next").disabled=!attempted(scenarios[current]);$("#next").textContent=current===5?copy.final[lang]:copy.next[lang];}}function show(i){current=Math.max(0,Math.min(6,i));applyCopy();nav();current<6?renderScenario(scenarios[current]):renderFinal();buttons();$("#assessment-content").focus();}document.querySelectorAll("[data-language]").forEach(b=>b.onclick=()=>{lang=b.dataset.language;const u=new URL(location.href);u.searchParams.set("hubLang",lang);history.replaceState(null,"",u);show(current);});$("#previous").onclick=()=>show(current-1);$("#next").onclick=()=>show(current+1);show(0);
+function completeMarkup(){return `<section id="eco-design-assessment-complete" class="complete active" tabindex="-1"><h3>${copy.completed[lang]}</h3><p>${copy.limitation[lang]}</p></section>`;}function finish(){if(!allAttempted()||state.studied.length!==6)return;state.final=true;save();if(!$("#eco-design-assessment-complete"))$("#assessment-content").insertAdjacentHTML("beforeend",completeMarkup());nav();$("#eco-design-assessment-complete").focus();}
+
+
+function buttons(){
+ $("#previous").disabled=current===0&&view!=="chapter";
+ $("#next").hidden=current===6;
+ if(current<6){
+  $("#next").disabled=view==="scenario"&&!attempted(scenarios[current]);
+  $("#next").textContent=view==="scenario"?lessonLabels[lang].open:(current===5?lessonLabels[lang].last:lessonLabels[lang].next);
+ }
+}
+function show(i){
+ const first=scenarios.findIndex(s=>!state.studied.includes(s.id));
+ const max=first<0?6:first;
+ current=Math.max(0,Math.min(i,max));view="scenario";state.active={index:current,view};save();
+ applyCopy();nav();
+ if(current<6)renderScenario(scenarios[current]);else renderFinal();
+ buttons();$("#assessment-content").focus();window.scrollTo?.({top:0,behavior:"instant"});
+}
+document.querySelectorAll("[data-language]").forEach(b=>b.onclick=()=>{
+ lang=b.dataset.language;
+ const u=new URL(location.href);u.searchParams.set("hubLang",lang);history.replaceState(null,"",u);
+ if(view==="chapter")showChapter(current);else show(current);
+});
+$("#previous").onclick=()=>{
+ if(view==="chapter"){show(current);return;}
+ if(current===0)return;
+ if(current===6){showChapter(5);return;}
+ if(state.studied.includes(scenarios[current-1].id))showChapter(current-1);else show(current-1);
+};
+$("#next").onclick=()=>{
+ if(current===6)return;
+ if(view==="chapter")advanceChapter();else showChapter(current);
+};
+const active=state.active;
+if(active&&active.view==="chapter"&&Number.isInteger(active.index)&&active.index>=0&&active.index<6&&attempted(scenarios[active.index])&&state.reviewed.includes(scenarios[active.index].id)){showChapter(active.index);}
+else if(active&&Number.isInteger(active.index)){show(active.index);}
+else show(0);
 })();
