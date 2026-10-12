@@ -119,3 +119,17 @@ nav .nav-entry>button:focus-visible{outline:3px solid #0a869c;outline-offset:2px
  .chapter-bottom-actions{display:grid;grid-template-columns:1fr}
  .chapter-bottom-actions button{width:100%;max-width:none}
 }
+
+
+/* Brief per-question feedback: a short explanation, never the full theory.
+   Comprehensive teaching remains on the separate chapter screen. */
+.decision>.feedback{margin:12px 0 6px!important;border-radius:10px;padding:0!important}
+.decision>.feedback .feedback-summary.feedback-brief{padding:12px 17px!important;background:#eff7f2}
+.decision>.feedback.weaker .feedback-summary.feedback-brief{background:#fff5e9}
+.decision>.feedback .feedback-brief p{font-size:16px!important;line-height:1.55!important;margin:0!important;color:#253d40}
+.decision>.feedback .feedback-brief p+p{margin-top:8px!important}
+.decision>.feedback .feedback-brief strong{font-weight:850}
+.decision>.feedback .brief-correct{border-top:1px solid #e5dfd3;padding-top:8px;color:#13574e!important}
+.panel .submit:disabled{background:#dce5e3;color:#607372;cursor:not-allowed;box-shadow:none}
+.panel .submit:not(:disabled){background:#16675e;color:#fff;border-radius:10px;font-size:17px;font-weight:850;padding:14px 20px;min-height:54px}
+#status{margin:17px 0 10px;color:#3b5b5d}
