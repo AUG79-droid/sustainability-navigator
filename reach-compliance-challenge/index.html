@@ -98,7 +98,11 @@ function withHubReturn(html) {
     const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
     const html = await new Response(stream).text();
     const localised = selectedLanguage === "es" ? window.SNReachLocalize(html) : html;
-    document.open(); document.write(withHubReturn(localised)); document.close();
+    // The exercise must focus on the layer descriptions in both languages.
+    const revisedCopy = localised
+      .replace("You have already learned what each layer does. Now use the descriptions—not prior chemistry knowledge—to assemble the compatible fictional protection stack.", "You have already learned what each layer does. Now use the descriptions to assemble the compatible fictional protection system.")
+      .replace("Ya has aprendido qué hace cada capa. Usa ahora las descripciones, no conocimientos previos de química, para ensamblar la pila ficticia compatible.", "Ya has aprendido qué hace cada capa. Usa ahora las descripciones para ensamblar el sistema de protección ficticio compatible.");
+    document.open(); document.write(withHubReturn(revisedCopy)); document.close();
   } catch (error) {
     const es = new URLSearchParams(location.search).get("hubLang") === "es"; document.getElementById("loading").innerHTML = es ? `No se ha podido cargar el reto. Actualiza la página. <a href="../?lang=es#applications">Volver al Sustainability Hub</a>` : `Unable to load the challenge. Please refresh. <a href="../?lang=en#applications">Back to Sustainability Hub</a>`;
   }
