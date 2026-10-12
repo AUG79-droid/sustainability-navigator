@@ -68,8 +68,7 @@ function renderChapter(s){
  }).join("");
  $("#content").innerHTML='<div class="chapter-page"><header class="chapter-heading"><p class="chapter-eyebrow">'+safeText(l.chapter)+' · '+(current+1)+' / 6</p><h2>'+safeText(s.title[lang])+'</h2><p class="chapter-subtitle">'+safeText(page.subtitle)+'</p><p class="chapter-overview">'+safeText(l.intro)+'</p></header>'
   +'<section class="chapter-intro">'+paragraphs(page.intro)+'</section>'
-  +'<aside class="chapter-importance"><h3>'+safeText(l.relevance)+'</h3><p>'+safeText(page.whyItMatters||page.intro[0])+'</p></aside>'
-  +'<section class="chapter-case"><h3>'+safeText(l.caseTitle)+'</h3><p>'+safeText(page.story||page.intro[1])+'</p></section>'
+  +'<section class="chapter-case"><h3>'+safeText(l.caseTitle)+'</h3><p>'+safeText(s.context[lang])+'</p><div class="case-facts"><div><h4>'+safeText(copy.evidence[lang])+'</h4><p>'+safeText(s.evidence[lang])+'</p></div><div><h4>'+safeText(copy.missing[lang])+'</h4><p>'+safeText(s.missing[lang])+'</p></div><div><h4>'+safeText(copy.pressure[lang])+'</h4><p>'+safeText(s.pressure[lang])+'</p></div></div></section>'
   +sectionHTML
   +'<section class="chapter-example"><h3>'+safeText(l.example)+'</h3><p>'+safeText(page.example)+'</p></section>'
   +'<section class="chapter-glossary"><h3>'+safeText(l.glossary)+'</h3><dl>'+glossary+'</dl></section>'
