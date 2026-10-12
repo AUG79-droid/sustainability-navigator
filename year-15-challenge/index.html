@@ -38,7 +38,12 @@ function withHubReturn(html){
   for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
   if(typeof DecompressionStream==='undefined') throw new Error('This browser does not support gzip decompression.');
   const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-  const html=await new Response(stream).text();
+  let html=await new Response(stream).text();
+  // Keep ARIA text and voice consistent with the chosen app language.
+  html=html.replace("u.lang='en-GB';","u.lang=document.documentElement.lang==='es'?'es-ES':'en-GB';")
+    .replace("const preferred=voices.find(v=>/en-GB/i.test(v.lang)&&/female|susan|samantha|serena|sonia|aria/i.test(v.name)) || voices.find(v=>/en-GB/i.test(v.lang)) || voices.find(v=>/^en/i.test(v.lang));","const spanishVoice=document.documentElement.lang==='es';const preferred=voices.find(v=>(spanishVoice?/^es/i.test(v.lang):/en-GB/i.test(v.lang))&&/female|susan|samantha|serena|sonia|aria|maria|helena|paulina|monica/i.test(v.name)) || voices.find(v=>spanishVoice?/^es/i.test(v.lang):/en-GB/i.test(v.lang)) || (!spanishVoice?voices.find(v=>/^en/i.test(v.lang)):null);")
+    .replace("const speech=guideSpeechText(strip); if(!speech) return;",
+      "let speech=guideSpeechText(strip); if(document.documentElement.lang==='es')speech=speech.replace('Here is what to do. ','Estos son los pasos. ').replace(/\\bStep ([0-9]+)\\./g,'Paso $1.'); if(!speech) return;");
   document.open();document.write(withHubReturn(html));document.close();
  }catch(e){
   const es=new URLSearchParams(location.search).get('hubLang')!=='en'; document.getElementById('boot').innerHTML=`<div class="card"><b>${es?'EL RETO DEL AÑO 15':'THE YEAR 15 CHALLENGE'}</b><p>${es?'No se ha podido cargar la experiencia.':'The experience could not be loaded.'}</p><button onclick="location.reload()">${es?'REINTENTAR':'RETRY'}</button><p><a href="../?lang=${es?'es':'en'}#applications">${es?'Volver al Sustainability Hub':'Back to Sustainability Hub'}</a></p></div>`;
