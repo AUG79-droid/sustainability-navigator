@@ -246,11 +246,11 @@
         ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("advanced-sustainability-air-power-services", ["es", "en"])], { noPriorExpertiseRequired: true }),
 
       resource("year-15-challenge", "application", "scenario-challenge",
-        text("El reto del Año 15", "The Year 15 Challenge"),
-        text("Aplicación de ingeniería y ecodiseño para explorar decisiones de ciclo de vida, mantenibilidad y extensión de la vida útil.", "An engineering and eco-design application for exploring life-cycle, maintainability and service-life extension decisions."),
-        text("Ingeniería, ecodiseño y ciclo de vida", "Engineering, eco-design and life cycle"),
-        ["engineering", "operations", "managers"], { es: "year-15-challenge/?hubLang=es", en: "year-15-challenge/?hubLang=en" }, { min: 35, max: 35, unit: "minutes" }, "advanced",
-        ["P2", "P1"], [repository("sustainability-navigator", ["es", "en"])], { legacyInternal: true })
+        text("Año 15 · El valor de lo que conservamos", "Year 15 · The Value of What We Retain"),
+        text("Juego de cuatro decisiones para aprender sostenibilidad sin conocimientos técnicos: evitar sustituciones innecesarias, conservar recursos, valorar la reutilización y comunicar con evidencias.", "A four-decision sustainability game for everyone: avoid unnecessary replacement, retain resources, assess reuse and make evidence-based claims."),
+        text("Sostenibilidad práctica y uso responsable de recursos", "Practical sustainability and responsible resource use"),
+        ["general", "operations", "teams", "sustainability"], { es: "year-15-challenge/?hubLang=es", en: "year-15-challenge/?hubLang=en" }, null, null,
+        ["P2", "P1"], [repository("sustainability-navigator", ["es", "en"])], { legacyInternal: true, noPriorExpertiseRequired: true })
     ]
   };
 });
