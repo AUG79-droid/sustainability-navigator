@@ -76,7 +76,7 @@ test("derives ES and EN completeness only from required catalogue launches", () 
 test("reports documented subtotals without estimating unknown required durations", () => {
   const expected = {
     "sustainable-aviation-foundations": [225, 360, 1],
-    "eco-design-circularity-materials": [345, 345, 3],
+    "eco-design-circularity-materials": [310, 310, 4],
     "responsible-supply-chain-compliance": [305, 305, 0],
     "sustainable-in-service-operations": [0, 0, 5],
     "nature-habitat-operational-risk": [0, 0, 4],
