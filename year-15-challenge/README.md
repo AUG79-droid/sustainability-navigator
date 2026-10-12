@@ -5,13 +5,14 @@ Bilingual (ES/EN) educational sustainability decision game for **all employees**
 - Canonical route: `year-15-challenge/?hubLang=es` or `?hubLang=en`.
 - `index.html` launches the game from `game.js` and `game.css`.
 - `game.js` contains **complete, separately authored Spanish and English copy**. Do not translate DOM fragments or re-enable `localization.js`.
+- The cover states the concrete problem, the learner's task, the success condition and the practical purpose before play begins.
 - Four missions: investigate unnecessary replacement, preserve suitable components, assess reuse and recovery, report evidence responsibly.
 - Content is fictional. Never portray choices as technical approvals or quantify environmental savings without validated inputs.
-- Guidance is provided by ARIA, with language-matched speech synthesis when supported by the browser.
+- Guidance is provided by Daniel, a male engineering guide with a locally stored avatar and a language-matched masculine speech voice when supported by the browser.
 - Progress is local to the user's browser. `progress-bridge.js` is configured to recognise the `.final-screen` view.
 - Back, home, retries, final review and language switching are intentionally supported.
 - `payload/`, `.payload/`, `localization.js` and `readability.css` are **legacy files not loaded** by this redesign; retain only for historical rollback.
-- The cover reuses an avatar asset at `../ethical-armor/aria-original.jpg`.
+- The guide uses the project-local `daniel-guide.png` avatar generated for this experience.
 
 ## QA acceptance checks
 1. Both `hubLang=es` and `hubLang=en` load the same four missions with complete native-language copy.

@@ -144,29 +144,37 @@
     es:{
       brand:"SOSTENIBILIDAD EN AIR POWER SERVICES",name:"AÑO 15",hub:"Volver al Sustainability Navigator",
       home:"Inicio",back:"Atrás",next:"Siguiente misión",start:"Empezar",how:"Cómo se juega",
-      scenario:"CASO FICTICIO · AERONAVE MILITAR",guide:"ARIA · GUÍA DEL RETO",
-      listen:"Escuchar a ARIA",stop:"Detener audio",show:"Mostrar instrucciones",hide:"Ocultar instrucciones",
-      coverKicker:"UNA HISTORIA. CUATRO DECISIONES. CONSECUENCIAS QUE IMPORTA COMPRENDER.",
-      coverTitle:"AÑO 15",coverTitle2:"El valor de lo que conservamos.",
-      coverLead:"Un equipo tiene que modernizar una aeronave que lleva 15 años en servicio. ¿Hay que sustituirlo todo? Tú decides qué investigar, cómo aprovechar los recursos y qué podemos afirmar con evidencias.",
+      scenario:"CASO FICTICIO · AERONAVE MILITAR",guide:"DANIEL · GUÍA DEL RETO",
+      listen:"Escuchar a Daniel",stop:"Detener audio",show:"Mostrar instrucciones",hide:"Ocultar instrucciones",
+      coverKicker:"UN PROBLEMA CONCRETO. CUATRO DECISIONES. UN RESULTADO QUE PUEDES EXPLICAR.",
+      coverTitle:"AÑO 15",coverTitle2:"Decide qué cambiar, qué conservar y qué puedes afirmar.",
+      coverLead:"El ordenador de misión de una aeronave necesita una actualización tras 15 años. El proveedor propone sustituir todo el conjunto, pero todavía no sabemos si todos sus componentes han dejado de ser útiles.",
+      problemLabel:"EL PROBLEMA",problemText:"Una tecnología ha quedado obsoleta. Sustituir todo sin comprobarlo podría retirar equipos que todavía funcionan.",
+      taskLabel:"TU TAREA",taskText:"Toma cuatro decisiones: investigar, conservar, gestionar el componente retirado y comunicar el resultado.",
+      successLabel:"CÓMO SE SUPERA",successText:"Elige la opción mejor respaldada por los hechos y distingue siempre una evaluación de una autorización técnica.",
+      purposeLabel:"PARA QUÉ SIRVE",purposeText:"Para practicar cómo la sostenibilidad mejora decisiones cotidianas sin sustituir la seguridad, la idoneidad técnica ni las evidencias.",
       coverLearn:"Qué aprenderás",coverLearnList:["Evitar sustituciones innecesarias.","Valorar la reutilización y otras opciones responsables.","Entender por qué la seguridad y las evidencias son esenciales.","Distinguir hechos de afirmaciones ambientales sin verificar."],
       coverDisclaimer:"Caso educativo ficticio. No describe una actuación real de Airbus ni autoriza cambios técnicos, reutilización o decisiones de cumplimiento.",
       photoAlt:"Airbus A400M fotografiado en tierra. Imagen ilustrativa, ajena al caso ficticio.",photoCaption:"Airbus A400M · Foto: Adrian Pingstone / Wikimedia Commons (dominio público)",
       timelinePast:"AÑO 0",timelineNow:"AÑO 15",timelineFuture:"TU DECISIÓN",
       timelinePastDesc:"Se diseñó y fabricó",timelineNowDesc:"Hace falta actualizar",timelineFutureDesc:"¿Qué conviene hacer?",
-      howTitle:"Cómo funciona el juego",howLead:"No tienes que conocer ingeniería. Leerás los hechos, elegirás una opción y descubrirás sus posibles consecuencias antes de avanzar.",
+      howTitle:"Qué tienes que conseguir y cómo",howLead:"No necesitas conocimientos de ingeniería. Tu objetivo es evitar sustituciones innecesarias sin convertir la sostenibilidad en una excusa para omitir verificaciones técnicas.",
+      objectiveTitle:"EL OBJETIVO, SIN JERGA",objectiveText:"Al terminar debes poder justificar cuatro cosas: qué necesita cambiar realmente, qué puede seguir utilizándose, qué conviene evaluar para el componente retirado y qué puede comunicarse con las evidencias disponibles.",
+      startState:"PUNTO DE PARTIDA",startStateText:"El proveedor propone sustituir el conjunto completo sin que todavía se haya separado lo obsoleto de lo que sigue funcionando.",
+      targetState:"RESULTADO BUSCADO",targetStateText:"Una decisión trazable que conserva únicamente lo que sea adecuado y seguro, evalúa el siguiente uso y evita afirmaciones ambientales no demostradas.",
       howSteps:[["01","Lee el contexto","Toda la información necesaria aparece dentro del caso."],["02","Toma una decisión","Elige entre tres alternativas y confirma tu elección."],["03","Descubre por qué","Recibirás una explicación, podrás reintentar y verás el aprendizaje."],["04","Aplica lo aprendido","Al final relacionarás las cuatro decisiones con tu propio trabajo."]],
       howRule:"No hay cifras ambientales inventadas ni decisiones técnicas reales. Las consecuencias son cualitativas y se explican con sus condiciones.",
-      goMission:"Comenzar misión 1",mission:"Misión",of:"de",evidence:"EVIDENCIAS",learnFirst:"ANTES DE DECIDIR",choose:"TU DECISIÓN",confirm:"Confirmar decisión",pickFirst:"Selecciona una alternativa para continuar.",
+      goMission:"Comenzar: investigar el caso",mission:"Misión",of:"de",evidence:"EVIDENCIAS",learnFirst:"ANTES DE DECIDIR",choose:"TU DECISIÓN",confirm:"Confirmar decisión",pickFirst:"Selecciona una alternativa para continuar.",
+      missionCompass:"OBJETIVO GENERAL: evitar sustituciones innecesarias con decisiones seguras, técnicamente adecuadas y respaldadas por evidencias.",
       result:"RESULTADO DE TU DECISIÓN",good:"Decisión bien fundamentada",needs:"Hay una alternativa mejor respaldada por las evidencias",effects:"Qué supone esta opción",rethink:"Probar otra opción",continue:"Continuar",lesson:"QUÉ NOS LLEVAMOS",apply:"Llévalo a tu trabajo",
-      finish:"REVISIÓN FINAL",finishTitle:"¿Qué cambia cuando pensamos en sostenibilidad?",finishIntro:"Has recorrido cuatro situaciones habituales: sustituir, conservar, recuperar y comunicar. No se trata de elegir siempre la opción que parece más «verde», sino de decidir con evidencias.",
+      finish:"REVISIÓN FINAL",finishTitle:"Ya puedes explicar para qué sirve el reto",finishIntro:"Has separado lo que necesita cambiar de lo que todavía puede aportar valor, has evaluado el destino del componente retirado y has limitado la comunicación a lo que las evidencias permiten afirmar. Esa es la utilidad práctica del juego.",
       scoreLabel:"Decisiones fundamentadas",scoreSuffix:"de 4",scoreNote:"Esta puntuación solo refleja las elecciones de este ejercicio, no un impacto ambiental real.",
       finishLessons:["Antes de sustituir, comprobar qué es necesario.","Conservar lo que sigue siendo adecuado y seguro.","Evaluar opciones para los componentes retirados.","Comunicar resultados con datos y limitaciones."],
       reflectionTitle:"Una pregunta para mañana",reflection:"En mi trabajo, ¿qué decisión podría mejorar si primero comprobara qué recursos ya tenemos, qué alternativas existen y qué evidencias faltan?",
       restart:"Volver a jugar",review:"Revisar mis decisiones",saved:"El progreso se guarda únicamente en este navegador.",status:"Progreso",complete:"Juego completado",
       voiceFail:"El navegador no dispone de voz. Puedes leer las instrucciones en pantalla.",
-      guideCover:"Bienvenido. No necesitas conocimientos técnicos. Verás cuatro decisiones sencillas para comprender la sostenibilidad durante la vida útil de un producto.",
-      guideHow:"Lee las instrucciones y comienza. Podrás revisar las decisiones anteriores sin perder las respuestas.",
+      guideCover:"Soy Daniel. El problema es concreto: un ordenador necesita actualizarse, pero no sabemos si hay que sustituir todo el conjunto. Tu trabajo es decidirlo con evidencias.",
+      guideHow:"Primero comprende el objetivo. Después tomarás cuatro decisiones y verás de inmediato qué consecuencias tiene cada una.",
       guideMission:"Lee las evidencias, elige una alternativa y confirma. Después podrás cambiar tu respuesta o pasar a la siguiente misión.",
       guideResult:"Lee las consecuencias y el aprendizaje. Puedes probar otra alternativa antes de avanzar.",
       guideFinal:"Has terminado. Observa las cuatro ideas que puedes aplicar a cualquier puesto de trabajo."
@@ -174,35 +182,43 @@
     en:{
       brand:"SUSTAINABILITY IN AIR POWER SERVICES",name:"YEAR 15",hub:"Back to Sustainability Navigator",
       home:"Home",back:"Back",next:"Next mission",start:"Start",how:"How to play",
-      scenario:"FICTIONAL CASE · MILITARY AIRCRAFT",guide:"ARIA · CHALLENGE GUIDE",
-      listen:"Hear ARIA",stop:"Stop audio",show:"Show instructions",hide:"Hide instructions",
-      coverKicker:"ONE STORY. FOUR DECISIONS. CONSEQUENCES WORTH UNDERSTANDING.",
-      coverTitle:"YEAR 15",coverTitle2:"The value of what we retain.",
-      coverLead:"A team needs to upgrade an aircraft that has been in service for 15 years. Does everything need replacing? You decide what to investigate, how to use resources wisely and what the evidence allows us to claim.",
+      scenario:"FICTIONAL CASE · MILITARY AIRCRAFT",guide:"DANIEL · CHALLENGE GUIDE",
+      listen:"Hear Daniel",stop:"Stop audio",show:"Show instructions",hide:"Hide instructions",
+      coverKicker:"ONE CONCRETE PROBLEM. FOUR DECISIONS. ONE RESULT YOU CAN EXPLAIN.",
+      coverTitle:"YEAR 15",coverTitle2:"Decide what to change, what to retain and what you can claim.",
+      coverLead:"A military aircraft mission computer needs an upgrade after 15 years. The supplier proposes replacing the entire assembly, but we do not yet know whether every component has stopped being useful.",
+      problemLabel:"THE PROBLEM",problemText:"One technology is obsolete. Replacing everything without checking could remove equipment that still works.",
+      taskLabel:"YOUR TASK",taskText:"Make four decisions: investigate, retain, manage the removed component and communicate the result.",
+      successLabel:"HOW YOU SUCCEED",successText:"Choose the option best supported by the facts and always distinguish an assessment from a technical approval.",
+      purposeLabel:"WHY THIS EXISTS",purposeText:"To practise how sustainability can improve everyday decisions without replacing safety, technical suitability or evidence.",
       coverLearn:"What you will learn",coverLearnList:["Avoid unnecessary replacement.","Assess reuse and other responsible options.","Understand why safety and evidence matter.","Distinguish facts from unsupported environmental claims."],
       coverDisclaimer:"Fictional educational case. It does not describe real Airbus work or authorise technical modifications, reuse or compliance decisions.",
       photoAlt:"Airbus A400M on the ground. Illustrative photo, not the aircraft in the fictional case.",photoCaption:"Airbus A400M · Photo: Adrian Pingstone / Wikimedia Commons (public domain)",
       timelinePast:"YEAR 0",timelineNow:"YEAR 15",timelineFuture:"YOUR CHOICE",
       timelinePastDesc:"Designed and built",timelineNowDesc:"An upgrade is needed",timelineFutureDesc:"What should be done?",
-      howTitle:"How the game works",howLead:"No engineering knowledge required. Read the facts, choose an option and see its possible consequences before moving on.",
+      howTitle:"What you need to achieve — and how",howLead:"No engineering knowledge is required. Your objective is to avoid unnecessary replacement without using sustainability as a reason to skip technical checks.",
+      objectiveTitle:"THE OBJECTIVE, IN PLAIN LANGUAGE",objectiveText:"By the end, you must be able to justify four things: what actually needs to change, what may remain in use, what should be assessed for the removed component and what the available evidence allows you to communicate.",
+      startState:"STARTING POINT",startStateText:"The supplier proposes replacing the entire assembly before the obsolete technology has been separated from the equipment that still works.",
+      targetState:"TARGET RESULT",targetStateText:"A traceable decision that retains only what is suitable and safe, assesses the next use and avoids unsupported environmental claims.",
       howSteps:[["01","Read the context","All the information you need is included in the case."],["02","Make a choice","Choose one of three alternatives and confirm your choice."],["03","Understand why","Read the explanation, retry if you wish and take away the lesson."],["04","Apply the lesson","Connect the four decisions to your own work at the end."]],
       howRule:"No invented environmental numbers or real engineering approvals. The consequences are qualitative and include their conditions.",
-      goMission:"Start mission 1",mission:"Mission",of:"of",evidence:"EVIDENCE",learnFirst:"BEFORE YOU DECIDE",choose:"YOUR DECISION",confirm:"Confirm choice",pickFirst:"Select an option to continue.",
+      goMission:"Start: investigate the case",mission:"Mission",of:"of",evidence:"EVIDENCE",learnFirst:"BEFORE YOU DECIDE",choose:"YOUR DECISION",confirm:"Confirm choice",pickFirst:"Select an option to continue.",
+      missionCompass:"OVERALL GOAL: avoid unnecessary replacement through decisions that are safe, technically suitable and supported by evidence.",
       result:"YOUR DECISION REVIEW",good:"Well-supported decision",needs:"Another option is better supported by the evidence",effects:"What this choice means",rethink:"Try another option",continue:"Continue",lesson:"KEY TAKEAWAY",apply:"Apply it at work",
-      finish:"FINAL REVIEW",finishTitle:"What changes when we think sustainably?",finishIntro:"You have explored four familiar situations: replacing, retaining, recovering and communicating. The aim is not always to select what looks 'greener', but to make evidence-based choices.",
+      finish:"FINAL REVIEW",finishTitle:"You can now explain why this challenge matters",finishIntro:"You separated what needs to change from what may still provide value, assessed the route for the removed component and limited communication to what the evidence supports. That is the practical purpose of the game.",
       scoreLabel:"Evidence-based decisions",scoreSuffix:"out of 4",scoreNote:"This score reflects choices in this exercise only, not actual environmental impact.",
       finishLessons:["Before replacing anything, check what is actually necessary.","Retain parts that are suitable and safe.","Assess options for removed components.","Communicate results with data and limitations."],
       reflectionTitle:"One question for tomorrow",reflection:"At work, which decision could I improve by first checking the resources we have, the alternatives available and the evidence still missing?",
       restart:"Play again",review:"Review my choices",saved:"Progress is stored only in this browser.",status:"Progress",complete:"Game completed",
       voiceFail:"Speech is unavailable in this browser. You can read the on-screen instructions.",
-      guideCover:"Welcome. You do not need technical knowledge. Four straightforward decisions will help you understand sustainability across a product's working life.",
-      guideHow:"Read the instructions, then begin. You can revisit earlier decisions without losing your answers.",
+      guideCover:"I am Daniel. The problem is concrete: a computer needs an upgrade, but we do not know whether the entire assembly must be replaced. Your job is to decide using evidence.",
+      guideHow:"First understand the objective. You will then make four decisions and immediately see the consequences of each one.",
       guideMission:"Read the evidence, choose an alternative and confirm. You can then change your answer or continue.",
       guideResult:"Read the consequences and takeaway. You can try another choice before moving on.",
       guideFinal:"You have finished. Review four ideas that apply to any job."
     }
   };
-  var t=labels[lang],storageKey="sn-year15-for-everyone-v1",state={page:-2,answers:[null,null,null,null],confirmed:[false,false,false,false],showGuide:false};
+  var t=labels[lang],storageKey="sn-year15-for-everyone-v2",state={page:-2,answers:[null,null,null,null],confirmed:[false,false,false,false],showGuide:false};
   function restore(){try{var raw=JSON.parse(localStorage.getItem(storageKey));if(!raw||!Array.isArray(raw.answers)||raw.answers.length!==4)return;state.page=Number.isInteger(raw.page)&&raw.page>=-2&&raw.page<=4?raw.page:-2;state.answers=raw.answers.map(function(x){return Number.isInteger(x)&&x>=0&&x<=2?x:null;});state.confirmed=Array.isArray(raw.confirmed)&&raw.confirmed.length===4?raw.confirmed.map(Boolean):[false,false,false,false];if(state.page===4&&!state.confirmed.every(Boolean))state.page=-2;}catch(e){}}
   function save(){try{localStorage.setItem(storageKey,JSON.stringify({page:state.page,answers:state.answers,confirmed:state.confirmed}));}catch(e){}}
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
@@ -213,7 +229,7 @@
   function guideText(){if(state.page===-2)return t.guideCover;if(state.page===-1)return t.guideHow;if(state.page===4)return t.guideFinal;return state.confirmed[state.page]?t.guideResult:t.guideMission;}
   function guideBox(){
     var text=guideText();
-    return '<aside class="guide" aria-label="'+html(t.guide)+'"><img class="guide-photo" src="../ethical-armor/aria-original.jpg" alt="" onerror="this.style.display=\'none\'"><div class="guide-copy"><small>'+html(t.guide)+'</small><p>'+html(text)+'</p>'+(state.showGuide?'<div class="guide-more">'+html(state.page>=0&&state.page<4?chapters[state.page][lang].theory:"")+'</div>':"")+'</div><div class="guide-actions"><button class="button button-solid" data-action="speak" type="button" aria-label="'+html(t.listen)+'">'+html(t.listen)+'</button><button class="button button-outline" data-action="guide" aria-expanded="'+state.showGuide+'" type="button">'+html(state.showGuide?t.hide:t.show)+'</button></div></aside>';
+    return '<aside class="guide" aria-label="'+html(t.guide)+'"><img class="guide-photo" src="./daniel-guide.png" alt="" onerror="this.style.display=\'none\'"><div class="guide-copy"><small>'+html(t.guide)+'</small><p>'+html(text)+'</p>'+(state.showGuide?'<div class="guide-more">'+html(state.page>=0&&state.page<4?chapters[state.page][lang].theory:"")+'</div>':"")+'</div><div class="guide-actions"><button class="button button-solid" data-action="speak" type="button" aria-label="'+html(t.listen)+'">'+html(t.listen)+'</button><button class="button button-outline" data-action="guide" aria-expanded="'+state.showGuide+'" type="button">'+html(state.showGuide?t.hide:t.show)+'</button></div></aside>';
   }
   function header(){
     var completed=state.confirmed.filter(Boolean).length;
@@ -221,11 +237,12 @@
   }
   function cover(){
     var points=t.coverLearnList.map(function(x){return '<li>'+html(x)+'</li>';}).join("");
-    return '<section class="cover-view"><div class="cover-main"><p class="eyebrow">'+html(t.coverKicker)+'</p><h1 tabindex="-1" id="screen-heading">'+html(t.coverTitle)+'<span>'+html(t.coverTitle2)+'</span></h1><p class="lead">'+html(t.coverLead)+'</p><div class="button-row"><button class="button button-primary" data-action="start" type="button">'+html(t.start)+' <span aria-hidden="true">→</span></button><button class="button button-outline" data-action="how" type="button">'+html(t.how)+'</button></div><div class="learning-list"><strong>'+html(t.coverLearn)+'</strong><ul>'+points+'</ul></div></div><aside class="story-panel"><div class="story-ribbon">'+html(t.scenario)+'</div><figure class="story-photo"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Airbus_A400M_Atlas_%28code_EC-400%29_of_the_Spanish_Air_Force_at_RIAT_Fairford_12July2018_arp.jpg/960px-Airbus_A400M_Atlas_%28code_EC-400%29_of_the_Spanish_Air_Force_at_RIAT_Fairford_12July2018_arp.jpg" loading="lazy" decoding="async" alt="'+html(t.photoAlt)+'" onerror="this.parentElement.hidden=true"><figcaption>'+html(t.photoCaption)+'</figcaption></figure><div class="story-number">15 <small>'+html(lang==="es"?"AÑOS EN SERVICIO":"YEARS IN SERVICE")+'</small></div><div class="timeline"><div><span>01</span><strong>'+html(t.timelinePast)+'</strong><small>'+html(t.timelinePastDesc)+'</small></div><div><span>02</span><strong>'+html(t.timelineNow)+'</strong><small>'+html(t.timelineNowDesc)+'</small></div><div><span>03</span><strong>'+html(t.timelineFuture)+'</strong><small>'+html(t.timelineFutureDesc)+'</small></div></div></aside></section><p class="disclaimer">'+html(t.coverDisclaimer)+'</p>';
+    var brief=[[t.problemLabel,t.problemText],[t.taskLabel,t.taskText],[t.successLabel,t.successText],[t.purposeLabel,t.purposeText]].map(function(x){return '<div><strong>'+html(x[0])+'</strong><p>'+html(x[1])+'</p></div>';}).join("");
+    return '<section class="cover-view"><div class="cover-main"><p class="eyebrow">'+html(t.coverKicker)+'</p><h1 tabindex="-1" id="screen-heading">'+html(t.coverTitle)+'<span>'+html(t.coverTitle2)+'</span></h1><p class="lead">'+html(t.coverLead)+'</p><section class="mission-brief" aria-label="'+html(t.taskLabel)+'">'+brief+'</section><div class="button-row"><button class="button button-primary" data-action="how" type="button">'+html(t.how)+' <span aria-hidden="true">→</span></button><button class="button button-outline" data-action="start" type="button">'+html(t.goMission)+'</button></div><div class="learning-list"><strong>'+html(t.coverLearn)+'</strong><ul>'+points+'</ul></div></div><aside class="story-panel"><div class="story-ribbon">'+html(t.scenario)+'</div><figure class="story-photo"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Airbus_A400M_Atlas_%28code_EC-400%29_of_the_Spanish_Air_Force_at_RIAT_Fairford_12July2018_arp.jpg/960px-Airbus_A400M_Atlas_%28code_EC-400%29_of_the_Spanish_Air_Force_at_RIAT_Fairford_12July2018_arp.jpg" loading="lazy" decoding="async" alt="'+html(t.photoAlt)+'" onerror="this.parentElement.hidden=true"><figcaption>'+html(t.photoCaption)+'</figcaption></figure><div class="story-number">15 <small>'+html(lang==="es"?"AÑOS EN SERVICIO":"YEARS IN SERVICE")+'</small></div><div class="timeline"><div><span>01</span><strong>'+html(t.timelinePast)+'</strong><small>'+html(t.timelinePastDesc)+'</small></div><div><span>02</span><strong>'+html(t.timelineNow)+'</strong><small>'+html(t.timelineNowDesc)+'</small></div><div><span>03</span><strong>'+html(t.timelineFuture)+'</strong><small>'+html(t.timelineFutureDesc)+'</small></div></div></aside></section><p class="disclaimer">'+html(t.coverDisclaimer)+'</p>';
   }
   function how(){
     var steps=t.howSteps.map(function(a){return '<article class="how-step"><span>'+html(a[0])+'</span><div><h3>'+html(a[1])+'</h3><p>'+html(a[2])+'</p></div></article>';}).join("");
-    return '<section class="view"><p class="eyebrow">'+html(t.how)+'</p><h1 tabindex="-1" id="screen-heading">'+html(t.howTitle)+'</h1><p class="sublead">'+html(t.howLead)+'</p><div class="how-grid">'+steps+'</div><p class="notice">'+html(t.howRule)+'</p><div class="button-row"><button type="button" data-action="back" class="button button-outline">← '+html(t.back)+'</button><button type="button" data-action="mission-start" class="button button-primary">'+html(t.goMission)+' →</button></div></section>';
+    return '<section class="view"><p class="eyebrow">'+html(t.how)+'</p><h1 tabindex="-1" id="screen-heading">'+html(t.howTitle)+'</h1><p class="sublead">'+html(t.howLead)+'</p><section class="objective-panel"><p class="eyebrow">'+html(t.objectiveTitle)+'</p><h2>'+html(t.objectiveText)+'</h2><div class="objective-compare"><div><strong>'+html(t.startState)+'</strong><p>'+html(t.startStateText)+'</p></div><span aria-hidden="true">→</span><div><strong>'+html(t.targetState)+'</strong><p>'+html(t.targetStateText)+'</p></div></div></section><div class="how-grid">'+steps+'</div><p class="notice">'+html(t.howRule)+'</p><div class="button-row"><button type="button" data-action="back" class="button button-outline">← '+html(t.back)+'</button><button type="button" data-action="mission-start" class="button button-primary">'+html(t.goMission)+' →</button></div></section>';
   }
   function mission(){
     var i=state.page,m=chapters[i],d=m[lang],reviewed=state.confirmed[i],sel=state.answers[i];
@@ -239,7 +256,7 @@
       var o=d.options[sel],correct=sel===m.correct;
       output='<section tabindex="-1" class="feedback '+(correct?'positive':'caution')+'" aria-live="polite"><p class="eyebrow">'+html(t.result)+'</p><h3>'+(correct?html(t.good):html(t.needs))+'</h3><p>'+html(o.feedback)+'</p><strong>'+html(t.effects)+'</strong><ul>'+o.effects.map(function(e){return '<li>'+html(e)+'</li>';}).join("")+'</ul><div class="takeaway"><p class="eyebrow">'+html(t.lesson)+'</p><h4>'+html(d.afterTitle)+'</h4><p>'+html(d.after)+'</p></div><p class="transfer"><strong>'+html(t.apply)+':</strong> '+html(d.transfer)+'</p></section>';
     }
-    return '<section class="view mission-view"><div class="step-top"><div><p class="eyebrow">'+html(d.kicker)+' · '+(i+1)+'/4</p><h1 tabindex="-1" id="screen-heading">'+html(d.title)+'</h1><p class="sublead">'+html(d.intro)+'</p></div><div class="chapter-index">'+String(i+1).padStart(2,"0")+' <span>/ 04</span></div></div><div class="mission-grid"><section class="evidence-card"><p class="eyebrow">'+html(t.learnFirst)+'</p><h2>'+html(d.theoryTitle)+'</h2><p>'+html(d.theory)+'</p><div class="facts"><strong>'+html(d.factsTitle)+'</strong><ol>'+facts+'</ol></div></section><section class="decision-card"><p class="eyebrow">'+html(t.choose)+'</p><h2>'+html(d.question)+'</h2><div class="choices" role="group" aria-label="'+html(d.question)+'">'+opts+'</div>'+(!reviewed?'<p class="decision-note" aria-live="polite">'+(sel===null?html(t.pickFirst):"")+'</p><button class="button button-primary confirm" type="button" data-action="confirm" '+(sel===null?'disabled':'')+'>'+html(t.confirm)+' →</button>':"")+'</section></div>'+output+'<div class="bottom-nav"><button type="button" class="button button-outline" data-action="back">← '+html(t.back)+'</button>'+(reviewed?'<div class="forward"><button class="button button-ghost" type="button" data-action="retry">'+html(t.rethink)+'</button><button class="button button-primary" type="button" data-action="next">'+html(i===3?t.finish:t.next)+' →</button></div>':"")+'</div></section>';
+    return '<section class="view mission-view"><div class="step-top"><div><p class="eyebrow">'+html(d.kicker)+' · '+(i+1)+'/4</p><h1 tabindex="-1" id="screen-heading">'+html(d.title)+'</h1><p class="sublead">'+html(d.intro)+'</p></div><div class="chapter-index">'+String(i+1).padStart(2,"0")+' <span>/ 04</span></div></div><p class="mission-compass">'+html(t.missionCompass)+'</p><div class="mission-grid"><section class="evidence-card"><p class="eyebrow">'+html(t.learnFirst)+'</p><h2>'+html(d.theoryTitle)+'</h2><p>'+html(d.theory)+'</p><div class="facts"><strong>'+html(d.factsTitle)+'</strong><ol>'+facts+'</ol></div></section><section class="decision-card"><p class="eyebrow">'+html(t.choose)+'</p><h2>'+html(d.question)+'</h2><div class="choices" role="group" aria-label="'+html(d.question)+'">'+opts+'</div>'+(!reviewed?'<p class="decision-note" aria-live="polite">'+(sel===null?html(t.pickFirst):"")+'</p><button class="button button-primary confirm" type="button" data-action="confirm" '+(sel===null?'disabled':'')+'>'+html(t.confirm)+' →</button>':"")+'</section></div>'+output+'<div class="bottom-nav"><button type="button" class="button button-outline" data-action="back">← '+html(t.back)+'</button>'+(reviewed?'<div class="forward"><button class="button button-ghost" type="button" data-action="retry">'+html(t.rethink)+'</button><button class="button button-primary" type="button" data-action="next">'+html(i===3?t.finish:t.next)+' →</button></div>':"")+'</div></section>';
   }
   function finalPage(){
     var rows=chapters.map(function(m,i){var answered=state.answers[i],ok=answered===m.correct;return '<div class="recap-item"><span>'+(i+1)+'</span><div><strong>'+html(m[lang].title)+'</strong><p>'+html(m[lang].afterTitle)+'</p></div><b class="'+(ok?"ok":"review")+'">'+(ok?'✓':'↻')+'</b></div>';}).join("");
@@ -259,7 +276,10 @@
     if(state.page>=0&&state.page<4){text+=" "+chapters[state.page][lang].intro;}
     var u=new SpeechSynthesisUtterance(text);u.lang=lang==="es"?"es-ES":"en-GB";u.rate=.95;
     var voices=window.speechSynthesis.getVoices();
-    var voice=voices.find(function(v){return v.lang.toLowerCase().startsWith(lang==="es"?"es":"en");});
+    var local=voices.filter(function(v){return v.lang.toLowerCase().startsWith(lang==="es"?"es":"en");});
+    var masculine=/jorge|pablo|diego|carlos|raul|álvaro|alvaro|enrique|antonio|david|mark|daniel|george|ryan|guy|male/i;
+    var feminine=/helena|elvira|monica|mónica|sabina|zira|samantha|female|woman|mujer/i;
+    var voice=local.find(function(v){return masculine.test(v.name)&&!feminine.test(v.name);})||local.find(function(v){return !feminine.test(v.name);})||local[0];
     if(voice)u.voice=voice;
     window.speechSynthesis.cancel();window.speechSynthesis.speak(u);
   }
