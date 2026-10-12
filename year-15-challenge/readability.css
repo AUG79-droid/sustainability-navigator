@@ -207,3 +207,27 @@ html,body{font-size:16px!important;line-height:1.58!important}
  #app .mcell{font-size:13px!important;padding:5px!important}
  #app .time-point span{font-size:13px!important}
 }
+
+
+/* QA repair · keep navigation away from the branded header in both languages. */
+body .sn-hub-return{top:auto!important;bottom:16px!important;left:16px!important;max-width:calc(50vw - 25px)!important;white-space:normal!important;text-align:center!important}
+body #year15-language{top:auto!important;bottom:16px!important;right:16px!important}
+
+/* The five 15-year subsystem labels must be allowed to grow in ES and EN.
+   Use a centred year indicator and five independent cards, not an overlaid orbit. */
+#app .hero-visual{min-height:0!important;padding-bottom:22px!important}
+#app .hero-visual .year-card{position:relative!important;inset:auto!important;width:100%!important;height:auto!important;min-height:0!important;margin-top:34px!important;padding:22px!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:visible!important}
+#app .hero-visual .year-orbit{position:relative!important;width:min(640px,100%)!important;height:auto!important;aspect-ratio:auto!important;min-height:0!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important;justify-items:stretch!important;gap:14px!important}
+#app .hero-visual .year-orbit:before,#app .hero-visual .year-orbit:after{display:none!important}
+#app .hero-visual .year-center{position:relative!important;left:auto!important;top:auto!important;right:auto!important;bottom:auto!important;transform:none!important;grid-column:1/-1!important;justify-self:center!important;width:170px!important;height:170px!important;max-width:100%!important;margin:0 auto 8px!important;z-index:1!important}
+#app .hero-visual .orbit-node{position:relative!important;inset:auto!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;min-width:0!important;width:100%!important;height:auto!important;min-height:90px!important;padding:16px!important;text-align:center!important;box-sizing:border-box!important;z-index:2!important}
+#app .hero-visual .orbit-node b{display:block!important;font-size:16px!important;line-height:1.3!important;overflow-wrap:break-word!important}
+#app .hero-visual .orbit-node span{display:block!important;font-size:15px!important;line-height:1.45!important;margin-top:6px!important;overflow-wrap:break-word!important}
+@media(max-width:580px){
+  #app .hero-visual .year-card{margin-top:28px!important;padding:12px!important}
+  #app .hero-visual .year-orbit{grid-template-columns:1fr!important}
+  #app .hero-visual .year-center{width:140px!important;height:140px!important}
+  #app .hero-visual .orbit-node{min-height:72px!important}
+  body .sn-hub-return{bottom:12px!important;left:10px!important;font-size:11px!important;max-width:48%!important;padding:9px!important}
+  body #year15-language{bottom:12px!important;right:10px!important}
+}
