@@ -268,7 +268,8 @@
     if(action==="home"){go(-2);return;}
     if(action==="speak"){speak();return;}
     if(action==="guide"){state.showGuide=!state.showGuide;render();return;}
-    if(action==="start"||action==="how"){go(-1);return;}
+    if(action==="start"){go(0);return;}
+    if(action==="how"){go(-1);return;}
     if(action==="mission-start"){go(0);return;}
     if(action==="back"){go(i===-1?-2:i===0?-1:i===4?3:i-1);return;}
     if(action==="choose"&&i>=0&&i<4&&!state.confirmed[i]){state.answers[i]=Number(button.dataset.index);save();render();return;}
