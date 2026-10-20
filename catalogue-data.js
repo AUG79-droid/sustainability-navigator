@@ -30,7 +30,7 @@
     version: 2,
     resources: [
       resource("airpower-mission-green-2026", "game", "decision-game",
-        text("Reto Airpower de Sostenibilidad 2026", "Airpower Sustainability Challenge 2026"),
+        text("Reto Airpower de Sostenibilidad", "Airpower Sustainability Challenge"),
         text("Juego de decisiones sobre misiones aéreas que integra rendimiento operacional, impacto ambiental, resiliencia y responsabilidad.", "A mission decision game integrating operational performance, environmental impact, resilience and responsibility."),
         text("Decisiones de sostenibilidad en misiones aéreas", "Sustainability decisions in air missions"),
         ["operations", "sustainability"],
@@ -69,7 +69,7 @@
         ["P1", "P2", "P3", "P5", "P6"], [repository("biodiversity-panic-mode-airbus", ["es"]), repository("biodiversity-panic-mode-airbus-50-blocks-en", ["en"])]),
 
       resource("tas-sustainability-knowledge-check", "quiz", "timed-assessment",
-        text("Evaluación de conocimientos de sostenibilidad TAS — edición de 50 preguntas", "TAS Sustainability Knowledge Check — 50-question edition"),
+        text("Evaluación de conocimientos de sostenibilidad — edición de 50 preguntas", "Sustainability Knowledge Check — 50-question edition"),
         text("Evaluación cronometrada y multimodo de 50 preguntas sobre sostenibilidad aplicada.", "A timed, multi-mode 50-question assessment of applied sustainability knowledge."),
         text("Conocimientos transversales de sostenibilidad", "Cross-cutting sustainability knowledge"),
         ["general", "teams", "sustainability"],
@@ -152,21 +152,21 @@
         ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("sustainable-aviation-foundations", ["es", "en"])]),
 
       resource("tass-readiness-resilience-simulator", "simulator", "mission-simulator",
-        text("TASS Readiness & Resilience Simulator", "TASS Readiness & Resilience Simulator"),
+        text("Readiness & Resilience Simulator", "Readiness & Resilience Simulator"),
         text("Simulador de misiones para practicar decisiones de preparación y resiliencia en servicios aeronáuticos.", "A mission simulator for practising readiness and resilience decisions in aviation services."),
         text("Preparación y resiliencia operacional", "Operational readiness and resilience"),
         ["in-service", "operations", "engineering"], { es: pages("tass-readiness-resilience-simulator") + "?hubLang=es", en: pages("tass-readiness-resilience-simulator") + "?hubLang=en" }, null, null,
         ["P1", "P2", "P5", "P6"], [repository("tass-readiness-resilience-simulator", ["es", "en"])]),
 
       resource("tassg-composite-guardian", "simulator", "maintenance-game",
-        text("TASSG Composite Guardian", "TASSG Composite Guardian"),
+        text("Composite Guardian", "Composite Guardian"),
         text("Juego serio de mantenimiento In-Service sobre decisiones de protección, reparación y sostenibilidad de materiales compuestos.", "An In-Service maintenance serious game about composite protection, repair and sustainability decisions."),
         text("Mantenimiento sostenible de materiales compuestos", "Sustainable composite maintenance"),
         ["maintenance", "in-service", "environment"], { es: pages("tassg-composite-guardian") + "?hubLang=es", en: pages("tassg-composite-guardian") + "?hubLang=en" }, null, null,
         ["P1", "P2", "P6"], [repository("tassg-composite-guardian", ["es", "en"])]),
 
       resource("tas-sustainability-quest", "game", "team-quiz-game",
-        text("TAS Sustainability Quest", "TAS Sustainability Quest"),
+        text("Sustainability Quest", "Sustainability Quest"),
         text("Juego de preguntas por equipos con formato de tablero para explorar retos de sostenibilidad.", "A board-style team quiz for exploring sustainability challenges."),
         text("Aprendizaje colaborativo de sostenibilidad", "Collaborative sustainability learning"),
         ["teams", "general", "sustainability"],
