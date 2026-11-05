@@ -173,6 +173,7 @@
 
   function previewSrc(resourceId, uiLanguage) {
     const language = uiLanguage === "en" ? "en" : "es";
+    if (resourceId === "material-sovereignty") return `assets/previews/${resourceId}-${language}.svg`;
     const filename = `assets/previews/${resourceId}-${language}.png`;
     return resourceId === "strategic-soil-footprint-mapper" ? `${filename}?v=soil-20261009` : resourceId === "esg-essentials-air-power-services" ? `${filename}?v=esg-20261009` : filename;
   }

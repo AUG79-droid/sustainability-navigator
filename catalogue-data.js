@@ -151,6 +151,14 @@
         ["sustainability", "managers", "engineering", "operations"], { es: pages("sustainable-aviation-foundations") + "?hubLang=es", en: pages("sustainable-aviation-foundations") + "?hubLang=en" }, { min: 420, max: 540, unit: "minutes" }, "advanced",
         ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("sustainable-aviation-foundations", ["es", "en"])]),
 
+      resource("material-sovereignty", "simulator", "materials-decision-simulator",
+        text("Soberanía de materiales · Materiales críticos y ecodiseño", "Material Sovereignty · Critical Materials & Eco-Design"),
+        text("Cinco misiones interactivas con teoría previa y 50 decisiones sobre suministro de materiales críticos, trazabilidad, cualificación, ecodiseño y resiliencia operativa.", "Five interactive missions with prior learning and 50 decisions about critical-material sourcing, traceability, qualification, eco-design and operational resilience."),
+        text("Soberanía de materiales y resiliencia operativa", "Material sovereignty and operational resilience"),
+        ["engineering", "procurement", "in-service", "operations", "sustainability"],
+        { es: pages("material-sovereignty") + "?hubLang=es", en: pages("material-sovereignty") + "?hubLang=en" }, null, null,
+        ["P2", "P5", "P1", "P6"], [repository("material-sovereignty", ["es", "en"])], { noPriorExpertiseRequired: true }),
+
       resource("tass-readiness-resilience-simulator", "simulator", "mission-simulator",
         text("Readiness & Resilience Simulator", "Readiness & Resilience Simulator"),
         text("Simulador de misiones para practicar decisiones de preparación y resiliencia en servicios aeronáuticos.", "A mission simulator for practising readiness and resilience decisions in aviation services."),

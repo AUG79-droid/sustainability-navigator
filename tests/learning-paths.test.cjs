@@ -117,7 +117,7 @@ test("preserves the catalogue and Knowledge Navigator integration points", () =>
   assert.match(html, /id="applications-grid"/);
   assert.match(html, /id="knowledge"/);
   assert.match(html, /src="search-engine\.js"/);
-  assert.equal(catalogue.resources.length, 29);
+  assert.equal(catalogue.resources.length, 30);
 });
 
 test("every Learning Path uses one representative preview from its own resources", () => {

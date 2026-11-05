@@ -26,9 +26,9 @@ const valid = (overrides = {}) => ({
 });
 const codes = value => validateCatalogue({ resources: value }, { root, checkInternalFiles: false }).map(item => item.code);
 
-test("the governed public catalogue preserves exactly 29 resources and valid metadata", () => {
+test("the governed public catalogue preserves exactly 30 resources and valid metadata", () => {
   const findings = validateCatalogue(catalogue, { root });
-  assert.equal(catalogue.resources.length, 29);
+  assert.equal(catalogue.resources.length, 30);
   assert.equal(findings.filter(item => item.level === "FAIL").length, 0);
   assert.ok(catalogue.resources.every(resource => resource.lifecycle === "active"));
 });

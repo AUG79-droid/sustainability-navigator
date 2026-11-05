@@ -95,6 +95,10 @@
             "Traslada la idea al análisis de huella mineral y aprovisionamiento en retrofit.",
             "Move from the idea to mineral-footprint and sourcing analysis in retrofit work."
           )),
+          resource("eco-design-material-sovereignty", "material-sovereignty", "practice", "optional", text(
+            "Explora cómo las decisiones sobre materiales críticos, trazabilidad y alternativas cualificadas refuerzan la resiliencia operativa.",
+            "Explore how decisions about critical materials, traceability and qualified alternatives strengthen operational resilience."
+          )),
           resource("eco-design-reach", "reach-compliance-challenge", "apply", "required", text(
             "Introduce obligaciones y evidencia química antes de las decisiones In-Service.",
             "Introduce chemicals obligations and evidence before In-Service decisions."
