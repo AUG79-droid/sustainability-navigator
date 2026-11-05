@@ -143,6 +143,6 @@ test("Pages uses an explicit learner-file allowlist and excludes governance repo
 test("reports are normalized, complete and sanitized", () => {
   const report = normalizeReport({ catalogue, pathsData, inventory, health: [], issues: [{ level: "WARNING", code: "REMOTE", message: "<script> token=secret-value", subject: "remote" }] });
   const output = markdown(report);
-  assert.equal(report.summary.logicalResources, 29); assert.equal(report.summary.paths, 6);
+  assert.equal(report.summary.logicalResources, 30); assert.equal(report.summary.paths, 6);
   assert.doesNotMatch(output, /<script>|secret-value/); assert.match(output, /\[redacted\]/);
 });
