@@ -151,6 +151,14 @@
         ["sustainability", "managers", "engineering", "operations"], { es: pages("sustainable-aviation-foundations") + "?hubLang=es", en: pages("sustainable-aviation-foundations") + "?hubLang=en" }, { min: 420, max: 540, unit: "minutes" }, "advanced",
         ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("sustainable-aviation-foundations", ["es", "en"])]),
 
+      resource("mission-energy", "simulator", "energy-resilience-simulator",
+        text("Mission Energy · Seguridad y resiliencia energética", "Mission Energy · Energy Security & Resilience"),
+        text("Simulador interactivo bilingüe para practicar decisiones sobre seguridad energética, suministro de combustible, interrupciones y continuidad operativa en operaciones aeronáuticas.", "A bilingual interactive simulator for practising decisions about energy security, fuel supply, disruptions and operational continuity in aviation operations."),
+        text("Seguridad energética y resiliencia operativa", "Energy security and operational resilience"),
+        ["operations", "in-service", "engineering", "managers", "sustainability"],
+        { es: pages("mission-energy") + "?hubLang=es", en: pages("mission-energy") + "?hubLang=en" }, null, null,
+        ["P1", "P2", "P5", "P6"], [repository("mission-energy", ["es", "en"])], { noPriorExpertiseRequired: true }),
+
       resource("material-sovereignty", "simulator", "materials-decision-simulator",
         text("Soberanía de materiales · Materiales críticos y ecodiseño", "Material Sovereignty · Critical Materials & Eco-Design"),
         text("Cinco misiones interactivas con teoría previa y 50 decisiones sobre suministro de materiales críticos, trazabilidad, cualificación, ecodiseño y resiliencia operativa.", "Five interactive missions with prior learning and 50 decisions about critical-material sourcing, traceability, qualification, eco-design and operational resilience."),
