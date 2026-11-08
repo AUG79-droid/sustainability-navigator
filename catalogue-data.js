@@ -159,6 +159,14 @@
         { es: pages("mission-energy") + "?hubLang=es", en: pages("mission-energy") + "?hubLang=en" }, null, null,
         ["P1", "P2", "P5", "P6"], [repository("mission-energy", ["es", "en"])], { noPriorExpertiseRequired: true }),
 
+      resource("fuel-sovereignty", "simulator", "fuel-supply-resilience-simulator",
+        text("Fuel Sovereignty · Soberanía y resiliencia del combustible", "Fuel Sovereignty · Strategic Fuel Resilience Simulator"),
+        text("Simulador bilingüe In-Service con seis crisis progresivas. Combina teoría previa, gestión de tres vías de suministro, reservas estratégicas, costes y decisiones de continuidad operativa, con análisis de resultados y evaluación final.", "A bilingual In-Service simulator with six escalating supply crises. Explore prior learning, three fuel-supply pathways, strategic reserves, budgets and operational continuity decisions, followed by outcome analysis and a final assessment."),
+        text("Soberanía del combustible y resiliencia de suministro", "Fuel sovereignty and supply-chain resilience"),
+        ["in-service", "operations", "procurement", "managers", "sustainability"],
+        { es: pages("fuel-sovereignty") + "?hubLang=es", en: pages("fuel-sovereignty") + "?hubLang=en" }, null, null,
+        ["P1", "P2", "P5", "P6"], [repository("fuel-sovereignty", ["es", "en"])], { noPriorExpertiseRequired: true }),
+
       resource("material-sovereignty", "simulator", "materials-decision-simulator",
         text("Soberanía de materiales · Materiales críticos y ecodiseño", "Material Sovereignty · Critical Materials & Eco-Design"),
         text("Cinco misiones interactivas con teoría previa y 50 decisiones sobre suministro de materiales críticos, trazabilidad, cualificación, ecodiseño y resiliencia operativa.", "Five interactive missions with prior learning and 50 decisions about critical-material sourcing, traceability, qualification, eco-design and operational resilience."),
