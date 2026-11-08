@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1425" height="891" viewBox="0 0 1425 891" role="img" aria-label="Fuel Sovereignty — SOBERANÍA Y RESILIENCIA DEL COMBUSTIBLE">
+<defs>
+ <linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071622"/><stop offset=".52" stop-color="#11354a"/><stop offset="1" stop-color="#081827"/></linearGradient>
+ <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#1a4654"/><stop offset="1" stop-color="#103045"/></linearGradient>
+ <linearGradient id="aqua" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#5ddacb"/><stop offset="1" stop-color="#a3f6db"/></linearGradient>
+ <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse"><path d="M42 0H0V42" fill="none" stroke="#b8f6f0" opacity=".065"/></pattern>
+ <filter id="shadow"><feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#010c14" flood-opacity=".5"/></filter>
+</defs>
+<rect width="1425" height="891" fill="url(#background)"/><rect width="1425" height="891" fill="url(#grid)"/>
+<circle cx="1310" cy="120" r="420" fill="#64e6d0" opacity=".06"/>
+<rect x="38" y="37" width="1349" height="817" rx="26" fill="none" stroke="#5d9aa7" stroke-opacity=".62" stroke-width="2"/>
+<rect x="78" y="74" width="10" height="55" rx="5" fill="#86efdd"/>
+<text x="112" y="96" font-family="Arial,sans-serif" font-size="23" letter-spacing="4" font-weight="700" fill="#9ef9e9">SOSTENIBILIDAD IN-SERVICE</text>
+<text x="78" y="233" font-family="Arial,sans-serif" font-size="81" font-weight="800" letter-spacing="-2" fill="#f3fcff">FUEL</text>
+<text x="78" y="332" font-family="Arial,sans-serif" font-size="81" font-weight="800" letter-spacing="-2" fill="#92f2da">SOVEREIGNTY</text>
+<text x="82" y="400" font-family="Arial,sans-serif" font-size="27" font-weight="700" letter-spacing="1" fill="#d2e8f0">SOBERANÍA Y RESILIENCIA DEL COMBUSTIBLE</text>
+<text x="82" y="454" font-family="Arial,sans-serif" font-size="26" fill="#c0dce5">Anticipar · Diversificar · Mantener operaciones</text>
+<g transform="translate(80 520)">
+  <rect width="238" height="74" rx="14" fill="#163e50" stroke="#65b5b8"/>
+  <text x="119" y="45" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" font-weight="800" fill="#e2f9f7">6 CRISIS</text>
+  <rect x="255" width="280" height="74" rx="14" fill="#163e50" stroke="#65b5b8"/>
+  <text x="395" y="45" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="800" fill="#e2f9f7">TEORÍA + DECISIONES</text>
+  <rect x="552" width="231" height="74" rx="14" fill="#163e50" stroke="#65b5b8"/>
+  <text x="668" y="45" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" font-weight="800" fill="#e2f9f7">INFORME FINAL</text>
+</g>
+<g transform="translate(950 150)" filter="url(#shadow)">
+  <rect width="390" height="470" rx="19" fill="url(#panel)" stroke="#4c91a3" stroke-width="3"/>
+  <text x="27" y="48" font-family="Arial,sans-serif" font-size="21" font-weight="800" fill="#bdf4e8">CONTINUIDAD OPERATIVA</text>
+  <g transform="translate(25 85)">
+    <rect width="230" height="66" rx="10" fill="#0b2d41" stroke="#518a9b"/>
+    <circle cx="19" cy="23" r="7" fill="#85b8eb"/>
+    <text x="36" y="30" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#e3f3f7">RED EXTERIOR</text>
+    <rect x="17" y="47" width="177" height="5" rx="3" fill="#85b8eb"/>
+    <path d="M230 32H265" fill="none" stroke="#7edbca" stroke-dasharray="5 5" stroke-width="4"/>
+   </g><g transform="translate(25 174)">
+    <rect width="230" height="66" rx="10" fill="#0b2d41" stroke="#518a9b"/>
+    <circle cx="19" cy="23" r="7" fill="#86e5bd"/>
+    <text x="36" y="30" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#e3f3f7">RED REGIONAL</text>
+    <rect x="17" y="47" width="131" height="5" rx="3" fill="#86e5bd"/>
+    <path d="M230 32H265" fill="none" stroke="#7edbca" stroke-dasharray="5 5" stroke-width="4"/>
+   </g><g transform="translate(25 263)">
+    <rect width="230" height="66" rx="10" fill="#0b2d41" stroke="#518a9b"/>
+    <circle cx="19" cy="23" r="7" fill="#efc58e"/>
+    <text x="36" y="30" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#e3f3f7">VÍA CUALIFICADA</text>
+    <rect x="17" y="47" width="94" height="5" rx="3" fill="#efc58e"/>
+    <path d="M230 32H265" fill="none" stroke="#7edbca" stroke-dasharray="5 5" stroke-width="4"/>
+   </g>
+  <rect x="301" y="181" width="64" height="106" rx="13" fill="#143f52" stroke="#82e3d3" stroke-width="3"/>
+  <path d="M320 218L333 198L346 218M324 216V256H342V216" fill="none" stroke="#a2f9e4" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M288 234H300" stroke="#9af4dc" stroke-width="4"/>
+  <text x="195" y="435" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" fill="#b7e5df">3 + 1  /  6  /  100%</text>
+</g>
+<rect x="80" y="704" width="1260" height="80" rx="14" fill="#0d2a3c" stroke="#386a7c"/>
+<circle cx="118" cy="744" r="10" fill="#8cf5da"/>
+<text x="143" y="754" font-family="Arial,sans-serif" font-size="26" font-weight="700" fill="#daf5f7">SIMULADOR FORMATIVO BILINGÜE  ·  DATOS FICTICIOS</text>
+</svg>
