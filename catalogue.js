@@ -173,7 +173,8 @@
 
   function previewSrc(resourceId, uiLanguage) {
     const language = uiLanguage === "en" ? "en" : "es";
-    if (["material-sovereignty", "fuel-sovereignty"].includes(resourceId)) return `assets/previews/${resourceId}-${language}.svg`;
+    if (["material-sovereignty", "fuel-sovereignty", "airbus-strategic-resilience-intelligence"].includes(resourceId)) return `assets/previews/${resourceId}-${language}.svg`;
+    if (resourceId === "mission-energy") return "https://aug79-droid.github.io/mission-energy/assets/mission-energy-hero.png";
     const filename = `assets/previews/${resourceId}-${language}.png`;
     return resourceId === "strategic-soil-footprint-mapper" ? `${filename}?v=soil-20261009` : resourceId === "esg-essentials-air-power-services" ? `${filename}?v=esg-20261009` : filename;
   }
