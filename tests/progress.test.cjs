@@ -242,7 +242,7 @@ test("preserves all Hub integration points and exposes the bilingual progress de
   assert.equal(pathsData.paths.length, 6);
   assert.equal(pathsData.paths.find(item => item.id === "responsible-supply-chain-compliance").revision, 3);
   assert.equal(pathsData.paths.find(item => item.id === "eco-design-circularity-materials").revision, 3);
-  assert.ok(pathsData.paths.filter(item => !["responsible-supply-chain-compliance", "eco-design-circularity-materials"].includes(item.id)).every(item => item.revision === 1));
+  assert.ok(pathsData.paths.filter(item => !["responsible-supply-chain-compliance", "eco-design-circularity-materials", "sustainable-in-service-operations"].includes(item.id)).every(item => item.revision === 1));
 });
 
 test("injects the strict bridge only into verified finals and leaves Phytosanitary manual", () => {
