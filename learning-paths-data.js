@@ -170,7 +170,7 @@
       },
       {
         id: "sustainable-in-service-operations",
-        revision: 1,
+        revision: 2,
         title: text("Operaciones Sostenibles en Servicio", "Sustainable In-Service Operations"),
         purpose: text(
           "Integrar impactos locales, materiales, resiliencia y decisiones bajo presión durante la fase In-Service.",
@@ -204,6 +204,18 @@
           resource("in-service-readiness", "tass-readiness-resilience-simulator", "apply", "required", text(
             "Añade preparación, interdependencias y resiliencia de servicios.",
             "Add readiness, interdependencies and service resilience."
+          )),
+          resource("in-service-energy", "mission-energy", "practice", "optional", text(
+            "Explora cómo mantener los servicios esenciales cuando el suministro energético se interrumpe.",
+            "Explore how to maintain essential services when energy supply is disrupted."
+          )),
+          resource("in-service-fuel", "fuel-sovereignty", "practice", "optional", text(
+            "Practica decisiones sobre reservas, abastecimiento y continuidad ante crisis de combustible.",
+            "Practise reserve, sourcing and continuity decisions in fuel supply crises."
+          )),
+          resource("in-service-asri", "airbus-strategic-resilience-intelligence", "practice", "optional", text(
+            "Compara reparación, sustitución y estrategias combinadas; cuestiona supuestos y evidencia de resiliencia.",
+            "Compare repair, replacement and combined strategies; challenge assumptions and resilience evidence."
           )),
           resource("in-service-control", "sustainability-control-room", "apply", "required", text(
             "Integra la progresión en escenarios interdependientes y contrarreloj.",
