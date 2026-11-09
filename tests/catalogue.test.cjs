@@ -16,10 +16,10 @@ function knowledgeData() {
   return context.window.SN_DATA;
 }
 
-test("registers 30 logical resources in the version 2 catalogue", () => {
+test("registers 33 logical resources in the version 2 catalogue", () => {
   assert.equal(catalogue.version, 2);
-  assert.equal(catalogue.resources.length, 30);
-  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 30);
+  assert.equal(catalogue.resources.length, 33);
+  assert.equal(new Set(catalogue.resources.map(resource => resource.id)).size, 33);
   assert.deepEqual(api.validateCatalogue(catalogue), []);
   assert.deepEqual(catalogue.resources.filter(resource => resource.legacyInternal).map(resource => resource.id).sort(), legacyIds);
 });
@@ -41,7 +41,7 @@ test("uses supported resource kinds and verified nullable metadata", () => {
 
 test("groups confirmed Spanish and English counterparts into one card", () => {
   const bilingual = catalogue.resources.filter(resource => resource.launches.es && resource.launches.en);
-  assert.equal(bilingual.length, 30);
+  assert.equal(bilingual.length, 33);
   const essentials = catalogue.resources.find(resource => resource.id === "sustainable-aviation-essentials");
   assert.equal(essentials.title.es, "Fundamentos de Aviación Sostenible");
   assert.equal(essentials.title.en, "Sustainable Aviation Essentials");
@@ -86,7 +86,7 @@ test("catalogue filters compose without inventing unknown values", () => {
 test("derives the four learner intentions from the single catalogue", () => {
   assert.deepEqual(api.intentionCounts(catalogue.resources), {
     learn: 10,
-    practice: 15,
+    practice: 18,
     assess: 4,
     explore: 1
   });
@@ -97,7 +97,7 @@ test("derives the four learner intentions from the single catalogue", () => {
   assert.equal(new Set(groupedIds).size, catalogue.resources.length, "a resource must belong to exactly one intention");
   assert.deepEqual(
     api.filterResources(catalogue.resources, { intention: "practice", kind: "simulator" }).map(resource => resource.kind),
-    Array(6).fill("simulator")
+    Array(8).fill("simulator")
   );
 });
 
@@ -182,8 +182,13 @@ test("maps every catalogue resource to a language-specific real preview", () => 
   catalogue.resources.forEach(resource => {
     ["es", "en"].forEach(language => {
       const imageUrl = api.previewSrc(resource.id, language);
+      if (resource.id === "mission-energy") {
+        assert.equal(imageUrl, "https://aug79-droid.github.io/mission-energy/assets/mission-energy-hero.png");
+        return;
+      }
       const relative = imageUrl.split("?")[0];
-      assert.equal(relative, `assets/previews/${resource.id}-${language}.${resource.id === "material-sovereignty" ? "svg" : "png"}`);
+      const extension = ["material-sovereignty", "fuel-sovereignty", "airbus-strategic-resilience-intelligence"].includes(resource.id) ? "svg" : "png";
+      assert.equal(relative, `assets/previews/${resource.id}-${language}.${extension}`);
       const target = path.resolve(root, relative);
       assert.equal(target.startsWith(path.join(root, "assets", "previews")), true, `${resource.id} preview escapes the asset directory`);
       assert.equal(fs.existsSync(target), true, `${resource.id}.${language} preview is missing`);
