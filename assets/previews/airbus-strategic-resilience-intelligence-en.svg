@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1425" height="891" viewBox="0 0 1425 891" role="img" aria-label="Strategic comparison between repair, replacement and combined strategies in an aviation environment">
+<defs>
+  <linearGradient id="sky" x2=".86" y2="1"><stop stop-color="#061b34"/><stop offset=".47" stop-color="#102f4c"/><stop offset="1" stop-color="#090d1e"/></linearGradient>
+  <radialGradient id="light" cx=".74" cy=".4" r=".7"><stop stop-color="#18699a" stop-opacity=".6"/><stop offset="1" stop-color="#09203a" stop-opacity="0"/></radialGradient>
+  <linearGradient id="ground" x2="0" y2="1"><stop stop-color="#223a50"/><stop offset="1" stop-color="#091725"/></linearGradient>
+  <linearGradient id="wing" x2=".2" y2="1"><stop stop-color="#b9d6e4"/><stop offset=".55" stop-color="#527e9b"/><stop offset="1" stop-color="#163750"/></linearGradient>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="12"/></filter>
+  <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="11" stdDeviation="16" flood-color="#000914" flood-opacity=".76"/></filter>
+  <pattern id="grid" width="66" height="66" patternUnits="userSpaceOnUse"><path d="M66 0H0V66" fill="none" stroke="#67b5d7" stroke-opacity=".11" stroke-width="1"/></pattern>
+</defs>
+<rect width="1425" height="891" fill="url(#sky)"/><rect width="1425" height="891" fill="url(#light)"/>
+<path d="M0 412 200 322 402 404 595 296 805 394 1000 255 1220 370 1425 290V891H0Z" fill="#06213a" opacity=".75"/>
+<path d="M0 624 250 565 610 592 955 531 1425 604V891H0Z" fill="url(#ground)"/>
+<path d="M0 695 1425 628M0 792 1425 714M0 850 1425 775" stroke="#5685a7" stroke-opacity=".2" stroke-width="3"/>
+<rect width="1425" height="891" fill="url(#grid)"/>
+<!-- Aircraft silhouette at right: strong visual anchor -->
+<g transform="translate(797 307) rotate(-8 240 180)" filter="url(#soft)">
+ <path d="M39 280 168 228 237 153 252 80Q263 63 275 79L305 155 389 190 532 217Q548 220 551 235L545 247 371 249 319 274 320 380 288 400 257 290 194 266 97 316Z" fill="url(#wing)" stroke="#c7eaf1" stroke-opacity=".6" stroke-width="4"/>
+ <path d="M242 174 268 93 281 168 295 256 251 260Z" fill="#d0e9f0" opacity=".56"/>
+ <path d="M104 278 531 233" stroke="#e4faff" stroke-opacity=".39" stroke-width="4"/>
+ <path d="M207 206 359 212" stroke="#60d4ee" opacity=".58" stroke-width="4"/>
+ <ellipse cx="278" cy="245" rx="85" ry="15" fill="#001120" opacity=".35"/>
+</g>
+<!-- Three distinct alternatives / decision comparison -->
+<path d="M158 339 496 339 580 424 731 424" fill="none" stroke="#45d4e9" stroke-width="8" stroke-linecap="round" opacity=".95"/>
+<path d="M158 470 505 470 580 424" fill="none" stroke="#fac869" stroke-width="8" stroke-linecap="round" opacity=".9"/>
+<path d="M158 602 499 602 580 424" fill="none" stroke="#80d6aa" stroke-width="8" stroke-linecap="round" opacity=".95"/>
+<circle cx="580" cy="424" r="29" fill="#061b31" stroke="#e3f9ff" stroke-width="5"/>
+<circle cx="580" cy="424" r="56" fill="#8deaff" opacity=".18" filter="url(#glow)"/>
+<g filter="url(#soft)">
+<rect x="110" y="252" width="350" height="125" rx="18" fill="#102b45" fill-opacity=".94" stroke="#50d7ef" stroke-width="3"/>
+<rect x="110" y="404" width="350" height="125" rx="18" fill="#102b45" fill-opacity=".94" stroke="#f9c978" stroke-width="3"/>
+<rect x="110" y="556" width="350" height="125" rx="18" fill="#102b45" fill-opacity=".94" stroke="#72e4b2" stroke-width="3"/>
+</g>
+<g font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="600" fill="#e8f6ff">
+ <text x="164" y="305">REPAIR</text><text x="164" y="456">REPLACE</text><text x="164" y="608">COMBINE</text>
+</g>
+<g stroke-width="6" fill="none"><path d="M153 329h250" stroke="#43ccdf"/><path d="M153 479h184" stroke="#f6ba57"/><path d="M153 633h292" stroke="#72d8aa"/></g>
+<circle cx="737" cy="424" r="90" fill="#0b3551" fill-opacity=".65" stroke="#71dbe8" stroke-opacity=".65" stroke-width="5"/>
+<circle cx="737" cy="424" r="64" fill="none" stroke="#71dbe8" stroke-opacity=".6" stroke-width="3" stroke-dasharray="12 9"/>
+<path d="M700 437 727 461 776 392" fill="none" stroke="#ccf8ff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+<g font-family="Arial, Helvetica, sans-serif" fill="#eef7fa"><text x="110" y="121" font-size="49" font-weight="bold">DECISIONS THAT MATTER</text><text x="112" y="174" font-size="27" fill="#85d9e9">Availability · Cost · Risk · Evidence</text></g>
+<g opacity=".83" stroke="#57d0dc" stroke-width="3"><path d="M830 143H1339V182H830" fill="none"/><path d="M844 161h62m25 0h46m26 0h92" stroke-width="8"/></g>
+<path d="M99 745H1358" stroke="#79a2b3" stroke-opacity=".3" stroke-width="2"/>
+<text x="112" y="809" font-family="Arial, Helvetica, sans-serif" font-size="21" fill="#99cce3" opacity=".85">SCENARIOS · SENSITIVITY · COMPARISON</text>
+</svg>
