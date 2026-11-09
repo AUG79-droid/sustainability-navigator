@@ -175,6 +175,15 @@
         { es: pages("material-sovereignty") + "?hubLang=es", en: pages("material-sovereignty") + "?hubLang=en" }, null, null,
         ["P2", "P5", "P1", "P6"], [repository("material-sovereignty", ["es", "en"])], { noPriorExpertiseRequired: true }),
 
+      resource("airbus-strategic-resilience-intelligence", "application", "decision-analysis-prototype",
+        text("ASRI · Inteligencia de Resiliencia Estratégica", "ASRI · Strategic Resilience Intelligence"),
+        text("Herramienta bilingüe para explorar decisiones de mantenimiento: comparar reparación, sustitución y estrategias combinadas, analizar disponibilidad, costes y riesgos, y revisar supuestos y evidencias antes de formular conclusiones.", "Bilingual decision-analysis prototype for exploring maintenance choices: compare repair, replacement and combined strategies, analyse availability, costs and risks, and review assumptions and evidence before drawing conclusions."),
+        text("Decisiones de mantenimiento y resiliencia operativa", "Maintenance decisions and operational resilience"),
+        ["in-service", "operations", "engineering", "managers", "sustainability", "maintenance"],
+        { es: pages("airbus-strategic-resilience-intelligence"), en: pages("airbus-strategic-resilience-intelligence") }, null, "advanced",
+        ["P1", "P2", "P5", "P6"], [repository("airbus-strategic-resilience-intelligence", ["es", "en"])],
+        { noPriorExpertiseRequired: true }),
+
       resource("tass-readiness-resilience-simulator", "simulator", "mission-simulator",
         text("Readiness & Resilience Simulator", "Readiness & Resilience Simulator"),
         text("Simulador de misiones para practicar decisiones de preparación y resiliencia en servicios aeronáuticos.", "A mission simulator for practising readiness and resilience decisions in aviation services."),
