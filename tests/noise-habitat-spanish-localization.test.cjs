@@ -12,8 +12,8 @@ const inventory = require("../governance/inventory-data.cjs");
 const id = "noise-habitat-missions";
 const resource = catalogue.resources.find(item => item.id === id);
 
-test("keeps one bilingual Noise & Habitat identity in catalogue 30", () => {
-  assert.equal(catalogue.resources.length, 30);
+test("keeps one bilingual Noise & Habitat identity in catalogue 33", () => {
+  assert.equal(catalogue.resources.length, 33);
   assert.equal(catalogue.resources.filter(item => item.id === id).length, 1);
   assert.deepEqual(resource.languages, ["es", "en"]);
   assert.deepEqual(resource.launches, {
@@ -21,7 +21,7 @@ test("keeps one bilingual Noise & Habitat identity in catalogue 30", () => {
     en: "https://aug79-droid.github.io/noise-habitat-operations-under-pressure/?hubLang=en"
   });
   assert.deepEqual(resource.provenance[0].languages, ["es", "en"]);
-  assert.equal(catalogue.resources.filter(item => item.languages.includes("es") && item.languages.includes("en")).length, 30);
+  assert.equal(catalogue.resources.filter(item => item.languages.includes("es") && item.languages.includes("en")).length, 33);
   const reach = catalogue.resources.find(item => item.id === "reach-compliance-challenge");
   assert.deepEqual(reach.languages, ["es", "en"]);
   assert.ok(reach.launches.es && reach.launches.en);
@@ -33,7 +33,7 @@ test("recalculates only the real Spanish path coverage and preserves revisions",
     "sustainable-aviation-foundations": 1,
     "eco-design-circularity-materials": 3,
     "responsible-supply-chain-compliance": 3,
-    "sustainable-in-service-operations": 1,
+    "sustainable-in-service-operations": 2,
     "nature-habitat-operational-risk": 1,
     "evidence-systems-decision-making": 1
   });
