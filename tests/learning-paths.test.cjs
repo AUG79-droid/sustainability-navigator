@@ -117,7 +117,7 @@ test("preserves the catalogue and Knowledge Navigator integration points", () =>
   assert.match(html, /id="applications-grid"/);
   assert.match(html, /id="knowledge"/);
   assert.match(html, /src="search-engine\.js"/);
-  assert.equal(catalogue.resources.length, 30);
+  assert.equal(catalogue.resources.length, 33);
 });
 
 test("every Learning Path uses one representative preview from its own resources", () => {
@@ -136,4 +136,17 @@ test("every Learning Path uses one representative preview from its own resources
     assert.equal(ids.has(previewId), true, `${pathItem.id}: preview must belong to the path`);
     assert.ok(catalogue.resources.some(resource => resource.id === previewId), `${pathItem.id}: unknown preview resource ${previewId}`);
   });
+});
+
+test("integrates the four resilience apps into the catalogue and learning paths", () => {
+  const ids = ["airbus-strategic-resilience-intelligence", "material-sovereignty", "fuel-sovereignty", "mission-energy"];
+  const registered = new Set(catalogue.resources.map(resource => resource.id));
+  ids.forEach(id => assert.ok(registered.has(id), `missing catalogue app: ${id}`));
+  const inService = pathsData.paths.find(item => item.id === "sustainable-in-service-operations");
+  const serviceIds = new Set(inService.steps.flatMap(api.resourceIdsForStep));
+  ["airbus-strategic-resilience-intelligence", "fuel-sovereignty", "mission-energy"].forEach(id =>
+    assert.ok(serviceIds.has(id), `missing In-Service learning step: ${id}`)
+  );
+  const ecoDesign = pathsData.paths.find(item => item.id === "eco-design-circularity-materials");
+  assert.ok(ecoDesign.steps.some(step => api.resourceIdsForStep(step).includes("material-sovereignty")));
 });
