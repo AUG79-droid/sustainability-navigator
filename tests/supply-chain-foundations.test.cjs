@@ -35,7 +35,7 @@ test("places the course first among required Supply Chain steps and increments o
   assert.equal(required[0].intention, "learn");
   assert.equal(supply.revision, 3);
   assert.equal(pathsData.paths.find(item => item.id === "eco-design-circularity-materials").revision, 3);
-  assert.ok(pathsData.paths.filter(item => ![supply.id, "eco-design-circularity-materials"].includes(item.id)).every(item => item.revision === 1));
+  assert.ok(pathsData.paths.filter(item => ![supply.id, "eco-design-circularity-materials", "sustainable-in-service-operations"].includes(item.id)).every(item => item.revision === 1));
 });
 
 test("course provides six progressive modules, checks, cases, explainers and an explicit final state", () => {
