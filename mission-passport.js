@@ -31,11 +31,12 @@
     es: {
       eyebrow: "SUSTAINABILITY IN-SERVICE HUB · EXPERIENCIA PERSONAL", title: "Sustainability Mission Passport",
       lead: "Tu recorrido de aprendizaje, tus misiones y los logros que vas explorando.",
+      xpMeaning: "XP significa Experience Points (puntos de experiencia).",
       level: "Nivel", totalXP: "XP acumulados", weekly: "Esta semana", previous: "Semana anterior",
       badges: "Insignias de misión", earned: "Conseguida", locked: "Por descubrir",
       all: "Ver rutas de aprendizaje", next: "Tu próxima misión", nextDefault: "Explora una ruta del Hub",
       nextDone: "Has explorado los pasos obligatorios de las rutas disponibles.",
-      week: "Tu evolución semanal", weeklyNote: "Comparación personal. No se muestran clasificaciones de otras personas.",
+      week: "Tu evolución semanal", weeklyNote: "Compara tus puntos de esta semana con los de la anterior.",
       more: "Cómo funcionan los XP, las insignias y el ranking", howXp: "XP por actividad completada",
       howPaths: "XP por ruta completada", rulesTitle: "Reglas del pasaporte",
       rules: [
@@ -43,8 +44,7 @@
         "Los XP por tipo de actividad son: curso 25; cuestionario 40; juego 40; simulador 55; aplicación 50; recurso de conocimiento 20. Una ruta completada aporta 100 XP adicionales.",
         "Las insignias temáticas se desbloquean cuando registras las actividades indicadas. Se conservan al cambiar de semana.",
         "El progreso semanal cuenta los XP asociados a actividades fechadas dentro de la semana actual. El lunes empieza una semana nueva, pero los XP acumulados y las insignias se mantienen.",
-        "En esta versión NO hay ranking entre empleados ni equipos: solo puedes comparar tu semana actual con la anterior.",
-        "El progreso se guarda en este navegador y puede exportarse desde Mi progreso. Las finalizaciones autodeclaradas no acreditan resultados de evaluación ni identidad."
+        "El progreso se guarda en este navegador y puede exportarse desde Mi progreso."
       ],
       note: "Reconocimiento didáctico local: no es una certificación Airbus ni una evaluación verificada.",
       none: "Aún no hay actividades completadas. Empieza una ruta para conseguir tu primera insignia.",
@@ -54,11 +54,12 @@
     en: {
       eyebrow: "SUSTAINABILITY IN-SERVICE HUB · PERSONAL EXPERIENCE", title: "Sustainability Mission Passport",
       lead: "Your learning journey, missions and the achievements you are exploring.",
+      xpMeaning: "XP stands for Experience Points.",
       level: "Level", totalXP: "Total XP", weekly: "This week", previous: "Previous week",
       badges: "Mission badges", earned: "Earned", locked: "To discover",
       all: "Explore Learning Paths", next: "Your next mission", nextDefault: "Explore a Hub learning path",
       nextDone: "You have explored the required steps in the available paths.",
-      week: "Your weekly progress", weeklyNote: "Personal comparison only. No other learners' rankings are displayed.",
+      week: "Your weekly progress", weeklyNote: "Compare points earned this week with last week.",
       more: "How XP, badges and rankings work", howXp: "XP per completed activity",
       howPaths: "XP per completed Learning Path", rulesTitle: "Passport rules",
       rules: [
@@ -66,8 +67,7 @@
         "XP by activity type: course 25; quiz 40; game 40; simulator 55; application 50; knowledge resource 20. Completing a Learning Path adds 100 XP.",
         "Topic badges unlock when you record the specified activities. Badges remain unlocked between weeks.",
         "Weekly progress counts XP from dated completions within the current week. A new week starts on Monday, but total XP and badges are retained.",
-        "This version has NO leaderboard of colleagues or teams: you only compare your current week with your previous week.",
-        "Progress is stored in this browser and can be exported from My progress. Self-reported completions do not verify assessment results or identity."
+        "Progress is stored in this browser and can be exported from My progress."
       ],
       note: "Local learning recognition: not an Airbus certification or a verified assessment.",
       none: "No completed activities yet. Start a path to unlock your first badge.",
@@ -174,7 +174,7 @@
     const rules = c.rules.map(s=>'<li>'+escapeHtml(s)+'</li>').join("");
     box.innerHTML = '<div class="mp-head"><div class="mp-passport-mark" aria-hidden="true"><span class="mp-mark-lines">✦</span><span>MISSION<br>PASSPORT</span></div><div class="mp-head-copy">'+
       '<p class="mp-kicker">'+c.eyebrow+'</p><h2 id="mission-passport-title">'+c.title+'</h2><p class="mp-lead">'+c.lead+'</p></div></div>'+
-      '<div class="mp-summary"><div class="mp-level"><span class="mp-overline">'+c.level+' '+level.index+'</span><h3>'+escapeHtml(level.current[lang])+'</h3>'+
+      '<p class="mp-xp-definition">'+c.xpMeaning+'</p><div class="mp-summary"><div class="mp-level"><span class="mp-overline">'+c.level+' '+level.index+'</span><h3>'+escapeHtml(level.current[lang])+'</h3>'+
       '<div class="mp-track" role="progressbar" aria-label="'+escapeHtml(c.level)+'" aria-valuenow="'+level.progress+'" aria-valuemin="0" aria-valuemax="100"><span style="width:'+level.progress+'%"></span></div>'+
       '<small>'+(level.next ? level.remaining+' XP '+c.advance : c.max)+'</small></div>'+
       '<div class="mp-stat"><strong>'+model.xp+'</strong><span>'+c.totalXP+'</span></div>'+
