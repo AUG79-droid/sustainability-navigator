@@ -138,15 +138,37 @@
     evidence: '<rect x="61" y="68" width="80" height="100" rx="8" fill="#37243d" stroke="#f8b1cf" stroke-width="4"/><path d="M81 66h38v11H81Z" fill="#ecd3db"/><path d="m77 103 7 7 12-15m-19 31 7 7 12-15" fill="none" stroke="#74e5b5" stroke-width="6" stroke-linecap="round"/><path d="M106 107h22m-22 23h22" stroke="#d5b2d4" stroke-width="4"/><path d="M145 93v48m-24-34h48m-38 0-10 17h20z m28 0-10 17h20z" fill="none" stroke="#ffd992" stroke-width="3"/>',
     mission: '<circle cx="100" cy="115" r="48" fill="none" stroke="#78cfff" stroke-width="3"/><circle cx="100" cy="115" r="27" fill="#103f65" stroke="#ffd37c" stroke-width="3"/><path d="M100 52v24m0 77v24M37 115h29m68 0h29" stroke="#d0eaff" stroke-width="4"/><circle cx="100" cy="52" r="10" fill="#ffc269"/><circle cx="163" cy="115" r="10" fill="#8cd9ff"/><circle cx="100" cy="177" r="10" fill="#8cf0dc"/><circle cx="37" cy="115" r="10" fill="#e8acd8"/><path d="m100 92 9 17 19 6-19 6-9 17-9-17-19-6 19-6z" fill="#e9effe" stroke="#ffdf8c" stroke-width="2"/>'
   };
+  // High-detail metallic collector emblems. All graphics are original editable SVG.
+  // No commercial aircraft, leaves beside aircraft, or environmental benefit claims.
   function svgArt(id, accent) {
-    return '<svg class="mp-art" viewBox="0 0 200 210" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">'+
-      '<defs><linearGradient id="mp-edge-'+id+'" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7f8ff"/><stop offset=".23" stop-color="#5f7a9c"/><stop offset=".51" stop-color="#f6d99b"/><stop offset=".78" stop-color="#526886"/><stop offset="1" stop-color="#f5f3e8"/></linearGradient>'+
-      '<radialGradient id="mp-core-'+id+'" cx=".5" cy=".37" r=".7"><stop stop-color="'+accent+'" stop-opacity=".36"/><stop offset=".68" stop-color="#0a2342"/><stop offset="1" stop-color="#030f25"/></radialGradient>'+
-      '<filter id="mp-glow-'+id+'" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="'+accent+'" flood-opacity=".34"/></filter></defs>'+
-      '<path d="M100 8 172 35v90c-7 39-32 63-72 77-40-14-65-38-72-77V35Z" fill="url(#mp-edge-'+id+')" stroke="#deedff" stroke-width="2"/>'+
-      '<path d="M100 18 161 42v81c-8 31-28 52-61 65-33-13-53-34-61-65V42Z" fill="url(#mp-core-'+id+')" stroke="'+accent+'" stroke-width="2"/>'+
-      '<path d="M100 28 150 46" stroke="#fff" stroke-opacity=".46" stroke-width="3" fill="none"/>'+
-      '<g filter="url(#mp-glow-'+id+')">'+(ICONS[id]||"")+'</g></svg>';
+    const k = "mp-premium-" + id;
+    const part = ICONS[id] || "";
+    const metallic = '<linearGradient id="'+k+'-metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset=".14" stop-color="#70869a"/><stop offset=".3" stop-color="#f7db98"/><stop offset=".48" stop-color="#263e5a"/><stop offset=".7" stop-color="#ecf5ff"/><stop offset=".88" stop-color="#a77b38"/><stop offset="1" stop-color="#fff7d9"/></linearGradient>';
+    const core = '<radialGradient id="'+k+'-core" cx=".52" cy=".36" r=".8"><stop stop-color="'+accent+'" stop-opacity=".62"/><stop offset=".42" stop-color="#17436b"/><stop offset="1" stop-color="#06142e"/></radialGradient>';
+    const gold = '<linearGradient id="'+k+'-gold" x1="0" y1="0" x2=".6" y2="1"><stop stop-color="#fff9d5"/><stop offset=".35" stop-color="#ecb95e"/><stop offset=".68" stop-color="#916226"/><stop offset="1" stop-color="#f8d992"/></linearGradient>';
+    const shine = '<linearGradient id="'+k+'-shine" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#ffffff" stop-opacity=".62"/><stop offset=".44" stop-color="#ffffff" stop-opacity="0"/><stop offset="1" stop-color="#b3ecff" stop-opacity=".12"/></linearGradient>';
+    const shield = "M110 10 201 47 194 145Q182 199 110 227Q38 199 26 145L19 47Z";
+    const inner = "M110 26 184 55 177 143Q166 183 110 210Q54 183 43 143L36 55Z";
+    const leavesLeft = Array.from({length:4},(_,i)=>{const y=152+i*12,x=17+i*8;return '<path d="M'+(x+17)+' '+(y+8)+'Q'+(x-3)+' '+(y+2)+' '+x+' '+(y-14)+'Q'+(x+19)+' '+(y-8)+' '+(x+17)+' '+(y+8)+'Z" fill="url(#'+k+'-gold)" stroke="#fff0ba" stroke-width=".8"/>';}).join("");
+    const leavesRight = Array.from({length:4},(_,i)=>{const y=152+i*12,x=203-i*8;return '<path d="M'+(x-17)+' '+(y+8)+'Q'+(x+3)+' '+(y+2)+' '+x+' '+(y-14)+'Q'+(x-19)+' '+(y-8)+' '+(x-17)+' '+(y+8)+'Z" fill="url(#'+k+'-gold)" stroke="#fff0ba" stroke-width=".8"/>';}).join("");
+    return '<svg class="mp-art" viewBox="0 0 220 240" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">'+
+      '<defs>'+metallic+core+gold+shine+
+        '<filter id="'+k+'-shadow" x="-28%" y="-23%" width="156%" height="160%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="'+accent+'" flood-opacity=".45"/><feDropShadow dx="0" dy="10" stdDeviation="5" flood-color="#000614" flood-opacity=".7"/></filter>'+
+        '<pattern id="'+k+'-mesh" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M14 0H0V14" fill="none" stroke="#9ed9fc" stroke-opacity=".15" stroke-width=".65"/></pattern>'+
+      '</defs>'+
+      '<g filter="url(#'+k+'-shadow)">'+
+        '<path d="'+shield+'" fill="#020c1e" stroke="#f8e4ad" stroke-width="3.5"/>'+
+        '<path d="'+shield+'" fill="url(#'+k+'-metal)" stroke="#7e9cbb" stroke-width="1.6" />'+
+        '<path d="'+inner+'" fill="url(#'+k+'-core)" stroke="'+accent+'" stroke-width="2.6"/>'+
+        '<path d="'+inner+'" fill="url(#'+k+'-mesh)" stroke="none"/>'+
+        '<path d="'+inner+'" fill="url(#'+k+'-shine)" stroke="none"/>'+
+        '<g transform="translate(10,14) scale(1,.97)">'+part+'</g>'+
+        '<path d="M110 26 184 55M36 55 110 26" fill="none" stroke="#ffffff" stroke-opacity=".60" stroke-width="2.3"/>'+
+        '<path d="M39 151Q53 192 110 211Q167 192 181 151" stroke="#ffdb8a" stroke-opacity=".65" stroke-width="1.6" fill="none"/>'+
+        leavesLeft+leavesRight+
+        '<path d="M76 214Q110 234 144 214L154 222Q111 245 67 222Z" fill="url(#'+k+'-gold)" stroke="#fff7d5" stroke-width="1"/>'+
+      '</g>'+
+      '</svg>';
   }
   function recommend(state, catalogue, pathsData, lang) {
     const paths = pathsData.paths || [];
@@ -161,32 +183,114 @@
     const lang = options.lang === "en" ? "en" : "es", c = COPY[lang];
     const model = evaluate(options.state || {}, options.catalogue || {resources:[]}, options.pathsData || {paths:[]});
     const level = model.level;
-    const next = recommend(options.state||{}, options.catalogue||{}, options.pathsData||{},lang);
+    const next = recommend(options.state || {}, options.catalogue || {}, options.pathsData || {}, lang);
     const old = container.querySelector(".mission-passport");
     if (old) old.remove();
+    const safe = escapeHtml;
+    const t = lang === "es" ? {
+      subtitle: "Tu pasaporte personal de aprendizaje, decisiones y retos en sostenibilidad y resiliencia.",
+      levelLabel: "TU NIVEL", lifetime: "EXPERIENCIA ACUMULADA", badgeProgress: "INSIGNIAS CONSEGUIDAS",
+      badgeTitle: "Insignias de misión", badgeHint: "Selecciona una insignia para descubrir cómo conseguirla.",
+      weekTitle: "Tu evolución semanal", explainer: "Cómo funcionan los XP y las insignias",
+      introXp: "Completa recursos y desafíos para avanzar de nivel.",
+      introBadge: "Desbloquea insignias al completar las actividades específicas.",
+      introWeek: "Compara tu evolución semanal y conserva tus logros.",
+      introPersonal: "Tu recorrido es personal; puedes continuar a tu ritmo.",
+      more: "Ver reglas y detalles del pasaporte",
+      selected: "Insignia seleccionada", nextAction: "Siguiente misión",
+      badgesNow: "de 8 insignias", levels: "de " + LEVELS.length + " niveles",
+      pathDone: "rutas finalizadas", weekCompare: "XP registrados",
+      aircraft: "Airbus A400M · aeronave de Airbus Defence and Space",
+      heroTop: "MISIÓN · APRENDIZAJE · RESILIENCIA",
+      statusEarned: "Desbloqueada", statusLocked: "Por descubrir",
+      weekNote: "Solo muestra tu evolución personal. No altera el progreso acumulado."
+    } : {
+      subtitle: "Your personal learning passport for sustainability, resilience and decision-making challenges.",
+      levelLabel: "YOUR LEVEL", lifetime: "TOTAL EXPERIENCE", badgeProgress: "BADGES EARNED",
+      badgeTitle: "Mission badges", badgeHint: "Select a badge to learn how to unlock it.",
+      weekTitle: "Your weekly progress", explainer: "How XP and badges work",
+      introXp: "Complete learning resources and challenges to progress through levels.",
+      introBadge: "Unlock badges by completing the activities associated with each topic.",
+      introWeek: "Compare weekly progress while keeping all your achievements.",
+      introPersonal: "Your journey is personal, so you can progress at your own pace.",
+      more: "Read all passport rules",
+      selected: "Selected badge", nextAction: "Next mission",
+      badgesNow: "out of 8 badges", levels: "out of " + LEVELS.length + " levels",
+      pathDone: "completed paths", weekCompare: "Recorded XP",
+      aircraft: "Airbus A400M · Airbus Defence and Space aircraft",
+      heroTop: "MISSION · LEARNING · RESILIENCE",
+      statusEarned: "Unlocked", statusLocked: "To discover",
+      weekNote: "Displays your personal progress only. Total XP is not reset."
+    };
+    const earned = model.badgeCount;
+    const badgePct = Math.round(earned / BADGES.length * 100);
+    const weeklyMax = Math.max(1, model.weeklyXP, model.previousXP);
+    const weeklyHeight = Math.round(model.weeklyXP / weeklyMax * 100);
+    const previousHeight = Math.round(model.previousXP / weeklyMax * 100);
+    const badgeMarkup = model.badges.map((b) =>
+      '<li class="mp-badge'+(b.earned?' is-earned':' is-locked')+'" style="--mp-accent:'+b.color+'">'+
+      '<button type="button" class="mp-badge-action" data-passport-badge="'+b.id+'" aria-label="'+safe(b[lang])+': '+safe(b.earned?t.statusEarned:t.statusLocked)+'">'+
+      svgArt(b.id,b.color)+
+      '<span class="mp-badge-label">'+safe(b[lang])+'</span>'+
+      '<span class="mp-badge-state">'+safe(b.earned?t.statusEarned:t.statusLocked)+'</span>'+
+      '</button></li>').join("");
+    const rules = c.rules.map(rule=>'<li>'+safe(rule)+'</li>').join("");
+    const aircraftSrc = "https://airbus-h.assetsadobe2.com/is/image/content/dam/channel-specific/website-/products-and-services/defence/content-navigation/Content_Navigation_A400M.png?fit=fit%2C1&amp;fmt=png-alpha&amp;qlt=85%2C0&amp;wid=1920";
     const box = document.createElement("section");
     box.className = "mission-passport";
-    box.setAttribute("aria-labelledby","mission-passport-title");
-    const badgeMarkup = model.badges.map(b=>'<li class="mp-badge'+(b.earned?' is-earned':' is-locked')+'" style="--mp-accent:'+b.color+'">'+
-      svgArt(b.id,b.color)+'<span class="mp-badge-name">'+escapeHtml(b[lang])+'</span>'+
-      '<span class="mp-badge-state">'+escapeHtml(b.earned?c.earned:c.locked)+'</span>'+
-      '<span class="mp-badge-help">'+escapeHtml(b[lang+"Help"])+'</span></li>').join("");
-    const rules = c.rules.map(s=>'<li>'+escapeHtml(s)+'</li>').join("");
-    box.innerHTML = '<div class="mp-head"><div class="mp-passport-mark" aria-hidden="true"><span class="mp-mark-lines">✦</span><span>MISSION<br>PASSPORT</span></div><div class="mp-head-copy">'+
-      '<p class="mp-kicker">'+c.eyebrow+'</p><h2 id="mission-passport-title">'+c.title+'</h2><p class="mp-lead">'+c.lead+'</p></div></div>'+
-      '<p class="mp-xp-definition">'+c.xpMeaning+'</p><div class="mp-summary"><div class="mp-level"><span class="mp-overline">'+c.level+' '+level.index+'</span><h3>'+escapeHtml(level.current[lang])+'</h3>'+
-      '<div class="mp-track" role="progressbar" aria-label="'+escapeHtml(c.level)+'" aria-valuenow="'+level.progress+'" aria-valuemin="0" aria-valuemax="100"><span style="width:'+level.progress+'%"></span></div>'+
-      '<small>'+(level.next ? level.remaining+' XP '+c.advance : c.max)+'</small></div>'+
-      '<div class="mp-stat"><strong>'+model.xp+'</strong><span>'+c.totalXP+'</span></div>'+
-      '<div class="mp-stat"><strong>'+model.badgeCount+' / '+BADGES.length+'</strong><span>'+c.count+'</span></div>'+
-      '<div class="mp-stat"><strong>'+model.pathCount+'</strong><span>'+(lang==="es"?"Rutas completadas":"Completed paths")+'</span></div></div>'+
-      '<div class="mp-badges-head"><h3>'+c.badges+'</h3><span>'+model.badgeCount+' / '+BADGES.length+'</span></div>'+
-      '<ul class="mp-badges">'+badgeMarkup+'</ul>'+
-      '<div class="mp-lower"><div class="mp-next"><span class="mp-overline">'+c.next+'</span><h3>'+escapeHtml(next?.title||c.nextDone)+'</h3>'+
-      '<a href="#learning-paths" class="mp-primary-link">'+c.all+'</a></div>'+
-      '<div class="mp-week"><h3>'+c.week+'</h3><div class="mp-week-grid"><div><strong>'+model.weeklyXP+' XP</strong><span>'+c.weekly+'</span></div><div><strong>'+model.previousXP+' XP</strong><span>'+c.previous+'</span></div></div><p>'+c.weeklyNote+'</p></div></div>'+
-      '<details class="mp-rules"><summary>'+c.more+'</summary><div class="mp-rules-body"><p><strong>'+c.rulesTitle+'</strong></p><ol>'+rules+'</ol><p>'+c.breakdown+'</p></div></details>'+
+    box.setAttribute("aria-labelledby", "mission-passport-title");
+    box.innerHTML =
+      '<div class="mp-hero">'+
+        '<div class="mp-hero-globe" aria-hidden="true"></div>'+
+        '<div class="mp-hero-copy">'+
+          '<p class="mp-hero-eyebrow">'+t.heroTop+'</p>'+
+          '<h2 id="mission-passport-title"><span>Sustainability</span><strong>Mission Passport</strong></h2>'+
+          '<p class="mp-hero-subtitle">'+t.subtitle+'</p>'+
+        '</div>'+
+        '<div class="mp-hero-decor" aria-hidden="true"><div class="mp-passport-book"><span class="mp-book-wing">✦</span><span>SUSTAINABILITY<br><b>MISSION<br>PASSPORT</b></span><span class="mp-book-globe">◉</span></div></div>'+
+        '<img class="mp-hero-aircraft" src="'+aircraftSrc+'" alt="'+safe(t.aircraft)+'" loading="lazy" decoding="async">'+
+        '<span class="mp-hero-aircraft-caption">AIRBUS A400M · DEFENCE &amp; SPACE</span>'+
+      '</div>'+
+      '<div class="mp-summary">'+
+        '<section class="mp-overview-card mp-overview-level"><div class="mp-mini-seal" aria-hidden="true">✦</div><div class="mp-level-main"><span class="mp-overline">'+t.levelLabel+'</span><h3>'+safe(level.current[lang])+'</h3><p>'+c.level+' '+level.index+' '+t.levels+'</p><div class="mp-track" role="progressbar" aria-label="'+safe(c.level)+'" aria-valuenow="'+level.progress+'" aria-valuemin="0" aria-valuemax="100"><span style="width:'+level.progress+'%"></span></div><small>'+(level.next ? level.remaining+' XP '+c.advance : c.max)+'</small></div></section>'+
+        '<section class="mp-overview-card mp-overview-xp"><span class="mp-summary-symbol" aria-hidden="true">◇</span><div><span class="mp-overline">'+t.lifetime+'</span><strong>'+model.xp+' <em>XP</em></strong><span class="mp-card-sub">'+model.weeklyXP+' XP · '+c.weekly+'</span></div></section>'+
+        '<section class="mp-overview-card mp-overview-badges"><div class="mp-ring" style="--mp-progress:'+badgePct+'%" aria-label="'+badgePct+'%"><span>'+badgePct+'%</span></div><div><span class="mp-overline">'+t.badgeProgress+'</span><strong>'+earned+' / '+BADGES.length+'</strong><p>'+t.badgesNow+'</p><div class="mp-mini-track"><span style="width:'+badgePct+'%"></span></div></div></section>'+
+      '</div>'+
+      '<p class="mp-xp-definition"><span class="mp-xp-info" aria-hidden="true">i</span>'+safe(c.xpMeaning)+'</p>'+
+      '<div class="mp-content-grid">'+
+        '<section class="mp-badge-board" aria-labelledby="mp-badges-heading"><div class="mp-panel-heading"><span class="mp-panel-icon" aria-hidden="true">✦</span><div><h3 id="mp-badges-heading">'+t.badgeTitle+'</h3><p>'+t.badgeHint+'</p></div><strong class="mp-badge-counter">'+earned+' / 8</strong></div>'+
+          '<ul class="mp-badges">'+badgeMarkup+'</ul>'+
+          '<div class="mp-badge-detail" aria-live="polite"><span class="mp-detail-indicator" aria-hidden="true">◎</span><p>'+t.badgeHint+'</p></div>'+
+        '</section>'+
+        '<aside class="mp-explainer" aria-labelledby="mp-explainer-heading">'+
+          '<div class="mp-panel-heading"><span class="mp-panel-icon" aria-hidden="true">▥</span><h3 id="mp-explainer-heading">'+t.explainer+'</h3></div>'+
+          '<div class="mp-explainer-item"><span class="mp-info-symbol" aria-hidden="true">◆</span><p>'+t.introXp+'</p></div>'+
+          '<div class="mp-explainer-item"><span class="mp-info-symbol" aria-hidden="true">✦</span><p>'+t.introBadge+'</p></div>'+
+          '<div class="mp-explainer-item"><span class="mp-info-symbol" aria-hidden="true">▤</span><p>'+t.introWeek+'</p></div>'+
+          '<div class="mp-explainer-item"><span class="mp-info-symbol" aria-hidden="true">◎</span><p>'+t.introPersonal+'</p></div>'+
+          '<details class="mp-rules"><summary>'+t.more+'</summary><div class="mp-rules-body"><ol>'+rules+'</ol></div></details>'+
+        '</aside>'+
+      '</div>'+
+      '<div class="mp-lower">'+
+        '<section class="mp-next"><div class="mp-panel-heading"><span class="mp-panel-icon" aria-hidden="true">◎</span><h3>'+t.nextAction+'</h3></div><p>'+safe(next?.title||c.nextDone)+'</p><p class="mp-next-note">'+(lang==="es"?"Cada ruta completada suma 100 XP a tu pasaporte.":"Each completed path adds 100 XP to your passport.")+'</p><a href="#learning-paths" class="mp-primary-link">'+c.all+' <span aria-hidden="true">›</span></a></section>'+
+        '<section class="mp-week"><div class="mp-panel-heading"><span class="mp-panel-icon" aria-hidden="true">↗</span><h3>'+t.weekTitle+'</h3></div><div class="mp-week-grid"><div><strong>'+model.weeklyXP+' <em>XP</em></strong><span>'+c.weekly+'</span></div><div><strong>'+model.previousXP+' <em>XP</em></strong><span>'+c.previous+'</span></div><div class="mp-week-bars" aria-hidden="true"><div class="mp-bar-wrap"><div class="mp-bar mp-bar-previous" style="height:'+previousHeight+'%"></div><span>'+c.previous+'</span></div><div class="mp-bar-wrap"><div class="mp-bar mp-bar-current" style="height:'+weeklyHeight+'%"></div><span>'+c.weekly+'</span></div></div></div><p class="mp-week-footnote">'+t.weekNote+'</p></section>'+
+      '</div>'+
       '<p class="mp-disclaimer">'+c.note+'</p>';
+    box.addEventListener("click", event => {
+      const button = event.target.closest(".mp-badge-action");
+      if (!button || !box.contains(button)) return;
+      const badge = model.badges.find(b=>b.id===button.dataset.passportBadge);
+      if (!badge) return;
+      const panel = box.querySelector(".mp-badge-detail");
+      if (!panel) return;
+      panel.replaceChildren();
+      const headline = document.createElement("strong");
+      headline.textContent = badge[lang] + " · " + (badge.earned ? t.statusEarned : t.statusLocked);
+      const description = document.createElement("span");
+      description.textContent = badge[lang+"Help"];
+      panel.append(headline, description);
+      box.querySelectorAll(".mp-badge-action").forEach(b=>b.setAttribute("aria-pressed",String(b===button)));
+    });
     container.prepend(box);
   }
   return { XP_BY_KIND, PATH_XP, LEVELS, BADGES, evaluate, levelFor, render };

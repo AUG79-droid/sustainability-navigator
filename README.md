@@ -40,6 +40,8 @@ Las rutas referencian los identificadores estables del catálogo y distinguen pa
 
 ## Sustainability Mission Passport · Individual mode
 
+**Visual update (v2):** premium aerospace hero with an Airbus Defence and Space A400M cutout (official remote Airbus product image), detailed original editable metallic SVG badges, badge discovery buttons, large XP/level/badge cards, bilingual explanatory panel and responsive weekly comparison. The underlying score and local progress contracts are unchanged; no fictional XP, rankings or identity fields are introduced. The official image loads from Airbus's public product navigation asset and the section remains functional if that optional image is unavailable.
+
 The `My Passport / Mi pasaporte` section integrates a local, personal, bilingual gamification layer above the existing progress dashboard. It derives XP, levels, weekly personal comparisons and eight themed shield badges from the canonical progress state, without introducing a new storage key or changing the learning-path schemas. Existing exports and completion histories remain available.
 
 - XP by uniquely completed resource type: course 25; quiz 40; game 40; simulator 55; application 50; knowledge resource 20. A completed Learning Path adds 100 XP once (not again for subsequent revisions).

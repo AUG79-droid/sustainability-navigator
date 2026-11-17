@@ -64,3 +64,43 @@ test("level thresholds and rollover are deterministic", () => {
   assert.equal(out.previousXP,55);
   assert.equal(out.badges.find(b=>b.id==="energy").earned,true);
 });
+
+
+test("premium passport rendering retains actual values and bilingual guidance", () => {
+  const oldDocument = global.document;
+  const nodes = [];
+  global.document = {
+    createElement: () => ({
+      setAttribute() {},
+      addEventListener() {},
+      set innerHTML(value) { this.html = value; },
+      get innerHTML() { return this.html; }
+    })
+  };
+  const container = { querySelector() { return null; }, prepend(node) { nodes.push(node); } };
+  const state = empty();
+  state.resources["mission-energy"] = { status: "completed", completedAt: "2026-11-17T10:00:00Z" };
+  try {
+    passport.render({ container, state, catalogue, pathsData, lang: "es" });
+    const es = nodes.at(-1).html;
+    assert.match(es, /Sustainability/);
+    assert.match(es, /Mission Passport/);
+    assert.match(es, /XP significa Experience Points/);
+    assert.match(es, /Airbus A400M/);
+    assert.match(es, /mp-badge-board/);
+    assert.match(es, /mp-content-grid/);
+    assert.match(es, /mp-explainer/);
+    assert.match(es, /Resiliencia Energética/);
+    assert.match(es, /55/);
+    assert.match(es, /Tu evolución semanal/);
+    assert.doesNotMatch(es, /En esta versión NO hay ranking/);
+    assert.doesNotMatch(es, /Las finalizaciones autodeclaradas/);
+    passport.render({ container, state, catalogue, pathsData, lang: "en" });
+    const en = nodes.at(-1).html;
+    assert.match(en, /XP stands for Experience Points/);
+    assert.match(en, /Your weekly progress/);
+    assert.match(en, /Energy Resilience/);
+  } finally {
+    global.document = oldDocument;
+  }
+});
