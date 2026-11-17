@@ -1,0 +1,54 @@
+/* Sustainability Mission Passport · personal, self-managed and bilingual */
+.mission-passport{margin:0 0 46px;padding:clamp(20px,3vw,38px);overflow:hidden;position:relative;border-radius:26px;color:#f3f8ff;background:radial-gradient(circle at 85% 0%,rgba(31,122,188,.26),transparent 38%),radial-gradient(circle at 10% 72%,rgba(12,143,184,.15),transparent 35%),linear-gradient(145deg,#07172d 0%,#0a2340 55%,#071a33 100%);border:1px solid #53728e;box-shadow:0 16px 45px rgba(2,20,42,.2)}
+.mission-passport *{box-sizing:border-box}
+.mp-head{display:flex;gap:22px;align-items:center;margin-bottom:26px}
+.mp-passport-mark{width:102px;height:121px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;background:linear-gradient(145deg,#1d3f61,#0a1a35 62%,#051125);border:2px solid #ccac6e;border-radius:12px 17px 17px 12px;transform:rotate(-5deg);box-shadow:7px 10px 20px #0004,inset 3px 0 #d7b675;font-size:10px;font-weight:900;letter-spacing:.09em;color:#ffe2a2}
+.mp-mark-lines{font-size:29px;color:#e8cf92}
+.mp-head-copy{min-width:0}
+.mp-kicker{color:#a5d5f3!important;font-size:11px!important;font-weight:850!important;letter-spacing:.12em;margin:0 0 10px!important}
+.mission-passport h2{color:#fff;font-size:clamp(27px,3.2vw,45px);line-height:1.08;margin:0;font-weight:850;letter-spacing:-.04em}
+.mp-lead{font-size:15px;color:#c3d7ec;margin:11px 0 0;line-height:1.55}
+.mp-summary{display:grid;grid-template-columns:minmax(210px,1.5fr) repeat(3,minmax(95px,1fr));gap:11px;margin:21px 0 31px}
+.mp-summary>div{background:rgba(255,255,255,.065);border:1px solid rgba(167,209,248,.19);border-radius:16px;padding:19px}
+.mp-overline{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#b6d5ef;font-weight:850}
+.mp-level h3{margin:5px 0 14px;font-size:21px;color:#fff}
+.mp-track{height:11px;border-radius:100px;background:#29455e;overflow:hidden}
+.mp-track>span{display:block;height:100%;border-radius:100px;background:linear-gradient(90deg,#5dd6fa,#f3c572)}
+.mp-level small{display:block;color:#bfd0dc;margin-top:9px;font-size:11px}
+.mp-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
+.mp-stat strong{font-size:clamp(23px,2.8vw,35px);color:#fff}
+.mp-stat span{font-size:11px;color:#b7d0e4}
+.mp-badges-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
+.mp-badges-head h3{font-size:22px;margin:0;color:#fff}
+.mp-badges-head span{font-size:13px;color:#f0d398;font-weight:850}
+.mp-badges{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.mp-badge{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:5px;min-width:0;padding:14px 7px 13px;background:linear-gradient(165deg,rgba(255,255,255,.085),rgba(10,24,44,.4));border:1px solid rgba(170,209,243,.18);border-radius:17px;transition:transform .2s,border .2s}
+.mp-badge.is-earned{border-color:color-mix(in srgb,var(--mp-accent) 70%,#aebbd7);box-shadow:inset 0 0 17px color-mix(in srgb,var(--mp-accent) 11%,transparent)}
+.mp-badge.is-earned:hover{transform:translateY(-3px)}
+.mp-art{width:min(100%,166px);height:auto;aspect-ratio:200/210;filter:drop-shadow(0 5px 10px #0008)}
+.mp-badge.is-locked .mp-art{filter:grayscale(.7) brightness(.63) drop-shadow(0 4px 7px #0007);opacity:.75}
+.mp-badge-name{font-size:13px;line-height:1.24;min-height:33px;font-weight:900;color:#fcfdff}
+.mp-badge-state{font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:850;color:var(--mp-accent)}
+.mp-badge.is-locked .mp-badge-state{color:#a8bbcd}
+.mp-badge-help{font-size:11px;line-height:1.35;color:#b0c5d7;max-width:160px}
+.mp-lower{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.mp-next,.mp-week{border:1px solid rgba(166,207,241,.19);border-radius:16px;padding:21px;background:rgba(255,255,255,.055)}
+.mp-next h3,.mp-week h3{font-size:17px;color:#fff;line-height:1.34;margin:9px 0 16px}
+.mp-primary-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:linear-gradient(120deg,#f0d39d,#f9e5be);border-radius:10px;color:#08213e!important;padding:11px 17px;font-size:13px;font-weight:900}
+.mp-primary-link:hover,.mp-primary-link:focus-visible{background:#fff0cc;outline:2px solid #fff}
+.mp-week h3{margin:0 0 16px}
+.mp-week-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mp-week-grid>div{display:flex;flex-direction:column;gap:4px}
+.mp-week-grid strong{font-size:23px;color:#fff}
+.mp-week-grid span{font-size:12px;color:#a9cfdf}
+.mp-week p{margin:13px 0 0!important;color:#c0d1e0;font-size:11px;line-height:1.5}
+.mp-rules{margin-top:19px;border:1px solid rgba(163,209,237,.22);border-radius:13px;background:rgba(255,255,255,.045)}
+.mp-rules summary{cursor:pointer;padding:16px 18px;font-size:14px;color:#ffe1a5;font-weight:850}
+.mp-rules summary:focus-visible{outline:3px solid #8edfff;outline-offset:2px}
+.mp-rules-body{padding:0 22px 18px;color:#d7e5f1;font-size:13px;line-height:1.6}
+.mp-rules-body ol{padding-left:20px;margin:9px 0 15px;display:grid;gap:7px}
+.mp-rules-body p{color:#d7e5f1}
+.mp-disclaimer{margin:16px 2px 0!important;color:#bbcfe0!important;font-size:11px!important;line-height:1.5}
+@media(max-width:900px){.mp-summary{grid-template-columns:repeat(3,minmax(0,1fr))}.mp-level{grid-column:1/-1}.mp-badges{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:650px){.mp-head{gap:14px}.mp-passport-mark{width:68px;height:88px;font-size:8px}.mp-mark-lines{font-size:21px}.mp-badges{grid-template-columns:repeat(2,minmax(0,1fr))}.mp-lower{grid-template-columns:1fr}.mp-badge-name{font-size:12px}.mp-summary>div{padding:13px 7px}.mp-stat strong{font-size:23px}.mp-lead{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.mp-badge{transition:none}}

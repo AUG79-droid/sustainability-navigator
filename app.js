@@ -37,7 +37,7 @@
       searchReady: "La búsqueda reconoce sinónimos, plurales, tildes y términos en español o inglés.",
       skipToKnowledge: "Saltar al conocimiento", primaryNavigation: "Navegación principal", languageLabel: "Idioma",
       navHome: "Inicio", navKnowledge: "Conocimiento", navApplications: "Catálogo", navCourses: "Cursos",
-      navPaths: "Rutas de aprendizaje", navProgress: "Mi progreso", navAbout: "Acerca de", learningStart: "Empieza aquí",
+      navPaths: "Rutas de aprendizaje", navProgress: "Mi pasaporte", navAbout: "Acerca de", learningStart: "Empieza aquí",
       learningIntentionsTitle: "¿Cómo quieres aprender hoy?",
       learningIntentionsIntro: "Elige una intención para ver una selección del catálogo o utiliza los filtros avanzados para explorar los 33 recursos.",
       learningPathsEyebrow: "Progresiones guiadas", learningPathsTitle: "Rutas de aprendizaje",
@@ -74,7 +74,7 @@
       searchReady: "Search recognises synonyms, plurals, accents and terms in English or Spanish.",
       skipToKnowledge: "Skip to knowledge", primaryNavigation: "Primary navigation", languageLabel: "Language",
       navHome: "Home", navKnowledge: "Knowledge", navApplications: "Catalogue", navCourses: "Courses",
-      navPaths: "Learning Paths", navProgress: "My progress", navAbout: "About", learningStart: "Start here",
+      navPaths: "Learning Paths", navProgress: "My Passport", navAbout: "About", learningStart: "Start here",
       learningIntentionsTitle: "How do you want to learn today?",
       learningIntentionsIntro: "Choose an intention to see a catalogue selection, or use advanced filters to explore all 33 resources.",
       learningPathsEyebrow: "Guided progressions", learningPathsTitle: "Learning Paths",
@@ -453,6 +453,13 @@
       }
     });
     progressUi.renderDashboard(el.progress, state.lang);
+    window.SNMissionPassport.render({
+      container: el.progress,
+      lang: state.lang,
+      state: progressService.getState(),
+      catalogue: window.SN_CATALOGUE,
+      pathsData: window.SN_LEARNING_PATHS
+    });
   }
 
   // Keep the visible learning-path detail in sync when the user changes the

@@ -37,6 +37,19 @@ El Navigator contiene seis progresiones guiadas:
 
 Las rutas referencian los identificadores estables del catálogo y distinguen pasos obligatorios, opcionales, alternativas y exploración recomendada.
 
+
+## Sustainability Mission Passport · Individual mode
+
+The `My Passport / Mi pasaporte` section integrates a local, personal, bilingual gamification layer above the existing progress dashboard. It derives XP, levels, weekly personal comparisons and eight themed shield badges from the canonical progress state, without introducing a new storage key or changing the learning-path schemas. Existing exports and completion histories remain available.
+
+- XP by uniquely completed resource type: course 25; quiz 40; game 40; simulator 55; application 50; knowledge resource 20. A completed Learning Path adds 100 XP once (not again for subsequent revisions).
+- Mission badges unlock from recorded activity completions. These are educational achievements, **not proof of competence or verified assessment results**.
+- Current-week and previous-week XP are compared locally; there is **no leaderboard across people, no employer analytics, and no shared ranking**.
+- Completion may be self-reported. Progress and related XP remain self-managed in the browser; data is not automatically transmitted to a server. Export/import/reset continue to use the existing progress service.
+- Design: eight original metallic aerospace-themed vector emblems; there are no commercial aircraft, decorative leaf/aircraft pairings or environmental benefit claims.
+- Developer files: `mission-passport.js` (pure calculation + DOM presentation), `mission-passport.css` (responsive design), `tests/mission-passport.test.cjs`.
+- Future real shared rankings, identity verification, central records or corporate certificates require a separately approved, secured backend and governance.
+
 ## Uso local
 
 No requiere instalación ni servidor para consultar la versión estática. Abre `index.html` en un navegador moderno. Para simular el comportamiento de GitHub Pages también se puede servir la carpeta con cualquier servidor estático.
