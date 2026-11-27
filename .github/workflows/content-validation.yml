@@ -32,3 +32,18 @@ jobs:
           name: content-governance-report
           path: governance-report/
           if-no-files-found: warn
+
+  pilot-browser:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install isolated browser test dependency
+        run: |
+          npm install --prefix tests/pilot-browser --no-save --no-audit --no-fund playwright@1.57.0
+          tests/pilot-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Exercise pilot in Chromium
+        run: node tests/pilot-browser/smoke.cjs
