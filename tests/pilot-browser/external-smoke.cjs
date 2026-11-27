@@ -64,7 +64,7 @@ async function finish(page,dialog,lang){
      await button(t("Ir al paso 7: revisar propuestas","Go to step 7: review proposals"));
      await button(t("Ver mi resultado y compararlo con la solución de referencia","See results and compare with a reference"));
      const post=p.locator("fieldset");await post.first().waitFor();assert.equal(await post.count(),4);for(const f of await post.all())await f.locator('input[type="radio"]').first().check();
-     for(const sel of await p.locator("select").all()){const values=await sel.locator("option").evaluateAll(os=>os.map(o=>o.value));await sel.selectOption(values.includes("4")?"4":"seek_evidence");}
+     for(const sel of await p.locator("select").filter({has:p.locator('option[value="4"],option[value="seek_evidence"]')}).all()){const values=await sel.locator("option").evaluateAll(os=>os.map(o=>o.value));await sel.selectOption(values.includes("4")?"4":"seek_evidence");}
      await button(t("Guardar evaluación","Save assessment"));
      const pending=p.waitForEvent("download");await button(t("Exportar resultados sin nombre (JSON)","Export unnamed results (JSON)"));
      const record=bio.parse(JSON.parse(fs.readFileSync(await (await pending).path(),"utf8")))[0];assert.equal(record.track,track);assert.equal(record.language,lang);assert.equal(record.maxScore,4);assert.ok(record.challengeId);assert.deepEqual(errs,[]);
@@ -369,7 +369,7 @@ async function finish(page,dialog,lang){
        const qs=page.locator(".content fieldset").filter({has:page.locator('input[type=radio]')});
        for(const q of await qs.all())await q.locator('input[type=radio]').first().check();
        const buttons=page.locator(".content article button:enabled").filter({hasText:/comprobar|verificar|check|confirm|evaluar|validate/i});
-       if(await buttons.count())await buttons.first().click();
+       if(await buttons.count()){await buttons.first().click();const correction=page.locator(".noise-case-option.correct input");if(await correction.count()){await correction.check();const check=page.locator(".noise-case-actions button").first();if(await check.isEnabled())await check.click();}}
      }
    }
    console.log("ADVANCED MODULE COMPLETE",modules,lang);
@@ -380,7 +380,7 @@ async function finish(page,dialog,lang){
  await page.goto(origin+prefix+"modules?hubLang="+lang);
  const links=page.locator('a[href*="/modules/"]');await links.first().waitFor({timeout:45000});
  const hrefs=await links.evaluateAll(xs=>[...new Set(xs.map(x=>x.href))]);assert.equal(hrefs.length,8);
- const keys=[[1,2,1,0],[0,1,0,2],[0,1,1,2],[0,0,1,1],[1,0,0,0],[0,1,0,0],[0,0,0,0],[0,0,0,0]];
+ const keys=[[0,0,0,0,0,0,0,0],[0,1,0,2],[0,1,1,2],[0,0,1,1],[1,0,0,0],[0,1,0,0],[0,0,0,0],[0,0,0,0]];
  for(let i=0;i<hrefs.length;i++){
    await page.goto(hrefs[i]);const accord=page.locator('button[data-state][aria-controls]');await accord.first().waitFor({timeout:45000});
    const fields=page.locator('fieldset').filter({has:page.locator('input[type=radio]')});await fields.first().waitFor();
