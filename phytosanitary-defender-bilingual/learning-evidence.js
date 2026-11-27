@@ -111,6 +111,8 @@ const style=el("style",`
 `);
 const dialog=el("dialog");dialog.setAttribute("aria-labelledby","sn-evidence-title");dialog.lang=language;
 const dock=el("div",undefined,"dock");dock.hidden=true;
+// Keep assessment access in normal flow on this resource: its navigation occupies the lower right corner.
+dock.style.position="static";dock.style.margin="16px auto";dock.style.width="fit-content";
 shadow.append(style,dialog,dock);
 function save(next){
  session=next;
