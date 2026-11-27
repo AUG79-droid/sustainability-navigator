@@ -367,7 +367,7 @@ async function finish(page,dialog,lang){
        await click(".lesson-footer button.primary");
      }else{
        const qs=page.locator(".content fieldset").filter({has:page.locator('input[type=radio]')});
-       for(const q of await qs.all())await q.locator("label").filter({has:q.locator('input[type=radio]')}).first().click();
+       for(const q of await qs.all())await q.locator("label:has(input[type=radio])").first().click();
        const buttons=page.locator(".content article button:enabled").filter({hasText:/comprobar|verificar|check|confirm|evaluar|validate/i});
        if(await buttons.count()){await buttons.first().click();const correction=page.locator(".noise-case-option.correct");if(await correction.count()){await correction.click();const check=page.locator(".noise-case-actions button").first();if(await check.isEnabled())await check.click();}}
      }
