@@ -144,6 +144,13 @@
 
   function translateStaticUi() {
     document.documentElement.lang = state.lang;
+    const pilotTitle = document.getElementById("pilot-banner-title"), pilotDescription = document.getElementById("pilot-banner-description"), pilotReport = document.getElementById("pilot-report-link");
+    if (pilotTitle && pilotDescription && pilotReport) {
+      pilotTitle.textContent = state.lang === "en" ? "Pilot · Learning evidence" : "Piloto · Evidencias de aprendizaje";
+      pilotDescription.textContent = state.lang === "en" ? "Choose the assessed entry to measure knowledge before and after and rate professional usefulness. Direct access remains available." : "Elige el acceso con evaluación para medir conocimientos antes y después y valorar la utilidad profesional. El acceso directo sigue disponible.";
+      pilotReport.textContent = state.lang === "en" ? "Consolidate pilot results" : "Consolidar resultados del piloto";
+      pilotReport.href = "pilot-assessment/report.html?lang=" + state.lang;
+    }
     document.title = state.lang === "es"
       ? "Sustainability Navigator · Conocimiento para decisiones aeronáuticas"
       : "Sustainability Navigator · Knowledge for aviation decisions";

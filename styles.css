@@ -270,3 +270,6 @@ footer{padding:28px clamp(20px,5vw,72px);display:flex;justify-content:space-betw
   .catalogue-root .application-metadata>div:last-child{grid-column:auto}
   .learning-path-preview{aspect-ratio:16/10}
 }
+
+/* Learning evidence · separate from completion and Mission Passport. */
+.pilot-assessed-launch{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.55rem .8rem;border-radius:8px;background:#075985;color:#fff;font-weight:650;font-size:.875rem;line-height:1.35;text-decoration:none;white-space:normal;text-align:center;overflow-wrap:anywhere;border:1px solid #075985}.pilot-assessed-launch:hover{background:#0b3652;color:#fff}.pilot-assessed-launch:focus-visible{outline:3px solid #d97706;outline-offset:3px}.pilot-evidence-banner{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:1rem 1.25rem;margin:0 0 1.5rem;border:1px solid #bfd5e5;background:#eff6fc;border-radius:12px;color:#173a56}.pilot-evidence-banner p{margin:.35rem 0 0;font-size:.92rem;max-width:75ch}.pilot-evidence-banner strong{font-size:1rem}.application-launches .pilot-assessed-launch,.path-resource-launches .pilot-assessed-launch{flex:1 1 150px}@media(max-width:500px){.pilot-evidence-banner .pilot-assessed-launch{width:100%}}

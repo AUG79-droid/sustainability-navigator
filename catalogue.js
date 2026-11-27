@@ -247,6 +247,7 @@
       launch.setAttribute("aria-label", `${l[`launch_${language}`]}: ${resource.title[lang]}`);
       if (/^https?:\/\//i.test(resource.launches[language])) launch.rel = "noopener";
       progressUi?.bindLaunch(launch, resource, language);
+      if (globalThis.SNPilotLinks) launches.append(globalThis.SNPilotLinks.make(resource, language, lang));
       launches.append(launch);
     });
 
