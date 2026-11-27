@@ -271,6 +271,38 @@ async function finish(page,dialog,lang){
  for(let i=0;i<course.final.length;i++)await click('[data-action="final-answer"][data-question="'+i+'"][data-index="'+course.final[i]+'"]');
  await page.locator(".result-banner.passed").waitFor();await finish(page,dialog,lang);
  console.log("REAL COMPLETE JOURNEY: six full modules, lessons, labs, assessments, capstone and final exam",entry.repo,lang);
+ }else if(entry.id==="tas-sustainability-quest"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:20000});
+ const key="sustainability-quest-"+lang+"-v3";
+ const read=()=>page.evaluate(k=>JSON.parse(localStorage.getItem(k)||"null"),key);
+ const graph=Array.from({length:43},()=>[]),link=(a,b)=>{graph[a].push(b);graph[b].push(a);};
+ for(let i=0;i<6;i++){link(0,1+i*3);link(1+i*3,2+i*3);link(2+i*3,3+i*3);link(3+i*3,19+i);link(19+i,25+i*3);link(25+i*3,26+i*3);link(26+i*3,27+i*3);link(27+i*3,19+((i+1)%6));}
+ const dist=(start,targets)=>{const q=[[start,0]],seen=new Set([start]);while(q.length){const [n,d]=q.shift();if(targets.includes(n))return d;for(const v of graph[n])if(!seen.has(v)){seen.add(v);q.push([v,d+1]);}}return 999;};
+ await click(".start-button");await page.waitForFunction(k=>!!localStorage.getItem(k),key);
+ let rolls=0,answers=0,iterations=0;
+ while(!(await page.locator(".victory-page").isVisible())){
+   assert.ok(iterations++<700,"Game did not reach victory through normal moves");
+   const st=await read();assert.ok(st);const player=st.players[st.currentPlayerIndex];
+   if(st.phase==="rolling"){
+     if(await page.locator(".final-button").isVisible())await click(".final-button");
+     else{rolls++;await click(".roll-button");await page.waitForFunction(k=>JSON.parse(localStorage.getItem(k)||"{}").phase!=="rolling",key,{timeout:20000});}
+   }else if(st.phase==="selectingMove"){
+     const targets=player.wedges.every(Boolean)?[0]:player.wedges.flatMap((w,i)=>w?[]:[19+i]);
+     const ids=Object.keys(st.validDestinations).map(Number);assert.ok(ids.length);
+     let idx=0;for(let i=1;i<ids.length;i++)if(dist(ids[i],targets)<dist(ids[idx],targets))idx=i;
+     await page.locator("g.destination").nth(idx).click({timeout:20000});
+     await page.waitForFunction(k=>JSON.parse(localStorage.getItem(k)||"{}").phase!=="selectingMove",key,{timeout:20000});
+   }else if(st.phase==="selectingCategory"){
+     await page.locator(".category-grid button").nth(Math.max(0,player.wedges.indexOf(false))).click();
+   }else if(st.phase==="answering"){
+     assert.ok(st.currentQuestion);await page.locator(".answer-button").nth(st.currentQuestion.correctIndex).click();answers++;
+   }else if(st.phase==="feedback"){await click(".feedback-card .primary-button");}
+   else if(st.phase==="victory"){break;}
+   else throw Error("Unexpected game phase "+st.phase);
+   await page.waitForTimeout(80);
+ }
+ const won=await read();assert.equal(won.phase,"victory");assert.ok(won.players[0].wedges.every(Boolean));
+ await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: six badges and final challenge",entry.repo,lang,"rolls",rolls,"answers",answers);
  }else if(config.manual){
  await native.locator(".dock button").click();await finish(page,dialog,lang);
  console.log("Manual consultation feedback completed",entry.repo,lang);
