@@ -71,6 +71,41 @@ async function finish(page,dialog,lang){
  await page.locator('#results.active').waitFor();
  await finish(page,dialog,lang);
  console.log("REAL COMPLETE JOURNEY: five stages and theory checkpoints",entry.repo,lang);
+ }else if(entry.repo==="eco-retrofit-mineral-footprint"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:15000});
+ await click('#home [data-go="briefing"]');await click('#briefing [data-go="mission1"]');
+ for(const v of ["tantalum","tin","gold","tungsten","ree","cobalt"])await click('[data-mineral="'+v+'"]');
+ await click("#eval1");await click("#fb1 button");await click('#theory1 [data-go="mission2"]');
+ for(let stage=2;stage<=6;stage++){await click('#mission'+stage+' [data-option="'+stage+'B"]');await click("#eval"+stage);await click("#fb"+stage+" button");if(stage<6)await click('#theory'+stage+' [data-go="mission'+(stage+1)+'"]');}
+ await page.locator("#results.active").waitFor();await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: six mineral sourcing stages",entry.repo,lang);
+ }else if(entry.repo==="sustainability-knowledge-check"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:15000});
+ await click('[data-action="start"]');let questions=0;
+ while(!(await page.locator(".results-page").isVisible())){
+   assert.ok(questions++<100,"Quiz did not reach its own result");
+   const submit=page.locator('[data-action="submit"]');await submit.waitFor({state:"visible"});
+   let choices=0;
+   while(!(await submit.isEnabled())){
+     assert.ok(choices++<20,"Unable to complete response through controls");
+     const opts=page.locator('[data-action="sequence-add"],[data-action="select"][aria-pressed="false"]');
+     await opts.first().click({timeout:10000});
+   }
+   await submit.click();await click('[data-action="next"]');
+ }
+ assert.ok(questions>0);await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY:",questions,"diagnostic questions",entry.repo,lang);
+ }else if(entry.repo==="tass-readiness-resilience-simulator"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:15000});
+ await click("#playNowBtn");let missions=0;
+ while(!(await page.locator(".final-learning-recap").isVisible())){
+   assert.ok(missions++<12,"Simulation did not reach recap");
+   await click('[data-opt]:enabled');await click("#confirmOperational");await click("#nextPhase");
+   await click('[data-evidence]:enabled');await click("#confirmInvestigation");await click("#nextPhase");
+   const available=page.locator('[data-invest]:enabled').filter({visible:true});await available.first().waitFor();
+   // Pick the least expensive displayed option; retain normal budget constraints.
+   const options=await available.allTextContents();const costs=options.map(v=>Number((v.match(/€\s*(\d+)/)||[])[1]||999999));await available.nth(costs.indexOf(Math.min(...costs))).click();
+   await click("#confirmInvestment");await click("#nextIncident");await click("#missionDebriefNext");
+ }
+ await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY:",missions,"readiness missions",entry.repo,lang);
  }else if(config.manual){
  await native.locator(".dock button").click();await finish(page,dialog,lang);
  console.log("Manual consultation feedback completed",entry.repo,lang);
