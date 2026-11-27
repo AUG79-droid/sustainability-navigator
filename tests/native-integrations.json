@@ -196,7 +196,7 @@
     {
       "repo": "mission-energy",
       "id": "mission-energy",
-      "commit": "607485dc53c79d67eebb6b73618be9562575b01f",
+      "commit": "c6ab839e38a5e864bb71f8a875dc6f1d7d5f6e46",
       "script": "learning-evidence.js",
       "entry": "index.html",
       "kind": "static"
