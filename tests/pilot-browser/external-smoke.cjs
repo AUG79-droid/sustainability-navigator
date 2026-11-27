@@ -56,6 +56,21 @@ async function finish(page,dialog,lang){
  const click=async a=>page.locator('[data-cmd="'+a+'"]').first().click({timeout:10000});
  await click("start");for(let i=0;i<6;i++){await click("endStudy");await page.locator('button[data-select]:enabled').first().click();await click("commit");await click("next");}
  await page.locator(".report-head").waitFor();await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: six crises",entry.repo,lang);
+ }else if(entry.repo==="tassg-composite-guardian"){
+ await page.locator('#home [data-go="briefing"]').click();
+ await page.locator('#briefing [data-go="mission1"]').click();
+ for(let stage=1;stage<=4;stage++){
+   await page.locator('#mission'+stage+' [data-option="'+stage+'B"]').click();
+   await page.locator('#eval'+stage).click();
+   await page.locator('#fb'+stage+' button').click();
+   await page.locator('#theory'+stage+' [data-go="mission'+(stage+1)+'"]').click();
+ }
+ await page.locator('#mission5 [data-audit="B"]').click();
+ await page.locator('#finishBtn').click();
+ await page.locator('#finalizeBtn').click();
+ await page.locator('#results.active').waitFor();
+ await finish(page,dialog,lang);
+ console.log("REAL COMPLETE JOURNEY: five stages and theory checkpoints",entry.repo,lang);
  }else if(config.manual){
  await native.locator(".dock button").click();await finish(page,dialog,lang);
  console.log("Manual consultation feedback completed",entry.repo,lang);
