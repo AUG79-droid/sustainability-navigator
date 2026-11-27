@@ -1,0 +1,3 @@
+(function(root){"use strict";function href(id,lang){return "pilot-assessment/index.html?resource="+encodeURIComponent(id)+"&lang="+encodeURIComponent(lang);}
+function make(resource,lang,uiLanguage){const a=document.createElement("a");a.className="pilot-assessed-launch";a.href=href(resource.id,lang);a.textContent=(uiLanguage==="en"?"With pilot assessment":"Con evaluación del piloto")+" ("+lang.toUpperCase()+")";a.setAttribute("aria-label",a.textContent+": "+resource.title[uiLanguage]);return a;}
+if(typeof module==="object"&&module.exports)module.exports={href};else root.SNPilotLinks={href,make};})(typeof globalThis!=="undefined"?globalThis:this);
