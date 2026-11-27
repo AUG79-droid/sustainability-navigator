@@ -1,0 +1,70 @@
+name: External native browser validation
+on:
+  pull_request:
+    paths:
+      - 'tests/pilot-browser/external-smoke.cjs'
+      - 'tests/native-integrations.json'
+      - '.github/workflows/native-browser-validation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  matrix:
+    runs-on: ubuntu-24.04
+    outputs:
+      entries: ${{ steps.list.outputs.entries }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - id: list
+        run: node -e 'const m=require("./tests/native-integrations.json");console.log("entries="+JSON.stringify(m.external.filter(e=>["static","vite","biolab","asri"].includes(e.kind))))' >> "$GITHUB_OUTPUT"
+  validate:
+    needs: matrix
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        entry: ${{ fromJSON(needs.matrix.outputs.entries) }}
+    env:
+      APP_REPO: ${{ matrix.entry.repo }}
+      APP_SHA: ${{ matrix.entry.commit }}
+      APP_KIND: ${{ matrix.entry.kind }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch pinned candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir candidate
+          git -C candidate init
+          git -C candidate remote add origin "https://github.com/AUG79-droid/$APP_REPO.git"
+          git -C candidate fetch --depth 1 origin "$APP_SHA"
+          git -C candidate checkout --detach FETCH_HEAD
+          test "$(git -C candidate rev-parse HEAD)" = "$APP_SHA"
+          echo "APP_SOURCE=$PWD/candidate" >> "$GITHUB_ENV"
+      - name: Build candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          dir="$PWD/candidate"
+          if [ "$APP_KIND" = asri ]; then dir="$dir/app"; fi
+          if [ "$APP_KIND" = static ]; then
+            echo "APP_SITE=$dir" >> "$GITHUB_ENV"
+          else
+            (cd "$dir"; npm install --no-audit --no-fund; npm run build)
+            test -f "$dir/dist/index.html"
+            echo "APP_SITE=$dir/dist" >> "$GITHUB_ENV"
+          fi
+      - name: Install browser
+        run: |
+          npm install --prefix tests/pilot-browser --no-save --no-audit --no-fund playwright@1.57.0
+          tests/pilot-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Validate native entry and export
+        run: node tests/pilot-browser/external-smoke.cjs
