@@ -363,13 +363,13 @@ async function finish(page,dialog,lang){
      await page.locator(".rail nav button").nth(i).click();
      if(i===sections-1){
        const qs=page.locator(".quiz fieldset");await qs.first().waitFor();
-       for(const q of await qs.all()){await q.locator("input").first().check();const correct=q.locator("label.correct input");await correct.check();}
+       for(const q of await qs.all()){await q.locator("label").first().click();await q.locator("label.correct").click();}
        await click(".lesson-footer button.primary");
      }else{
        const qs=page.locator(".content fieldset").filter({has:page.locator('input[type=radio]')});
-       for(const q of await qs.all())await q.locator('input[type=radio]').first().check();
+       for(const q of await qs.all())await q.locator("label").filter({has:q.locator('input[type=radio]')}).first().click();
        const buttons=page.locator(".content article button:enabled").filter({hasText:/comprobar|verificar|check|confirm|evaluar|validate/i});
-       if(await buttons.count()){await buttons.first().click();const correction=page.locator(".noise-case-option.correct input");if(await correction.count()){await correction.check();const check=page.locator(".noise-case-actions button").first();if(await check.isEnabled())await check.click();}}
+       if(await buttons.count()){await buttons.first().click();const correction=page.locator(".noise-case-option.correct");if(await correction.count()){await correction.click();const check=page.locator(".noise-case-actions button").first();if(await check.isEnabled())await check.click();}}
      }
    }
    console.log("ADVANCED MODULE COMPLETE",modules,lang);
