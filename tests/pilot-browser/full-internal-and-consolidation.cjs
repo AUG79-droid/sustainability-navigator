@@ -21,8 +21,9 @@ const journeys=[
 ["phytosanitary-defender","phytosanitary-defender-bilingual",phyto]
 ];
 async function actual(browser,origin,id,dir,journey,lang){
- const c=await browser.newContext({acceptDownloads:true,viewport:{width:1440,height:1000}}),p=await c.newPage(),errors=[];
+ const c=await browser.newContext({acceptDownloads:true,viewport:{width:1440,height:1000},reducedMotion:"reduce"}),p=await c.newPage(),errors=[];
  try{
+ p.setDefaultTimeout(12000);
  await c.route("**/*",r=>r.request().url().startsWith(origin)?r.continue():r.abort());p.on("pageerror",e=>errors.push(e.message));
  await p.goto(origin+"/"+dir+"/?hubLang="+lang,{waitUntil:"domcontentloaded"});const native=p.locator("#sn-native-learning-evidence"),d=native.locator("dialog"),t=(es,en)=>lang==="es"?es:en;
  await d.waitFor({state:"visible"});assert.equal(await d.getAttribute("lang"),lang);

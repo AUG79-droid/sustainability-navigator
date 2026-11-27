@@ -43,7 +43,7 @@ jobs:
       - name: Install isolated browser test dependency
         run: |
           npm install --prefix tests/pilot-browser --no-save --no-audit --no-fund playwright@1.57.0
-          tests/pilot-browser/node_modules/.bin/playwright install --with-deps chromium
+          tests/pilot-browser/node_modules/.bin/playwright install chromium
       - name: Exercise pilot in Chromium
         run: node tests/pilot-browser/smoke.cjs
       - name: Verify real internal journeys and complete dashboard coverage
