@@ -1,0 +1,63 @@
+name: Native assessment special course builds
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/native-special-builds.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - repo: aero-skills-launchpad
+            sha: a65b60eb78b34dc91da5048a57e6441cdc62b0a4
+            kind: tanstack
+          - repo: advanced-sustainability-air-power-services
+            sha: 17199578f2ae9d21fb0cac876cedd0d9dc72062c
+            kind: next
+    env:
+      APP_REPO: ${{ matrix.repo }}
+      APP_SHA: ${{ matrix.sha }}
+      APP_KIND: ${{ matrix.kind }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Fetch pinned candidate
+        run: |
+          set -euo pipefail
+          mkdir candidate
+          git -C candidate init
+          git -C candidate remote add origin "https://github.com/AUG79-droid/$APP_REPO.git"
+          git -C candidate fetch --depth 1 origin "$APP_SHA"
+          git -C candidate checkout --detach FETCH_HEAD
+          test "$(git -C candidate rev-parse HEAD)" = "$APP_SHA"
+          echo "APP_SOURCE=$PWD/candidate" >> "$GITHUB_ENV"
+      - name: Reproduce production build without deploying
+        run: |
+          set -euo pipefail
+          cd candidate
+          npm install --no-audit --no-fund
+          if [ "$APP_KIND" = tanstack ]; then
+            npm run build -- --base=/aero-skills-launchpad/
+            test -f .output/public/_shell.html
+            cp .output/public/_shell.html .output/public/index.html
+            echo "APP_SITE=$PWD/.output/public" >> "$GITHUB_ENV"
+          else
+            npx next build
+            test -f out/index.html
+            echo "APP_SITE=$PWD/out" >> "$GITHUB_ENV"
+          fi
+      - name: Install browser
+        run: |
+          npm install --prefix tests/pilot-browser --no-save --no-audit --no-fund playwright@1.57.0
+          tests/pilot-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Test native entry and export
+        run: node tests/pilot-browser/external-smoke.cjs
