@@ -4,9 +4,9 @@ function mountNative(config,m){
 const id=config.id,params=new URLSearchParams(location.search),t=(a,b)=>language==="es"?a:b;
 let language=config.fixedLanguage||((params.get("hubLang")||params.get("lang")||document.documentElement.lang||"en").toLowerCase().startsWith("es")?"es":"en");
 const measured=m.measured(id),key=m.KEY+".native."+id;
-let records=[],session,storageOK=true,eligible=false,seenNonFinal=false,dialogMode="",finalSignal=false;
+let records=[],session,storageOK=true,eligible=false,seenNonFinal=false,dialogMode="",finalSignal=false,prompted=false;
 const read=()=>{try{const raw=localStorage.getItem(key);return raw?m.parse(JSON.parse(raw)):[];}catch{storageOK=false;return [];}};
-records=read();session=[...records].reverse().find(s=>s.outcome===null)||[...records].reverse()[0]||null;
+records=read();const compatible=records.filter(s=>!config.fixedLanguage||s.language===config.fixedLanguage);session=[...compatible].reverse().find(s=>s.outcome===null)||[...compatible].reverse()[0]||null;
 if(session)language=session.language;
 const uid=()=>crypto.randomUUID?crypto.randomUUID():Array.from(crypto.getRandomValues(new Uint32Array(4)),n=>n.toString(16).padStart(8,"0")).join("-");
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
@@ -26,7 +26,7 @@ function save(next){
  try{if(records.length>5000)throw Error("limit");localStorage.setItem(key,JSON.stringify(m.pack(records)));storageOK=true;}catch{storageOK=false;}
 }
 function transition(event){save(m.transition(session,event));}
-function startFresh(){session=m.newSession(id,language,uid());eligible=false;seenNonFinal=false;finalSignal=false;show("pre");}
+function startFresh(){session=m.newSession(id,language,uid());eligible=false;seenNonFinal=false;finalSignal=false;prompted=false;show("pre");}
 function close(){if(dialog.open)dialog.close();dialogMode="";updateDock();}
 dialog.addEventListener("cancel",e=>{if(dialogMode==="pre"){e.preventDefault();return;}dialogMode="";updateDock();});
 const terminal=()=>{
@@ -40,6 +40,7 @@ function check(){
  if(!ended)seenNonFinal=true;
  if(ended&&(seenNonFinal||eligible))eligible=true;
  updateDock();
+ if(eligible&&!prompted&&!dialog.open){prompted=true;show("finish");}
 }
 function updateDock(){
  if(!session?.opened){dock.hidden=true;return;}
@@ -76,7 +77,7 @@ function show(mode,outcome){
    const f=el("form"),answers=measured?questions(f,"pre"):null;
    submit(f,t("Guardar y empezar","Save and start"),()=>{if(measured){if(!answers.every(Number.isInteger))return;transition({type:"pre",answers});}transition({type:"launch"});seenNonFinal=!terminal();close();check();});dialog.append(f);
  }else if(mode==="finish"){
-   note(config.manual?t("Indica si has terminado el recorrido de aprendizaje. La finalización es autodeclarada.","Indicate whether you completed the learning journey. Completion is self-reported."):eligible?t("Has llegado a la pantalla de resultados. Revisa el resultado de la actividad y completa la evaluación final.","You reached the results screen. Review the activity result and complete the final assessment."):t("La evaluación final de conocimientos se habilita cuando llegues a los resultados de la actividad. Puedes continuar o registrar una sesión parcial.","The final knowledge assessment becomes available when you reach the activity results. You can continue or record a partial session."));
+   note(config.manual?t("Indica si has terminado el recorrido de aprendizaje DESPUÉS de la evaluación inicial. La finalización es autodeclarada.","Indicate whether you completed the learning journey AFTER the initial assessment. Completion is self-reported."):eligible?t("Has llegado a la pantalla de resultados. Si has completado el recorrido después de la evaluación inicial, revisa tu resultado y realiza la evaluación final.","You reached the results screen. If you completed the journey after the initial assessment, review your result and take the final assessment."):t("La evaluación final de conocimientos se habilita cuando llegues a los resultados de la actividad. Puedes continuar o registrar una sesión parcial.","The final knowledge assessment becomes available when you reach the activity results. You can continue or record a partial session."));
    const row=el("div",undefined,"actions");
    if(eligible||config.manual)row.append(button(t("He terminado · evaluación final","I finished · final assessment"),()=>show("survey","completed")));
    row.append(button(t("No he terminado","I did not finish"),()=>show("survey","partial"),"secondary"),button(t("Volver a la actividad","Return to activity"),close,"secondary"));dialog.append(row);
