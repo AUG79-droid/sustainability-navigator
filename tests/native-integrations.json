@@ -1,0 +1,287 @@
+{
+  "schema": 1,
+  "external": [
+    {
+      "repo": "airpower-mission-green-2026-es",
+      "id": "airpower-mission-green-2026",
+      "commit": "2b5edd1bb0fb3da308a6a507292825092e0a3d5a",
+      "script": "public/learning-evidence.js",
+      "entry": "index.html",
+      "kind": "vite"
+    },
+    {
+      "repo": "airpower-mission-green-2026",
+      "id": "airpower-mission-green-2026",
+      "commit": "6b6e9674247ecc56ccbfed00c3077bfe7edbf950",
+      "script": "public/learning-evidence.js",
+      "entry": "index.html",
+      "kind": "vite"
+    },
+    {
+      "repo": "bio-airbus-ignite",
+      "id": "bio-inspired-innovation-lab",
+      "commit": "bec27837cc29025f9d1c419e39a178dbdbdc6d8d",
+      "script": "src/components/biolab/PilotAssessment.tsx",
+      "entry": "src/components/biolab/ChallengeRoulette.tsx",
+      "kind": "biolab"
+    },
+    {
+      "repo": "bio-airbus-ignite-en",
+      "id": "bio-inspired-innovation-lab",
+      "commit": "7ecbe9188540424987cdf4db10fe8a560a0575b0",
+      "script": "src/components/biolab/PilotAssessment.tsx",
+      "entry": "src/components/biolab/ChallengeRoulette.tsx",
+      "kind": "biolab"
+    },
+    {
+      "repo": "bio-radar-runway-prevention",
+      "id": "bio-radar-runway-prevention",
+      "commit": "2cce332b75f09f6081a9e670851c12a68061c338",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "Biodiversidad-y-Sostenibilidad-Real-en-Airbus",
+      "id": "sustainability-evidence-decisions",
+      "commit": "63554160431c4245e08d1413c262b59f38297a9e",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "Real-Biodiversity-and-Sustainability-at-Airbus_EN",
+      "id": "sustainability-evidence-decisions",
+      "commit": "26238954e0efae2dafabce823a25b58091331ecc",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "biodiversity-panic-mode-airbus",
+      "id": "sustainability-control-room",
+      "commit": "e7e580a3f952513fbb9a7ef440f759118d112fd2",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "biodiversity-panic-mode-airbus-50-blocks-en",
+      "id": "sustainability-control-room",
+      "commit": "72b97660543dc678433b52c3ad8c4a3d214d5920",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "biodivertrivial-airbus",
+      "id": "tas-sustainability-knowledge-check",
+      "commit": "2f053f714d9d13c76cf681170886bf81666cd9c1",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "biodivertrivial-airbus-en",
+      "id": "tas-sustainability-knowledge-check",
+      "commit": "59c0471d0578c72db90e6b19db9a19a1b36ae6c5",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "curso-biodiversidad-airbus",
+      "id": "sustainable-aviation-essentials",
+      "commit": "7f7c6a9180d01fcdbd31c2fcdaed6aec514b946e",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "curso-biodiversidad-airbus-en",
+      "id": "sustainable-aviation-essentials",
+      "commit": "c4709b5d08a45d60ba84e61ebd68dec04b236ee8",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "esg-essentials-air-power-services",
+      "id": "esg-essentials-air-power-services",
+      "commit": "17ead7dffebf8a09608b4d4920e963204a914c87",
+      "script": "public/learning-evidence.js",
+      "entry": "index.html",
+      "kind": "vite"
+    },
+    {
+      "repo": "eco-retrofit-mineral-footprint",
+      "id": "eco-retrofit-mineral-footprint",
+      "commit": "064f43e0012feacb5fa4e7de5ac4ad3ce8996b5e",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "escape-room-biodiversidad",
+      "id": "sustainability-systems-escape-room",
+      "commit": "8c7527242878ed4b421b99572cad9e4a2f29af9a",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "escape-room-biodiversidad-en",
+      "id": "sustainability-systems-escape-room",
+      "commit": "932f9e430a1066cc093b96a659fd06328ad131d5",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "factory-biodiversity-library",
+      "id": "sustainable-aviation-learning-library",
+      "commit": "d93375dda4e60bd371aa050e83a777cb59a5fa45",
+      "script": "public/learning-evidence.js",
+      "entry": "index.html",
+      "kind": "vite"
+    },
+    {
+      "repo": "Introduction-to-Nature-for-Development",
+      "id": "introduction-sustainability-aviation",
+      "commit": "c227fc22834bb3822ad8495bd92996a4a59843f0",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "Introduction-to-Nature-for-Development_en",
+      "id": "introduction-sustainability-aviation",
+      "commit": "c76812eaec768e06096768905161bf6c08bf8205",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "noise-habitat-operations-under-pressure",
+      "id": "noise-habitat-missions",
+      "commit": "722d07f1ea87a93e31aa92680adb1faa9cd09af1",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "strategic-soil-footprint-mapper",
+      "id": "strategic-soil-footprint-mapper",
+      "commit": "51d3a3edc74127136a0bc013d00dc1d94a1634ad",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "sustainability-knowledge-check",
+      "id": "sustainability-knowledge-check-evidence",
+      "commit": "efe4f68d14e5201bf62f377774f5e86cdd6821cd",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "sustainable-aviation-foundations",
+      "id": "sustainable-aviation-foundations-master",
+      "commit": "924da4b667c6c965e71375afea8619ca57394d7c",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "mission-energy",
+      "id": "mission-energy",
+      "commit": "99559b63182a29d82a83e80633756d92c1ef60d2",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "fuel-sovereignty",
+      "id": "fuel-sovereignty",
+      "commit": "5fcf6cedf696366ba6d39cc7f3f30fc54932d4f7",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "material-sovereignty",
+      "id": "material-sovereignty",
+      "commit": "ceacbc299967b480ba75ea29137ca0335eabe7ae",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "airbus-strategic-resilience-intelligence",
+      "id": "airbus-strategic-resilience-intelligence",
+      "commit": "e67d85a94e8acd920e8318785fb13a60871abbba",
+      "script": "app/public/learning-evidence.js",
+      "entry": "app/index.html",
+      "kind": "asri"
+    },
+    {
+      "repo": "tass-readiness-resilience-simulator",
+      "id": "tass-readiness-resilience-simulator",
+      "commit": "b1317c99bb01e4e586f7f60e3ca1566ef66a1351",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "tassg-composite-guardian",
+      "id": "tassg-composite-guardian",
+      "commit": "2d0cce60242adbe56fa2953dc7387dbbe17a4ea5",
+      "script": "learning-evidence.js",
+      "entry": "index.html",
+      "kind": "static"
+    },
+    {
+      "repo": "trivia-airbus-quest",
+      "id": "tas-sustainability-quest",
+      "commit": "caafbb93010030ffdbbd83ac09130a9ea954da85",
+      "script": "public/learning-evidence.js",
+      "entry": "index.html",
+      "kind": "vite"
+    },
+    {
+      "repo": "trivia-airbus-quest-en",
+      "id": "tas-sustainability-quest",
+      "commit": "a39bd9d9d7bcdfef2bf736a05456f85bf47cff23",
+      "script": "public/learning-evidence.js",
+      "entry": "index.html",
+      "kind": "vite"
+    },
+    {
+      "repo": "aero-skills-launchpad",
+      "id": "aero-skills-launchpad",
+      "commit": "a65b60eb78b34dc91da5048a57e6441cdc62b0a4",
+      "script": "public/learning-evidence.js",
+      "entry": "src/routes/__root.tsx",
+      "kind": "tanstack"
+    },
+    {
+      "repo": "advanced-sustainability-air-power-services",
+      "id": "advanced-sustainability-air-power-services",
+      "commit": "17199578f2ae9d21fb0cac876cedd0d9dc72062c",
+      "script": "public/learning-evidence.js",
+      "entry": "app/page.tsx",
+      "kind": "next"
+    }
+  ],
+  "internal": [
+    "responsible-supply-chain-compliance-foundations",
+    "eco-design-circularity-aerospace-materials",
+    "supply-chain-compliance-decision-review",
+    "eco-design-lifecycle-decision-assessment",
+    "ethical-armor",
+    "phytosanitary-defender",
+    "reach-compliance-challenge",
+    "year-15-challenge"
+  ]
+}

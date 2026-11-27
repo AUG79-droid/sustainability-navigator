@@ -47,3 +47,14 @@ jobs:
           tests/pilot-browser/node_modules/.bin/playwright install --with-deps chromium
       - name: Exercise pilot in Chromium
         run: node tests/pilot-browser/smoke.cjs
+
+  native-source-audit:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Audit pinned external native integrations
+        run: node tests/audit-native-externals.cjs
