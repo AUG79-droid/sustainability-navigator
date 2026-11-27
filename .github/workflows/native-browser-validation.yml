@@ -23,7 +23,7 @@ jobs:
         with:
           persist-credentials: false
       - id: list
-        run: node -e 'const m=require("./tests/native-integrations.json");console.log("entries="+JSON.stringify(m.external.filter(e=>["static","vite","biolab"].includes(e.kind) && (process.env.GITHUB_EVENT_NAME!=="push" || ["eco-retrofit-mineral-footprint","sustainability-knowledge-check","tass-readiness-resilience-simulator"].includes(e.repo)))))' >> "$GITHUB_OUTPUT"
+        run: node -e 'const m=require("./tests/native-integrations.json");console.log("entries="+JSON.stringify(m.external.filter(e=>["static","vite","biolab"].includes(e.kind) && (process.env.GITHUB_EVENT_NAME!=="push" || ["eco-retrofit-mineral-footprint","sustainability-knowledge-check","tass-readiness-resilience-simulator","biodivertrivial-airbus","biodivertrivial-airbus-en","biodiversity-panic-mode-airbus","biodiversity-panic-mode-airbus-50-blocks-en"].includes(e.repo)))))' >> "$GITHUB_OUTPUT"
   validate:
     needs: matrix
     runs-on: ubuntu-24.04
@@ -70,6 +70,6 @@ jobs:
       - name: Install browser
         run: |
           npm install --prefix tests/pilot-browser --no-save --no-audit --no-fund playwright@1.57.0
-          tests/pilot-browser/node_modules/.bin/playwright install --with-deps chromium
+          tests/pilot-browser/node_modules/.bin/playwright install chromium
       - name: Validate native entry and export
         run: node tests/pilot-browser/external-smoke.cjs
