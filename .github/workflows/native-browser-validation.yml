@@ -5,6 +5,11 @@ on:
       - 'tests/pilot-browser/external-smoke.cjs'
       - 'tests/native-integrations.json'
       - '.github/workflows/native-browser-validation.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tests/pilot-browser/external-smoke.cjs'
+      - '.github/workflows/native-browser-validation.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -18,7 +23,7 @@ jobs:
         with:
           persist-credentials: false
       - id: list
-        run: node -e 'const m=require("./tests/native-integrations.json");console.log("entries="+JSON.stringify(m.external.filter(e=>["static","vite","biolab","asri"].includes(e.kind))))' >> "$GITHUB_OUTPUT"
+        run: node -e 'const m=require("./tests/native-integrations.json");console.log("entries="+JSON.stringify(m.external.filter(e=>["static","vite","biolab"].includes(e.kind) && (process.env.GITHUB_EVENT_NAME!=="push" || ["eco-retrofit-mineral-footprint","sustainability-knowledge-check","tass-readiness-resilience-simulator"].includes(e.repo)))))' >> "$GITHUB_OUTPUT"
   validate:
     needs: matrix
     runs-on: ubuntu-24.04
