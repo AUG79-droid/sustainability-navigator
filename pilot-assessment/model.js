@@ -8,6 +8,9 @@
  const common={es:["Un resultado del recurso se basa en un caso ficticio. ¿Qué puedes concluir?","Tras una actividad, una alternativa obtiene un resultado favorable en la simulación. ¿Qué comunica correctamente ese resultado?","Aprendizaje o hipótesis condicionada; hace falta evidencia real para afirmar un beneficio operativo","El resultado demuestra una mejora real del negocio","El resultado autoriza a aplicar la decisión"],
  en:["A resource outcome is based on a fictional case. What can you conclude?","After an activity, an alternative achieves a favourable simulation outcome. What is the correct way to communicate it?","Learning or a conditional hypothesis; real evidence is needed to claim operational benefit","The result demonstrates a real business improvement","The result authorises application of the decision"]};
  const resources=new Map(catalogue.resources.map(r=>[r.id,r]));
+ // An assessed edition of the existing game, not a new catalogue application.
+ const quest=resources.get("tas-sustainability-quest");
+ if(quest)resources.set("climate-adaptation-quest",{...quest,id:"climate-adaptation-quest",title:{es:"Sustainability Quest · Adaptación climática",en:"Sustainability Quest · Climate adaptation"},launches:Object.fromEntries(Object.entries(quest.launches).map(([lang,raw])=>{const url=new URL(raw);url.searchParams.set("track","climate");return [lang,url.href];}))});
  const resource=id=>resources.get(id);
  const supported=id=>Object.hasOwn(bank,id)||id===LIBRARY;
  const measured=id=>Object.hasOwn(bank,id);
