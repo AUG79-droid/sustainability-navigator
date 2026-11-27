@@ -58,7 +58,8 @@ async function finish(page,dialog,lang){
      const answers=["The fictional system is exposed to recurring environmental pressure, so we need to identify the physical mechanism and the service function at risk.","The selected living organism offers a functional analogy that must be examined rather than copied merely for appearance or assumed performance.","A bounded design principle is to modify the interface to manage exposure while maintaining the function, and compare the mechanism against a reference.","A candidate prototype would be assessed against an unmodified reference through controlled tests, including degradation, maintenance and failure modes.","The anticipated benefit is reduced vulnerability, not a proven performance improvement; define a measurable baseline and compare under identical conditions.","Establish technical ownership, applicable requirements and independent review before any implementation; record uncertainties and test results."];
      for(let i=0;i<6;i++)await fields.nth(i).fill(answers[i]);
      await button(t("Ya he redactado los seis apartados · Preparar presentación →","I have written all six sections · Prepare my pitch →"));
-     await p.getByRole("textbox").first().fill("Bounded biomimetic prototype evaluation");
+     await p.getByRole("button",{name:t("Ir al paso 7: revisar propuestas","Go to step 7: review proposals"),exact:true}).waitFor();
+     await p.locator("input.biolab-input").fill("Bounded biomimetic prototype evaluation");
      await p.locator("textarea").fill("This fictional proposal compares a natural functional mechanism with a reference design. We would test environmental exposure, durability and maintainability using bounded measurements, document the uncertainties and obtain authorised technical review before implementation.");
      await button(t("Ir al paso 7: revisar propuestas","Go to step 7: review proposals"));
      await button(t("Ver mi resultado y compararlo con la solución de referencia","See results and compare with a reference"));
@@ -307,11 +308,11 @@ async function finish(page,dialog,lang){
  const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:20000});
  await click('button.hit[aria-label="Start campaign briefing"],button.hit[aria-label*="campaña"]');await click("#introStart");await click("#briefGo");
  await click('button.hit[aria-label*="GR-774A"]');await click('button.hit[aria-label="Deploy squad"],button.hit[aria-label="Desplegar equipo"]');
- await click("[data-choice]");await click("#confirmDecision1");await click("#finish1");await click(".theoryLaunch");await click("#theoryNext");
- await click("#brief2Go");for(let i=0;i<3;i++)await click("#m2Next");await click('[data-choose-route="c"]');await click("#finish2");await click(".theoryLaunch");await click("#theoryNext");
- await click("#brief3Go");for(let i=0;i<3;i++)await click("#m3Next");await click("[data-response3]");await click("#m3Confirm");await click("#finish3");await click(".theoryLaunch");await click("#theoryNext");
- await click("#brief4Go");for(let i=0;i<3;i++)await click("#m4Next");await click('[data-window4="buffer"]');await click("#m4Confirm");await click("#finish4");await click(".theoryLaunch");await click("#theoryNext");
- await click("#brief5Go");for(let i=0;i<4;i++)await click("#m5Next");await click('[data-finding5="recheck"]');await click("#m5FindingNext");await click("[data-action5]");await click("#m5ActionNext");await click("#finish5");await click(".theoryLaunch");await click("#theoryNext");
+ await click("[data-choice]");await click("#confirmDecision1");await click("#finish1");await click(".completionButton,.theoryLaunch");await click("#theoryNext");
+ await click("#brief2Go");for(let i=0;i<3;i++)await click("#m2Next");await click('[data-choose-route="c"]');await click("#finish2");await click(".completionButton,.theoryLaunch");await click("#theoryNext");
+ await click("#brief3Go");for(let i=0;i<3;i++)await click("#m3Next");await click("[data-response3]");await click("#m3Confirm");await click("#finish3");await click(".completionButton,.theoryLaunch");await click("#theoryNext");
+ await click("#brief4Go");for(let i=0;i<3;i++)await click("#m4Next");await click('[data-window4="buffer"]');await click("#m4Confirm");await click("#finish4");await click(".completionButton,.theoryLaunch");await click("#theoryNext");
+ await click("#brief5Go");for(let i=0;i<4;i++)await click("#m5Next");await click('[data-finding5="recheck"]');await click("#m5FindingNext");await click("[data-action5]");await click("#m5ActionNext");await click("#finish5");await click(".completionButton,.theoryLaunch");await click("#theoryNext");
  await click("#brief6Go");for(let i=0;i<5;i++)await click("#m6Next");await click('[data-conclusion6="evidence"]');await click("#m6Confirm");await click("#theory6Go");await click("#theoryNext");await page.locator(".finalCelebration").waitFor();await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: six noise and habitat missions",entry.repo,lang);
  }else if(config.manual){
  await native.locator(".dock button").click();await finish(page,dialog,lang);
