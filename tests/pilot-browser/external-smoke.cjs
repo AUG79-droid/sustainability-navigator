@@ -203,6 +203,39 @@ async function finish(page,dialog,lang){
  for(const k of ["data","roles","habitat","tools","thresholds","protected","metrics"])await click('[data-plan="'+k+'"]');
  await click("#eval6");await click("#fb6 button");await page.locator("#results.active").waitFor();await finish(page,dialog,lang);
  console.log("REAL COMPLETE JOURNEY: six wildlife-risk stages",entry.repo,lang);
+ }else if(entry.id==="airpower-mission-green-2026"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:15000});
+ await click(".launch-button");await click(".briefing-modal .primary-button");
+ for(let i=0;i<6;i++){
+   await click(".mission-card:not(.complete) button");
+   await click(".learning-actions .primary-button");
+   for(let j=0;j<5;j++){await click(".choice-list .choice-card");await click(".decision-main .primary-button");}
+   await click(".learning-actions .primary-button");await click(".debrief-actions .primary-button");
+ }
+ await click(".map-footer .secondary-button");await page.locator(".final-screen").waitFor();
+ await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: six missions, 30 decisions and pre/post theory",entry.repo,lang);
+ }else if(entry.id==="sustainable-aviation-foundations-master"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:15000});
+ // Read the course's existing content model; never write to its progress or dispatch completion.
+ const course=await page.evaluate(()=>{const d=window.FOUNDATIONS_ACTIVE_DATA||window.FOUNDATIONS_DATA;return {modules:d.modules.map(m=>({id:m.id,lessons:m.lessons.length,lab:m.lab.questions.map(q=>q.correct),assessment:m.assessmentQuestions.map(q=>q.correct)})),final:d.finalAssessment.questions.map(q=>q.correct)};});
+ assert.equal(course.modules.length,6);
+ const nav=async hash=>{await click('a[href="#'+hash+'"]');await page.waitForURL('**/#'+hash);};
+ for(const m of course.modules){
+   await nav("course");await nav("module/"+m.id);
+   const paths=Array.from({length:m.lessons},(_,i)=>"lesson/"+m.id+"/"+i);
+   for(const path of paths){await nav(path);await page.locator(".lesson-header").waitFor();}
+   await nav("visuals/"+m.id);const tabs=page.locator('[data-action="visual-step"]');for(let i=0;i<await tabs.count();i++)await tabs.nth(i).click();
+   await nav("case/"+m.id);await nav("lab/"+m.id);
+   for(let i=0;i<m.lab.length;i++)await click('[data-action="lab-answer"][data-question="'+i+'"][data-index="'+m.lab[i]+'"]');
+   await nav("assessment/"+m.id);
+   for(let i=0;i<m.assessment.length;i++)await click('[data-action="assessment-answer"][data-question="'+i+'"][data-index="'+m.assessment[i]+'"]');
+   await page.locator(".result-banner.passed").waitFor();
+ }
+ await nav("capstone");const notes=page.locator("textarea[data-note]");for(const n of await notes.all())await n.fill("Synthetic browser test: evaluate a bounded decision using evidence, trade-offs and authorised review.");
+ await nav("final-check");
+ for(let i=0;i<course.final.length;i++)await click('[data-action="final-answer"][data-question="'+i+'"][data-index="'+course.final[i]+'"]');
+ await page.locator(".result-banner.passed").waitFor();await finish(page,dialog,lang);
+ console.log("REAL COMPLETE JOURNEY: six full modules, lessons, labs, assessments, capstone and final exam",entry.repo,lang);
  }else if(config.manual){
  await native.locator(".dock button").click();await finish(page,dialog,lang);
  console.log("Manual consultation feedback completed",entry.repo,lang);

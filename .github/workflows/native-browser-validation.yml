@@ -23,7 +23,7 @@ jobs:
         with:
           persist-credentials: false
       - id: list
-        run: node -e 'const m=require("./tests/native-integrations.json");console.log("entries="+JSON.stringify(m.external.filter(e=>["static","vite","biolab"].includes(e.kind) && (process.env.GITHUB_EVENT_NAME!=="push" || ["introduction-sustainability-aviation","sustainability-systems-escape-room","strategic-soil-footprint-mapper","bio-radar-runway-prevention"].includes(e.id)))))' >> "$GITHUB_OUTPUT"
+        run: node -e 'const m=require("./tests/native-integrations.json");console.log("entries="+JSON.stringify(m.external.filter(e=>["static","vite","biolab"].includes(e.kind) && (process.env.GITHUB_EVENT_NAME!=="push" || ["airpower-mission-green-2026","sustainable-aviation-foundations-master","sustainable-aviation-learning-library"].includes(e.id)))))' >> "$GITHUB_OUTPUT"
   validate:
     needs: matrix
     runs-on: ubuntu-24.04
