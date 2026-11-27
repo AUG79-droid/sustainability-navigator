@@ -16,7 +16,7 @@ async function finish(page,dialog,lang,resourceId=entry.id){
  const download=page.waitForEvent("download");await dialog.getByRole("button",{name:t("Descargar resultado JSON","Download JSON result")}).click();
  const record=model.parse(JSON.parse(fs.readFileSync(await (await download).path(),"utf8")))[0];
  assert.equal(record.resourceId,resourceId);assert.equal(record.language,lang);assert.equal(record.outcome,"completed");
- if(model.measured(resourceId)){assert.equal(model.score(record.pre),2);assert.equal(model.score(record.post),4);}
+ if(model.measured(resourceId)){assert.equal(model.score(record.pre),2);assert.equal(model.score(record.post),4);assert.equal(await dialog.locator('[data-assessment-review="post"] .correct-answer').count(),4);}
  console.log("Native result exported and validated",entry.repo,lang);
 }
 (async()=>{

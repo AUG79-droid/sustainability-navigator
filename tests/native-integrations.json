@@ -220,7 +220,7 @@
     {
       "repo": "airbus-strategic-resilience-intelligence",
       "id": "airbus-strategic-resilience-intelligence",
-      "commit": "f85d444c736d539d624100a05aef272e7cc737af",
+      "commit": "a081fc03fc3a75017311a110e01a86496a98b6f1",
       "script": "app/public/learning-evidence.js",
       "entry": "app/index.html",
       "kind": "asri"
