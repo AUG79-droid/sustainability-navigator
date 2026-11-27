@@ -1,0 +1,26 @@
+name: Verify live Learning Evidence
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/public-learning-evidence.yml'
+      - 'tests/pilot-browser/live-smoke.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  live:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install browser
+        run: |
+          npm install --prefix tests/pilot-browser --no-save --no-audit --no-fund playwright@1.57.0
+          tests/pilot-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Verify live catalogue links and initial assessments
+        run: node tests/pilot-browser/live-smoke.cjs
