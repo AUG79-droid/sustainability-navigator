@@ -385,7 +385,7 @@ async function finish(page,dialog,lang){
  page.on("requestfailed",r=>{const u=new URL(r.url());if(u.pathname.startsWith("/rest/v1/"))console.log("AEROSKILLS FAILED REQUEST",u.pathname,r.failure()?.errorText);});
  for(let i=0;i<hrefs.length;i++){
    console.log("AEROSKILLS OPEN",i+1,new URL(hrefs[i]).pathname);
-   await page.goto(hrefs[i]);const accord=page.locator('button[data-state][aria-controls]');try{await accord.first().waitFor({timeout:20000});}catch(e){console.log("AEROSKILLS PAGE",page.url(),(await page.locator("body").innerText()).slice(0,3000));console.log("AEROSKILLS ERRORS",errors);throw e;}
+   await page.goto(hrefs[i]);const accord=page.locator('section').filter({has:page.getByRole('heading',{name:t('Lecciones','Lessons'),exact:true})}).locator('button').filter({hasText:/^\s*\d{2}/});try{await accord.first().waitFor({timeout:20000});}catch(e){console.log("AEROSKILLS PAGE",page.url(),(await page.locator("body").innerText()).slice(0,3000));console.log("AEROSKILLS ERRORS",errors);throw e;}
    const fields=page.locator('fieldset').filter({has:page.locator('input[type=radio]')});await fields.first().waitFor();
    assert.equal(await fields.count(),keys[i].length);
    for(let j=0;j<keys[i].length;j++)await fields.nth(j).locator("input").nth(keys[i][j]).check();
