@@ -44,14 +44,14 @@ async function actual(browser,origin,id,dir,journey,lang){
  await p.goto(origin+"/"+dir+"/?hubLang="+lang,{waitUntil:"domcontentloaded"});const native=p.locator("#sn-native-learning-evidence"),d=native.locator("dialog"),t=(es,en)=>lang==="es"?es:en;
  await d.waitFor({state:"visible"});assert.equal(await d.getAttribute("lang"),lang);
  for(const [i,f] of (await d.locator("fieldset").all()).entries())await f.locator('input[value="'+[0,1,3,0][i]+'"]').check();
- await d.getByRole("button",{name:t("Guardar y empezar","Save and start"),exact:true}).click();await d.waitFor({state:"hidden"});
+ await d.getByRole("button",{name:t("Corregir evaluación inicial","Correct initial assessment"),exact:true}).click();assert.equal(await d.locator('[data-initial-score="2"]').count(),1);assert.equal(await d.locator('[data-assessment-review="pre"] .review-item').count(),4);assert.equal(await d.locator('[data-assessment-review="pre"] .correct-answer').count(),4);assert.equal(await d.locator('[data-assessment-review="pre"] .review-item.incorrect').count(),2);await d.getByRole("button",{name:t("Comenzar actividad","Start activity"),exact:true}).click();await d.waitFor({state:"hidden"});
  await native.locator(".dock button").click();assert.equal(await d.getByRole("button",{name:t("He terminado · evaluación final","I finished · final assessment"),exact:true}).count(),0);
  await d.getByRole("button",{name:t("Volver a la actividad","Return to activity"),exact:true}).click();await journey(p);
  await d.waitFor({state:"visible",timeout:20000});await d.getByRole("button",{name:t("He terminado · evaluación final","I finished · final assessment"),exact:true}).click();
  for(const f of await d.locator("fieldset").all())await f.locator('input[value="0"]').check();
  for(const s of await d.locator(".ratings select").all()){const opts=await s.locator("option").evaluateAll(o=>o.map(v=>v.value));await s.selectOption(opts.includes("5")?"5":"seek_evidence");}
  await d.getByRole("button",{name:t("Guardar resultado","Save result"),exact:true}).click();
- const event=p.waitForEvent("download");await d.getByRole("button",{name:t("Descargar resultado JSON","Download JSON result"),exact:true}).click();
+ assert.equal(await d.locator('[data-assessment-review="post"] .correct-answer').count(),4);const event=p.waitForEvent("download");await d.getByRole("button",{name:t("Descargar resultado JSON","Download JSON result"),exact:true}).click();
  const record=m.parse(JSON.parse(fs.readFileSync(await (await event).path(),"utf8")))[0];assert.equal(record.resourceId,id);assert.equal(record.language,lang);assert.equal(record.outcome,"completed");assert.equal(m.score(record.pre),2);assert.equal(m.score(record.post),4);assert.deepEqual(errors,[]);
  console.log("REAL JOURNEY PASS",id,lang);return record;
  }finally{await c.close();}

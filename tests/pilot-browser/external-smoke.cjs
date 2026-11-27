@@ -46,11 +46,9 @@ async function finish(page,dialog,lang,resourceId=entry.id){
      else await button(track==="climate"?t("Empezar adaptación climática","Start climate adaptation"):t("Empezar resiliencia estratégica","Start strategic resilience"));
      await button(t("Formar los equipos","Form teams"));await p.getByRole("textbox").first().fill("Synthetic QA team");
      await button(t("Añadir","Add"));await button(t("Asignar retos","Assign challenges"));
-     const pre=p.locator("fieldset");await pre.first().waitFor();assert.equal(await pre.count(),4);for(const f of await pre.all())await f.locator('input[type="radio"]').first().check();
-     await button(t("Guardar evaluación","Save assessment"));
      if(track==="general")await p.locator("button.biolab-btn-accent.w-full").click();
      else await p.locator('button[aria-pressed].biolab-btn-ghost').filter({visible:true}).nth(2).click();
-     await button(t("Confirmar reto","Confirm challenge"));
+     const pre=p.getByTestId("initial-assessment");await pre.waitFor();assert.equal(await pre.locator("fieldset").count(),4);for(const f of await pre.locator("fieldset").all())await f.locator('input[type="radio"]').first().check();await pre.getByTestId("correct-assessment").click();await pre.getByTestId("initial-score").waitFor();assert.equal(await pre.locator('[data-testid^="feedback-"]').count(),4);await button(t("Confirmar reto","Confirm challenge"));
      await p.getByRole("button",{name:t("Elegir este modelo","Choose this model"),exact:true}).first().click();
      await button(t("Ir al paso 4: conectar reto y principio","Go to step 4: connect challenge and principle"));
      await button(t("Ir al paso 5: abrir el lienzo","Go to step 5: open the canvas"));
@@ -65,7 +63,7 @@ async function finish(page,dialog,lang,resourceId=entry.id){
      await button(t("Ver mi resultado y compararlo con la solución de referencia","See results and compare with a reference"));
      const post=p.locator("fieldset");await post.first().waitFor();assert.equal(await post.count(),4);for(const f of await post.all())await f.locator('input[type="radio"]').first().check();
      for(const sel of await p.locator("select").filter({has:p.locator('option[value="4"],option[value="seek_evidence"]')}).all()){const values=await sel.locator("option").evaluateAll(os=>os.map(o=>o.value));await sel.selectOption(values.includes("4")?"4":"seek_evidence");}
-     await button(t("Guardar evaluación","Save assessment"));
+     await p.getByTestId("final-assessment").getByTestId("correct-assessment").click();await p.getByTestId("final-score").waitFor();
      const pending=p.waitForEvent("download");await button(t("Exportar resultados sin nombre (JSON)","Export unnamed results (JSON)"));
      const record=bio.parse(JSON.parse(fs.readFileSync(await (await pending).path(),"utf8")))[0];assert.equal(record.track,track);assert.equal(record.language,lang);assert.equal(record.maxScore,4);assert.ok(record.challengeId);assert.deepEqual(errs,[]);
      console.log("REAL COMPLETE BIOLAB JOURNEY",track,lang,record.challengeId);
@@ -79,7 +77,7 @@ async function finish(page,dialog,lang,resourceId=entry.id){
  assert.equal(await dialog.locator("fieldset").count(),model.measured(entry.id)?4:0);
  const t=(es,en)=>lang==="es"?es:en;
  for(const [i,f] of (await dialog.locator("fieldset").all()).entries())await f.locator('input[value="'+[0,1,3,0][i]+'"]').check();
- await dialog.getByRole("button",{name:t("Guardar y empezar","Save and start"),exact:true}).click();
+ if(model.measured(entry.id)){await dialog.getByRole("button",{name:t("Corregir evaluación inicial","Correct initial assessment"),exact:true}).click();assert.equal(await dialog.locator('[data-initial-score="2"]').count(),1);assert.equal(await dialog.locator('[data-assessment-review="pre"] .review-item').count(),4);assert.equal(await dialog.locator('[data-assessment-review="pre"] .correct-answer').count(),4);assert.equal(await dialog.locator('[data-assessment-review="pre"] .review-item.incorrect').count(),2);await dialog.getByRole("button",{name:t("Comenzar actividad","Start activity"),exact:true}).click();}else await dialog.getByRole("button",{name:t("Guardar y empezar","Save and start"),exact:true}).click();
  await dialog.waitFor({state:"hidden"});await native.locator(".dock").waitFor({state:"visible"});
  console.log("Direct baseline gate passed",entry.repo,lang);
  if(["mission-energy","material-sovereignty"].includes(entry.repo)){
