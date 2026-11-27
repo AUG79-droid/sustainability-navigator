@@ -11,7 +11,23 @@ async function review(p,eco){for(let i=0;i<6;i++){await fill(p,"fieldset.decisio
 async function year(p){await p.locator('[data-action="start"]').click();for(let i=0;i<4;i++){await p.locator('[data-action="choose"]').first().click();await p.locator('[data-action="confirm"]').click();await p.locator('[data-action="next"]').click();}await p.locator(".final-screen").waitFor();}
 async function ethical(p){const click=async s=>p.locator(s).filter({visible:true}).first().click();await click('[data-go="briefing"]');await click('[data-go="p1"]');await click('[data-p1="trace"]');await click("#p1next");await click('[data-go="p2"]');for(let i=0;i<5;i++)await click('[data-node="'+i+'"]');await click("#flagContradiction");await click("#p2next");await click('[data-go="p3"]');for(const v of ["audit","origin","owner"])await p.locator('#redFlags input[value="'+v+'"]').check();await click("#checkRedFlags");await click("#p3next");await click('[data-go="p4"]');for(const [k,v] of [["hr1","mitigate"],["hr2","monitor"],["hr3","freeze"]])await p.locator("#"+k).selectOption(v);await click("#checkHR");await click("#p4next");await click('[data-go="p5"]');await click('[data-pay="security"]');await click("#p5next");await click('[data-go="p6"]');for(const v of ["dual","intensity","module"])await p.locator('#designOptions input[value="'+v+'"]').check();await click("#checkDesign");await click("#p6next");await click('[data-go="final"]');await p.locator("#final.active").waitFor();}
 async function phyto(p){const click=async s=>p.locator(s).filter({visible:true}).first().click();await click('.goto[data-target="theory1"]');await click('.goto[data-target="practice1"]');await click("#spotA");await click("#spotB");await click('#choices1 [data-answer="hold"]');await click("#toTheory2");await click('.goto[data-target="practice2"]');await click("#barkGauge");await click('#choices2 [data-answer="accept-both"]');await p.locator('[data-sn-pilot-complete="true"]').waitFor();}
+async function reach(p){
+ const click=async s=>p.locator(s).filter({visible:true}).first().click();
+ const all=async attr=>{const keys=await p.locator("["+attr+"]").evaluateAll((els,a)=>[...new Set(els.map(e=>e.getAttribute(a)))],attr);for(const key of keys)await click("["+attr+'="'+key+'"]');return keys.length;};
+ for(let phase=0;phase<17;phase++){
+ await p.locator('[data-next="'+(phase+1)+'"]').first().waitFor();
+ if(phase===2)assert.equal(await all("data-hotspot"),5);
+ if(phase===4)assert.equal(await all("data-passport"),3);
+ if(phase===6){const keys=await p.evaluate(()=>Object.entries(substitutionData).map(([k,d])=>[k,d.options.find(o=>o.valid).id]));for(const [k,v] of keys)await click('[data-sub="'+k+'"][data-opt="'+v+'"]');}
+ if(phase===8){for(const [k,v] of [["pretreatment","clean"],["conversion","tcc"],["primer","p40"],["sealant","s21"],["topcoat","tc"]])await p.locator('[data-stack="'+k+'"]').selectOption(v);await click("#checkStack");}
+ if(phase===10)await click('[data-maint="brush"]');
+ if(phase===12){for(const [k,v] of [["method","brush"],["ventilation","local"],["frequency","occasional"]])await p.locator('[data-exp="'+k+'"]').selectOption(v);await click("#calcRisk");}
+ if(phase===14)assert.equal(await all("data-gate"),4);
+ await click('[data-next="'+(phase+1)+'"]');
+ }await p.locator(".final-score").waitFor();
+}
 const journeys=[
+["reach-compliance-challenge","reach-compliance-challenge",reach],
 ["responsible-supply-chain-compliance-foundations","responsible-supply-chain-compliance-foundations",course],
 ["eco-design-circularity-aerospace-materials","eco-design-circularity-aerospace-materials",course],
 ["supply-chain-compliance-decision-review","supply-chain-compliance-decision-review",p=>review(p,false)],

@@ -48,7 +48,7 @@ async function finish(page,dialog,lang){
      await button(t("Añadir","Add"));await button(t("Asignar retos","Assign challenges"));
      const pre=p.locator("fieldset");await pre.first().waitFor();assert.equal(await pre.count(),4);for(const f of await pre.all())await f.locator('input[type="radio"]').first().check();
      await button(t("Guardar evaluación","Save assessment"));
-     if(track==="general")await p.locator(".biolab-wheel-panel .biolab-btn-accent").click();
+     if(track==="general")await p.locator("button.biolab-btn-accent.w-full").click();
      else await p.locator('button[aria-pressed].biolab-btn-ghost').filter({visible:true}).nth(2).click();
      await button(t("Confirmar reto","Confirm challenge"));
      await p.getByRole("button",{name:t("Elegir este modelo","Choose this model"),exact:true}).first().click();
@@ -290,7 +290,7 @@ async function finish(page,dialog,lang){
      const targets=player.wedges.every(Boolean)?[0]:player.wedges.flatMap((w,i)=>w?[]:[19+i]);
      const ids=Object.keys(st.validDestinations).map(Number);assert.ok(ids.length);
      let idx=0;for(let i=1;i<ids.length;i++)if(dist(ids[i],targets)<dist(ids[idx],targets))idx=i;
-     await page.locator("g.destination").nth(idx).click({timeout:20000});
+     await page.locator("g.destination").nth(idx).press("Enter",{timeout:20000});
      await page.waitForFunction(k=>JSON.parse(localStorage.getItem(k)||"{}").phase!=="selectingMove",key,{timeout:20000});
    }else if(st.phase==="selectingCategory"){
      await page.locator(".category-grid button").nth(Math.max(0,player.wedges.indexOf(false))).click();
