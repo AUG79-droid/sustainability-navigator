@@ -5,7 +5,7 @@ const entry=manifest.external.find(e=>e.repo===process.env.APP_REPO);
 if(!entry)throw Error("Unknown repository");
 const root=path.resolve(process.env.APP_SITE),prefix="/"+entry.repo+"/",mime={".html":"text/html",".js":"application/javascript",".mjs":"application/javascript",".css":"text/css",".svg":"image/svg+xml",".png":"image/png",".jpg":"image/jpeg",".webp":"image/webp",".json":"application/json",".txt":"text/plain",".woff2":"font/woff2",".wasm":"application/wasm"};
 const server=http.createServer((req,res)=>{try{let p=decodeURIComponent(new URL(req.url,"http://localhost").pathname);if(p.startsWith(prefix))p="/"+p.slice(prefix.length);const file=path.resolve(root,"."+p);if(file!==root&&!file.startsWith(root+path.sep))throw Error("path");let f;try{f=fs.statSync(file).isDirectory()?path.join(file,"index.html"):file;}catch{if(path.extname(file))throw Error("missing");f=path.join(root,"index.html");}res.setHeader("Content-Type",mime[path.extname(f)]||"application/octet-stream");res.end(fs.readFileSync(f));}catch{res.writeHead(404);res.end();}});
-async function finish(page,dialog,lang){
+async function finish(page,dialog,lang,resourceId=entry.id){
  const t=(es,en)=>lang==="es"?es:en;
  await dialog.waitFor({state:"visible",timeout:20000});
  await dialog.getByRole("button",{name:t("He terminado · evaluación final","I finished · final assessment"),exact:true}).click();
@@ -15,8 +15,8 @@ async function finish(page,dialog,lang){
  await dialog.getByRole("heading",{name:t("Tu resultado de aprendizaje","Your learning result")}).waitFor();
  const download=page.waitForEvent("download");await dialog.getByRole("button",{name:t("Descargar resultado JSON","Download JSON result")}).click();
  const record=model.parse(JSON.parse(fs.readFileSync(await (await download).path(),"utf8")))[0];
- assert.equal(record.resourceId,entry.id);assert.equal(record.language,lang);assert.equal(record.outcome,"completed");
- if(model.measured(entry.id)){assert.equal(model.score(record.pre),2);assert.equal(model.score(record.post),4);}
+ assert.equal(record.resourceId,resourceId);assert.equal(record.language,lang);assert.equal(record.outcome,"completed");
+ if(model.measured(resourceId)){assert.equal(model.score(record.pre),2);assert.equal(model.score(record.post),4);}
  console.log("Native result exported and validated",entry.repo,lang);
 }
 (async()=>{
@@ -26,12 +26,12 @@ async function finish(page,dialog,lang){
  const script=entry.kind==="biolab"?null:fs.readFileSync(path.resolve(process.env.APP_SOURCE,entry.script),"utf8");
  const config=script?JSON.parse(script.match(/const config=(\{[^\n]*?\});/)[1]):null;
  const languages=config?.fixedLanguage?[config.fixedLanguage]:entry.kind==="biolab"?[entry.repo.endsWith("-en")?"en":"es"]:["es","en"];
- for(const lang of languages){
+ for(const lang of languages)for(const track of entry.climateEdition?["general","climate"]:["general"]){
  const context=await browser.newContext({acceptDownloads:true,viewport:{width:1280,height:900}});
  await context.route("**/*",r=>{const q=r.request(),u=new URL(q.url());return q.url().startsWith(origin)||(entry.kind==="tanstack"&&u.protocol==="https:"&&u.pathname.startsWith("/rest/v1/")&&((q.method()==="GET"&&/\/rest\/v1\/(modules|quizzes|quiz_questions|quiz_options)$/.test(u.pathname))||(q.method()==="POST"&&u.pathname==="/rest/v1/rpc/grade_quiz")))?r.continue():r.abort();});
  const page=await context.newPage(),errors=[];
  page.on("pageerror",e=>errors.push(e.message));
- await page.goto(origin+prefix+"?hubLang="+lang,{waitUntil:"domcontentloaded"});
+ await page.goto(origin+prefix+"?hubLang="+lang+(track==="climate"?"&track=climate":""),{waitUntil:"domcontentloaded"});
  if(entry.kind==="biolab"){
  await context.close();
  const bio=require("../../pilot-assessment/biolab-results.js");
@@ -274,7 +274,7 @@ async function finish(page,dialog,lang){
  console.log("REAL COMPLETE JOURNEY: six full modules, lessons, labs, assessments, capstone and final exam",entry.repo,lang);
  }else if(entry.id==="tas-sustainability-quest"){
  const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:20000});
- const key="sustainability-quest-"+lang+"-v3";
+ const key=(track==="climate"?"climate-":"")+"sustainability-quest-"+lang+"-v3";
  const read=()=>page.evaluate(k=>JSON.parse(localStorage.getItem(k)||"null"),key);
  const graph=Array.from({length:43},()=>[]),link=(a,b)=>{graph[a].push(b);graph[b].push(a);};
  for(let i=0;i<6;i++){link(0,1+i*3);link(1+i*3,2+i*3);link(2+i*3,3+i*3);link(3+i*3,19+i);link(19+i,25+i*3);link(25+i*3,26+i*3);link(26+i*3,27+i*3);link(27+i*3,19+((i+1)%6));}
@@ -296,14 +296,14 @@ async function finish(page,dialog,lang){
    }else if(st.phase==="selectingCategory"){
      await page.locator(".category-grid button").nth(Math.max(0,player.wedges.indexOf(false))).click();
    }else if(st.phase==="answering"){
-     assert.ok(st.currentQuestion);await page.locator(".answer-button").nth(st.currentQuestion.correctIndex).click();answers++;
+     assert.ok(st.currentQuestion);assert.equal(st.currentQuestion.id>=1001,track==="climate","question bank matches edition");await page.locator(".answer-button").nth(st.currentQuestion.correctIndex).click();answers++;
    }else if(st.phase==="feedback"){await click(".feedback-card .primary-button");}
    else if(st.phase==="victory"){break;}
    else throw Error("Unexpected game phase "+st.phase);
    await page.waitForTimeout(80);
  }
  const won=await read();assert.equal(won.phase,"victory");assert.ok(won.players[0].wedges.every(Boolean));
- await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: six badges and final challenge",entry.repo,lang,"rolls",rolls,"answers",answers);
+ await finish(page,dialog,lang,track==="climate"?"climate-adaptation-quest":entry.id);console.log("REAL COMPLETE JOURNEY: six badges and final challenge",entry.repo,lang,track,"rolls",rolls,"answers",answers);
  }else if(entry.id==="noise-habitat-missions"){
  const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:20000});
  await click('button.hit[aria-label="Start campaign briefing"],button.hit[aria-label*="campaña"]');await click("#introStart");await click("#briefGo");

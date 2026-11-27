@@ -244,18 +244,20 @@
     {
       "repo": "trivia-airbus-quest",
       "id": "tas-sustainability-quest",
-      "commit": "caafbb93010030ffdbbd83ac09130a9ea954da85",
+      "commit": "6b41cdc5c66aa70a4b2c9d6b32b0b30ace6e293d",
       "script": "public/learning-evidence.js",
       "entry": "index.html",
-      "kind": "vite"
+      "kind": "vite",
+      "climateEdition": true
     },
     {
       "repo": "trivia-airbus-quest-en",
       "id": "tas-sustainability-quest",
-      "commit": "a39bd9d9d7bcdfef2bf736a05456f85bf47cff23",
+      "commit": "bfcc807efe29d63f91d125d64589581db01c8ecb",
       "script": "public/learning-evidence.js",
       "entry": "index.html",
-      "kind": "vite"
+      "kind": "vite",
+      "climateEdition": true
     },
     {
       "repo": "aero-skills-launchpad",

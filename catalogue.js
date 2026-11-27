@@ -250,6 +250,18 @@
       launches.append(launch);
     });
 
+    if (resource.id === "tas-sustainability-quest" && launchable(resource)) {
+      languagesOf(resource).forEach(language => {
+        const climate = document.createElement("a");
+        climate.className = "application-launch";
+        const url = new URL(resource.launches[language]);
+        url.searchParams.set("track", "climate");
+        climate.href = url.href;
+        climate.textContent = (lang === "es" ? "Adaptación climática" : "Climate adaptation") + " (" + language.toUpperCase() + ")";
+        climate.rel = "noopener";
+        launches.append(climate);
+      });
+    }
     const content = document.createElement("div");
     content.className = "application-card-content";
     content.append(title, topic, description, metadata, launches);

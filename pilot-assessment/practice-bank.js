@@ -700,6 +700,56 @@
       ]
     }
   ],
+  "climate-adaptation-quest": [
+  {
+    "es": [
+      "Una planta reduce emisiones y protege un equipo del calor futuro. ¿Qué es adaptación?",
+      "Un hangar afronta temperaturas futuras mayores. ¿Qué medida es adaptación?",
+      "Reducir exposición o vulnerabilidad física al calor",
+      "Reducir únicamente emisiones",
+      "Comprar compensaciones sin reducir exposición"
+    ],
+    "en": [
+      "A plant cuts emissions and protects equipment from future heat. What is adaptation?",
+      "A hangar faces higher future temperatures. Which measure is adaptation?",
+      "Reduce physical heat exposure or vulnerability",
+      "Only reduce emissions",
+      "Buy offsets without reducing exposure"
+    ]
+  },
+  {
+    "es": [
+      "¿Qué revisar ante una posible exposición futura de un producto al polvo?",
+      "¿Qué revisar ante una posible exposición futura de un producto al calor?",
+      "Amenaza, exposición, función vulnerable y requisitos técnicos",
+      "Solo el coste de compra",
+      "Suponer que la cualificación actual cubre todo"
+    ],
+    "en": [
+      "What should be reviewed for possible future product dust exposure?",
+      "What should be reviewed for possible future product heat exposure?",
+      "Hazard, exposure, vulnerable function and technical requirements",
+      "Purchase cost alone",
+      "Assume current qualification covers everything"
+    ]
+  },
+  {
+    "es": [
+      "Una inundación amenaza el suministro eléctrico. ¿Cómo seleccionar una medida?",
+      "Una tormenta amenaza una función de apoyo. ¿Cómo seleccionar una medida?",
+      "Comparar continuidad, seguridad, dependencias y evidencia bajo escenarios equivalentes",
+      "Elegir solo el menor coste",
+      "Aplicar una medida sin revisar límites"
+    ],
+    "en": [
+      "Flooding threatens electricity supply. How should a measure be selected?",
+      "A storm threatens a support function. How should a measure be selected?",
+      "Compare continuity, safety, dependencies and evidence under equivalent scenarios",
+      "Choose lowest cost alone",
+      "Apply a measure without checking limits"
+    ]
+  }
+],
   "tas-sustainability-quest": [
     {
       "es": [
