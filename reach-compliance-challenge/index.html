@@ -81,9 +81,9 @@ function withHubReturn(html) {
   const progress = `<script defer src="../catalogue-data.js"><\/script><script defer src="../learning-paths-data.js"><\/script><script defer src="../progress-model.js"><\/script><script defer src="../progress-store.js"><\/script><script defer src="../progress-service.js"><\/script><script defer src="../progress-bridge.js" data-resource-id="reach-compliance-challenge" data-completion-selector=".final-score"><\/script>`;
   if (/<body[^>]*>/i.test(html)) {
     const withControl = html.replace(/<body[^>]*>/i, match => match + control);
-    return /<\/body>/i.test(withControl) ? withControl.replace(/<\/body>/i, snReachInspectionUpgrade + progress + "</body>") : withControl + progress;
+    return /<\/body>/i.test(withControl) ? withControl.replace(/<\/body>/i, snReachInspectionUpgrade + progress + '<script defer src="learning-evidence.js"><\\/script>' + "</body>") : withControl + progress + '<script defer src="learning-evidence.js"><\/script>';
   }
-  return control + html + snReachInspectionUpgrade + progress;
+  return control + html + snReachInspectionUpgrade + progress + '<script defer src="learning-evidence.js"><\/script>';
 }
 (async () => {
   const selectedLanguage = new URLSearchParams(location.search).get("hubLang") === "es" ? "es" : "en";
