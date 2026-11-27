@@ -159,7 +159,7 @@ async function finish(page,dialog,lang){
    const current=page.locator('.route-card.current [data-go^="module-"]');await current.first().click();
    for(const attr of ["data-case-option","data-check-option"]){
      const opts=page.locator('['+attr+']');await opts.first().waitFor();let solved=false;
-     for(let k=0;k<await opts.count();k++){await opts.nth(k).click();if(await page.locator('['+attr+'].correct').isVisible()){solved=true;break;}}
+     for(let k=0;k<await opts.count();k++){await opts.nth(k).click();if(await page.locator('['+attr+'].correct').isVisible()){await page.locator('['+attr+'].correct').click();solved=true;break;}}
      assert.ok(solved,"No correct answer for "+attr);
    }
    await click("#completeModule");
@@ -169,6 +169,40 @@ async function finish(page,dialog,lang){
  const answers=[0,0,1,1,1,1,0,1,1,1];for(let i=0;i<answers.length;i++)await click('[data-final-q="'+i+'"][data-final-option="'+answers[i]+'"]');
  await click("#submitFinal");await page.locator("#printCertificate").waitFor();await finish(page,dialog,lang);
  console.log("REAL COMPLETE JOURNEY: eight milestones and ten-question final exam",entry.repo,lang);
+ }else if(entry.id==="sustainability-systems-escape-room"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:15000});
+ await click("#briefBtn");await click("#beginBtn");
+ // Read the existing exercise answer key, then solve exclusively through its normal input controls.
+ const rooms=await page.evaluate(()=>ROOMS.map(r=>({clue:r.clue,answers:r.rows.map(x=>x.answer)})));
+ assert.equal(rooms.length,10);
+ for(let i=0;i<rooms.length;i++){
+   const sels=page.locator("#puzzleRows select");await sels.first().waitFor();
+   assert.equal(await sels.count(),rooms[i].answers.length);
+   for(let j=0;j<rooms[i].answers.length;j++)await sels.nth(j).selectOption(String(rooms[i].answers[j]));
+   await click("#validateBtn");await page.locator("#debrief.show").waitFor();
+   if(i<rooms.length-1)await click("#nextRoomBtn");
+ }
+ await page.locator("#finalCodeInput").fill(rooms.map(r=>r.clue).join(""));await click("#unlockBtn");
+ await page.locator("#resultsScreen.active").waitFor();await finish(page,dialog,lang);
+ console.log("REAL COMPLETE JOURNEY: ten rooms and final code",entry.repo,lang);
+ }else if(entry.id==="strategic-soil-footprint-mapper"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:15000});
+ await click("#start");await click("#begin");
+ for(let i=0;i<5;i++){await click(".choice[data-id]");await click("#confirm");await click("#learn");await click("#next");}
+ await page.locator(".screen.auditLayout").waitFor();await finish(page,dialog,lang);
+ console.log("REAL COMPLETE JOURNEY: five soil missions and final audit",entry.repo,lang);
+ }else if(entry.id==="bio-radar-runway-prevention"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:15000});
+ await click('#home [data-go="briefing"]');await click('#briefing [data-go="mission1"]');
+ const spots=page.locator("#mission1 [data-location-id]");assert.equal(await spots.count(),6);
+ for(let i=0;i<6;i++){await spots.nth(i).click();await click("#stage1Decision button[data-action]");}
+ await click('[data-option="1B"]');await click("#eval1");await click("#fb1 button");await click('#theory1 [data-go="mission2"]');
+ for(const key of ["drain","grass","waste","roof"])await click('[data-key="'+key+'"]');
+ await click("#eval2");await click("#fb2 button");await click('#theory2 [data-go="mission3"]');
+ for(let stage=3;stage<=5;stage++){await click('[data-option="'+stage+'B"]');await click("#eval"+stage);await click("#fb"+stage+" button");await click('#theory'+stage+' [data-go="mission'+(stage+1)+'"]');}
+ for(const k of ["data","roles","habitat","tools","thresholds","protected","metrics"])await click('[data-plan="'+k+'"]');
+ await click("#eval6");await click("#fb6 button");await page.locator("#results.active").waitFor();await finish(page,dialog,lang);
+ console.log("REAL COMPLETE JOURNEY: six wildlife-risk stages",entry.repo,lang);
  }else if(config.manual){
  await native.locator(".dock button").click();await finish(page,dialog,lang);
  console.log("Manual consultation feedback completed",entry.repo,lang);
