@@ -1,0 +1,35 @@
+name: Mission Energy v2 validation
+on:
+  pull_request:
+    paths:
+      - 'tests/pilot-browser/mission-energy-v2.cjs'
+      - '.github/workflows/mission-energy-v2-validation.yml'
+      - 'pilot-assessment/model.js'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Test consolidation model
+        run: node --test tests/pilot-assessment.test.cjs
+      - name: Fetch pinned Mission Energy candidate
+        run: |
+          git init candidate
+          git -C candidate remote add origin https://github.com/AUG79-droid/mission-energy.git
+          git -C candidate fetch --depth 1 origin f3cad1e14eff8d0887e59bd28abd6e0037fa67ff
+          git -C candidate checkout --detach FETCH_HEAD
+          echo "APP_SITE=$PWD/candidate" >> "$GITHUB_ENV"
+      - name: Install browser
+        run: |
+          npm install --prefix tests/pilot-browser --no-save --no-audit --no-fund playwright@1.57.0
+          tests/pilot-browser/node_modules/.bin/playwright install chromium
+      - name: Validate both languages and export
+        run: node tests/pilot-browser/mission-energy-v2.cjs

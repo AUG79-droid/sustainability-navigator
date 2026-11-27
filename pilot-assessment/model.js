@@ -34,8 +34,11 @@
    if(!supported(id)||!resource(id)?.launches?.[lang]||!validId(sessionId))throw Error("Invalid session");
    return {instrument:VERSION,sessionId,resourceId:id,language:lang,pre:null,opened:false,outcome:null,post:null,feedback:null};
  };
+ const validTransfer=v=>!!v&&["operations","maintenance","procurement","environment"].includes(v.role)&&Array.isArray(v.answers)&&v.answers.length===3&&v.answers.every(n=>Number.isInteger(n)&&n>=0&&n<=2);
  function validate(s){
    if(!s||s.instrument!==VERSION||!validId(s.sessionId)||!supported(s.resourceId)||!resource(s.resourceId)?.launches?.[s.language]||typeof s.opened!=="boolean")return false;
+   if(s.revision!==undefined&&(s.revision!=="energy-v2"||s.resourceId!=="mission-energy"))return false;
+   if(s.revision==="energy-v2"&&s.outcome==="completed"? !validTransfer(s.transferEvidence):s.transferEvidence!==undefined)return false;
    if(s.pre!==null&&!validAnswers(s.pre,s.resourceId))return false;
    if(!measured(s.resourceId)&&s.pre!==null)return false;
    if(s.opened&&measured(s.resourceId)&&!validAnswers(s.pre,s.resourceId))return false;
@@ -55,7 +58,7 @@
    }else throw Error("Invalid transition");
    if(!validate(next))throw Error("Invalid result");return next;
  }
- const clean=s=>({instrument:VERSION,sessionId:s.sessionId,resourceId:s.resourceId,language:s.language,pre:s.pre===null?null:[...s.pre],opened:s.opened,outcome:s.outcome,post:s.post===null?null:[...s.post],feedback:s.feedback===null?null:{utility:s.feedback.utility,clarity:s.feedback.clarity,transfer:s.feedback.transfer,confidence:s.feedback.confidence,action:s.feedback.action}});
+ const clean=s=>({instrument:VERSION,...(s.revision?{revision:s.revision}:{}),...(s.transferEvidence?{transferEvidence:{role:s.transferEvidence.role,answers:[...s.transferEvidence.answers]}}:{}),sessionId:s.sessionId,resourceId:s.resourceId,language:s.language,pre:s.pre===null?null:[...s.pre],opened:s.opened,outcome:s.outcome,post:s.post===null?null:[...s.post],feedback:s.feedback===null?null:{utility:s.feedback.utility,clarity:s.feedback.clarity,transfer:s.feedback.transfer,confidence:s.feedback.confidence,action:s.feedback.action}});
  const pack=sessions=>({schema:1,instrument:VERSION,records:sessions.filter(validate).map(clean)});
  function parse(data){
    if(!data||data.schema!==1||data.instrument!==VERSION||!Array.isArray(data.records)||data.records.length>5000)throw Error("Invalid file");
@@ -68,7 +71,7 @@
        // An exact in-progress prefix may be replaced by the completed version, never a conflicting outcome.
        const older=old.outcome===null?old:c.outcome===null?c:null;
        const newer=older===old?c:old;
-       const same=older&&newer.outcome!==null&&older.resourceId===newer.resourceId&&older.language===newer.language&&JSON.stringify(older.pre)===JSON.stringify(newer.pre)&&older.opened===newer.opened;
+       const same=older&&newer.outcome!==null&&older.resourceId===newer.resourceId&&older.language===newer.language&&older.revision===newer.revision&&JSON.stringify(older.pre)===JSON.stringify(newer.pre)&&older.opened===newer.opened;
        if(same)map.set(c.sessionId,newer);else conflicts.add(c.sessionId);
      }else map.set(c.sessionId,c);
    }
@@ -76,14 +79,15 @@
  }
  function aggregate(input){
    const merged=merge(input),groups=new Map();
-   for(const s of merged.records){const k=s.resourceId+"|"+s.language;const a=groups.get(k)||[];a.push(s);groups.set(k,a);}
+   for(const s of merged.records){const k=s.resourceId+"|"+s.language+"|"+(s.revision||"v1");const a=groups.get(k)||[];a.push(s);groups.set(k,a);}
    const mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
    const rows=[...groups.values()].map(a=>{
      const pairs=a.filter(s=>s.outcome==="completed"&&measured(s.resourceId)&&validAnswers(s.pre,s.resourceId)&&validAnswers(s.post,s.resourceId));
      const completed=a.filter(s=>s.outcome==="completed"), ratings={};
      for(const k of ["utility","clarity","transfer","confidence"]){const v=completed.map(s=>s.feedback[k]).filter(n=>n>0);ratings[k]={n:v.length,mean:mean(v)};}
      const actionCounts=Object.fromEntries(actions.map(k=>[k,completed.filter(s=>s.feedback.action===k).length]));
-     return {resourceId:a[0].resourceId,language:a[0].language,received:a.length,opened:a.filter(s=>s.opened).length,completed:completed.length,partial:a.filter(s=>s.outcome==="partial").length,notAccessed:a.filter(s=>s.outcome==="not_accessed").length,pending:a.filter(s=>s.outcome===null).length,paired:pairs.length,prePct:mean(pairs.map(s=>score(s.pre)*25)),postPct:mean(pairs.map(s=>score(s.post)*25)),gainPp:mean(pairs.map(s=>(score(s.post)-score(s.pre))*25)),ratings,actionCounts};
+     const transfer=completed.filter(s=>validTransfer(s.transferEvidence));const transferPassed=transfer.filter(s=>s.transferEvidence.answers[2]===0&&score(s.transferEvidence.answers)>=2).length;
+     return {resourceId:a[0].resourceId,language:a[0].language,revision:a[0].revision||null,transferN:transfer.length,transferPassed,received:a.length,opened:a.filter(s=>s.opened).length,completed:completed.length,partial:a.filter(s=>s.outcome==="partial").length,notAccessed:a.filter(s=>s.outcome==="not_accessed").length,pending:a.filter(s=>s.outcome===null).length,paired:pairs.length,prePct:mean(pairs.map(s=>score(s.pre)*25)),postPct:mean(pairs.map(s=>score(s.post)*25)),gainPp:mean(pairs.map(s=>(score(s.post)-score(s.pre))*25)),ratings,actionCounts};
    }).sort((a,b)=>a.resourceId.localeCompare(b.resourceId)||a.language.localeCompare(b.language));
    return {rows,conflicts:merged.conflicts,records:merged.records.length};
  }
