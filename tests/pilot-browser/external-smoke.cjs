@@ -378,11 +378,14 @@ async function finish(page,dialog,lang){
  }else if(entry.id==="aero-skills-launchpad"){
  const t=(es,en)=>lang==="es"?es:en;
  await page.goto(origin+prefix+"modules?hubLang="+lang);
- const links=page.locator('a[href*="/modules/"]');await links.first().waitFor({timeout:45000});
+ const links=page.locator('a[href*="/modules/"].group');await links.first().waitFor({timeout:45000});
  const hrefs=await links.evaluateAll(xs=>[...new Set(xs.map(x=>x.href))]);assert.equal(hrefs.length,8);
  const keys=[[0,0,0,0,0,0,0,0],[0,1,0,2],[0,1,1,2],[0,0,1,1],[1,0,0,0],[0,1,0,0],[0,0,0,0],[0,0,0,0]];
+ page.on("response",r=>{const u=new URL(r.url());if(u.pathname.startsWith("/rest/v1/"))console.log("AEROSKILLS API",u.pathname,r.status());});
+ page.on("requestfailed",r=>{const u=new URL(r.url());if(u.pathname.startsWith("/rest/v1/"))console.log("AEROSKILLS FAILED REQUEST",u.pathname,r.failure()?.errorText);});
  for(let i=0;i<hrefs.length;i++){
-   await page.goto(hrefs[i]);const accord=page.locator('button[data-state][aria-controls]');await accord.first().waitFor({timeout:45000});
+   console.log("AEROSKILLS OPEN",i+1,new URL(hrefs[i]).pathname);
+   await page.goto(hrefs[i]);const accord=page.locator('button[data-state][aria-controls]');try{await accord.first().waitFor({timeout:20000});}catch(e){console.log("AEROSKILLS PAGE",page.url(),(await page.locator("body").innerText()).slice(0,3000));console.log("AEROSKILLS ERRORS",errors);throw e;}
    const fields=page.locator('fieldset').filter({has:page.locator('input[type=radio]')});await fields.first().waitFor();
    assert.equal(await fields.count(),keys[i].length);
    for(let j=0;j<keys[i].length;j++)await fields.nth(j).locator("input").nth(keys[i][j]).check();
