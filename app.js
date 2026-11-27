@@ -147,7 +147,7 @@
     const pilotTitle = document.getElementById("pilot-banner-title"), pilotDescription = document.getElementById("pilot-banner-description"), pilotReport = document.getElementById("pilot-report-link");
     if (pilotTitle && pilotDescription && pilotReport) {
       pilotTitle.textContent = state.lang === "en" ? "Pilot · Learning evidence" : "Piloto · Evidencias de aprendizaje";
-      pilotDescription.textContent = state.lang === "en" ? "Open any learning resource normally: its initial assessment, final assessment and survey are built into the experience. The library measures consultation usefulness." : "Abre cualquier recurso formativo normalmente: su evaluación inicial, final y encuesta están dentro de la propia experiencia. La biblioteca mide utilidad de consulta.";
+      pilotDescription.textContent = state.lang === "en" ? "Open learning resources normally: initial and final assessments and the survey are built into the experience. ASRI is awaiting an update. The library measures consultation usefulness." : "Abre los recursos formativos normalmente: las evaluaciones inicial y final y la encuesta están dentro de la experiencia. ASRI está pendiente de actualización. La biblioteca mide utilidad de consulta.";
       pilotReport.textContent = state.lang === "en" ? "Consolidate pilot results" : "Consolidar resultados del piloto";
       pilotReport.href = "pilot-assessment/report.html?lang=" + state.lang;
     }
