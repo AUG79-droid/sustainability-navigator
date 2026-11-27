@@ -106,6 +106,20 @@ async function finish(page,dialog,lang){
    await click("#confirmInvestment");await click("#nextIncident");await click("#missionDebriefNext");
  }
  await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY:",missions,"readiness missions",entry.repo,lang);
+ }else if(entry.id==="tas-sustainability-knowledge-check"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:15000});
+ await click('[data-mode="full"]');let questions=0;
+ while(!(await page.locator(".results-summary.panel").isVisible())){
+   assert.ok(questions++<55,"Assessment did not reach its result");
+   await click('[data-answer]');await click('[data-action="next"]');
+   if(await page.locator('[data-action="continue-block"]').isVisible())await click('[data-action="continue-block"]');
+ }
+ assert.equal(questions,50);await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: full 50-question assessment",entry.repo,lang);
+ }else if(entry.id==="sustainability-control-room"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:15000});
+ const modes=page.locator("#modeGrid [data-decisions]");await modes.first().waitFor();const counts=(await modes.evaluateAll(a=>a.map(x=>Number(x.dataset.decisions))));const count=Math.max(...counts);await click('[data-decisions="'+count+'"]');await click("#startMissionBtn");
+ for(let i=0;i<count;i++){await click("#answers .answer");await click("#confirmBtn");await click("#nextBtn");}
+ await page.locator("#resultScreen.active").waitFor();await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY:",count,"timed decisions",entry.repo,lang);
  }else if(config.manual){
  await native.locator(".dock button").click();await finish(page,dialog,lang);
  console.log("Manual consultation feedback completed",entry.repo,lang);
