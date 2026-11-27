@@ -120,6 +120,55 @@ async function finish(page,dialog,lang){
  const modes=page.locator("#modeGrid [data-decisions]");await modes.first().waitFor();const counts=(await modes.evaluateAll(a=>a.map(x=>Number(x.dataset.decisions))));const count=Math.max(...counts);await click('[data-decisions="'+count+'"]');await click("#startMissionBtn");
  for(let i=0;i<count;i++){await click("#answers .answer");await click("#confirmBtn");await click("#nextBtn");}
  await page.locator("#resultScreen.active").waitFor();await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY:",count,"timed decisions",entry.repo,lang);
+ }else if(entry.id==="sustainable-aviation-essentials"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:15000});
+ await click('[data-open="m1"]');
+ for(let i=1;i<=8;i++){
+   const section=page.locator('#m'+i+'.active');await section.waitFor();
+   const qs=await section.locator(".activity .question").all();assert.ok(qs.length);
+   for(const q of qs)await q.locator('.choice[data-correct="true"]').click();
+   await section.locator(".completeModule").click();
+   await section.locator(".completion.show").waitFor();
+   if(i<8)await section.locator('[data-open="m'+(i+1)+'"]').click();
+ }
+ await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: eight modules and final war room",entry.repo,lang);
+ }else if(entry.id==="sustainability-evidence-decisions"){
+ await page.locator("#nav-program").click();
+ const total=await page.locator("#program-view .open-btn").count();assert.ok(total>0);
+ for(let i=0;i<total;i++){
+   await page.locator("#program-view .open-btn").nth(i).click();
+   const groups=page.locator("#module-view .choice-wrap");await groups.first().waitFor();
+   const count=await groups.count();assert.ok(count>=2);
+   for(let j=0;j<count;j++){
+     const g=groups.nth(j),opts=g.locator(".choice-option");let solved=false;
+     for(let k=0;k<await opts.count();k++){
+       await opts.nth(k).click();await g.locator(".choice-submit").click();
+       if(await g.locator(".choice-feedback.correct").isVisible()){solved=true;break;}
+     }
+     assert.ok(solved,"No correct response in module "+i+" exercise "+j);
+   }
+   if(i<total-1)await page.locator("#nav-program").click();
+ }
+ await page.locator('[data-sn-pilot-complete="true"]').waitFor();await finish(page,dialog,lang);
+ console.log("REAL COMPLETE JOURNEY:",total,"modules including practical cases and quizzes",entry.repo,lang);
+ }else if(entry.id==="introduction-sustainability-aviation"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:15000});
+ await click("#overviewBtn");let modules=0;
+ while(!(await page.locator('[data-go="assessment"]').filter({visible:true}).count())){
+   assert.ok(modules++<10,"Course failed to unlock assessment");
+   const current=page.locator('.route-card.current [data-go^="module-"]');await current.first().click();
+   for(const attr of ["data-case-option","data-check-option"]){
+     const opts=page.locator('['+attr+']');await opts.first().waitFor();let solved=false;
+     for(let k=0;k<await opts.count();k++){await opts.nth(k).click();if(await page.locator('['+attr+'].correct').isVisible()){solved=true;break;}}
+     assert.ok(solved,"No correct answer for "+attr);
+   }
+   await click("#completeModule");
+   await page.locator(".route-card").first().waitFor();
+ }
+ assert.equal(modules,8);await click('[data-go="assessment"]');
+ const answers=[0,0,1,1,1,1,0,1,1,1];for(let i=0;i<answers.length;i++)await click('[data-final-q="'+i+'"][data-final-option="'+answers[i]+'"]');
+ await click("#submitFinal");await page.locator("#printCertificate").waitFor();await finish(page,dialog,lang);
+ console.log("REAL COMPLETE JOURNEY: eight milestones and ten-question final exam",entry.repo,lang);
  }else if(config.manual){
  await native.locator(".dock button").click();await finish(page,dialog,lang);
  console.log("Manual consultation feedback completed",entry.repo,lang);
