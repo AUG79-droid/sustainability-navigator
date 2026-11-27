@@ -22,7 +22,7 @@ jobs:
       - name: Validate governed content
         env:
           GOVERNANCE_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || 'HEAD^' }}
-        run: node governance/check-content.cjs --report
+        run: node governance/check-content.cjs --report --verbose
       - name: Run complete automated test suite
         run: node --test tests/*.test.cjs
       - name: Upload maintainer report
@@ -34,7 +34,6 @@ jobs:
           if-no-files-found: warn
 
   pilot-browser:
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -47,6 +46,9 @@ jobs:
           tests/pilot-browser/node_modules/.bin/playwright install --with-deps chromium
       - name: Exercise pilot in Chromium
         run: node tests/pilot-browser/smoke.cjs
+      - name: Verify real internal journeys and complete dashboard coverage
+        if: always()
+        run: node tests/pilot-browser/full-internal-and-consolidation.cjs
 
   native-source-audit:
     if: github.event_name == 'pull_request'
