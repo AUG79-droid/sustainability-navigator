@@ -88,7 +88,6 @@
    const raw=resource(id)?.launches?.[lang];if(!raw||!supported(id))throw Error("Unknown resource");
    const url=new URL(raw,rootURL);if(!["https:","http:"].includes(url.protocol))throw Error("Unsafe launch");
    if(id==="airbus-strategic-resilience-intelligence")url.searchParams.set("hubLang",lang);
-   if(id==="bio-inspired-innovation-lab")url.searchParams.set("hubAssessment",VERSION);
    return url.href;
  }
  return {VERSION,KEY,LIBRARY,resources,resource,supported,measured,forms,newSession,validate,transition,score,validFeedback,pack,parse,merge,aggregate,launchURL};

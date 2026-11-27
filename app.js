@@ -147,7 +147,7 @@
     const pilotTitle = document.getElementById("pilot-banner-title"), pilotDescription = document.getElementById("pilot-banner-description"), pilotReport = document.getElementById("pilot-report-link");
     if (pilotTitle && pilotDescription && pilotReport) {
       pilotTitle.textContent = state.lang === "en" ? "Pilot · Learning evidence" : "Piloto · Evidencias de aprendizaje";
-      pilotDescription.textContent = state.lang === "en" ? "Choose the assessed entry to measure knowledge before and after and rate professional usefulness. Direct access remains available." : "Elige el acceso con evaluación para medir conocimientos antes y después y valorar la utilidad profesional. El acceso directo sigue disponible.";
+      pilotDescription.textContent = state.lang === "en" ? "Open any learning resource normally: its initial assessment, final assessment and survey are built into the experience. The library measures consultation usefulness." : "Abre cualquier recurso formativo normalmente: su evaluación inicial, final y encuesta están dentro de la propia experiencia. La biblioteca mide utilidad de consulta.";
       pilotReport.textContent = state.lang === "en" ? "Consolidate pilot results" : "Consolidar resultados del piloto";
       pilotReport.href = "pilot-assessment/report.html?lang=" + state.lang;
     }
