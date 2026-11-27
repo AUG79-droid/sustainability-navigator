@@ -385,13 +385,13 @@ async function finish(page,dialog,lang){
  page.on("requestfailed",r=>{const u=new URL(r.url());if(u.pathname.startsWith("/rest/v1/"))console.log("AEROSKILLS FAILED REQUEST",u.pathname,r.failure()?.errorText);});
  for(let i=0;i<hrefs.length;i++){
    console.log("AEROSKILLS OPEN",i+1,new URL(hrefs[i]).pathname);
-   await page.goto(hrefs[i]);const accord=page.locator('section').filter({has:page.getByRole('heading',{name:t('Lecciones','Lessons'),exact:true})}).locator('button').filter({hasText:/^\s*\d{2}/});try{await accord.first().waitFor({timeout:20000});}catch(e){console.log("AEROSKILLS PAGE",page.url(),(await page.locator("body").innerText()).slice(0,3000));console.log("AEROSKILLS ERRORS",errors);throw e;}
+   await page.goto(hrefs[i]);const accord=page.locator('section').filter({has:page.getByRole('heading',{name:t('Lecciones','Lessons'),exact:true})}).locator('button:has(> div > span.font-mono)');try{await accord.first().waitFor({timeout:20000});}catch(e){console.log("AEROSKILLS PAGE",page.url(),(await page.locator("body").innerText()).slice(0,3000));console.log("AEROSKILLS ERRORS",errors);throw e;}
    const fields=page.locator('fieldset').filter({has:page.locator('input[type=radio]')});await fields.first().waitFor();
    assert.equal(await fields.count(),keys[i].length);
    for(let j=0;j<keys[i].length;j++)await fields.nth(j).locator("input").nth(keys[i][j]).check();
    await page.getByRole("button",{name:t("Enviar respuestas","Submit answers"),exact:true}).click();
    await page.getByText(t("Evaluación superada","Assessment passed"),{exact:true}).waitFor({timeout:30000});
-   for(let j=0;j<await accord.count();j++){await accord.nth(j).click();await page.getByRole("button",{name:t("Marcar la lección como completada","Mark lesson as complete"),exact:true}).click();}
+   const lessonCount=await accord.count();assert.ok(lessonCount>0);for(let j=0;j<lessonCount;j++){const trigger=accord.nth(j);await trigger.click();const mark=page.getByRole("button",{name:t("Marcar la lección como completada","Mark lesson as complete"),exact:true});try{await mark.click({timeout:10000});}catch(e){console.log("AEROSKILLS LESSON",j+1,(await trigger.getAttribute("aria-expanded")),(await page.locator("body").innerText()).slice(0,2000));throw e;}console.log("AEROSKILLS LESSON MARKED",i+1,j+1,lang);}
    console.log("AEROSKILLS MODULE COMPLETE",i+1,lang);
  }
  await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: eight modules with actual grading service",entry.repo,lang);
