@@ -23,7 +23,7 @@ jobs:
         with:
           persist-credentials: false
       - id: list
-        run: node -e 'const m=require("./tests/native-integrations.json");console.log("entries="+JSON.stringify(m.external.filter(e=>["static","vite","biolab"].includes(e.kind) && (process.env.GITHUB_EVENT_NAME!=="push" || ["noise-habitat-missions","bio-inspired-innovation-lab"].includes(e.id)))))' >> "$GITHUB_OUTPUT"
+        run: node -e 'const m=require("./tests/native-integrations.json");console.log("entries="+JSON.stringify(m.external.filter(e=>["static","vite","biolab","tanstack","next"].includes(e.kind) && (process.env.GITHUB_EVENT_NAME!=="push" || ["esg-essentials-air-power-services","aero-skills-launchpad","advanced-sustainability-air-power-services"].includes(e.id)))))' >> "$GITHUB_OUTPUT"
   validate:
     needs: matrix
     runs-on: ubuntu-24.04
@@ -42,7 +42,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
       - name: Fetch pinned candidate
         shell: bash
         run: |
@@ -62,6 +62,15 @@ jobs:
           if [ "$APP_KIND" = asri ]; then dir="$dir/app"; fi
           if [ "$APP_KIND" = static ]; then
             echo "APP_SITE=$dir" >> "$GITHUB_ENV"
+          elif [ "$APP_KIND" = tanstack ]; then
+            (cd "$dir"; npm install --no-audit --no-fund; npm run build -- --base=/"$APP_REPO"/)
+            test -f "$dir/.output/public/_shell.html"
+            cp "$dir/.output/public/_shell.html" "$dir/.output/public/index.html"
+            echo "APP_SITE=$dir/.output/public" >> "$GITHUB_ENV"
+          elif [ "$APP_KIND" = next ]; then
+            (cd "$dir"; npm install --no-audit --no-fund; npx next build)
+            test -f "$dir/out/index.html"
+            echo "APP_SITE=$dir/out" >> "$GITHUB_ENV"
           else
             (cd "$dir"; npm install --no-audit --no-fund; npm run build)
             test -f "$dir/dist/index.html"

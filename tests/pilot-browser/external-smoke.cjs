@@ -28,7 +28,7 @@ async function finish(page,dialog,lang){
  const languages=config?.fixedLanguage?[config.fixedLanguage]:entry.kind==="biolab"?[entry.repo.endsWith("-en")?"en":"es"]:["es","en"];
  for(const lang of languages){
  const context=await browser.newContext({acceptDownloads:true,viewport:{width:1280,height:900}});
- await context.route("**/*",r=>r.request().url().startsWith(origin)?r.continue():r.abort());
+ await context.route("**/*",r=>{const q=r.request(),u=new URL(q.url());return q.url().startsWith(origin)||(entry.kind==="tanstack"&&u.protocol==="https:"&&u.pathname.startsWith("/rest/v1/")&&((q.method()==="GET"&&/\/rest\/v1\/(modules|quizzes|quiz_questions|quiz_options)$/.test(u.pathname))||(q.method()==="POST"&&u.pathname==="/rest/v1/rpc/grade_quiz")))?r.continue():r.abort();});
  const page=await context.newPage(),errors=[];
  page.on("pageerror",e=>errors.push(e.message));
  await page.goto(origin+prefix+"?hubLang="+lang,{waitUntil:"domcontentloaded"});
@@ -314,6 +314,84 @@ async function finish(page,dialog,lang){
  await click("#brief4Go");for(let i=0;i<3;i++)await click("#m4Next");await click('[data-window4="buffer"]');await click("#m4Confirm");await click("#finish4");await click(".completionButton,.theoryLaunch");await click("#theoryNext");
  await click("#brief5Go");for(let i=0;i<4;i++)await click("#m5Next");await click('[data-finding5="recheck"]');await click("#m5FindingNext");await click("[data-action5]");await click("#m5ActionNext");await click("#finish5");await click(".completionButton,.theoryLaunch");await click("#theoryNext");
  await click("#brief6Go");for(let i=0;i<5;i++)await click("#m6Next");await click('[data-conclusion6="evidence"]');await click("#m6Confirm");await click("#theory6Go");await click("#theoryNext");await page.locator(".finalCelebration").waitFor();await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: six noise and habitat missions",entry.repo,lang);
+ }else if(entry.id==="esg-essentials-air-power-services"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:20000});
+ const nav=async h=>{await page.goto(origin+prefix+"?hubLang="+lang+"#"+h);};
+ const section=async v=>{await page.locator(".reader-content").waitFor();};
+ const questions=async(review=false)=>{
+   const buttons=page.locator(".question-nav button");await buttons.first().waitFor();
+   for(let i=0;i<await buttons.count();i++){
+     await buttons.nth(i).click();const radios=page.locator(".assessment input[type=radio]");
+     await radios.first().check();
+     if(!review)await click(".assessment form button.primary");
+     if(!(await buttons.nth(i).evaluate(e=>e.classList.contains("done")))){
+       await radios.nth(1).check();if(!review)await click(".assessment form button.primary");
+     }
+     await page.waitForFunction(i=>document.querySelectorAll(".question-nav button")[i]?.classList.contains("done"),i);
+   }
+ };
+ for(let i=0;i<9;i++){
+   const id=String(i).padStart(2,"0");
+   for(const v of ["opening","theory","visuals","scenario","activity","check","close"]){
+     await nav("/module/"+id+"/"+v);await section(v);
+     if(v==="activity"){
+       if(i===0){const boxes=page.locator(".compass-panel input[type=checkbox]");for(let j=0;j<4;j++)await boxes.nth(j).check();await page.locator(".compass-panel select").selectOption({index:1});await click(".compass-panel form button.primary");}
+       else{const selects=page.locator(".evidence-workbench select");for(const s of await selects.all())await s.selectOption({index:1});await page.locator(".evidence-workbench textarea").fill("Synthetic QA: technical owner verifies bounded evidence and reviews uncertainty before approval.");await click(".evidence-workbench button.primary");}
+     }
+     if(v==="check")await questions();
+     if(v==="close"){await click(i===0?".completion-box button.primary":".source-panel button.primary");}
+   }
+   console.log("ESG MODULE COMPLETE",id,lang);
+ }
+ await nav("/lab/opening");await page.locator(".lab-opening").waitFor();await nav("/lab/visuals");await page.locator(".native-visual-grid").waitFor();
+ const counts=[2,2,2,5,4,4,5,10];
+ for(let i=1;i<=8;i++){
+   await nav("/lab/"+i);const boxes=page.locator(".decision-panel input[type=checkbox]");await boxes.first().waitFor();
+   for(let j=0;j<counts[i-1];j++)await boxes.nth(j).check();
+   if(i===8)for(const f of await page.locator(".record-form textarea").all())await f.fill("Synthetic QA record: compare the reference, verify source evidence, document constraints and obtain authorised technical review.");
+   await click(".decision-panel button.primary");await page.locator(".decision-panel .feedback").waitFor();
+ }
+ await nav("/lab/debrief");await click(".completion-actions button.primary");await nav("/lab/review");await questions(true);
+ await nav("/lab/complete");await page.locator(".course-complete").waitFor();await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: ten ESG modules and eight-stage capstone",entry.repo,lang);
+ }else if(entry.id==="advanced-sustainability-air-power-services"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:20000});
+ await click(".mission-start");let modules=0;
+ while(!(await page.locator('[data-sn-pilot-complete=true]').count())){
+   assert.ok(modules++<30);await page.locator(".rail nav button").first().waitFor();
+   const sections=await page.locator(".rail nav button").count();
+   for(let i=0;i<sections;i++){
+     await page.locator(".rail nav button").nth(i).click();
+     if(i===sections-1){
+       const qs=page.locator(".quiz fieldset");await qs.first().waitFor();
+       for(const q of await qs.all()){await q.locator("input").first().check();const correct=q.locator("label.correct input");await correct.check();}
+       await click(".lesson-footer button.primary");
+     }else{
+       const qs=page.locator(".content fieldset").filter({has:page.locator('input[type=radio]')});
+       for(const q of await qs.all())await q.locator('input[type=radio]').first().check();
+       const buttons=page.locator(".content article button:enabled").filter({hasText:/comprobar|verificar|check|confirm|evaluar|validate/i});
+       if(await buttons.count())await buttons.first().click();
+     }
+   }
+   console.log("ADVANCED MODULE COMPLETE",modules,lang);
+ }
+ await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY:",modules,"advanced modules and exams",entry.repo,lang);
+ }else if(entry.id==="aero-skills-launchpad"){
+ const t=(es,en)=>lang==="es"?es:en;
+ await page.goto(origin+prefix+"modules?hubLang="+lang);
+ const links=page.locator('a[href*="/modules/"]');await links.first().waitFor({timeout:45000});
+ const hrefs=await links.evaluateAll(xs=>[...new Set(xs.map(x=>x.href))]);assert.equal(hrefs.length,8);
+ const keys=[[1,2,1,0],[0,1,0,2],[0,1,1,2],[0,0,1,1],[1,0,0,0],[0,1,0,0],[0,0,0,0],[0,0,0,0]];
+ for(let i=0;i<hrefs.length;i++){
+   await page.goto(hrefs[i]);const accord=page.locator('button[data-state][aria-controls]');await accord.first().waitFor({timeout:45000});
+   const fields=page.locator('fieldset').filter({has:page.locator('input[type=radio]')});await fields.first().waitFor();
+   assert.equal(await fields.count(),keys[i].length);
+   for(let j=0;j<keys[i].length;j++)await fields.nth(j).locator("input").nth(keys[i][j]).check();
+   await page.getByRole("button",{name:t("Enviar respuestas","Submit answers"),exact:true}).click();
+   await page.getByText(t("Evaluación superada","Assessment passed"),{exact:true}).waitFor({timeout:30000});
+   for(let j=0;j<await accord.count();j++){await accord.nth(j).click();await page.getByRole("button",{name:t("Marcar la lección como completada","Mark lesson as complete"),exact:true}).click();}
+   console.log("AEROSKILLS MODULE COMPLETE",i+1,lang);
+ }
+ await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: eight modules with actual grading service",entry.repo,lang);
  }else if(config.manual){
  await native.locator(".dock button").click();await finish(page,dialog,lang);
  console.log("Manual consultation feedback completed",entry.repo,lang);
