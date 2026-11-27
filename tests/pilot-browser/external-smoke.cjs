@@ -31,7 +31,7 @@ async function finish(page,dialog,lang,resourceId=entry.id){
  await context.route("**/*",r=>{const q=r.request(),u=new URL(q.url());return q.url().startsWith(origin)||(entry.kind==="tanstack"&&u.protocol==="https:"&&u.pathname.startsWith("/rest/v1/")&&((q.method()==="GET"&&/\/rest\/v1\/(modules|quizzes|quiz_questions|quiz_options)$/.test(u.pathname))||(q.method()==="POST"&&u.pathname==="/rest/v1/rpc/grade_quiz")))?r.continue():r.abort();});
  const page=await context.newPage(),errors=[];
  page.on("pageerror",e=>errors.push(e.message));
- await page.goto(origin+prefix+"?hubLang="+lang+(track==="climate"?"&track=climate":""),{waitUntil:"domcontentloaded"});
+ await page.goto(origin+prefix+"?hubLang="+lang+(track==="climate"&&!entry.climateEdition?"&track=climate":""),{waitUntil:"domcontentloaded"});
  if(entry.kind==="biolab"){
  await context.close();
  const bio=require("../../pilot-assessment/biolab-results.js");
@@ -72,6 +72,18 @@ async function finish(page,dialog,lang,resourceId=entry.id){
  continue;
  }
  const native=page.locator("#sn-native-learning-evidence"),dialog=native.locator("dialog");
+ if(entry.climateEdition){
+   await page.getByTestId("mode-general").waitFor();await page.getByTestId("mode-climate").waitFor();
+   assert.equal(await page.locator(".start-button").isDisabled(),true);
+   assert.equal(await dialog.isVisible(),false);
+   await page.getByTestId("mode-"+track).click();
+   await page.waitForURL(u=>u.searchParams.get("track")===track);
+   await page.getByTestId("mode-"+track).waitFor();
+   assert.equal(await page.getByTestId("mode-"+track).getAttribute("aria-current"),"true");
+   assert.equal(await dialog.isVisible(),false);
+   await page.locator(".start-button").click();
+   assert.equal(await page.locator(".setup-page").isVisible(),true);
+ }
  await dialog.waitFor({state:"visible",timeout:45000});
  assert.equal(await dialog.getAttribute("lang"),lang);
  assert.equal(await dialog.locator("fieldset").count(),model.measured(entry.id)?4:0);
@@ -277,7 +289,7 @@ async function finish(page,dialog,lang,resourceId=entry.id){
  const graph=Array.from({length:43},()=>[]),link=(a,b)=>{graph[a].push(b);graph[b].push(a);};
  for(let i=0;i<6;i++){link(0,1+i*3);link(1+i*3,2+i*3);link(2+i*3,3+i*3);link(3+i*3,19+i);link(19+i,25+i*3);link(25+i*3,26+i*3);link(26+i*3,27+i*3);link(27+i*3,19+((i+1)%6));}
  const dist=(start,targets)=>{const q=[[start,0]],seen=new Set([start]);while(q.length){const [n,d]=q.shift();if(targets.includes(n))return d;for(const v of graph[n])if(!seen.has(v)){seen.add(v);q.push([v,d+1]);}}return 999;};
- await click(".start-button");await page.waitForFunction(k=>!!localStorage.getItem(k),key);
+ await page.waitForFunction(k=>JSON.parse(localStorage.getItem(k)||"{}").phase==="rolling",key);assert.equal(await page.locator(".setup-page").count(),0);
  let rolls=0,answers=0,iterations=0;
  while(!(await page.locator(".victory-page").isVisible())){
    assert.ok(iterations++<700,"Game did not reach victory through normal moves");

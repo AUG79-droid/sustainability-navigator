@@ -244,7 +244,7 @@
     {
       "repo": "trivia-airbus-quest",
       "id": "tas-sustainability-quest",
-      "commit": "1e9fa3acf91266b814a1c7355d01db82f2936343",
+      "commit": "fc49a728cf52467d15b1f47bed725bc7f5e564b9",
       "script": "public/learning-evidence.js",
       "entry": "index.html",
       "kind": "vite",
@@ -253,7 +253,7 @@
     {
       "repo": "trivia-airbus-quest-en",
       "id": "tas-sustainability-quest",
-      "commit": "b18a2449f48760f5482df4218f45f813e0ee8561",
+      "commit": "36add8dc7e733aca19176cfa64b966b99ba5a175",
       "script": "public/learning-evidence.js",
       "entry": "index.html",
       "kind": "vite",
