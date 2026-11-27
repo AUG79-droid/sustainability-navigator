@@ -303,6 +303,16 @@ async function finish(page,dialog,lang){
  }
  const won=await read();assert.equal(won.phase,"victory");assert.ok(won.players[0].wedges.every(Boolean));
  await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: six badges and final challenge",entry.repo,lang,"rolls",rolls,"answers",answers);
+ }else if(entry.id==="noise-habitat-missions"){
+ const click=async s=>page.locator(s).filter({visible:true}).first().click({timeout:20000});
+ await click('button.hit[aria-label="Start campaign briefing"],button.hit[aria-label*="campaña"]');await click("#introStart");await click("#briefGo");
+ await click('button.hit[aria-label*="GR-774A"]');await click('button.hit[aria-label="Deploy squad"],button.hit[aria-label="Desplegar equipo"]');
+ await click("[data-choice]");await click("#confirmDecision1");await click("#finish1");await click(".theoryLaunch");await click("#theoryNext");
+ await click("#brief2Go");for(let i=0;i<3;i++)await click("#m2Next");await click('[data-choose-route="c"]');await click("#finish2");await click(".theoryLaunch");await click("#theoryNext");
+ await click("#brief3Go");for(let i=0;i<3;i++)await click("#m3Next");await click("[data-response3]");await click("#m3Confirm");await click("#finish3");await click(".theoryLaunch");await click("#theoryNext");
+ await click("#brief4Go");for(let i=0;i<3;i++)await click("#m4Next");await click('[data-window4="buffer"]');await click("#m4Confirm");await click("#finish4");await click(".theoryLaunch");await click("#theoryNext");
+ await click("#brief5Go");for(let i=0;i<4;i++)await click("#m5Next");await click('[data-finding5="recheck"]');await click("#m5FindingNext");await click("[data-action5]");await click("#m5ActionNext");await click("#finish5");await click(".theoryLaunch");await click("#theoryNext");
+ await click("#brief6Go");for(let i=0;i<5;i++)await click("#m6Next");await click('[data-conclusion6="evidence"]');await click("#m6Confirm");await click("#theory6Go");await click("#theoryNext");await page.locator(".finalCelebration").waitFor();await finish(page,dialog,lang);console.log("REAL COMPLETE JOURNEY: six noise and habitat missions",entry.repo,lang);
  }else if(config.manual){
  await native.locator(".dock button").click();await finish(page,dialog,lang);
  console.log("Manual consultation feedback completed",entry.repo,lang);
