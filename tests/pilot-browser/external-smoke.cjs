@@ -33,9 +33,44 @@ async function finish(page,dialog,lang){
  page.on("pageerror",e=>errors.push(e.message));
  await page.goto(origin+prefix+"?hubLang="+lang,{waitUntil:"domcontentloaded"});
  if(entry.kind==="biolab"){
- await page.locator("body").waitFor();await page.waitForTimeout(700);
- assert.ok((await page.locator("body").innerText()).length>100);assert.deepEqual(errors,[]);
- console.log("BioLab built entry loaded; track assessment covered by its own integration tests",entry.repo);await context.close();continue;
+ await context.close();
+ const bio=require("../../pilot-assessment/biolab-results.js");
+ const t=(es,en)=>lang==="es"?es:en;
+ for(const track of ["general","climate","resilience"]){
+   const c=await browser.newContext({acceptDownloads:true,viewport:{width:1440,height:1000},reducedMotion:"reduce"}),p=await c.newPage(),errs=[];
+   try{
+     await c.route("**/*",r=>r.request().url().startsWith(origin)?r.continue():r.abort());p.on("pageerror",e=>errs.push(e.message));
+     await p.goto(origin+prefix+"?hubLang="+lang);
+     const button=async name=>p.getByRole("button",{name,exact:true}).first().click({timeout:20000});
+     if(track==="general")await p.locator("button.biolab-btn-accent").last().click();
+     else await button(track==="climate"?t("Empezar adaptación climática","Start climate adaptation"):t("Empezar resiliencia estratégica","Start strategic resilience"));
+     await button(t("Formar los equipos","Form teams"));await p.getByRole("textbox").first().fill("Synthetic QA team");
+     await button(t("Añadir","Add"));await button(t("Asignar retos","Assign challenges"));
+     const pre=p.locator("fieldset");await pre.first().waitFor();assert.equal(await pre.count(),4);for(const f of await pre.all())await f.locator('input[type="radio"]').first().check();
+     await button(t("Guardar evaluación","Save assessment"));
+     if(track==="general")await p.locator(".biolab-wheel-panel .biolab-btn-accent").click();
+     else await p.locator('button[aria-pressed].biolab-btn-ghost').filter({visible:true}).nth(2).click();
+     await button(t("Confirmar reto","Confirm challenge"));
+     await p.getByRole("button",{name:t("Elegir este modelo","Choose this model"),exact:true}).first().click();
+     await button(t("Ir al paso 4: conectar reto y principio","Go to step 4: connect challenge and principle"));
+     await button(t("Ir al paso 5: abrir el lienzo","Go to step 5: open the canvas"));
+     const fields=p.locator("textarea");await fields.first().waitFor();assert.equal(await fields.count(),6);
+     const answers=["The fictional system is exposed to recurring environmental pressure, so we need to identify the physical mechanism and the service function at risk.","The selected living organism offers a functional analogy that must be examined rather than copied merely for appearance or assumed performance.","A bounded design principle is to modify the interface to manage exposure while maintaining the function, and compare the mechanism against a reference.","A candidate prototype would be assessed against an unmodified reference through controlled tests, including degradation, maintenance and failure modes.","The anticipated benefit is reduced vulnerability, not a proven performance improvement; define a measurable baseline and compare under identical conditions.","Establish technical ownership, applicable requirements and independent review before any implementation; record uncertainties and test results."];
+     for(let i=0;i<6;i++)await fields.nth(i).fill(answers[i]);
+     await button(t("Ya he redactado los seis apartados · Preparar presentación →","I have written all six sections · Prepare my pitch →"));
+     await p.getByRole("textbox").first().fill("Bounded biomimetic prototype evaluation");
+     await p.locator("textarea").fill("This fictional proposal compares a natural functional mechanism with a reference design. We would test environmental exposure, durability and maintainability using bounded measurements, document the uncertainties and obtain authorised technical review before implementation.");
+     await button(t("Ir al paso 7: revisar propuestas","Go to step 7: review proposals"));
+     await button(t("Ver mi resultado y compararlo con la solución de referencia","See results and compare with a reference"));
+     const post=p.locator("fieldset");await post.first().waitFor();assert.equal(await post.count(),4);for(const f of await post.all())await f.locator('input[type="radio"]').first().check();
+     for(const sel of await p.locator("select").all()){const values=await sel.locator("option").evaluateAll(os=>os.map(o=>o.value));await sel.selectOption(values.includes("4")?"4":"seek_evidence");}
+     await button(t("Guardar evaluación","Save assessment"));
+     const pending=p.waitForEvent("download");await button(t("Exportar resultados sin nombre (JSON)","Export unnamed results (JSON)"));
+     const record=bio.parse(JSON.parse(fs.readFileSync(await (await pending).path(),"utf8")))[0];assert.equal(record.track,track);assert.equal(record.language,lang);assert.equal(record.maxScore,4);assert.ok(record.challengeId);assert.deepEqual(errs,[]);
+     console.log("REAL COMPLETE BIOLAB JOURNEY",track,lang,record.challengeId);
+   }finally{await c.close();}
+ }
+ continue;
  }
  const native=page.locator("#sn-native-learning-evidence"),dialog=native.locator("dialog");
  await dialog.waitFor({state:"visible",timeout:45000});
@@ -219,7 +254,7 @@ async function finish(page,dialog,lang){
  // Read the course's existing content model; never write to its progress or dispatch completion.
  const course=await page.evaluate(()=>{const d=window.FOUNDATIONS_ACTIVE_DATA||window.FOUNDATIONS_DATA;return {modules:d.modules.map(m=>({id:m.id,lessons:m.lessons.length,lab:m.lab.questions.map(q=>q.correct),assessment:m.assessmentQuestions.map(q=>q.correct)})),final:d.finalAssessment.questions.map(q=>q.correct)};});
  assert.equal(course.modules.length,6);
- const nav=async hash=>{await click('a[href="#'+hash+'"]');await page.waitForURL('**/#'+hash);};
+ const nav=async hash=>{await page.goto(origin+prefix+"?hubLang="+lang+"#"+hash);await page.waitForURL(u=>u.hash==="#"+hash);};
  for(const m of course.modules){
    await nav("course");await nav("module/"+m.id);
    const paths=Array.from({length:m.lessons},(_,i)=>"lesson/"+m.id+"/"+i);
@@ -229,7 +264,7 @@ async function finish(page,dialog,lang){
    for(let i=0;i<m.lab.length;i++)await click('[data-action="lab-answer"][data-question="'+i+'"][data-index="'+m.lab[i]+'"]');
    await nav("assessment/"+m.id);
    for(let i=0;i<m.assessment.length;i++)await click('[data-action="assessment-answer"][data-question="'+i+'"][data-index="'+m.assessment[i]+'"]');
-   await page.locator(".result-banner.passed").waitFor();
+   await page.locator(".result-banner.passed").waitFor();assert.equal(await dialog.isVisible(),false,"Final assessment must not open after an individual module");
  }
  await nav("capstone");const notes=page.locator("textarea[data-note]");for(const n of await notes.all())await n.fill("Synthetic browser test: evaluate a bounded decision using evidence, trade-offs and authorised review.");
  await nav("final-check");
