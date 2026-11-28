@@ -11,7 +11,7 @@
 
   const ui = {
     es: {
-      contributionEyebrow: "Aprendizaje aplicado", contributionIntro: "Descubre cómo una decisión de tu área puede reducir una vulnerabilidad, qué evidencia necesitas y qué recurso practicar a continuación.", contributionOpen: "Explorar mi contribución →",
+      contributionEyebrow: "Aprendizaje aplicado", contributionIntro: "Descubre cómo una decisión de tu área puede reducir una vulnerabilidad, qué evidencia necesitas y qué recurso practicar a continuación.", contributionOpen: "Explorar mi contribución →", climateOpen: "Explorar adaptación climática →",
       prototype: "Hub de aprendizaje", eyebrow: "Explorar · Aprender · Practicar · Evaluar",
       heroLead: "Busca conocimiento o elige una experiencia de aprendizaje para avanzar en sostenibilidad aeronáutica.",
       searchLabel: "Buscar en el Navigator", searchButton: "Buscar", tryLabel: "Prueba:",
@@ -40,7 +40,7 @@
       navHome: "Inicio", navKnowledge: "Conocimiento", navApplications: "Catálogo", navCourses: "Cursos",
       navPaths: "Rutas de aprendizaje", navProgress: "Mi progreso", navAbout: "Acerca de", learningStart: "Empieza aquí",
       learningIntentionsTitle: "¿Cómo quieres aprender hoy?",
-      learningIntentionsIntro: "Elige una intención para ver una selección del catálogo o utiliza los filtros avanzados para explorar los 33 recursos.",
+      learningIntentionsIntro: "Elige una intención para ver una selección del catálogo o utiliza los filtros avanzados para explorar los 34 recursos.",
       learningPathsEyebrow: "Progresiones guiadas", learningPathsTitle: "Rutas de aprendizaje",
       learningPathsIntro: "Compara seis progresiones construidas exclusivamente con los recursos existentes y abre la secuencia que mejor encaje con tu objetivo.",
       interactiveLearning: "Catálogo completo", applicationsTitle: "Todos los recursos de aprendizaje",
@@ -49,7 +49,7 @@
       knowledgeIntro: "Busca conceptos, preguntas frecuentes y referencias conectadas con los mismos seis pilares del catálogo de aprendizaje."
     },
     en: {
-      contributionEyebrow: "Applied learning", contributionIntro: "Discover how a decision in your area could reduce a vulnerability, what evidence you need and which resource to practise next.", contributionOpen: "Explore my contribution →",
+      contributionEyebrow: "Applied learning", contributionIntro: "Discover how a decision in your area could reduce a vulnerability, what evidence you need and which resource to practise next.", contributionOpen: "Explore my contribution →", climateOpen: "Explore climate adaptation →",
       prototype: "Learning Hub", eyebrow: "Explore · Learn · Practice · Assess",
       heroLead: "Search knowledge or choose a learning experience to advance your understanding of sustainability in aviation.",
       searchLabel: "Search the Navigator", searchButton: "Search", tryLabel: "Try:",
@@ -78,7 +78,7 @@
       navHome: "Home", navKnowledge: "Knowledge", navApplications: "Catalogue", navCourses: "Courses",
       navPaths: "Learning Paths", navProgress: "My progress", navAbout: "About", learningStart: "Start here",
       learningIntentionsTitle: "How do you want to learn today?",
-      learningIntentionsIntro: "Choose an intention to see a catalogue selection, or use advanced filters to explore all 33 resources.",
+      learningIntentionsIntro: "Choose an intention to see a catalogue selection, or use advanced filters to explore all 34 resources.",
       learningPathsEyebrow: "Guided progressions", learningPathsTitle: "Learning Paths",
       learningPathsIntro: "Compare six progressions built exclusively from existing resources and open the sequence that best fits your goal.",
       interactiveLearning: "Complete catalogue", applicationsTitle: "All learning resources",
@@ -147,6 +147,7 @@
   function translateStaticUi() {
     document.documentElement.lang = state.lang;
     const contributionLink = document.getElementById("contribution-link"); if (contributionLink) contributionLink.href = "my-contribution/?lang=" + state.lang;
+    const climateLink = document.getElementById("climate-link"); if(climateLink) climateLink.href = "product-climate-resilience/?hubLang=" + state.lang;
     const pilotTitle = document.getElementById("pilot-banner-title"), pilotDescription = document.getElementById("pilot-banner-description"), pilotReport = document.getElementById("pilot-report-link");
     if (pilotTitle && pilotDescription && pilotReport) {
       pilotTitle.textContent = state.lang === "en" ? "Pilot · Learning evidence" : "Piloto · Evidencias de aprendizaje";

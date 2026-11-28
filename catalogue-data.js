@@ -278,6 +278,14 @@
         { es: pages("advanced-sustainability-air-power-services") + "?hubLang=es", en: pages("advanced-sustainability-air-power-services") + "?hubLang=en" }, null, "advanced",
         ["P1", "P2", "P3", "P4", "P5", "P6"], [repository("advanced-sustainability-air-power-services", ["es", "en"])], { noPriorExpertiseRequired: true }),
 
+      resource("product-climate-resilience", "simulator", "climate-adaptation-challenge",
+        text("Product Climate Resilience Challenge", "Product Climate Resilience Challenge"),
+        text("Cuatro misiones y 40 decisiones sobre calor extremo, densidad del aire, polvo y tormentas severas, con teoría, casos ficticios, análisis de brechas y evaluación.", "Four missions and 40 decisions about extreme heat, air density, dust and severe storms, with theory, fictional cases, gap analysis and assessment."),
+        text("Adaptación climática del producto aeronáutico", "Aircraft product climate adaptation"),
+        ["general","engineering","operations","in-service","maintenance","quality","managers","environment","sustainability"],
+        {es:"product-climate-resilience/?hubLang=es",en:"product-climate-resilience/?hubLang=en"},null,null,
+        ["P1","P2","P5","P6"],[repository("sustainability-navigator",["es","en"])],{internalAssessment:true,noPriorExpertiseRequired:true}),
+
       resource("year-15-challenge", "application", "scenario-challenge",
         text("Año 15 · El valor de lo que conservamos", "Year 15 · The Value of What We Retain"),
         text("Juego de cuatro decisiones para aprender sostenibilidad sin conocimientos técnicos: evitar sustituciones innecesarias, conservar recursos, valorar la reutilización y comunicar con evidencias.", "A four-decision sustainability game for everyone: avoid unnecessary replacement, retain resources, assess reuse and make evidence-based claims."),

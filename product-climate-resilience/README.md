@@ -1,0 +1,3 @@
+# Product Climate Resilience Challenge
+
+Four bilingual missions, 20 theory sections and 40 original decisions. Educational data only; no aircraft model, airworthiness assessment, actual performance, operational procedure or corporate validation. Four-question paired formative probes follow the existing Navigator instrument and export under a distinct resource ID; do not infer competence or causality from short pre/post scores. Public context sources are shown in the application. A subject-matter review and learner pilot remain necessary. The fifth priority (design requirement/manual change and programme longevity) is integrated throughout the four missions. The guide and climate resource do not use internal articles, confidential data or corporate approvals.
