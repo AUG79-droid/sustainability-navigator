@@ -1,4 +1,4 @@
-name: Mission Energy v2 validation
+name: Mission Energy v3 validation
 on:
   pull_request:
     paths:
@@ -24,9 +24,11 @@ jobs:
         run: |
           git init candidate
           git -C candidate remote add origin https://github.com/AUG79-droid/mission-energy.git
-          git -C candidate fetch --depth 1 origin 070dbc1749d65c767f90f5458441e8a021059e71
+          git -C candidate fetch --depth 1 origin 071c3dbb809da8941c88b24cd485b12df6e705ba
           git -C candidate checkout --detach FETCH_HEAD
           echo "APP_SITE=$PWD/candidate" >> "$GITHUB_ENV"
+      - name: Check bilingual curriculum
+        run: cd candidate && node curriculum-check.cjs
       - name: Install browser
         run: |
           npm install --prefix tests/pilot-browser --no-save --no-audit --no-fund playwright@1.57.0

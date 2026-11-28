@@ -15,7 +15,7 @@ async function finish(page,dialog,lang,resourceId=entry.id){
  await dialog.getByRole("heading",{name:t("Tu resultado de aprendizaje","Your learning result")}).waitFor();
  const download=page.waitForEvent("download");await dialog.getByRole("button",{name:t("Descargar resultado JSON","Download JSON result")}).click();
  const record=model.parse(JSON.parse(fs.readFileSync(await (await download).path(),"utf8")))[0];
- assert.equal(record.resourceId,resourceId);assert.equal(record.language,lang);assert.equal(record.outcome,"completed");if(entry.repo==="mission-energy"){assert.equal(record.revision,"energy-v2");assert.deepEqual(record.transferEvidence,{role:"maintenance",answers:[0,0,0]});}
+ assert.equal(record.resourceId,resourceId);assert.equal(record.language,lang);assert.equal(record.outcome,"completed");if(entry.repo==="mission-energy"){assert.equal(record.revision,"energy-v3");assert.deepEqual(record.transferEvidence,{role:"maintenance",answers:[0,0,0]});}
  if(model.measured(resourceId)){assert.equal(model.score(record.pre),2);assert.equal(model.score(record.post),4);}
  console.log("Native result exported and validated",entry.repo,lang);
 }
