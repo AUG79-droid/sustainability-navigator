@@ -24,7 +24,7 @@ jobs:
         run: |
           git init candidate
           git -C candidate remote add origin https://github.com/AUG79-droid/mission-energy.git
-          git -C candidate fetch --depth 1 origin cf1daac9ae1aaf865986642d8977eeff8058a785
+          git -C candidate fetch --depth 1 origin 070dbc1749d65c767f90f5458441e8a021059e71
           git -C candidate checkout --detach FETCH_HEAD
           echo "APP_SITE=$PWD/candidate" >> "$GITHUB_ENV"
       - name: Install browser
