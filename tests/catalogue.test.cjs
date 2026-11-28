@@ -187,7 +187,7 @@ test("maps every catalogue resource to a language-specific real preview", () => 
         return;
       }
       const relative = imageUrl.split("?")[0];
-      const extension = ["material-sovereignty", "fuel-sovereignty", "airbus-strategic-resilience-intelligence"].includes(resource.id) ? "svg" : "png";
+      const extension = ["material-sovereignty", "fuel-sovereignty", "airbus-strategic-resilience-intelligence", "product-climate-resilience"].includes(resource.id) ? "svg" : "png";
       assert.equal(relative, `assets/previews/${resource.id}-${language}.${extension}`);
       const target = path.resolve(root, relative);
       assert.equal(target.startsWith(path.join(root, "assets", "previews")), true, `${resource.id} preview escapes the asset directory`);

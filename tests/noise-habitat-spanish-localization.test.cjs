@@ -13,7 +13,7 @@ const id = "noise-habitat-missions";
 const resource = catalogue.resources.find(item => item.id === id);
 
 test("keeps one bilingual Noise & Habitat identity in catalogue 33", () => {
-  assert.equal(catalogue.resources.length, 33);
+  assert.equal(catalogue.resources.length, 34);
   assert.equal(catalogue.resources.filter(item => item.id === id).length, 1);
   assert.deepEqual(resource.languages, ["es", "en"]);
   assert.deepEqual(resource.launches, {
