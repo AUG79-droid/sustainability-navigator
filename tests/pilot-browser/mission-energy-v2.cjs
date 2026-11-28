@@ -8,8 +8,11 @@ assert.equal(await page.locator("#energy-topics-title").innerText(),t("Qué vas 
 assert.equal(await page.locator(".energy-steps li").count(),3);
 assert.equal(await page.locator(".energy-progress .metric").count(),0);
 assert.match(await page.locator(".energy-progress").innerText(),/Todavía sin evaluar|Not yet assessed/);
-assert.equal(await page.locator(".metricsHelp").getAttribute("open"),null);
-await page.locator(".metricsHelp summary").click();assert.match(await page.locator(".metricsHelp>p").innerText(),/80\s?%/);await page.locator(".metricsHelp summary").click();
+assert.equal(await page.locator(".energy-progress details").count(),0);
+assert.ok(await page.locator(".energy-score-explanation").isVisible());
+assert.match(await page.locator(".energy-score-explanation").innerText(),/80\s?%/);
+assert.match(await page.locator(".energy-score-explanation strong").innerText(),/Por ejemplo:|For example:/);
+assert.doesNotMatch(await page.locator("#main").innerText(),/No tienes que configurar|No tienes que elegir|rendimiento real de una instalación|nothing else to configure|do not need to select|actual facility performance/i);
 await page.setViewportSize({width:390,height:844});assert.ok(await page.locator(".energy-start").evaluate(e=>e.scrollWidth<=e.clientWidth+1));assert.ok(await page.locator(".energy-start [data-action=start]").isVisible());await page.setViewportSize({width:1440,height:1000});
 const click=a=>page.locator('[data-action="'+a+'"]').first().click({timeout:10000});await click("start");
 for(let i=0;i<5;i++){await click("after-theory");await click("begin");for(let j=0;j<10;j++){await click("answer");if(i===0&&j===0){const cards=await page.locator(".metricband .metric").allTextContents();assert.ok(cards[0].includes("%")&&cards[1].includes("%"));assert.match(cards[0],/1 de 1 respuestas correctas|1 of 1 correct answers/);assert.ok(!cards[2].includes("%")&&!cards[3].includes("%"));assert.match(cards[2],/Todavía sin evaluar|Not yet assessed/);}await click("next-question");}await click("next-mission");}
