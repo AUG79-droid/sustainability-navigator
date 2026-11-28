@@ -12,7 +12,7 @@ const inventory = require("../governance/inventory-data.cjs");
 const id = "noise-habitat-missions";
 const resource = catalogue.resources.find(item => item.id === id);
 
-test("keeps one bilingual Noise & Habitat identity in catalogue 33", () => {
+test("keeps one bilingual Noise & Habitat identity in catalogue 34", () => {
   assert.equal(catalogue.resources.length, 34);
   assert.equal(catalogue.resources.filter(item => item.id === id).length, 1);
   assert.deepEqual(resource.languages, ["es", "en"]);
@@ -21,7 +21,7 @@ test("keeps one bilingual Noise & Habitat identity in catalogue 33", () => {
     en: "https://aug79-droid.github.io/noise-habitat-operations-under-pressure/?hubLang=en"
   });
   assert.deepEqual(resource.provenance[0].languages, ["es", "en"]);
-  assert.equal(catalogue.resources.filter(item => item.languages.includes("es") && item.languages.includes("en")).length, 33);
+  assert.equal(catalogue.resources.filter(item => item.languages.includes("es") && item.languages.includes("en")).length, 34);
   const reach = catalogue.resources.find(item => item.id === "reach-compliance-challenge");
   assert.deepEqual(reach.languages, ["es", "en"]);
   assert.ok(reach.launches.es && reach.launches.en);
