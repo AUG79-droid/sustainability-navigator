@@ -31,6 +31,10 @@ jobs:
         run: |
           node governance/check-content.cjs
           node --test tests/*.test.cjs
+      - name: Prepare licensed climate photograph
+        run: |
+          python -m pip install Pillow
+          python scripts/prepare-climate-photo.py
       - name: Browser validation of new experiences
         run: |
           npm install --no-save playwright
