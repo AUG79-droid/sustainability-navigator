@@ -37,8 +37,8 @@
  const validTransfer=v=>!!v&&["operations","maintenance","procurement","environment"].includes(v.role)&&Array.isArray(v.answers)&&v.answers.length===3&&v.answers.every(n=>Number.isInteger(n)&&n>=0&&n<=2);
  function validate(s){
    if(!s||s.instrument!==VERSION||!validId(s.sessionId)||!supported(s.resourceId)||!resource(s.resourceId)?.launches?.[s.language]||typeof s.opened!=="boolean")return false;
-   if(s.revision!==undefined&&(s.revision!=="energy-v2"||s.resourceId!=="mission-energy"))return false;
-   if(s.revision==="energy-v2"&&s.outcome==="completed"? !validTransfer(s.transferEvidence):s.transferEvidence!==undefined)return false;
+   if(s.revision!==undefined&&(!["energy-v2","energy-v3"].includes(s.revision)||s.resourceId!=="mission-energy"))return false;
+   if(["energy-v2","energy-v3"].includes(s.revision)&&s.outcome==="completed"? !validTransfer(s.transferEvidence):s.transferEvidence!==undefined)return false;
    if(s.pre!==null&&!validAnswers(s.pre,s.resourceId))return false;
    if(!measured(s.resourceId)&&s.pre!==null)return false;
    if(s.opened&&measured(s.resourceId)&&!validAnswers(s.pre,s.resourceId))return false;
