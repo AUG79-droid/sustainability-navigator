@@ -11,6 +11,7 @@
 
   const ui = {
     es: {
+      contributionEyebrow: "Aprendizaje aplicado", contributionIntro: "Descubre cómo una decisión de tu área puede reducir una vulnerabilidad, qué evidencia necesitas y qué recurso practicar a continuación.", contributionOpen: "Explorar mi contribución →",
       prototype: "Hub de aprendizaje", eyebrow: "Explorar · Aprender · Practicar · Evaluar",
       heroLead: "Busca conocimiento o elige una experiencia de aprendizaje para avanzar en sostenibilidad aeronáutica.",
       searchLabel: "Buscar en el Navigator", searchButton: "Buscar", tryLabel: "Prueba:",
@@ -48,6 +49,7 @@
       knowledgeIntro: "Busca conceptos, preguntas frecuentes y referencias conectadas con los mismos seis pilares del catálogo de aprendizaje."
     },
     en: {
+      contributionEyebrow: "Applied learning", contributionIntro: "Discover how a decision in your area could reduce a vulnerability, what evidence you need and which resource to practise next.", contributionOpen: "Explore my contribution →",
       prototype: "Learning Hub", eyebrow: "Explore · Learn · Practice · Assess",
       heroLead: "Search knowledge or choose a learning experience to advance your understanding of sustainability in aviation.",
       searchLabel: "Search the Navigator", searchButton: "Search", tryLabel: "Try:",
@@ -144,6 +146,7 @@
 
   function translateStaticUi() {
     document.documentElement.lang = state.lang;
+    const contributionLink = document.getElementById("contribution-link"); if (contributionLink) contributionLink.href = "my-contribution/?lang=" + state.lang;
     const pilotTitle = document.getElementById("pilot-banner-title"), pilotDescription = document.getElementById("pilot-banner-description"), pilotReport = document.getElementById("pilot-report-link");
     if (pilotTitle && pilotDescription && pilotReport) {
       pilotTitle.textContent = state.lang === "en" ? "Pilot · Learning evidence" : "Piloto · Evidencias de aprendizaje";

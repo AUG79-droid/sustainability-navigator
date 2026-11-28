@@ -186,9 +186,9 @@
 
       resource("tass-readiness-resilience-simulator", "simulator", "mission-simulator",
         text("Readiness & Resilience Simulator", "Readiness & Resilience Simulator"),
-        text("Simulador de misiones para practicar decisiones de preparación y resiliencia en servicios aeronáuticos.", "A mission simulator for practising readiness and resilience decisions in aviation services."),
-        text("Preparación y resiliencia operacional", "Operational readiness and resilience"),
-        ["in-service", "operations", "engineering"], { es: pages("tass-readiness-resilience-simulator") + "?hubLang=es", en: pages("tass-readiness-resilience-simulator") + "?hubLang=en" }, null, null,
+        text("Cinco misiones transversales para conectar decisiones de ingeniería, compras, mantenimiento, calidad, operaciones y gestión con la disponibilidad y la resiliencia aeroespacial.", "Five cross-functional missions connecting engineering, procurement, maintenance, quality, operations and management decisions with aerospace readiness and resilience."),
+        text("Disponibilidad y resiliencia operativa", "Operational readiness and resilience"),
+        ["general", "in-service", "operations", "engineering", "procurement", "maintenance", "quality", "managers", "sustainability"], { es: pages("tass-readiness-resilience-simulator") + "?hubLang=es", en: pages("tass-readiness-resilience-simulator") + "?hubLang=en" }, null, null,
         ["P1", "P2", "P5", "P6"], [repository("tass-readiness-resilience-simulator", ["es", "en"])]),
 
       resource("tassg-composite-guardian", "simulator", "maintenance-game",
